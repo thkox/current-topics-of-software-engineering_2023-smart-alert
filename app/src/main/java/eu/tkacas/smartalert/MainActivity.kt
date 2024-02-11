@@ -10,21 +10,21 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import eu.tkacas.smartalert.app.SmartAlertApp
+import eu.tkacas.smartalert.screens.SignUpScreen
 import eu.tkacas.smartalert.ui.theme.SmartAlertTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            SmartAlertTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-
-                }
-            }
+            SmartAlertApp()
         }
     }
+}
+
+@Preview
+@Composable
+fun DefaultPreview(){
+    SmartAlertApp()
 }
