@@ -18,15 +18,17 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material.Icon
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
+import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -62,8 +64,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
-import androidx.constraintlayout.compose.Visibility
 import eu.tkacas.smartalert.data.NavigationItem
 import eu.tkacas.smartalert.ui.theme.AccentColor
 import eu.tkacas.smartalert.ui.theme.BgColor
@@ -83,14 +85,13 @@ fun NormalTextComponent(value: String) {
             fontSize = 24.sp,
             fontWeight = FontWeight.Normal,
             fontStyle = FontStyle.Normal
-        )
-        , color = TextColor,
+        ), color = colorResource(id = R.color.colorText),
         textAlign = TextAlign.Center
     )
 }
 
 @Composable
-fun HeadingTextComponent(value:String) {
+fun HeadingTextComponent(value: String) {
     Text(
         text = value,
         modifier = Modifier
@@ -100,18 +101,24 @@ fun HeadingTextComponent(value:String) {
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold,
             fontStyle = FontStyle.Normal
-        )
-        , color = TextColor,
+        ), color = colorResource(id = R.color.colorText),
         textAlign = TextAlign.Center
     )
 }
-@OptIn(ExperimentalMaterial3Api::class)
+
+
 @Composable
-fun MyTextFieldComponent(labelValue: String, painterResource: Painter, onTextChanged: (String) -> Unit, errorStatus: Boolean = false) {
+fun MyTextFieldComponent(
+    labelValue: String, painterResource: Painter,
+    onTextChanged: (String) -> Unit,
+    errorStatus: Boolean = false
+    ) {
+
     val textValue = remember {
         mutableStateOf("")
     }
     val localFocusManager = LocalFocusManager.current
+
     OutlinedTextField(
         modifier = Modifier
             .fillMaxWidth()
@@ -121,7 +128,7 @@ fun MyTextFieldComponent(labelValue: String, painterResource: Painter, onTextCha
             focusedBorderColor = Primary,
             focusedLabelColor = Primary,
             cursorColor = Primary,
-            containerColor = BgColor
+            backgroundColor = BgColor
         ),
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
         singleLine = true,
@@ -139,11 +146,16 @@ fun MyTextFieldComponent(labelValue: String, painterResource: Painter, onTextCha
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PasswordTextFieldComponent(labelValue: String, painterResource: Painter,  onTextSelected: (String) -> Unit, errorStatus: Boolean = false) {
+fun PasswordTextFieldComponent(
+    labelValue: String,
+    painterResource: Painter,
+    onTextSelected: (String) -> Unit,
+    errorStatus: Boolean = false
+    ){
+
     val localFocusManager = LocalFocusManager.current
-    val passwordValue = remember {
+    val password = remember {
         mutableStateOf("")
     }
 
@@ -160,7 +172,7 @@ fun PasswordTextFieldComponent(labelValue: String, painterResource: Painter,  on
             focusedBorderColor = Primary,
             focusedLabelColor = Primary,
             cursorColor = Primary,
-            containerColor = BgColor
+            backgroundColor = BgColor
         ),
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Password,
@@ -171,9 +183,9 @@ fun PasswordTextFieldComponent(labelValue: String, painterResource: Painter,  on
             localFocusManager.clearFocus()
         },
         maxLines = 1,
-        value = passwordValue.value,
+        value = password.value,
         onValueChange = {
-            passwordValue.value = it
+            password.value = it
             onTextSelected(it)
         },
         leadingIcon = {
@@ -182,10 +194,10 @@ fun PasswordTextFieldComponent(labelValue: String, painterResource: Painter,  on
         trailingIcon = {
             val iconImage = if(passwordVisible.value) {
                 //Icon(painter = painterResource(id = R.drawable.visibility), contentDescription = "")
-                painterResource(id = R.drawable.visibility)
+                painterResource(id = com.google.android.gms.base.R.drawable.common_full_open_on_phone)
             } else{
                 //Icon(painter = painterResource(id = R.drawable.visibility_off), contentDescription = "")
-                painterResource(id = R.drawable.visibility_off)
+                painterResource(id = com.google.android.gms.base.R.drawable.common_full_open_on_phone)
             }
             val description = if(passwordVisible.value){
                 stringResource(id = R.string.hide_password)
@@ -195,7 +207,6 @@ fun PasswordTextFieldComponent(labelValue: String, painterResource: Painter,  on
 
             IconButton(onClick = { passwordVisible.value = !passwordVisible.value }) {
                 Icon(painter = iconImage, contentDescription = description)
-
             }
         },
         visualTransformation = if(passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
@@ -204,11 +215,16 @@ fun PasswordTextFieldComponent(labelValue: String, painterResource: Painter,  on
 }
 
 @Composable
-fun CheckboxComponent(value: String, onTextSelected: (String) -> Unit, onCheckedChange: (Boolean) -> Unit){
-    Row(modifier = Modifier
-        .fillMaxWidth()
-        .heightIn(56.dp)
-        .padding(16.dp),
+fun CheckboxComponent(
+    value: String,
+    onTextSelected: (String) -> Unit,
+    onCheckedChange: (Boolean) -> Unit
+    ){
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(56.dp)
+            .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ){
         val checkedState = remember {
@@ -225,7 +241,7 @@ fun CheckboxComponent(value: String, onTextSelected: (String) -> Unit, onChecked
 
 
 @Composable
-fun ClickableTextComponent(value: String, onTextSelected: (String) -> Unit){
+fun ClickableTextComponent(value: String, onTextSelected: (String) -> Unit) {
     val initialText = "By continuing you accept our "
     val privacyPolicyText = "Privacy Policy"
     val andText = " and "
@@ -388,10 +404,13 @@ fun UnderLinedTextComponent(value: String) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppToolbar(toolbarTitle: String, logoutButtonClicked: () -> Unit, navigationIconClicked: () -> Unit) {
+fun AppToolbar(
+    toolbarTitle: String,
+    logoutButtonClicked: () -> Unit,
+    navigationIconClicked: () -> Unit)
+    {
 
     TopAppBar(
-        //colors = Primary,
         title = {
             Text(
                 text = toolbarTitle, color = WhiteColor
@@ -465,7 +484,8 @@ fun NavigationItemRow(item: NavigationItem,
             .fillMaxWidth()
             .clickable {
                 onNavigationItemClicked.invoke(item)
-            }.padding(all = 16.dp)
+            }
+            .padding(all = 16.dp)
     ) {
 
         Icon(
@@ -498,7 +518,3 @@ fun NavigationDrawerText(title: String, textUnit: TextUnit, color: Color) {
         )
     )
 }
-
-
-
-

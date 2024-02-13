@@ -1,6 +1,7 @@
 package eu.tkacas.smartalert.app
 
 import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -21,7 +22,7 @@ fun SmartAlertApp(homeViewModel: HomeViewModel = viewModel()) {
     homeViewModel.checkForActiveSession()
 
     Surface (
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxSize(),
         color = Color.White
     ){
         if (homeViewModel.isUserLoggedIn.value == true) {
