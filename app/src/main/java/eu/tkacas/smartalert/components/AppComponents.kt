@@ -228,11 +228,13 @@ fun CheckboxComponent(
         val checkedState = remember {
             mutableStateOf(false)
         }
-        Checkbox(checked = checkedState.value,
+        Checkbox(
+            checked = checkedState.value,
             onCheckedChange = {
-                checkedState.value != checkedState.value
+                checkedState.value = it // Corrected line
                 onCheckedChange.invoke(it)
-            })
+            }
+        )
         ClickableTextComponent(value = value, onTextSelected)
     }
 }
