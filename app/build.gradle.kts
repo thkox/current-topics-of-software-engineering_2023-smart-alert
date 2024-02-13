@@ -49,6 +49,7 @@ android {
 
 dependencies {
 
+    implementation("com.google.firebase:firebase-database:20.3.0")
     val nav_version = "2.7.7"
     val compose_version = "1.6.1"
 
