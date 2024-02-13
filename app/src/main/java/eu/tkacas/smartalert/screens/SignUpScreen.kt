@@ -71,7 +71,7 @@ fun SignUpScreen(signupViewModel: SignupViewModel = viewModel()) {
                 )
                 MyTextFieldComponent(
                     labelValue = stringResource(id = lastname),
-                    painterResource = painterResource(id = R.drawable.profile),
+                    painterResource(id = R.drawable.profile),
                     onTextChanged = {
                         signupViewModel.onEvent(SignupUIEvent.LastNameChanged(it))
                     },
@@ -79,7 +79,7 @@ fun SignUpScreen(signupViewModel: SignupViewModel = viewModel()) {
                 )
                 MyTextFieldComponent(
                     labelValue = stringResource(id = email),
-                    painterResource = painterResource(id = R.drawable.email),
+                    painterResource(id = R.drawable.email),
                     onTextChanged = {
                         signupViewModel.onEvent(SignupUIEvent.EmailChanged(it))
                     },
@@ -87,7 +87,7 @@ fun SignUpScreen(signupViewModel: SignupViewModel = viewModel()) {
                 )
                 PasswordTextFieldComponent(
                     labelValue = stringResource(id = password),
-                    painterResource = painterResource(id = R.drawable.password),
+                    painterResource(id = R.drawable.password),
                     onTextSelected = {
                         signupViewModel.onEvent(SignupUIEvent.PasswordChanged(it))
                     },
