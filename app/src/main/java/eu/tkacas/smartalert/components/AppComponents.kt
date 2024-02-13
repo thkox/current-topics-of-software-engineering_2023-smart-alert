@@ -193,11 +193,9 @@ fun PasswordTextFieldComponent(
         },
         trailingIcon = {
             val iconImage = if(passwordVisible.value) {
-                //Icon(painter = painterResource(id = R.drawable.visibility), contentDescription = "")
-                painterResource(id = com.google.android.gms.base.R.drawable.common_full_open_on_phone)
+                painterResource(id = R.drawable.visibility)
             } else{
-                //Icon(painter = painterResource(id = R.drawable.visibility_off), contentDescription = "")
-                painterResource(id = com.google.android.gms.base.R.drawable.common_full_open_on_phone)
+                painterResource(id = R.drawable.visibility_off)
             }
             val description = if(passwordVisible.value){
                 stringResource(id = R.string.hide_password)
