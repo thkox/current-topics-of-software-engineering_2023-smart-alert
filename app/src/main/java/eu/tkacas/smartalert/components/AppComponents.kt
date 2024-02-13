@@ -231,7 +231,7 @@ fun CheckboxComponent(
         Checkbox(
             checked = checkedState.value,
             onCheckedChange = {
-                checkedState.value = it // Corrected line
+                checkedState.value = it
                 onCheckedChange.invoke(it)
             }
         )
