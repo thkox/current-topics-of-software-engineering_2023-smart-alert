@@ -180,7 +180,7 @@ fun PermissionsScreen() {
         }
 
         ButtonComponent(
-            value = stringResource(id = R.string.login),
+            value = stringResource(id = R.string.next),
             onButtonClicked = {
 
             },

@@ -32,7 +32,7 @@ import eu.tkacas.smartalert.viewmodels.LoginViewModel
 import eu.tkacas.smartalert.navigation.Screen
 import eu.tkacas.smartalert.navigation.SmartAlertAppRouter
 import eu.tkacas.smartalert.navigation.SystemBackButtonHandler
-import eu.tkacas.smartalert.R.string.welcome_back
+import eu.tkacas.smartalert.R.string.welcome_to_smart_alert_app
 
 @Composable
 fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
@@ -55,7 +55,7 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
             ) {
 
                 NormalTextComponent(value = stringResource(id = R.string.login))
-                HeadingTextComponent(value = stringResource(id = welcome_back))
+                HeadingTextComponent(value = stringResource(id = welcome_to_smart_alert_app))
                 Spacer(modifier = Modifier.height(20.dp))
 
                 MyTextFieldComponent(labelValue = stringResource(id = R.string.email),

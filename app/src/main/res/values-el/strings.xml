@@ -3,7 +3,7 @@
     <string name="app_name">Εμφάνιση Κωδικού</string>
     <string name="hello">Γεια σου</string>
     <string name="create_account">Δημιουργία Λογαριασμού</string>
-    <string name="welcome_back">Γεια σου</string>
+    <string name="welcome_to_smart_alert_app">Καλωσήρθες στο \nSmart Alert!</string>
     <string name="firstname">Όνομα</string>
     <string name="lastname">Επίθετο</string>
     <string name="password">Κωδικός</string>
@@ -19,4 +19,6 @@
     <string name="menu">Μενού</string>
     <string name="navigation_header">Συρτάρι Εφαρμογών</string>
     <string name="next">Συνέχεια</string>
+    <string name="welcome_message">H εφαρμογή που θα σας κρατάει ασφαλείς σε περιόδους κρίσης. \nΜείνετε ενήμεροι και ασφαλείς με ενημερώσεις σε πραγματικό χρόνο και αναφέρετε άμεσα έκτακτες καταστάσεις στις αρχές.</string>
+    <string name="creators">Δημιουργήθηκες από τους @thkox, @Apostolis2002, @AlexanderCholis</string>
 </resources>

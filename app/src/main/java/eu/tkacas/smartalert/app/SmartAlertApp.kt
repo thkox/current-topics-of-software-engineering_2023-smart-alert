@@ -15,6 +15,7 @@ import eu.tkacas.smartalert.screens.HomeScreen
 import eu.tkacas.smartalert.screens.LoginScreen
 import eu.tkacas.smartalert.screens.PermissionsScreen
 import eu.tkacas.smartalert.screens.TermsAndConditionsScreen
+import eu.tkacas.smartalert.screens.WelcomeScreen
 
 @Composable
 fun SmartAlertApp(homeViewModel: HomeViewModel = viewModel()) {
@@ -26,11 +27,15 @@ fun SmartAlertApp(homeViewModel: HomeViewModel = viewModel()) {
         color = Color.White
     ){
         if (homeViewModel.isUserLoggedIn.value == true) {
-            SmartAlertAppRouter.navigateTo(Screen.HomeScreen)
+            SmartAlertAppRouter.navigateTo(Screen.WelcomeScreen)
         }
 
         Crossfade(targetState = SmartAlertAppRouter.currentScreen, label = "") { currentState ->
             when (currentState.value) {
+                is Screen.WelcomeScreen -> {
+                    WelcomeScreen()
+                }
+
                 is Screen.SignUpScreen -> {
                     SignUpScreen()
                 }
@@ -44,7 +49,7 @@ fun SmartAlertApp(homeViewModel: HomeViewModel = viewModel()) {
                 }
 
                 is Screen.HomeScreen -> {
-                    HomeScreen()
+                    PermissionsScreen()
                 }
             }
         }
