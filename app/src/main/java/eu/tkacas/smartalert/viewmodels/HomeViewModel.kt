@@ -1,4 +1,4 @@
-package eu.tkacas.smartalert.data.home
+package eu.tkacas.smartalert.viewmodels
 
 import android.util.Log
 import androidx.compose.material.icons.Icons
@@ -7,9 +7,8 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
-import eu.tkacas.smartalert.data.NavigationItem
+import eu.tkacas.smartalert.models.NavigationItem
 import eu.tkacas.smartalert.navigation.Screen
 import eu.tkacas.smartalert.navigation.SmartAlertAppRouter
 

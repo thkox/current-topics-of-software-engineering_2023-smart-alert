@@ -35,9 +35,9 @@ import eu.tkacas.smartalert.components.ClickableLoginTextComponent
 import eu.tkacas.smartalert.components.DividerTextComponent
 import eu.tkacas.smartalert.components.MyTextFieldComponent
 import eu.tkacas.smartalert.components.PasswordTextFieldComponent
-import eu.tkacas.smartalert.data.signup.SignupUIEvent
-import eu.tkacas.smartalert.data.signup.SignupViewModel
-//import eu.tkacas.smartalert.data.signup.SignupUIEvent
+import eu.tkacas.smartalert.ui.event.SignupUIEvent
+import eu.tkacas.smartalert.viewmodels.SignupViewModel
+//import eu.tkacas.smartalert.ui.event.SignupUIEvent
 import eu.tkacas.smartalert.navigation.Screen
 import eu.tkacas.smartalert.navigation.SmartAlertAppRouter
 

@@ -1,4 +1,4 @@
-package eu.tkacas.smartalert.data.signup
+package eu.tkacas.smartalert.ui.event
 
 sealed class SignupUIEvent{
 

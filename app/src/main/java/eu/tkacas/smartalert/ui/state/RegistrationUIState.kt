@@ -1,4 +1,4 @@
-package eu.tkacas.smartalert.data
+package eu.tkacas.smartalert.ui.state
 
 data class RegistrationUIState (
     var firstName :String = "",

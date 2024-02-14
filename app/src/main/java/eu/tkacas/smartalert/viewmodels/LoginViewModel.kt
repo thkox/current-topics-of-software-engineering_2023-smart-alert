@@ -1,9 +1,11 @@
-package eu.tkacas.smartalert.data.login
+package eu.tkacas.smartalert.viewmodels
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
+import eu.tkacas.smartalert.ui.event.LoginUIEvent
+import eu.tkacas.smartalert.ui.state.LoginUIState
 import eu.tkacas.smartalert.data.rules.Validator
 import eu.tkacas.smartalert.navigation.Screen
 import eu.tkacas.smartalert.navigation.SmartAlertAppRouter

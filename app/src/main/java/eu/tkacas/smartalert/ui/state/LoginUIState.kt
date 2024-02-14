@@ -1,4 +1,4 @@
-package eu.tkacas.smartalert.data.login
+package eu.tkacas.smartalert.ui.state
 
 data class LoginUIState (
     var email  :String = "",

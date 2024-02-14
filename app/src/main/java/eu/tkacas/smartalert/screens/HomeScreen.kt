@@ -16,7 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import eu.tkacas.smartalert.R
-import eu.tkacas.smartalert.data.home.HomeViewModel
+import eu.tkacas.smartalert.viewmodels.HomeViewModel
 import kotlinx.coroutines.launch
 import eu.tkacas.smartalert.components.NavigationDrawerHeader
 import eu.tkacas.smartalert.components.NavigationDrawerBody
