@@ -29,9 +29,6 @@ import eu.tkacas.smartalert.components.PasswordTextFieldComponent
 import eu.tkacas.smartalert.components.UnderLinedTextComponent
 import eu.tkacas.smartalert.ui.event.LoginUIEvent
 import eu.tkacas.smartalert.viewmodels.LoginViewModel
-import eu.tkacas.smartalert.navigation.Screen
-import eu.tkacas.smartalert.navigation.SmartAlertAppRouter
-import eu.tkacas.smartalert.navigation.SystemBackButtonHandler
 import eu.tkacas.smartalert.R.string.welcome_to_smart_alert_app
 
 @Composable
@@ -93,7 +90,7 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
                 DividerTextComponent()
 
                 ClickableLoginTextComponent(tryingToLogin = false, onTextSelected = {
-                    SmartAlertAppRouter.navigateTo(Screen.SignUpScreen)
+                    // Navigate to Sign Up Screen
                 })
             }
         }
@@ -103,10 +100,8 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
         }
     }
 
+    // go back to sign up screen
 
-    SystemBackButtonHandler {
-        SmartAlertAppRouter.navigateTo(Screen.SignUpScreen)
-    }
 }
 
 @Preview

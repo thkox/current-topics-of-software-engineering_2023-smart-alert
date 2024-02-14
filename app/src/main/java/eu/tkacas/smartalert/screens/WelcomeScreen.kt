@@ -24,8 +24,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.components.ButtonComponent
-import eu.tkacas.smartalert.navigation.Screen
-import eu.tkacas.smartalert.navigation.SmartAlertAppRouter
 import eu.tkacas.smartalert.ui.theme.WhiteColor
 
 @Composable
@@ -87,7 +85,7 @@ fun WelcomeScreen() {
                 ButtonComponent(
                     value = stringResource(id = R.string.login),
                     onButtonClicked = {
-                        SmartAlertAppRouter.navigateTo(Screen.LoginScreen)
+                        // navigate to login screen
                     },
                     isEnabled = true
                 )

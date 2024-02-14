@@ -37,9 +37,7 @@ import eu.tkacas.smartalert.components.MyTextFieldComponent
 import eu.tkacas.smartalert.components.PasswordTextFieldComponent
 import eu.tkacas.smartalert.ui.event.SignupUIEvent
 import eu.tkacas.smartalert.viewmodels.SignupViewModel
-//import eu.tkacas.smartalert.ui.event.SignupUIEvent
-import eu.tkacas.smartalert.navigation.Screen
-import eu.tkacas.smartalert.navigation.SmartAlertAppRouter
+
 
 @Composable
 fun SignUpScreen(signupViewModel: SignupViewModel = viewModel()) {
@@ -95,7 +93,7 @@ fun SignUpScreen(signupViewModel: SignupViewModel = viewModel()) {
                 CheckboxComponent(
                     value = stringResource(id = terms_and_conditions),
                     onTextSelected = {
-                        SmartAlertAppRouter.navigateTo(Screen.TermsAndConditionsScreen)
+                        // navigate to Terms and conditions
                     },
                     onCheckedChange = {
                         signupViewModel.onEvent(SignupUIEvent.PrivacyPolicyCheckBoxClicked(it))
@@ -114,7 +112,7 @@ fun SignUpScreen(signupViewModel: SignupViewModel = viewModel()) {
                 DividerTextComponent()
 
                 ClickableLoginTextComponent(tryingToLogin = true, onTextSelected = {
-                    SmartAlertAppRouter.navigateTo(Screen.LoginScreen)
+                    // navigate to login screen
                 })
             }
 

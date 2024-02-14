@@ -7,8 +7,6 @@ import com.google.firebase.auth.FirebaseAuth
 import eu.tkacas.smartalert.ui.event.LoginUIEvent
 import eu.tkacas.smartalert.ui.state.LoginUIState
 import eu.tkacas.smartalert.data.rules.Validator
-import eu.tkacas.smartalert.navigation.Screen
-import eu.tkacas.smartalert.navigation.SmartAlertAppRouter
 
 class LoginViewModel : ViewModel() {
 
@@ -76,7 +74,7 @@ class LoginViewModel : ViewModel() {
 
                 if(it.isSuccessful){
                     loginInProgress.value = false
-                    SmartAlertAppRouter.navigateTo(Screen.HomeScreen)
+                    // navigate to Home Screen
                 }
             }
             .addOnFailureListener {

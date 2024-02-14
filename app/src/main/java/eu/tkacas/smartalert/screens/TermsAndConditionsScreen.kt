@@ -12,9 +12,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.components.HeadingTextComponent
-import eu.tkacas.smartalert.navigation.Screen
-import eu.tkacas.smartalert.navigation.SmartAlertAppRouter
-import eu.tkacas.smartalert.navigation.SystemBackButtonHandler
 
 
 @Composable
@@ -27,9 +24,7 @@ fun TermsAndConditionsScreen() {
         HeadingTextComponent(value = stringResource(id = R.string.terms_and_conditions_header))
     }
 
-    SystemBackButtonHandler {
-        SmartAlertAppRouter.navigateTo(Screen.SignUpScreen)
-    }
+    // go back to sign up screen
 }
 
 @Preview
