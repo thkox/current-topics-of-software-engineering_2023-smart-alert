@@ -41,7 +41,6 @@ import eu.tkacas.smartalert.viewmodels.SignupViewModel
 import eu.tkacas.smartalert.navigation.Screen
 import eu.tkacas.smartalert.navigation.SmartAlertAppRouter
 
-@Preview
 @Composable
 fun SignUpScreen(signupViewModel: SignupViewModel = viewModel()) {
 
@@ -130,6 +129,6 @@ fun SignUpScreen(signupViewModel: SignupViewModel = viewModel()) {
 
 @Preview
 @Composable
-fun DefaultPreviewOfSignUpScreen() {
+fun SignUpScreenPreview() {
     SignUpScreen()
 }
