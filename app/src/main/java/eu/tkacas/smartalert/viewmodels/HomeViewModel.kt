@@ -9,8 +9,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import eu.tkacas.smartalert.models.NavigationItem
-import eu.tkacas.smartalert.navigation.Screen
-import eu.tkacas.smartalert.navigation.SmartAlertAppRouter
 
 class HomeViewModel : ViewModel(){
     private val TAG = HomeViewModel::class.simpleName
@@ -47,7 +45,7 @@ class HomeViewModel : ViewModel(){
         val authStateListener = FirebaseAuth.AuthStateListener {
             if (it.currentUser == null) {
                 Log.d(TAG, "Inside sign outsuccess")
-                SmartAlertAppRouter.navigateTo(Screen.LoginScreen)
+                // navigate to login screen
             } else {
                 Log.d(TAG, "Inside sign out is not complete")
             }
