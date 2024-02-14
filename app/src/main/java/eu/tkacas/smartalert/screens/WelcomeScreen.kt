@@ -28,7 +28,6 @@ import eu.tkacas.smartalert.navigation.Screen
 import eu.tkacas.smartalert.navigation.SmartAlertAppRouter
 import eu.tkacas.smartalert.ui.theme.WhiteColor
 
-@Preview(backgroundColor = 0xFFFFFF, showBackground = true)
 @Composable
 fun WelcomeScreen() {
     Surface(
@@ -95,4 +94,10 @@ fun WelcomeScreen() {
             }
         }
     }
+}
+
+@Preview(backgroundColor = 0xFFFFFF, showBackground = true)
+@Composable
+fun WelcomeScreenPreview(){
+    WelcomeScreen()
 }

@@ -27,7 +27,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.smartalert.components.ButtonComponent
 
-@Preview
 @Composable
 fun PermissionsScreen() {
     val checkedStateLocation = remember { mutableStateOf(false) }
@@ -187,4 +186,10 @@ fun PermissionsScreen() {
             isEnabled = false
         )
     }
+}
+
+@Preview
+@Composable
+fun PermissionsScreenPreview() {
+    PermissionsScreen()
 }

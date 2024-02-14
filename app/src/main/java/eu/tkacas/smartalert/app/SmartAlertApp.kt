@@ -11,7 +11,6 @@ import eu.tkacas.smartalert.navigation.SmartAlertAppRouter
 import eu.tkacas.smartalert.screens.SignUpScreen
 import eu.tkacas.smartalert.viewmodels.HomeViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
-import eu.tkacas.smartalert.screens.HomeScreen
 import eu.tkacas.smartalert.screens.LoginScreen
 import eu.tkacas.smartalert.screens.PermissionsScreen
 import eu.tkacas.smartalert.screens.TermsAndConditionsScreen
