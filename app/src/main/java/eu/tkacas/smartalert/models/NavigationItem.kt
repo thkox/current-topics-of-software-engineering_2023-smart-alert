@@ -1,4 +1,4 @@
-package eu.tkacas.smartalert.data
+package eu.tkacas.smartalert.models
 
 import androidx.compose.ui.graphics.vector.ImageVector
 

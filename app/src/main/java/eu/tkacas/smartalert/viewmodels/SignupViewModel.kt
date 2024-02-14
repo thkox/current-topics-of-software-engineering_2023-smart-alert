@@ -1,15 +1,15 @@
-package eu.tkacas.smartalert.data.signup
+package eu.tkacas.smartalert.viewmodels
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import eu.tkacas.smartalert.navigation.SmartAlertAppRouter
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuth.AuthStateListener
 import com.google.firebase.database.FirebaseDatabase
 import eu.tkacas.smartalert.navigation.Screen
 import eu.tkacas.smartalert.data.rules.Validator
-import eu.tkacas.smartalert.data.RegistrationUIState
+import eu.tkacas.smartalert.ui.state.RegistrationUIState
+import eu.tkacas.smartalert.ui.event.SignupUIEvent
 
 class SignupViewModel : ViewModel(){
     private val TAG = SignupViewModel::class.simpleName
