@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Εμφάνιση Κωδικού</string>
+    <string name="hello">Γεια σου</string>
+    <string name="create_account">Δημιουργία Λογαριασμού</string>
+    <string name="welcome_back">Γεια σου</string>
+    <string name="firstname">Όνομα</string>
+    <string name="lastname">Επίθετο</string>
+    <string name="password">Κωδικός</string>
+    <string name="hide_password">Απόκρυψη Κωδικού</string>
+    <string name="show_password">Εμφάνιση Κωδικού</string>
+    <string name="register">Εγγραφή</string>
+    <string name="login">Σύνδεση</string>
+    <string name="or">Ή</string>
+    <string name="go_to_login">Έχεις Λογαριασμό; Σύνδεση</string>
+    <string name="forgot_password">Ξέχασες τον Κωδικό;</string>
+    <string name="home">Αρχική</string>
+    <string name="logout">Έξοδος</string>
+    <string name="menu">Μενού</string>
+    <string name="navigation_header">Συρτάρι Εφαρμογών</string>
+    <string name="next">Συνέχεια</string>
+</resources>
