@@ -2,7 +2,7 @@
     <string name="app_name">Smart Alert</string>
     <string name="hello">Hey there, </string>
     <string name="create_account">Create an Account </string>
-    <string name="welcome_back">Welcome Back </string>
+    <string name="welcome_to_smart_alert_app">Welcome to \nSmart Alert!</string>
     <string name="firstname">First Name </string>
     <string name="lastname">Last Name </string>
     <string name="email" translatable="false">Email </string>
@@ -23,4 +23,6 @@
     <string name="location_coarse_permission" translatable="false">Allow Smart Alert to access this device\'s location?</string>
     <string name="camera_permission" translatable="false">Allow Smart Alert to access the camera. This is only required when you upload a natural disaster</string>
     <string name="next">Next</string>
+    <string name="welcome_message">Your emergency lifeline. \nStay informed and safe with real-time updates and report emergencies to authorities instantly.</string>
+    <string name="creators">Created by @thkox, @Apostolis2002, @AlexanderCholis</string>
 </resources>
