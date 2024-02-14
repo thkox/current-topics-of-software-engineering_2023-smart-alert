@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import eu.tkacas.smartalert.navigation.SmartAlertAppRouter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuth.AuthStateListener
+import com.google.firebase.database.FirebaseDatabase
 import eu.tkacas.smartalert.navigation.Screen
 import eu.tkacas.smartalert.data.rules.Validator
 import eu.tkacas.smartalert.data.RegistrationUIState
@@ -72,7 +73,9 @@ class SignupViewModel : ViewModel(){
         printState()
         createUserInFirebase(
             email = registrationUIState.value.email,
-            password = registrationUIState.value.password
+            password = registrationUIState.value.password,
+            firstName = registrationUIState.value.firstName,
+            lastName = registrationUIState.value.lastName
         )
     }
 
@@ -127,19 +130,31 @@ class SignupViewModel : ViewModel(){
     }
 
 
-    private fun createUserInFirebase(email: String, password: String) {
+    private fun createUserInFirebase(email: String, password: String, firstName: String, lastName: String) {
 
         signUpInProgress.value = true
 
-        FirebaseAuth
-            .getInstance()
-            .createUserWithEmailAndPassword(email, password)
+        val auth = FirebaseAuth.getInstance()
+        auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener {
                 Log.d(TAG, "Inside_OnCompleteListener")
                 Log.d(TAG, " isSuccessful = ${it.isSuccessful}")
 
                 signUpInProgress.value = false
                 if (it.isSuccessful) {
+                    // Get the user's UID
+                    val uid = auth.currentUser?.uid
+
+                    // Create a reference to the user's data in the Realtime Database
+                    val db = FirebaseDatabase.getInstance()
+                    val userRef = db.getReference("users").child(uid!!)
+
+                    // Create a map to hold the user's first name and last name
+                    val userData = mapOf("firstName" to firstName, "lastName" to lastName)
+
+                    // Save the user's first name and last name in the Realtime Database
+                    userRef.setValue(userData)
+
                     SmartAlertAppRouter.navigateTo(Screen.HomeScreen)
                 }
             }
