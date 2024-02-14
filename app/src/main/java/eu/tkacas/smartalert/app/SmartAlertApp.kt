@@ -14,6 +14,7 @@ import eu.tkacas.smartalert.data.home.HomeViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import eu.tkacas.smartalert.screens.HomeScreen
 import eu.tkacas.smartalert.screens.LoginScreen
+import eu.tkacas.smartalert.screens.PermissionsScreen
 import eu.tkacas.smartalert.screens.TermsAndConditionsScreen
 
 @Composable
@@ -44,7 +45,7 @@ fun SmartAlertApp(homeViewModel: HomeViewModel = viewModel()) {
                 }
 
                 is Screen.HomeScreen -> {
-                    HomeScreen()
+                    PermissionsScreen()
                 }
             }
         }
