@@ -74,7 +74,7 @@ fun Navigation(navController: NavController = rememberNavController()) {
         composable("signUp") { SignUpScreen(navController) }
         composable("termsAndConditions") { TermsAndConditionsScreen() }
         composable("homeCitizen") { HomeCitizenScreen(navController) }
-        composable("homeEmployee") { HomeEmployeeScreen() }
+        composable("homeEmployee") { HomeEmployeeScreen(navController) }
         composable("settings") { SettingsScreen(navController) }
         composable("alertForm") { AlertFormScreen() }
         composable("alert") { AlertScreen() }
@@ -84,12 +84,11 @@ fun Navigation(navController: NavController = rememberNavController()) {
         screensInSettings.forEach { screen ->
             composable(screen.route) {
                 when (screen) {
-                    is Screen.SettingsScreen.Account -> AccountScreen()
-                    is Screen.SettingsScreen.MyReportsHistory -> MyReportsHistoryScreen()
-                    is Screen.SettingsScreen.Language -> LanguageScreen()
-                    is Screen.SettingsScreen.Analytics -> AnalyticsScreen()
-                    is Screen.SettingsScreen.About -> AboutScreen()
-                    else -> {}
+                    is Screen.SettingsScreen.Account -> AccountScreen(navController)
+                    is Screen.SettingsScreen.MyReportsHistory -> MyReportsHistoryScreen(navController)
+                    is Screen.SettingsScreen.Language -> LanguageScreen(navController)
+                    is Screen.SettingsScreen.Analytics -> AnalyticsScreen(navController)
+                    is Screen.SettingsScreen.About -> AboutScreen(navController)
                 }
             }
         }

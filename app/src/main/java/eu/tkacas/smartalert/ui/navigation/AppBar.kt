@@ -33,7 +33,7 @@ fun AppBarBackView(
                     .heightIn(max = 24.dp))
         },
         elevation = 3.dp,
-        backgroundColor = colorResource(id = R.color.green),
+        backgroundColor = colorResource(id = R.color.prussian_blue),
         navigationIcon = {
             IconButton(onClick = { navController?.navigateUp() }) {
                 Icon(
@@ -60,7 +60,7 @@ fun AppBarWithoutBackView(
                     .heightIn(max = 24.dp))
         },
         elevation = 3.dp,
-        backgroundColor = colorResource(id = R.color.colorAccent),
+        backgroundColor = colorResource(id = R.color.prussian_blue),
         navigationIcon = null,
         actions = {
             IconButton(

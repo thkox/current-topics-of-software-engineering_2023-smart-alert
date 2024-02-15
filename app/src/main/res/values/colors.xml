@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorYellow">#E6EF0E</color>
+    <color name="colorOrange">#EF920E</color>
+    <color name="colorBlue">#55C2DA</color>
+
+    <color name="sky_blue">#8ECAE6</color>
+    <color name="blue_green">#219EBC</color>
+    <color name="prussian_blue">#023047</color>
+    <color name="selective_yellow">#FFB703</color>
+    <color name="ut_orange">#FB8500</color>
+
     <color name="colorPrimary">#92A3FD</color>
     <color name="colorSecondary">#9DCEFF</color>
     <color name="colorText">#1D1617</color>

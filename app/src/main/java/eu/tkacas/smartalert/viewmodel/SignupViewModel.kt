@@ -156,6 +156,7 @@ class SignupViewModel() : ViewModel(){
                     // Save the user's first name and last name in the Realtime Database
                     userRef.setValue(userData)
 
+                    // Todo: check if those lines are redundant
                     val domain = email.substringAfter("@")
                     val destination = if (domain == "civilprotection.gr") "homeEmployee" else "homeCitizen"
                     navController?.navigate(destination)
