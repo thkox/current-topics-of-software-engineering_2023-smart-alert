@@ -29,6 +29,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import eu.tkacas.smartalert.R
+import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.ui.theme.OrangeColor
 import eu.tkacas.smartalert.ui.theme.Primary
 import eu.tkacas.smartalert.ui.theme.Secondary
@@ -70,7 +72,16 @@ fun ButtonComponent(value: String, onButtonClicked: () -> Unit, isEnabled: Boole
 }
 
 @Composable
-fun CriticalWeatherPhenomenonButtonComponent(imageResId: Int) {
+fun CriticalWeatherPhenomenonButtonComponent(imageResId: Int, weatherPhenomenon: CriticalWeatherPhenomenon) {
+    val imageResId = when(weatherPhenomenon) {
+        CriticalWeatherPhenomenon.EARTHQUAKE -> R.drawable.earthquake
+        CriticalWeatherPhenomenon.FLOOD -> R.drawable.flood
+        CriticalWeatherPhenomenon.WILDFIRE -> R.drawable.wildfire
+        CriticalWeatherPhenomenon.RIVER_FLOOD -> R.drawable.river_flood
+        CriticalWeatherPhenomenon.HEATWAVE -> R.drawable.heatwave
+        CriticalWeatherPhenomenon.SNOWSTORM -> R.drawable.snowstorm
+        CriticalWeatherPhenomenon.STORM -> R.drawable.storm
+    }
     Box(
         modifier = Modifier
             .size(100.dp)
@@ -89,6 +100,10 @@ fun CriticalWeatherPhenomenonButtonComponent(imageResId: Int) {
                 //painter = painterResource(id = R.drawable.storm),
                 contentDescription = "Button Image",
                 modifier = Modifier.fillMaxSize() // Make the image fill the button
+            )
+            Text(
+                text = weatherPhenomenon.name,
+                color = Color.Black
             )
         }
     }
