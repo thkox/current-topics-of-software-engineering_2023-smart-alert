@@ -17,11 +17,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.ui.component.ButtonComponent
 
 @Composable
-fun WelcomeScreen() {
+fun WelcomeScreen( navController: NavController? = null) {
     Surface(
         modifier = Modifier.fillMaxSize(),
     ) {
@@ -79,7 +80,7 @@ fun WelcomeScreen() {
                 ButtonComponent(
                     value = stringResource(id = R.string.login),
                     onButtonClicked = {
-                        // navigate to login screen
+                        navController?.navigate("login")
                     },
                     isEnabled = true
                 )

@@ -1,5 +1,6 @@
 package eu.tkacas.smartalert.ui.screen.citizen
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.IconButton
 import androidx.compose.material.rememberScaffoldState
@@ -9,50 +10,42 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import eu.tkacas.smartalert.R
-import eu.tkacas.smartalert.ui.component.CriticalWeatherPhenomenonButtonComponent
+import eu.tkacas.smartalert.ui.navigation.AppBarWithoutBackView
 import kotlinx.coroutines.CoroutineScope
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun HomeCitizenScreen() {
+fun HomeCitizenScreen(navController: NavController? = null) {
 
-    val title = stringResource(id = R.string.app_name)
+    val scaffoldState = rememberScaffoldState()
 
-    val scaffoldState: ScaffoldState = rememberScaffoldState()
-    val scope: CoroutineScope = rememberCoroutineScope()
-
-
-    Scaffold (
+    Scaffold(
+        scaffoldState = scaffoldState,
         topBar = {
-            TopAppBar(
-                title = { Text(title) },
-                navigationIcon = {
-                    IconButton(onClick = {
-                        //do nothing
-                    }) {
-                        Icon(painter = painterResource(id = R.drawable.crisis_alert), contentDescription = null)
-                    }
-                },
-                actions = {
-                    androidx.compose.material3.IconButton(
-                        onClick = {
-                            //change to settings activity
-                        }
-                    ) {
-                        Icon(imageVector = Icons.Default.Settings, contentDescription = null)
-                    }
-                },
-            )
+            AppBarWithoutBackView(title = "Home Citizen Screen", navController = navController)
         }
     ) {
-        Text(text ="Test", modifier = Modifier.padding(it))
+        Card (
+            modifier = Modifier.padding(16.dp)
+
+        ) {
+            Text("Home Citizen Screen")
+        }
     }
 }
 
