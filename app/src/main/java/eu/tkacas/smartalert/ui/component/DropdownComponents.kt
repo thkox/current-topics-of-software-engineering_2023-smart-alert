@@ -13,9 +13,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.models.EmergencyLevel
 
+@Preview
 @Composable
 fun LevelDropdownComponent() {
     var expanded by remember { mutableStateOf(false) }
