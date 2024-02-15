@@ -163,7 +163,7 @@ fun MultilineTextFieldComponent(){
         },
         trailingIcon = {
             Row(
-                modifier = Modifier.padding(end = 10.dp)
+                modifier = Modifier.padding(end = 10.dp, top = 80.dp)
             ) {
                 Text("${text.length}/250")
             }

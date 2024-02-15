@@ -1,5 +1,6 @@
 package eu.tkacas.smartalert.ui.component
 
+import android.widget.Button
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -32,10 +33,12 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
+import eu.tkacas.smartalert.ui.theme.BlueColor
 import eu.tkacas.smartalert.ui.theme.OrangeColor
 import eu.tkacas.smartalert.ui.theme.Primary
 import eu.tkacas.smartalert.ui.theme.Secondary
@@ -168,6 +171,40 @@ fun AlertLevelButtonsRowComponent() {
             Text(
                 text = "High",
                 color = if (selectedDangerLevelButton == 3) Color.Black else Color.White
+            )
+        }
+    }
+}
+
+@Composable
+fun GeneralButtonComponent(value: String, onButtonClicked: () -> Unit) {
+    Button(
+        modifier = Modifier
+            .width(175.dp)
+            .heightIn(48.dp),
+        onClick = {
+            onButtonClicked.invoke()
+        },
+        contentPadding = PaddingValues(),
+        colors = ButtonDefaults.buttonColors(Color.Transparent),
+        shape = RoundedCornerShape(30.dp),
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(40.dp)
+                .background(
+                    color = BlueColor,
+                    shape = RoundedCornerShape(30.dp)
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                //text = "High",
+                text = value,
+                fontSize = 18.sp,
+                color = Color.White,
+                fontWeight = FontWeight.Bold
             )
         }
     }

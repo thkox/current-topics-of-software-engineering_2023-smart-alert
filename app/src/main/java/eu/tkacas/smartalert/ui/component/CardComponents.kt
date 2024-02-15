@@ -17,7 +17,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.Switch
 import androidx.compose.material.Text
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.tooling.preview.Preview
 import eu.tkacas.smartalert.R
 
