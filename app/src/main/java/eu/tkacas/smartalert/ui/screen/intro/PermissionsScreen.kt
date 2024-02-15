@@ -1,4 +1,4 @@
-package eu.tkacas.smartalert.screens
+package eu.tkacas.smartalert.ui.screen.intro
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,7 +25,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import eu.tkacas.smartalert.components.ButtonComponent
+import eu.tkacas.smartalert.ui.component.ButtonComponent
 
 @Composable
 fun PermissionsScreen() {

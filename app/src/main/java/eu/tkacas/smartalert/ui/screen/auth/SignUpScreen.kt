@@ -1,4 +1,4 @@
-package eu.tkacas.smartalert.screens
+package eu.tkacas.smartalert.ui.screen.auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -19,8 +19,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import eu.tkacas.smartalert.R
-import eu.tkacas.smartalert.components.HeadingTextComponent
-import eu.tkacas.smartalert.components.NormalTextComponent
+import eu.tkacas.smartalert.ui.component.HeadingTextComponent
+import eu.tkacas.smartalert.ui.component.NormalTextComponent
 import eu.tkacas.smartalert.R.string.create_account
 import eu.tkacas.smartalert.R.string.firstname
 import eu.tkacas.smartalert.R.string.lastname
@@ -29,14 +29,14 @@ import eu.tkacas.smartalert.R.string.password
 import eu.tkacas.smartalert.R.string.terms_and_conditions
 import eu.tkacas.smartalert.R.string.register
 import eu.tkacas.smartalert.R.string.hello
-import eu.tkacas.smartalert.components.ButtonComponent
-import eu.tkacas.smartalert.components.CheckboxComponent
-import eu.tkacas.smartalert.components.ClickableLoginTextComponent
-import eu.tkacas.smartalert.components.DividerTextComponent
-import eu.tkacas.smartalert.components.MyTextFieldComponent
-import eu.tkacas.smartalert.components.PasswordTextFieldComponent
+import eu.tkacas.smartalert.ui.component.ButtonComponent
+import eu.tkacas.smartalert.ui.component.CheckboxComponent
+import eu.tkacas.smartalert.ui.component.ClickableLoginTextComponent
+import eu.tkacas.smartalert.ui.component.DividerTextComponent
+import eu.tkacas.smartalert.ui.component.MyTextFieldComponent
+import eu.tkacas.smartalert.ui.component.PasswordTextFieldComponent
 import eu.tkacas.smartalert.ui.event.SignupUIEvent
-import eu.tkacas.smartalert.viewmodels.SignupViewModel
+import eu.tkacas.smartalert.viewmodel.SignupViewModel
 
 
 @Composable

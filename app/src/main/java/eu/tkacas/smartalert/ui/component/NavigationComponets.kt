@@ -1,4 +1,4 @@
-package eu.tkacas.smartalert.components
+package eu.tkacas.smartalert.ui.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

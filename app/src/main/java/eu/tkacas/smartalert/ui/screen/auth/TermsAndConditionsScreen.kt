@@ -1,4 +1,4 @@
-package eu.tkacas.smartalert.screens
+package eu.tkacas.smartalert.ui.screen.auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,7 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import eu.tkacas.smartalert.R
-import eu.tkacas.smartalert.components.HeadingTextComponent
+import eu.tkacas.smartalert.ui.component.HeadingTextComponent
 
 
 @Composable
