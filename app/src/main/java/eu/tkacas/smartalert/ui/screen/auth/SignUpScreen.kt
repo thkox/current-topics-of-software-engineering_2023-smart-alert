@@ -17,10 +17,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.ui.component.HeadingTextComponent
-import eu.tkacas.smartalert.ui.component.NormalTextComponent
 import eu.tkacas.smartalert.R.string.create_account
 import eu.tkacas.smartalert.R.string.firstname
 import eu.tkacas.smartalert.R.string.lastname
@@ -28,7 +30,6 @@ import eu.tkacas.smartalert.R.string.email
 import eu.tkacas.smartalert.R.string.password
 import eu.tkacas.smartalert.R.string.terms_and_conditions
 import eu.tkacas.smartalert.R.string.register
-import eu.tkacas.smartalert.R.string.hello
 import eu.tkacas.smartalert.ui.component.ButtonComponent
 import eu.tkacas.smartalert.ui.component.CheckboxComponent
 import eu.tkacas.smartalert.ui.component.ClickableLoginTextComponent
@@ -40,7 +41,10 @@ import eu.tkacas.smartalert.viewmodel.SignupViewModel
 
 
 @Composable
-fun SignUpScreen(signupViewModel: SignupViewModel = viewModel()) {
+fun SignUpScreen(navController: NavController? = null) {
+
+    val signupViewModel: SignupViewModel = viewModel()
+    signupViewModel.navController = navController
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -55,7 +59,6 @@ fun SignUpScreen(signupViewModel: SignupViewModel = viewModel()) {
                 .padding(28.dp)
         ) {
             Column(modifier = Modifier.fillMaxSize()) {
-                NormalTextComponent(value = stringResource(id = hello))
                 HeadingTextComponent(value = stringResource(id = create_account))
                 Spacer(modifier = Modifier.height(20.dp))
                 MyTextFieldComponent(
@@ -93,7 +96,7 @@ fun SignUpScreen(signupViewModel: SignupViewModel = viewModel()) {
                 CheckboxComponent(
                     value = stringResource(id = terms_and_conditions),
                     onTextSelected = {
-                        // navigate to Terms and conditions
+                        navController?.navigate("termsAndConditionsScreen")
                     },
                     onCheckedChange = {
                         signupViewModel.onEvent(SignupUIEvent.PrivacyPolicyCheckBoxClicked(it))
@@ -112,7 +115,7 @@ fun SignUpScreen(signupViewModel: SignupViewModel = viewModel()) {
                 DividerTextComponent()
 
                 ClickableLoginTextComponent(tryingToLogin = true, onTextSelected = {
-                    // navigate to login screen
+                    navController?.navigate("login")
                 })
             }
 
