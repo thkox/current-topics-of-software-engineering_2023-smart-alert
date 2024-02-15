@@ -13,20 +13,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import eu.tkacas.smartalert.R
-import eu.tkacas.smartalert.models.EmergencyLevel
 
-@Preview
 @Composable
-fun LevelDropdownComponent() {
+fun <T : Enum<T>> EnumDropdownComponent(enumClass: Class<T>) {
     var expanded by remember { mutableStateOf(false) }
-    val levels = EmergencyLevel.entries.toTypedArray()
-    var selectedLevel by remember { mutableStateOf(levels[0]) }
+    val enumValues = enumClass.enumConstants
+    var selectedValue by remember { mutableStateOf(enumValues[0]) }
 
     Box {
         Button(onClick = { expanded = true }) {
-            Text(selectedLevel.name)
+            Text(selectedValue.name)
             Icon(painter = if (expanded) painterResource(id = R.drawable.arrow_up) else painterResource(id = R.drawable.arrow_down),
                 contentDescription = if (expanded) "Arrow Up" else "Arrow Down",
                 tint = Color.White)
@@ -36,12 +33,12 @@ fun LevelDropdownComponent() {
             expanded = expanded,
             onDismissRequest = { expanded = false }
         ) {
-            levels.forEach { level ->
+            enumValues.forEach { value ->
                 DropdownMenuItem(onClick = {
-                    selectedLevel = level
+                    selectedValue = value
                     expanded = false
                 }) {
-                    Text(level.name)
+                    Text(value.name)
                 }
             }
         }
