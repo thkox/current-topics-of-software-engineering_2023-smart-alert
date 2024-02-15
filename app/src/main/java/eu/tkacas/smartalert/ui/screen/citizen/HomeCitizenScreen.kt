@@ -25,50 +25,13 @@ import eu.tkacas.smartalert.R
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
-fun HomeCitizenScreen(navController: NavController) {
+fun HomeCitizenScreen() {
 
-    val scaffoldState: ScaffoldState = rememberScaffoldState()
-    val scope: CoroutineScope = rememberCoroutineScope()
-
-    //Allow us to find out on which screen we are
-    val navBackStackEntry = navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry.value?.destination?.route
-
-    // Update the title based on the current route
-    val title = when (currentRoute) {
-        "settings" -> "Settings"
-        else -> ""
-    }
-
-    Scaffold (
-        topBar = {
-            TopAppBar(
-                title = { Text(title) },
-                navigationIcon = {
-                    IconButton(onClick = {
-                        //do nothing
-                    }) {
-                        Icon(painter = painterResource(id = R.drawable.crisis_alert), contentDescription = null)
-                    }
-                },
-                actions = {
-                    androidx.compose.material3.IconButton(
-                        onClick = {
-                            navController.navigate("settings")
-                        }
-                    ) {
-                        Icon(imageVector = Icons.Default.Settings, contentDescription = null)
-                    }
-                },
-            )
-        }
-    ) {
-        Text(text ="Test", modifier = Modifier.padding(it))
-    }
+    Text(text ="Test")
 }
 
 @Preview
 @Composable
 fun HomeCitizenScreenPreview() {
-    HomeCitizenScreen(navController = rememberNavController())
+    HomeCitizenScreen()
 }

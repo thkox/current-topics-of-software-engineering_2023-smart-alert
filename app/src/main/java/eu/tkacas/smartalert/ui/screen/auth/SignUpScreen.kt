@@ -18,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.ui.component.HeadingTextComponent
 import eu.tkacas.smartalert.ui.component.NormalTextComponent
@@ -40,7 +41,7 @@ import eu.tkacas.smartalert.viewmodel.SignupViewModel
 
 
 @Composable
-fun SignUpScreen(signupViewModel: SignupViewModel = viewModel()) {
+fun SignUpScreen(navController: NavController? = null, signupViewModel: SignupViewModel = viewModel()) {
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -55,7 +56,6 @@ fun SignUpScreen(signupViewModel: SignupViewModel = viewModel()) {
                 .padding(28.dp)
         ) {
             Column(modifier = Modifier.fillMaxSize()) {
-                NormalTextComponent(value = stringResource(id = hello))
                 HeadingTextComponent(value = stringResource(id = create_account))
                 Spacer(modifier = Modifier.height(20.dp))
                 MyTextFieldComponent(
@@ -93,7 +93,7 @@ fun SignUpScreen(signupViewModel: SignupViewModel = viewModel()) {
                 CheckboxComponent(
                     value = stringResource(id = terms_and_conditions),
                     onTextSelected = {
-                        // navigate to Terms and conditions
+                        navController?.navigate("termsAndConditionsScreen")
                     },
                     onCheckedChange = {
                         signupViewModel.onEvent(SignupUIEvent.PrivacyPolicyCheckBoxClicked(it))
@@ -112,7 +112,7 @@ fun SignUpScreen(signupViewModel: SignupViewModel = viewModel()) {
                 DividerTextComponent()
 
                 ClickableLoginTextComponent(tryingToLogin = true, onTextSelected = {
-                    // navigate to login screen
+                    navController?.navigate("login")
                 })
             }
 
