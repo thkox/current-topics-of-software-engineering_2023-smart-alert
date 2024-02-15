@@ -1,4 +1,4 @@
-package eu.tkacas.smartalert.components
+package eu.tkacas.smartalert.ui.component
 
 import android.util.Log
 import androidx.compose.foundation.layout.fillMaxWidth

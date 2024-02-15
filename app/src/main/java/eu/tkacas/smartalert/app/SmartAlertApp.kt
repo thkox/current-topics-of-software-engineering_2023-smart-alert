@@ -1,33 +1,29 @@
 package eu.tkacas.smartalert.app
 
-import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import eu.tkacas.smartalert.screens.SignUpScreen
-import eu.tkacas.smartalert.viewmodels.HomeViewModel
+import eu.tkacas.smartalert.viewmodel.HomeViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
-import eu.tkacas.smartalert.screens.HomeScreen
-import eu.tkacas.smartalert.screens.LoginScreen
-import eu.tkacas.smartalert.screens.PermissionsScreen
-import eu.tkacas.smartalert.screens.TermsAndConditionsScreen
-import eu.tkacas.smartalert.screens.WelcomeScreen
+import eu.tkacas.smartalert.ui.screen.citizen.HomeScreen
 
 @Composable
 fun SmartAlertApp(homeViewModel: HomeViewModel = viewModel()) {
 
-    homeViewModel.checkForActiveSession()
+    // homeViewModel.checkForActiveSession()
 
     Surface (
         modifier = Modifier.fillMaxSize(),
-        color = Color.White
+        color = MaterialTheme.colorScheme.background
     ){
-        if (homeViewModel.isUserLoggedIn.value == true) {
-            HomeScreen()
-        } else {
-            WelcomeScreen()
-        }
+//        if (homeViewModel.isUserLoggedIn.value == true) {
+//            HomeScreen()
+//        } else {
+//            WelcomeScreen()
+//        }
+
+        HomeScreen()
     }
 }

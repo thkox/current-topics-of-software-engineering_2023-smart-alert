@@ -1,4 +1,4 @@
-package eu.tkacas.smartalert.viewmodels
+package eu.tkacas.smartalert.viewmodel
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf

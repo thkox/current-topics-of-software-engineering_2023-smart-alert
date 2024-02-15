@@ -1,4 +1,4 @@
-package eu.tkacas.smartalert.components
+package eu.tkacas.smartalert.ui.component
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,7 +17,7 @@ fun CheckboxComponent(
     value: String,
     onTextSelected: (String) -> Unit,
     onCheckedChange: (Boolean) -> Unit
-    ){
+){
     Row(
         modifier = Modifier
             .fillMaxWidth()
