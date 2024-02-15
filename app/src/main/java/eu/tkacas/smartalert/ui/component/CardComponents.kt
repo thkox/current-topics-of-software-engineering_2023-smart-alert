@@ -22,7 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import eu.tkacas.smartalert.R
 
 
-@Preview
+
 @Composable
 fun CardComponent(iconResId: Int) {
     Card(
@@ -35,8 +35,8 @@ fun CardComponent(iconResId: Int) {
             modifier = Modifier.padding(16.dp)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.wildfire),
-                //painter = painterResource(id = iconResId),
+                //painter = painterResource(id = R.drawable.wildfire),
+                painter = painterResource(id = iconResId),
                 contentDescription = "Card Icon",
                 modifier = Modifier.size(34.dp)
             )
