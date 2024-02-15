@@ -53,7 +53,39 @@ fun CardComponent(iconResId: Int) {
     }
 }
 
+@Preview
 @Composable
 fun cardComponentWithImage() {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(10.dp),
+        elevation = 4.dp){
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(8.dp)
+        ){
+            Column(
+                modifier = Modifier.padding(start = 8.dp),
+                verticalArrangement = Arrangement.Center
+            ){
+                Row(){
+                    Image(
+                        painter = painterResource(id = R.drawable.flood),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(80.dp)
+                            .padding(horizontal = 5.dp)
+                    )
+                    Column(){
+                        Text(text = "Address")
+                        Text(text = "Emergency level")
+                        Text(text = "Tap to show the message")
+                    }
+                }
+            }
+            Column(){
 
+            }
+        }
+    }
 }
