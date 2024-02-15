@@ -18,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.ui.component.ButtonComponent
 import eu.tkacas.smartalert.ui.component.ClickableLoginTextComponent
@@ -32,7 +33,7 @@ import eu.tkacas.smartalert.viewmodel.LoginViewModel
 import eu.tkacas.smartalert.R.string.welcome_to_smart_alert_app
 
 @Composable
-fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
+fun LoginScreen(navController: NavController? = null, loginViewModel: LoginViewModel = viewModel()) {
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -51,7 +52,6 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
                     .fillMaxSize()
             ) {
 
-                NormalTextComponent(value = stringResource(id = R.string.login))
                 HeadingTextComponent(value = stringResource(id = welcome_to_smart_alert_app))
                 Spacer(modifier = Modifier.height(20.dp))
 
@@ -90,7 +90,7 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
                 DividerTextComponent()
 
                 ClickableLoginTextComponent(tryingToLogin = false, onTextSelected = {
-                    // Navigate to Sign Up Screen
+                    navController?.navigate("signup")
                 })
             }
         }
@@ -99,9 +99,6 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
             CircularProgressIndicator()
         }
     }
-
-    // go back to sign up screen
-
 }
 
 @Preview
