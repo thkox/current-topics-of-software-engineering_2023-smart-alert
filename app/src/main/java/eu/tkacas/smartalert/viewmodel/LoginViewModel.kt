@@ -3,6 +3,7 @@ package eu.tkacas.smartalert.viewmodel
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
 import eu.tkacas.smartalert.ui.event.LoginUIEvent
 import eu.tkacas.smartalert.ui.state.LoginUIState
@@ -11,6 +12,8 @@ import eu.tkacas.smartalert.data.rules.Validator
 class LoginViewModel : ViewModel() {
 
     private val TAG = LoginViewModel::class.simpleName
+
+    var navController: NavController? = null
 
     var loginUIState = mutableStateOf(LoginUIState())
 
@@ -74,7 +77,11 @@ class LoginViewModel : ViewModel() {
 
                 if(it.isSuccessful){
                     loginInProgress.value = false
-                    // navigate to Home Screen
+
+                    // TODO change the place of validation
+                    val domain = email.substringAfter("@")
+                    val destination = if (domain == "civilprotection.gr") "homeEmployee" else "homeCitizen"
+                    navController?.navigate(destination)
                 }
             }
             .addOnFailureListener {
