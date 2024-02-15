@@ -1,14 +1,17 @@
 package eu.tkacas.smartalert.ui.component
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.material3.Button
@@ -22,8 +25,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.smartalert.ui.theme.OrangeColor
@@ -63,9 +66,34 @@ fun ButtonComponent(value: String, onButtonClicked: () -> Unit, isEnabled: Boole
             )
 
         }
-
     }
 }
+
+@Composable
+fun CriticalWeatherPhenomenonButtonComponent(imageResId: Int) {
+    Box(
+        modifier = Modifier
+            .size(100.dp)
+            //Add a 3D Effect to the button
+            //.shadow(20.dp, RoundedCornerShape(20.dp))
+    ) {
+        Button(
+            onClick = { /* Do something when button is clicked */ },
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.White),
+            shape = RoundedCornerShape(20.dp)
+        ) {
+            Image(
+                painter = painterResource(id = imageResId),
+                //painter = painterResource(id = R.drawable.storm),
+                contentDescription = "Button Image",
+                modifier = Modifier.fillMaxSize() // Make the image fill the button
+            )
+        }
+    }
+}
+
 
 @Composable
 fun AlertLevelButtonsRowComponent() {

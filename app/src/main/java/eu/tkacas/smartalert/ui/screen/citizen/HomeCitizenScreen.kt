@@ -17,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import eu.tkacas.smartalert.R
+import eu.tkacas.smartalert.ui.component.CriticalWeatherPhenomenonButtonComponent
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
