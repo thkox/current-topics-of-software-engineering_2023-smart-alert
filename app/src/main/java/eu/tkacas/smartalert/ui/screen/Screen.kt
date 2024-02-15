@@ -11,9 +11,9 @@ sealed class Screen(val title: String, val route: String) {
             R.drawable.account_box
         )
 
-        object ReportsHistory: SettingsScreen(
+        object MyReportsHistory: SettingsScreen(
             "Reports History",
-            "ReportsHistory",
+            "MyReportsHistory",
             R.drawable.manage_history
         )
 
@@ -23,17 +23,25 @@ sealed class Screen(val title: String, val route: String) {
             R.drawable.language
         )
 
-        object About: SettingsScreen(
-            "About",
-            "About",
-            R.drawable.about
-        )
-
         object Analytics: SettingsScreen(
             "Analytics",
             "Analytics",
             R.drawable.analytics
 
         )
+
+        object About: SettingsScreen(
+            "About",
+            "About",
+            R.drawable.about
+        )
     }
 }
+
+val screensInSettings = listOf(
+    Screen.SettingsScreen.Account,
+    Screen.SettingsScreen.MyReportsHistory,
+    Screen.SettingsScreen.Language,
+    Screen.SettingsScreen.Analytics,
+    Screen.SettingsScreen.About
+)
