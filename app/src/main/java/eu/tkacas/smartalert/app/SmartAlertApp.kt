@@ -7,7 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import eu.tkacas.smartalert.viewmodel.HomeViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
-import eu.tkacas.smartalert.ui.screen.citizen.HomeScreen
+import eu.tkacas.smartalert.ui.screen.citizen.HomeCitizenScreen
+
 
 @Composable
 fun SmartAlertApp(homeViewModel: HomeViewModel = viewModel()) {
@@ -24,6 +25,6 @@ fun SmartAlertApp(homeViewModel: HomeViewModel = viewModel()) {
 //            WelcomeScreen()
 //        }
 
-        HomeScreen()
+        HomeCitizenScreen()
     }
 }
