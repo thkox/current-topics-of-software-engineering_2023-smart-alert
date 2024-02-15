@@ -25,7 +25,6 @@ import eu.tkacas.smartalert.ui.component.ClickableLoginTextComponent
 import eu.tkacas.smartalert.ui.component.DividerTextComponent
 import eu.tkacas.smartalert.ui.component.HeadingTextComponent
 import eu.tkacas.smartalert.ui.component.MyTextFieldComponent
-import eu.tkacas.smartalert.ui.component.NormalTextComponent
 import eu.tkacas.smartalert.ui.component.PasswordTextFieldComponent
 import eu.tkacas.smartalert.ui.component.UnderLinedTextComponent
 import eu.tkacas.smartalert.ui.event.LoginUIEvent
@@ -33,7 +32,10 @@ import eu.tkacas.smartalert.viewmodel.LoginViewModel
 import eu.tkacas.smartalert.R.string.welcome_to_smart_alert_app
 
 @Composable
-fun LoginScreen(navController: NavController? = null, loginViewModel: LoginViewModel = viewModel()) {
+fun LoginScreen(navController: NavController? = null) {
+
+    val loginViewModel: LoginViewModel = viewModel()
+    loginViewModel.navController = navController
 
     Box(
         modifier = Modifier.fillMaxSize(),

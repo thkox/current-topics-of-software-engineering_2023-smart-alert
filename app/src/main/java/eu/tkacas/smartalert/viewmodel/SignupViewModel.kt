@@ -3,15 +3,18 @@ package eu.tkacas.smartalert.viewmodel
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import eu.tkacas.smartalert.data.rules.Validator
 import eu.tkacas.smartalert.ui.state.RegistrationUIState
 import eu.tkacas.smartalert.ui.event.SignupUIEvent
 
-class SignupViewModel : ViewModel(){
+class SignupViewModel() : ViewModel(){
     private val TAG = SignupViewModel::class.simpleName
 
+    var navController: NavController? = null
 
     var registrationUIState = mutableStateOf(RegistrationUIState())
 
@@ -153,7 +156,9 @@ class SignupViewModel : ViewModel(){
                     // Save the user's first name and last name in the Realtime Database
                     userRef.setValue(userData)
 
-                    // Navigate to the HomeScreen
+                    val domain = email.substringAfter("@")
+                    val destination = if (domain == "civilprotection.gr") "homeEmployee" else "homeCitizen"
+                    navController?.navigate(destination)
                 }
             }
             .addOnFailureListener {

@@ -53,58 +53,45 @@ fun Navigation(navController: NavController = rememberNavController()) {
     }
 
     // Exclude screens that should not have a TopAppBar
-    val excludedRoutes = listOf("welcome", "permissions", "login", "signUp", "termsAndConditions")
+    val excludedRoutes = listOf("welcome", "permissions", "login", "signUp")
 
-    if (currentRoute !in excludedRoutes) {
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = { Text(currentScreen?.title ?: "") },
-                    navigationIcon = {
-                        if (currentRoute != "homeCitizen" && currentRoute != "homeEmployee") {
-                            IconButton(onClick = { navController.navigateUp() }) {
-                                Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
-                            }
-                        }
-                    }
-                )
-            }
-        ) {
-            NavHost(navController = navController as NavHostController, startDestination = if (FirebaseAuth.getInstance().currentUser != null) "homeCitizen" else "welcome") {
-                // TODO: Needs to be changed to "homeEmployee" when the employee screen is ready
-                composable("welcome") { WelcomeScreen(navController) }
-                composable("permissions") { PermissionsScreen() }
-                composable("login") { LoginScreen(navController) }
-                composable("signUp") { SignUpScreen(navController) }
-                composable("termsAndConditions") { TermsAndConditionsScreen() }
-                composable("homeCitizen") { HomeCitizenScreen() }
-                composable("homeEmployee") { HomeEmployeeScreen() }
-                composable("alertForm") { AlertFormScreen() }
-                composable("alert") { AlertScreen() }
-                composable("alertCitizensForm") { AlertCitizensFormScreen() }
-                composable("groupEventsByLocation") { GroupEventsByLocationScreen() }
-                composable("mapWithPinnedReports") { MapWithPinnedReportsScreen() }
-                screensInSettings.forEach { screen ->
-                    composable(screen.route) {
-                        when(screen) {
-                            is Screen.SettingsScreen.Account -> AccountScreen()
-                            is Screen.SettingsScreen.MyReportsHistory -> MyReportsHistoryScreen()
-                            is Screen.SettingsScreen.Language -> LanguageScreen()
-                            is Screen.SettingsScreen.Analytics -> AnalyticsScreen()
-                            is Screen.SettingsScreen.About -> AboutScreen()
-                            else -> {}
-                        }
-                    }
+    val startDestination = if (FirebaseAuth.getInstance().currentUser != null && FirebaseAuth.getInstance().currentUser?.email?.contains("@civilprotection.gr") == true){
+        "homeEmployee"
+    } else if (FirebaseAuth.getInstance().currentUser != null ) {
+        "homeCitizen"
+    } else {
+        "welcome"
+    }
+
+    NavHost(
+        navController = navController as NavHostController,
+        startDestination = startDestination
+    ) {
+        // TODO: Needs to be changed to "homeEmployee" when the employee screen is ready
+        composable("welcome") { WelcomeScreen(navController) }
+        composable("permissions") { PermissionsScreen() }
+        composable("login") { LoginScreen(navController) }
+        composable("signUp") { SignUpScreen(navController) }
+        composable("termsAndConditions") { TermsAndConditionsScreen() }
+        composable("homeCitizen") { HomeCitizenScreen(navController) }
+        composable("homeEmployee") { HomeEmployeeScreen() }
+        composable("settings") { SettingsScreen(navController) }
+        composable("alertForm") { AlertFormScreen() }
+        composable("alert") { AlertScreen() }
+        composable("alertCitizensForm") { AlertCitizensFormScreen() }
+        composable("groupEventsByLocation") { GroupEventsByLocationScreen() }
+        composable("mapWithPinnedReports") { MapWithPinnedReportsScreen() }
+        screensInSettings.forEach { screen ->
+            composable(screen.route) {
+                when (screen) {
+                    is Screen.SettingsScreen.Account -> AccountScreen()
+                    is Screen.SettingsScreen.MyReportsHistory -> MyReportsHistoryScreen()
+                    is Screen.SettingsScreen.Language -> LanguageScreen()
+                    is Screen.SettingsScreen.Analytics -> AnalyticsScreen()
+                    is Screen.SettingsScreen.About -> AboutScreen()
+                    else -> {}
                 }
             }
-        }
-    } else {
-        NavHost(navController = navController as NavHostController, startDestination = "welcome") {
-            composable("welcome") { WelcomeScreen(navController) }
-            composable("permissions") { PermissionsScreen() }
-            composable("login") { LoginScreen(navController) }
-            composable("signUp") { SignUpScreen(navController) }
-            composable("termsAndConditions") { TermsAndConditionsScreen() }
         }
     }
 }
