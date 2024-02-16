@@ -116,6 +116,10 @@ fun Navigation(navController: NavController = rememberNavController()) {
                     is Screen.SettingsScreen.Language -> LanguageScreen(navController)
                     is Screen.SettingsScreen.Analytics -> AnalyticsScreen(navController)
                     is Screen.SettingsScreen.About -> AboutScreen(navController)
+                    is Screen.SettingsScreen.Logout -> {
+                        FirebaseAuth.getInstance().signOut()
+                        navController.navigate("welcome")
+                    }
                 }
             }
         }
