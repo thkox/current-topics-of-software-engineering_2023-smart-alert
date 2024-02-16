@@ -77,13 +77,7 @@ class LoginViewModel : ViewModel() {
 
                 if(it.isSuccessful){
                     loginInProgress.value = false
-
-                    // TODO change the place of validation
-                    val domain = email.substringAfter("@")
-                    val destination = if (domain == "civilprotection.gr") "homeEmployee" else "homeCitizen"
-                    navController?.navigate(destination) {
-                        popUpTo("welcome") { inclusive = true } //remove the previous screens
-                    }
+                    navController?.navigate("permissions")
                 }
             }
             .addOnFailureListener {

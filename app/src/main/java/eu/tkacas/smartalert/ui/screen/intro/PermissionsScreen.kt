@@ -25,10 +25,11 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import eu.tkacas.smartalert.ui.component.ButtonComponent
 
 @Composable
-fun PermissionsScreen() {
+fun PermissionsScreen(navController: NavController? = null) {
     val checkedStateLocation = remember { mutableStateOf(false) }
     val checkedStateCamera = remember { mutableStateOf(false) }
 
@@ -181,9 +182,9 @@ fun PermissionsScreen() {
         ButtonComponent(
             value = stringResource(id = R.string.next),
             onButtonClicked = {
-
+                navController?.navigate("home")
             },
-            isEnabled = false
+            isEnabled = true
         )
     }
 }

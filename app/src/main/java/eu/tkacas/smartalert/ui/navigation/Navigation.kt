@@ -41,13 +41,12 @@ import eu.tkacas.smartalert.ui.screen.screensInSettings
 @Composable
 fun Navigation(navController: NavController = rememberNavController()) {
 
-    val startDestination = if (FirebaseAuth.getInstance().currentUser != null && FirebaseAuth.getInstance().currentUser?.email?.contains("@civilprotection.gr") == true){
-        "homeEmployee"
-    } else if (FirebaseAuth.getInstance().currentUser != null ) {
-        "homeCitizen"
-    } else {
-        "welcome"
-    }
+    val startDestination =
+        if (FirebaseAuth.getInstance().currentUser != null ) {
+            "home"
+        } else {
+            "welcome"
+        }
 
     NavHost(
         navController = navController as NavHostController,
@@ -55,29 +54,21 @@ fun Navigation(navController: NavController = rememberNavController()) {
     ) {
         // TODO: Needs to be changed to "homeEmployee" when the employee screen is ready
         composable("welcome") { WelcomeScreen(navController) }
-        composable("permissions") { PermissionsScreen() }
+        composable("permissions") { PermissionsScreen(navController)} // TODO: Add conditions whether to show this screen or not based on the app give permissions.
         composable("login") { LoginScreen(navController) }
         composable("signUp") { SignUpScreen(navController) }
         composable("termsAndConditions") { TermsAndConditionsScreen() }
         composable("forgotPassword") { ForgotPasswordScreen(navController) }
-
-        composable("homeCitizen") {
-            if (FirebaseAuth.getInstance().currentUser != null) {
+        composable("home") {
+            if (FirebaseAuth.getInstance().currentUser != null && FirebaseAuth.getInstance().currentUser?.email?.contains("@civilprotection.gr") == true) {
+                HomeEmployeeScreen(navController)
+            } else if (FirebaseAuth.getInstance().currentUser != null) {
                 HomeCitizenScreen(navController)
             } else {
                 // Redirect to login screen if user is not authenticated
                 navController.navigate("welcome")
             }
         }
-        composable("homeEmployee") {
-            if (FirebaseAuth.getInstance().currentUser != null && FirebaseAuth.getInstance().currentUser?.email?.contains("@civilprotection.gr") == true) {
-                HomeEmployeeScreen(navController)
-            } else {
-                // Redirect to login screen if user is not authenticated
-                navController.navigate("welcome")
-            }
-        }
-
         composable("settings") { SettingsScreen(navController) }
 
         screensInHomeCitizen.forEach { screen ->
