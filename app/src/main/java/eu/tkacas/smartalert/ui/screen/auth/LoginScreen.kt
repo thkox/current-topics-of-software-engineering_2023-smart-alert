@@ -43,6 +43,7 @@ fun LoginScreen(navController: NavController? = null) {
     ) {
 
         Surface(
+            color = Color.White,
             modifier = Modifier
                 .fillMaxSize()
                 .background(Color.White)
@@ -75,7 +76,9 @@ fun LoginScreen(navController: NavController? = null) {
                 )
 
                 Spacer(modifier = Modifier.height(40.dp))
-                UnderLinedTextComponent(value = stringResource(id = R.string.forgot_password))
+                UnderLinedTextComponent(value = stringResource(id = R.string.forgot_password), onClick = {
+                    navController?.navigate("forgotPassword")
+                })
 
                 Spacer(modifier = Modifier.height(40.dp))
 
