@@ -2,15 +2,15 @@
     <string name="app_name">Smart Alert</string>
     <string name="hello">Hey there, </string>
     <string name="create_account">Create an Account </string>
-    <string name="welcome_back">Welcome Back </string>
+    <string name="welcome_to_smart_alert_app">Welcome to \nSmart Alert!</string>
     <string name="firstname">First Name </string>
     <string name="lastname">Last Name </string>
-    <string name="email">Email </string>
+    <string name="email" translatable="false">Email </string>
     <string name="password">Password </string>
     <string name="hide_password">Hide password </string>
     <string name="show_password">Show password </string>
-    <string name="terms_and_conditions">By continuing you accept our Privacy Policy and Term of Use </string>
-    <string name="terms_and_conditions_header">Term of Use</string>
+    <string name="terms_and_conditions" translatable="false">By continuing you accept our Privacy Policy and Term of Use </string>
+    <string name="terms_and_conditions_header" translatable="false">Term of Use</string>
     <string name="register">Register</string>
     <string name="login">Login</string>
     <string name="or">or</string>
@@ -20,4 +20,12 @@
     <string name="logout">Logout</string>
     <string name="menu">Menu</string>
     <string name="navigation_header">App Drawer</string>
+    <string name="location_coarse_permission" translatable="false">Allow Smart Alert to access this device\'s location?</string>
+    <string name="camera_permission" translatable="false">Allow Smart Alert to access the camera. This is only required when you upload a natural disaster</string>
+    <string name="next">Next</string>
+    <string name="welcome_message">Your emergency lifeline. \nStay informed and safe with real-time updates and report emergencies to authorities instantly.</string>
+    <string name="creators">Created by @thkox, @ApostolisSiampanis, @AlexanderCholis</string>
+    <string name="settings">Settings</string>
+    <string name="forgot_password_instructions">Please type your email</string>
+    <string name="submit">Submit\n</string>
 </resources>
