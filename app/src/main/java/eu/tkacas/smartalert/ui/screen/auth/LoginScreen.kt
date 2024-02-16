@@ -24,7 +24,7 @@ import eu.tkacas.smartalert.ui.component.ButtonComponent
 import eu.tkacas.smartalert.ui.component.ClickableLoginTextComponent
 import eu.tkacas.smartalert.ui.component.DividerTextComponent
 import eu.tkacas.smartalert.ui.component.HeadingTextComponent
-import eu.tkacas.smartalert.ui.component.MyTextFieldComponent
+import eu.tkacas.smartalert.ui.component.TextFieldComponent
 import eu.tkacas.smartalert.ui.component.PasswordTextFieldComponent
 import eu.tkacas.smartalert.ui.component.UnderLinedTextComponent
 import eu.tkacas.smartalert.ui.event.LoginUIEvent
@@ -58,7 +58,7 @@ fun LoginScreen(navController: NavController? = null) {
                 HeadingTextComponent(value = stringResource(id = welcome_to_smart_alert_app))
                 Spacer(modifier = Modifier.height(20.dp))
 
-                MyTextFieldComponent(labelValue = stringResource(id = R.string.email),
+                TextFieldComponent(labelValue = stringResource(id = R.string.email),
                     painterResource(id = R.drawable.email),
                     onTextChanged = {
                         loginViewModel.onEvent(LoginUIEvent.EmailChanged(it))
