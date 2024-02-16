@@ -6,6 +6,7 @@ import eu.tkacas.smartalert.R
 sealed class Screen<ImageVector>(val title: String, val route: String) {
 
     sealed class SettingsScreen(title: String, route: String, @DrawableRes  val icon: Int) : Screen<Any?>(title, route) {
+
         object Account : SettingsScreen(
             "Account",
             "Account",

@@ -2,9 +2,10 @@ package eu.tkacas.smartalert.ui.screen.employee
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
 
 @Composable
-fun AlertCitizensFormScreen(){
+fun AlertCitizensFormScreen(navController: NavHostController? = null){
 
 }
 
