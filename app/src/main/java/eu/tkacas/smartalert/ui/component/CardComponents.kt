@@ -2,9 +2,11 @@ package eu.tkacas.smartalert.ui.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
@@ -17,12 +19,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Switch
 import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.MutableState
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import eu.tkacas.smartalert.R
-
+import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 
 
 @Composable
@@ -87,6 +93,51 @@ fun cardComponentWithImage() {
             }
             Column(){
 
+            }
+        }
+    }
+}
+
+@Composable
+fun CriticalWeatherPhenomenonCardComponent(weatherPhenomenon: CriticalWeatherPhenomenon) {
+    val imageResId = when(weatherPhenomenon) {
+        CriticalWeatherPhenomenon.EARTHQUAKE -> R.drawable.earthquake
+        CriticalWeatherPhenomenon.FLOOD -> R.drawable.flood
+        CriticalWeatherPhenomenon.WILDFIRE -> R.drawable.wildfire
+        CriticalWeatherPhenomenon.RIVER_FLOOD -> R.drawable.river_flood
+        CriticalWeatherPhenomenon.HEATWAVE -> R.drawable.heatwave
+        CriticalWeatherPhenomenon.SNOWSTORM -> R.drawable.snowstorm
+        CriticalWeatherPhenomenon.STORM -> R.drawable.storm
+    }
+    Card(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(12.dp),
+        shape = RoundedCornerShape(20.dp),
+        elevation = 4.dp
+    ) {
+        Button(
+            onClick = { /* Do something when button is clicked */ },
+            modifier = Modifier.fillMaxSize(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.White),
+            shape = RoundedCornerShape(20.dp)
+        ) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ){
+                Image(
+                    painter = painterResource(id = imageResId),
+                    //painter = painterResource(id = R.drawable.storm),
+                    contentDescription = "Button Image",
+                    modifier = Modifier.size(80.dp).padding(bottom = 8.dp) // Make the image fill the button
+                )
+                Text(
+                    text = weatherPhenomenon.name,
+                    color = Color.Black
+                )
             }
         }
     }
