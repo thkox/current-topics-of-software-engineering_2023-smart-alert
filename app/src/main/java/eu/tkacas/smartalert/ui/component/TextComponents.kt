@@ -1,5 +1,6 @@
 package eu.tkacas.smartalert.ui.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.material.Text
@@ -48,12 +49,13 @@ fun HeadingTextComponent(value: String) {
 }
 
 @Composable
-fun UnderLinedTextComponent(value: String) {
+fun UnderLinedTextComponent(value: String, onClick: () -> Unit) {
     Text(
         text = value,
         modifier = Modifier
             .fillMaxWidth()
-            .heightIn(min = 40.dp),
+            .heightIn(min = 40.dp)
+            .clickable(onClick = onClick),
         style = TextStyle(
             fontSize = 16.sp,
             fontWeight = FontWeight.Normal,
@@ -62,5 +64,4 @@ fun UnderLinedTextComponent(value: String) {
         textAlign = TextAlign.Center,
         textDecoration = TextDecoration.Underline
     )
-
 }

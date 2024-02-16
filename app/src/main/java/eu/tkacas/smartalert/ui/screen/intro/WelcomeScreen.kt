@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.ui.component.ButtonComponent
@@ -63,28 +64,27 @@ fun WelcomeScreen( navController: NavController? = null) {
                     Row {
                         Text(
                             text = stringResource(id = R.string.creators),
-                            style = typography.body2
+                            style = typography.body2.copy(fontSize = 12.sp)
                         )
                     }
                 }
-
             }
-            Row (
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(bottom = 30.dp),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.Bottom
-            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(bottom = 30.dp),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.Bottom
+                ) {
 
-                ButtonComponent(
-                    value = stringResource(id = R.string.login),
-                    onButtonClicked = {
-                        navController?.navigate("login")
-                    },
-                    isEnabled = true
-                )
-            }
+                    ButtonComponent(
+                        value = stringResource(id = R.string.login),
+                        onButtonClicked = {
+                            navController?.navigate("login")
+                        },
+                        isEnabled = true
+                    )
+                }
         }
     }
 }
