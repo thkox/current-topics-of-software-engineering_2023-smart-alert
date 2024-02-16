@@ -59,6 +59,7 @@ fun Navigation(navController: NavController = rememberNavController()) {
         composable("signUp") { SignUpScreen(navController) }
         composable("termsAndConditions") { TermsAndConditionsScreen() }
         composable("forgotPassword") { ForgotPasswordScreen(navController) }
+        composable("alertcitizensform") { AlertCitizensFormScreen(navController) }
         composable("home") {
             if (FirebaseAuth.getInstance().currentUser != null && FirebaseAuth.getInstance().currentUser?.email?.contains("@civilprotection.gr") == true) {
                 HomeEmployeeScreen(navController)

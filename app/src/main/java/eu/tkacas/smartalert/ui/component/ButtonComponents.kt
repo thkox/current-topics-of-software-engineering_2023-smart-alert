@@ -93,7 +93,7 @@ fun AlertLevelButtonsRowComponent() {
         }
         Button(
             onClick = { selectedDangerLevelButton = 2 },
-            enabled = false,
+            enabled = true,
             colors = ButtonDefaults.buttonColors(
                 containerColor = if (selectedDangerLevelButton == 2) OrangeColor else Color.LightGray,
             ),
@@ -109,7 +109,7 @@ fun AlertLevelButtonsRowComponent() {
         }
         Button(
             onClick = { selectedDangerLevelButton = 3 },
-            enabled = false,
+            enabled = true,
             colors = ButtonDefaults.buttonColors(
                 containerColor = if (selectedDangerLevelButton == 3) Color.Red else Color.LightGray,
             ),
@@ -126,7 +126,6 @@ fun AlertLevelButtonsRowComponent() {
     }
 }
 
-@Preview
 @Composable
 fun GeneralButtonComponent(value: String, onButtonClicked: () -> Unit) {
     Button(
