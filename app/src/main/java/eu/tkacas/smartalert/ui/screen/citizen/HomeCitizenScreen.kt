@@ -2,6 +2,7 @@ package eu.tkacas.smartalert.ui.screen.citizen
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.IconButton
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material.Scaffold
@@ -9,6 +10,7 @@ import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
@@ -17,6 +19,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -38,6 +41,18 @@ fun HomeCitizenScreen(navController: NavController? = null) {
         scaffoldState = scaffoldState,
         topBar = {
             AppBarWithoutBackView(title = "Home Citizen Screen", navController = navController)
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                modifier = Modifier.padding(all = 20.dp),
+                contentColor = Color.White,
+                backgroundColor = Color.Black,
+                onClick = {
+
+                }
+            ){
+                androidx.compose.material.Icon(imageVector = Icons.Default.Add, contentDescription = null)
+            }
         }
     ) {
         Card (
