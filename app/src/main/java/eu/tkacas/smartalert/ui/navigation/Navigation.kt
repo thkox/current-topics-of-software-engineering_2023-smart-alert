@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.firebase.auth.FirebaseAuth
+import eu.tkacas.smartalert.ui.screen.auth.ForgotPasswordScreen
 import eu.tkacas.smartalert.ui.screen.auth.LoginScreen
 import eu.tkacas.smartalert.ui.screen.auth.SignUpScreen
 import eu.tkacas.smartalert.ui.screen.auth.TermsAndConditionsScreen
@@ -37,23 +38,8 @@ import eu.tkacas.smartalert.ui.screen.screensInHomeCitizen
 import eu.tkacas.smartalert.ui.screen.screensInHomeEmployee
 import eu.tkacas.smartalert.ui.screen.screensInSettings
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Navigation(navController: NavController = rememberNavController()) {
-
-    val navBackStackEntry = navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry.value?.destination?.route
-
-    // Update the title and icon based on the current route
-    val currentScreen = when (currentRoute) {
-        "homeCitizen" -> screensInHomeCitizen.find { it.route == currentRoute }
-        "homeEmployee" -> screensInHomeEmployee.find { it.route == currentRoute }
-        else -> screensInSettings.find { it.route == currentRoute }
-    }
-
-    // Exclude screens that should not have a TopAppBar
-    val excludedRoutes = listOf("welcome", "permissions", "login", "signUp")
 
     val startDestination = if (FirebaseAuth.getInstance().currentUser != null && FirebaseAuth.getInstance().currentUser?.email?.contains("@civilprotection.gr") == true){
         "homeEmployee"
@@ -73,14 +59,55 @@ fun Navigation(navController: NavController = rememberNavController()) {
         composable("login") { LoginScreen(navController) }
         composable("signUp") { SignUpScreen(navController) }
         composable("termsAndConditions") { TermsAndConditionsScreen() }
-        composable("homeCitizen") { HomeCitizenScreen(navController) }
-        composable("homeEmployee") { HomeEmployeeScreen(navController) }
+        composable("forgotPassword") { ForgotPasswordScreen(navController) }
+
+        composable("homeCitizen") {
+            if (FirebaseAuth.getInstance().currentUser != null) {
+                HomeCitizenScreen(navController)
+            } else {
+                // Redirect to login screen if user is not authenticated
+                navController.navigate("welcome")
+            }
+        }
+        composable("homeEmployee") {
+            if (FirebaseAuth.getInstance().currentUser != null && FirebaseAuth.getInstance().currentUser?.email?.contains("@civilprotection.gr") == true) {
+                HomeEmployeeScreen(navController)
+            } else {
+                // Redirect to login screen if user is not authenticated
+                navController.navigate("welcome")
+            }
+        }
+
         composable("settings") { SettingsScreen(navController) }
-        composable("alertForm") { AlertFormScreen() }
-        composable("alert") { AlertScreen() }
-        composable("alertCitizensForm") { AlertCitizensFormScreen() }
-        composable("groupEventsByLocation") { GroupEventsByLocationScreen() }
-        composable("mapWithPinnedReports") { MapWithPinnedReportsScreen() }
+
+        screensInHomeCitizen.forEach { screen ->
+            composable(screen.route) {
+                if (FirebaseAuth.getInstance().currentUser != null) {
+                    when (screen) {
+                        is Screen.HomeCitizen.AlertForm -> AlertFormScreen(navController)
+                        is Screen.HomeCitizen.Alert -> AlertScreen(navController)
+                    }
+                } else {
+                    // Redirect to login screen if user is not authenticated
+                    navController.navigate("welcome")
+                }
+            }
+        }
+
+        screensInHomeEmployee.forEach { screen ->
+            composable(screen.route) {
+                if (FirebaseAuth.getInstance().currentUser != null && FirebaseAuth.getInstance().currentUser?.email?.contains("@civilprotection.gr") == true) {
+                    when (screen) {
+                        is Screen.HomeEmployee.AlertCitizenForm -> AlertCitizensFormScreen(navController)
+                        is Screen.HomeEmployee.GroupEventsByLocation -> GroupEventsByLocationScreen(navController)
+                        is Screen.HomeEmployee.MapWithPinnedReports -> MapWithPinnedReportsScreen(navController)
+                    }
+                } else {
+                    // Redirect to login screen if user is not authenticated
+                    navController.navigate("welcome")
+                }
+            }
+        }
         screensInSettings.forEach { screen ->
             composable(screen.route) {
                 when (screen) {
