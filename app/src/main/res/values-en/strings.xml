@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Smart Alert</string>
+    <string name="hello">Hey There</string>
+    <string name="create_account">"Create an Account "</string>
+    <string name="welcome_to_smart_alert_app">Welcome to \nSmart Alert!</string>
+    <string name="firstname">"First Name "</string>
+    <string name="lastname">"Last Name "</string>
+    <string name="password">"Password "</string>
+    <string name="hide_password">"Hide password "</string>
+    <string name="show_password">"Show password "</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="or">or</string>
+    <string name="go_to_login">Already have an account? Login</string>
+    <string name="forgot_password">Forgot your password</string>
+    <string name="home">Home</string>
+    <string name="logout">Logout</string>
+    <string name="menu">Menu</string>
+    <string name="navigation_header">App Drawer</string>
+    <string name="next">Next</string>
+    <string name="welcome_message">Your emergency lifeline. \nStay informed and safe with real-time updates and report emergencies to authorities instantly.</string>
+    <string name="creators">Created by @thkox, @Apostolis2002, @AlexanderCholis</string>
+    <string name="settings">Settings</string>
+</resources>
