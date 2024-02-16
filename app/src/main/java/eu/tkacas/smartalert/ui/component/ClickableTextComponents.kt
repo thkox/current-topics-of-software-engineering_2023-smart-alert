@@ -93,3 +93,42 @@ fun ClickableLoginTextComponent(tryingToLogin: Boolean = true, onTextSelected: (
         },
     )
 }
+
+@Composable
+fun BackToLoginComponent(onTextSelected: (String) -> Unit) {
+    val initialText = "Return back to "
+    val loginText = "Login"
+
+    val annotatedString = buildAnnotatedString {
+        append(initialText)
+        withStyle(style = SpanStyle(color = Primary)) {
+            pushStringAnnotation(tag = loginText, annotation = loginText)
+            append(loginText)
+        }
+    }
+
+    ClickableText(
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(min = 40.dp),
+        style = TextStyle(
+            fontSize = 21.sp,
+            fontWeight = FontWeight.Normal,
+            fontStyle = FontStyle.Normal,
+            textAlign = TextAlign.Center
+        ),
+        text = annotatedString,
+        onClick = { offset ->
+
+            annotatedString.getStringAnnotations(offset, offset)
+                .firstOrNull()?.also { span ->
+                    Log.d("ClickableTextComponent", "{${span.item}}")
+
+                    if (span.item == loginText) {
+                        onTextSelected(span.item)
+                    }
+                }
+
+        },
+    )
+}

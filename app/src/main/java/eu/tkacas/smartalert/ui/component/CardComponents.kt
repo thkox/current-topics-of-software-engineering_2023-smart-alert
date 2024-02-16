@@ -150,6 +150,8 @@ fun CriticalWeatherPhenomenonCardComponent(weatherPhenomenon: CriticalWeatherPhe
 
 @Composable
 fun SettingCard(screen: Screen.SettingsScreen, onClick: () -> Unit) {
+    val color = if(screen.title == "Logout") Color.Red else Color.Black
+
     Card(
         modifier = Modifier
             .clickable(onClick = onClick)
@@ -168,18 +170,22 @@ fun SettingCard(screen: Screen.SettingsScreen, onClick: () -> Unit) {
                 Icon(
                     painter = painterResource(id = screen.icon),
                     contentDescription = null,
-                    modifier = Modifier.size(35.dp)
+                    modifier = Modifier.size(35.dp),
+                    tint = color
                 )
                 Text(
                     text = screen.title,
                     style = MaterialTheme.typography.h6,
-                    modifier = Modifier.padding(start = 10.dp)
+                    modifier = Modifier.padding(start = 10.dp),
+                    color = color
                 )
             }
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                contentDescription = "Arrow Icon"
-            )
+            if(screen.title != "Logout") {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                    contentDescription = "Arrow Icon"
+                )
+            }
         }
     }
 }
