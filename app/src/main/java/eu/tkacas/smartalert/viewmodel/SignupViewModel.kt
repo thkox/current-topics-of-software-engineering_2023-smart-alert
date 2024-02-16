@@ -159,7 +159,9 @@ class SignupViewModel() : ViewModel(){
                     // Todo: check if those lines are redundant
                     val domain = email.substringAfter("@")
                     val destination = if (domain == "civilprotection.gr") "homeEmployee" else "homeCitizen"
-                    navController?.navigate(destination)
+                    navController?.navigate(destination) {
+                        popUpTo("welcome") { inclusive = true } //remove the previous screens
+                    }
                 }
             }
             .addOnFailureListener {
