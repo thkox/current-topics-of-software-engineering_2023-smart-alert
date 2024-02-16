@@ -14,11 +14,14 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.ui.component.CriticalWeatherPhenomenonCardComponent
+import eu.tkacas.smartalert.ui.component.NormalTextComponent
 import eu.tkacas.smartalert.ui.navigation.AppBarWithoutBackView
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -37,7 +40,7 @@ fun HomeEmployeeScreen(navController: NavController? = null){
                 contentColor = Color.White,
                 backgroundColor = Color.Black,
                 onClick = {
-
+                    navController?.navigate("alertcitizensform")
                 }
             ){
                 Icon(imageVector = Icons.Default.Add, contentDescription = null)
