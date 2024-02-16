@@ -36,6 +36,12 @@ sealed class Screen<ImageVector>(val title: String, val route: String) {
             "About",
             R.drawable.about
         )
+
+        object Logout : SettingsScreen(
+            "Logout",
+            "Logout",
+            R.drawable.logout
+        )
     }
 
     sealed class HomeCitizen(title: String, route: String, @DrawableRes val icon: Int) : Screen<Any?>(title, route) {
@@ -78,7 +84,8 @@ val screensInSettings = listOf(
     Screen.SettingsScreen.MyReportsHistory,
     Screen.SettingsScreen.Language,
     Screen.SettingsScreen.Analytics,
-    Screen.SettingsScreen.About
+    Screen.SettingsScreen.About,
+    Screen.SettingsScreen.Logout
 )
 
 val screensInHomeCitizen = listOf(
