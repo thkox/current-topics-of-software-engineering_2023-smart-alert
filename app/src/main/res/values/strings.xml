@@ -15,7 +15,7 @@
     <string name="login">Login</string>
     <string name="or">or</string>
     <string name="go_to_login">Already have an account? Login</string>
-    <string name="forgot_password">Forgot your password</string>
+    <string name="forgot_password">Forgot your password?</string>
     <string name="home">Home</string>
     <string name="logout">Logout</string>
     <string name="menu">Menu</string>
@@ -27,5 +27,5 @@
     <string name="creators">Created by @thkox, @ApostolisSiampanis, @AlexanderCholis</string>
     <string name="settings">Settings</string>
     <string name="forgot_password_instructions">Please type your email</string>
-    <string name="submit">Submit\n</string>
+    <string name="submit">Submit</string>
 </resources>
