@@ -71,7 +71,6 @@ fun ForgotPasswordScreen(navController: NavController? = null) {
                     },
                     errorStatus = forgotpasswordViewModel.forgotPasswordUIState.value.emailError
                 )
-
                 Spacer(modifier = Modifier.size(15.dp))
 
                 GeneralButtonComponent(

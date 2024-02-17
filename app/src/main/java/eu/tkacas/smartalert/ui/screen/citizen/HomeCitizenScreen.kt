@@ -34,7 +34,6 @@ import kotlinx.coroutines.CoroutineScope
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun HomeCitizenScreen(navController: NavController? = null) {
-
     val scaffoldState = rememberScaffoldState()
 
     Scaffold(
@@ -63,6 +62,7 @@ fun HomeCitizenScreen(navController: NavController? = null) {
         }
     }
 }
+
 
 @Preview
 @Composable

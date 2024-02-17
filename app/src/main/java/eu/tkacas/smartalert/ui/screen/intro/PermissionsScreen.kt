@@ -1,5 +1,6 @@
 package eu.tkacas.smartalert.ui.screen.intro
 
+import androidx.activity.result.ActivityResultLauncher
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,7 +27,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import eu.tkacas.smartalert.ui.component.ButtonComponent
+import eu.tkacas.smartalert.ui.component.GeneralButtonComponent
+import eu.tkacas.smartalert.ui.component.SwitchWithThumbIconSample
+
+
+private lateinit var permissionLauncher: ActivityResultLauncher<String>
+private var isLocationPermissionGranted = false
+private var isRecordPermissionGranted = false
 
 @Composable
 fun PermissionsScreen(navController: NavController? = null) {
@@ -35,6 +42,7 @@ fun PermissionsScreen(navController: NavController? = null) {
 
     val isExpandedLocation = remember { mutableStateOf(false) }
     val isExpandedCamera = remember { mutableStateOf(false) }
+
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -78,10 +86,7 @@ fun PermissionsScreen(navController: NavController? = null) {
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ){
-                        Checkbox(
-                            checked = checkedStateLocation.value,
-                            onCheckedChange = { checkedStateLocation.value = it }
-                        )
+                        SwitchWithThumbIconSample()
                     }
                 }
                 Row(
@@ -109,6 +114,8 @@ fun PermissionsScreen(navController: NavController? = null) {
                 }
             }
         }
+
+        Spacer(modifier = Modifier.size(2.dp))
 
         Card(
             modifier = Modifier.padding(8.dp), elevation = 4.dp
@@ -145,10 +152,7 @@ fun PermissionsScreen(navController: NavController? = null) {
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ){
-                        Checkbox(
-                            checked = checkedStateCamera.value,
-                            onCheckedChange = { checkedStateCamera.value = it }
-                        )
+                        SwitchWithThumbIconSample()
                     }
                 }
                 Row(
@@ -168,28 +172,25 @@ fun PermissionsScreen(navController: NavController? = null) {
                     Row (
                     ) {
                         Text(
-                            text = "Allow Smart Alert to access this device's location?",
+                            text = "Allow Smart Alert to access this device's camera?",
                             modifier = Modifier.padding(start = 8.dp),
                             style = TextStyle(fontSize = 14.sp)
                         )
                     }
                 }
-
-
             }
         }
-
-        ButtonComponent(
+        Spacer(modifier = Modifier.size(50.dp))
+        GeneralButtonComponent(
             value = stringResource(id = R.string.next),
             onButtonClicked = {
                 navController?.navigate("home")
-            },
-            isEnabled = true
+            }
         )
     }
 }
 
-@Preview
+@Preview(backgroundColor = 0xFFFFFF, showBackground = true)
 @Composable
 fun PermissionsScreenPreview() {
     PermissionsScreen()
