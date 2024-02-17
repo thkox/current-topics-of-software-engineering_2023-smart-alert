@@ -1,6 +1,13 @@
 package eu.tkacas.smartalert.ui.screen.intro
 
 import android.Manifest
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.provider.Settings
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
@@ -16,24 +23,33 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import eu.tkacas.smartalert.ui.component.CameraPermissionTextProvider
 import eu.tkacas.smartalert.ui.component.GeneralButtonComponent
+import eu.tkacas.smartalert.ui.component.LocationPermissionTextProvider
 import eu.tkacas.smartalert.ui.component.PermissionCard
+import eu.tkacas.smartalert.ui.component.PermissionDialog
 import eu.tkacas.smartalert.viewmodel.PermissionsViewModel
 
 
-private lateinit var permissionLauncher: ActivityResultLauncher<String>
-private var isLocationPermissionGranted = false
-private var isRecordPermissionGranted = false
-
 @Composable
 fun PermissionsScreen(navController: NavController? = null) {
+
+    val context = LocalContext.current
+
+    val permissionsToRequest = arrayOf(
+        Manifest.permission.ACCESS_COARSE_LOCATION,
+        Manifest.permission.CAMERA,
+    )
 
     val isExpandedLocation = remember { mutableStateOf(false) }
     val isExpandedCamera = remember { mutableStateOf(false) }
@@ -42,16 +58,37 @@ fun PermissionsScreen(navController: NavController? = null) {
     val switchStateCamera = remember { mutableStateOf(false) }
 
     val viewModel = viewModel<PermissionsViewModel>()
-    val dialogQueue = viewModel.permissions
+    val dialogQueue = viewModel.visiblePermissionDialogQueue
 
     val cameraPermissionResultLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission(),
-        onResult = {
-            granted ->
+        onResult = { isGranted ->
+            viewModel.onPermissionResult(
+                permission = Manifest.permission.CAMERA,
+                isGranted = isGranted
+            )
+        }
+    )
+
+    val locationPermissionResultLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission(),
+        onResult = { isGranted ->
+            viewModel.onPermissionResult(
+                permission = Manifest.permission.ACCESS_COARSE_LOCATION,
+                isGranted = isGranted
+            )
+        }
+    )
+
+    val multiplePermissionResultLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestMultiplePermissions(),
+        onResult = { perms ->
+            permissionsToRequest.forEach { permission ->
                 viewModel.onPermissionResult(
-                    permission = Manifest.permission.CAMERA,
-                    granted = granted
+                    permission = permission,
+                    isGranted = perms[permission] == true
                 )
+            }
         }
     )
 
@@ -70,7 +107,9 @@ fun PermissionsScreen(navController: NavController? = null) {
             isExpanded = isExpandedLocation,
             switchState = switchStateLocation,
             onToggleClick = {
-
+                locationPermissionResultLauncher.launch(
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
             })
 
         Spacer(modifier = Modifier.size(2.dp))
@@ -81,8 +120,9 @@ fun PermissionsScreen(navController: NavController? = null) {
             isExpanded = isExpandedCamera,
             switchState = switchStateCamera,
             onToggleClick = {
-                cameraPermissionResultLauncher.launch(Manifest.permission.CAMERA)
-
+                cameraPermissionResultLauncher.launch(
+                    Manifest.permission.CAMERA
+                )
             })
 
 
@@ -90,9 +130,51 @@ fun PermissionsScreen(navController: NavController? = null) {
         GeneralButtonComponent(
             value = stringResource(id = R.string.next),
             onButtonClicked = {
-                navController?.navigate("home")
+                multiplePermissionResultLauncher.launch(permissionsToRequest)
+                if (areAllPermissionsGranted(context, permissionsToRequest)) {
+                    navController?.navigate("home")
+                } else {
+                    Toast.makeText(context, "Please grant all permissions", Toast.LENGTH_SHORT).show()
+                }
             }
         )
+    }
+
+    dialogQueue
+        .reversed()
+        .forEach { permission ->
+            PermissionDialog(
+                permissionTextProvider = when (permission) {
+                    Manifest.permission.CAMERA -> {
+                        CameraPermissionTextProvider()
+                    }
+                    Manifest.permission.ACCESS_COARSE_LOCATION -> {
+                        LocationPermissionTextProvider()
+                    }
+                    else -> return@forEach
+                },
+                isPermanentlyDeclined = !shouldShowRequestPermissionRationale(
+                    context as Activity,
+                    permission
+                ),
+                onDismiss = viewModel::dismissDialog,
+                onOkClick = {
+                    viewModel.dismissDialog()
+                    multiplePermissionResultLauncher.launch(
+                        arrayOf(permission)
+                    )
+                },
+                onGoToAppSettingsClick = { openAppSettings(context) }
+            )
+        }
+}
+
+fun openAppSettings(context: Context) {
+    Intent(
+        Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+        Uri.fromParts("package", context.packageName, null)
+    ).also { intent ->
+        context.startActivity(intent)
     }
 }
 
@@ -101,3 +183,10 @@ fun PermissionsScreen(navController: NavController? = null) {
 fun PermissionsScreenPreview() {
     PermissionsScreen()
 }
+
+fun areAllPermissionsGranted(context: Context, permissions: Array<String>): Boolean {
+    return permissions.all { permission ->
+        ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
+    }
+}
+
