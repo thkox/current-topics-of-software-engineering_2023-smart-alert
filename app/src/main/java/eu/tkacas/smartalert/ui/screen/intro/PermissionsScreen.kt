@@ -1,34 +1,31 @@
 package eu.tkacas.smartalert.ui.screen.intro
 
+import android.Manifest
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResultLauncher
-import androidx.compose.foundation.layout.Arrangement
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import eu.tkacas.smartalert.R
-import androidx.compose.material.Card
-import androidx.compose.material.Checkbox
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import eu.tkacas.smartalert.ui.component.GeneralButtonComponent
-import eu.tkacas.smartalert.ui.component.SwitchWithThumbIconSample
+import eu.tkacas.smartalert.ui.component.PermissionCard
+import eu.tkacas.smartalert.viewmodel.PermissionsViewModel
 
 
 private lateinit var permissionLauncher: ActivityResultLauncher<String>
@@ -37,11 +34,26 @@ private var isRecordPermissionGranted = false
 
 @Composable
 fun PermissionsScreen(navController: NavController? = null) {
-    val checkedStateLocation = remember { mutableStateOf(false) }
-    val checkedStateCamera = remember { mutableStateOf(false) }
 
     val isExpandedLocation = remember { mutableStateOf(false) }
     val isExpandedCamera = remember { mutableStateOf(false) }
+
+    val switchStateLocation = remember { mutableStateOf(false) }
+    val switchStateCamera = remember { mutableStateOf(false) }
+
+    val viewModel = viewModel<PermissionsViewModel>()
+    val dialogQueue = viewModel.permissions
+
+    val cameraPermissionResultLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission(),
+        onResult = {
+            granted ->
+                viewModel.onPermissionResult(
+                    permission = Manifest.permission.CAMERA,
+                    granted = granted
+                )
+        }
+    )
 
 
     Column(
@@ -51,135 +63,29 @@ fun PermissionsScreen(navController: NavController? = null) {
         Spacer(modifier = Modifier.size(20.dp))
         Text(text = "Permissions Screen", style = TextStyle(fontSize = 24.sp))
         Spacer(modifier = Modifier.size(20.dp))
-        Card(
-            modifier = Modifier.padding(8.dp), elevation = 4.dp
-        ) {
-            Column(modifier = Modifier.padding(8.dp)) {
-                Row (
-                    Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column(
-                        modifier = Modifier.padding(start = 8.dp),
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ){
-                            Icon(
-                                painter = painterResource(id = R.drawable.location_pin),
-                                modifier = Modifier
-                                    .padding(horizontal = 5.dp)
-                                    .size(40.dp),
-                                contentDescription = null)
-                            Text(
-                                text = "Location",
-                                modifier = Modifier.padding(start = 8.dp),
-                                style = TextStyle(fontSize = 20.sp)
-                            )
-                        }
-                    }
-                    Column(
-                        modifier = Modifier.padding(start = 8.dp),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ){
-                        SwitchWithThumbIconSample()
-                    }
-                }
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
-                ){
-                    IconButton(onClick = { isExpandedLocation.value = !isExpandedLocation.value }){
-                        Icon(
-                            painter = if (isExpandedLocation.value) painterResource(id = R.drawable.arrow_up) else painterResource(id = R.drawable.arrow_down),
-                            modifier = Modifier
-                                .padding(horizontal = 5.dp),
-                            contentDescription = null
-                        )
-                    }
-                }
-                if (isExpandedLocation.value) { // Add this line
-                    Row (
-                    ) {
-                        Text(
-                            text = "Allow SmartAlert to access this device's location?",
-                            modifier = Modifier.padding(start = 8.dp),
-                            style = TextStyle(fontSize = 14.sp)
-                        )
-                    }
-                }
-            }
-        }
+
+        PermissionCard(
+            iconResId = R.drawable.location_pin,
+            permissionName = "Location",
+            isExpanded = isExpandedLocation,
+            switchState = switchStateLocation,
+            onToggleClick = {
+
+            })
 
         Spacer(modifier = Modifier.size(2.dp))
 
-        Card(
-            modifier = Modifier.padding(8.dp), elevation = 4.dp
-        ) {
-            Column(modifier = Modifier.padding(8.dp)) {
-                Row (
-                    Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column(
-                        modifier = Modifier.padding(start = 8.dp),
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ){
-                            Icon(
-                                painter = painterResource(id = R.drawable.photo_camera),
-                                modifier = Modifier
-                                    .padding(horizontal = 5.dp)
-                                    .size(40.dp),
-                                contentDescription = null)
-                            Text(
-                                text = "Camera",
-                                modifier = Modifier.padding(start = 8.dp),
-                                style = TextStyle(fontSize = 20.sp)
-                            )
-                        }
-                    }
-                    Column(
-                        modifier = Modifier.padding(start = 8.dp),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ){
-                        SwitchWithThumbIconSample()
-                    }
-                }
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
-                ){
-                    IconButton(onClick = { isExpandedCamera.value = !isExpandedCamera.value }){
-                        Icon(
-                            painter = if (isExpandedCamera.value) painterResource(id = R.drawable.arrow_up) else painterResource(id = R.drawable.arrow_down),
-                            modifier = Modifier
-                                .padding(horizontal = 5.dp),
-                            contentDescription = null
-                        )
-                    }
-                }
-                if (isExpandedCamera.value) { // Add this line
-                    Row (
-                    ) {
-                        Text(
-                            text = "Allow Smart Alert to access this device's camera?",
-                            modifier = Modifier.padding(start = 8.dp),
-                            style = TextStyle(fontSize = 14.sp)
-                        )
-                    }
-                }
-            }
-        }
+        PermissionCard(
+            iconResId = R.drawable.photo_camera,
+            permissionName = "Camera",
+            isExpanded = isExpandedCamera,
+            switchState = switchStateCamera,
+            onToggleClick = {
+                cameraPermissionResultLauncher.launch(Manifest.permission.CAMERA)
+
+            })
+
+
         Spacer(modifier = Modifier.size(50.dp))
         GeneralButtonComponent(
             value = stringResource(id = R.string.next),
