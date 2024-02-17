@@ -121,7 +121,7 @@ fun PermissionsScreen(navController: NavController? = null) {
             isExpanded = isExpandedLocation,
             switchState = switchStateCoarseLocation,
             onToggleClick = {
-                if (!switchStateCoarseLocation.value) {
+                if (switchStateCoarseLocation.value) {
                     locationPermissionResultLauncher.launch(
                         Manifest.permission.ACCESS_COARSE_LOCATION
                     )
@@ -136,12 +136,15 @@ fun PermissionsScreen(navController: NavController? = null) {
             isExpanded = isExpandedCamera,
             switchState = switchStateCamera,
             onToggleClick = {
-                if (!switchStateCamera.value) {
+                if (switchStateCamera.value) {
                     cameraPermissionResultLauncher.launch(
                         Manifest.permission.CAMERA
                     )
                 }
-            })
+            }
+        )
+
+        
 
 
         Spacer(modifier = Modifier.size(50.dp))
