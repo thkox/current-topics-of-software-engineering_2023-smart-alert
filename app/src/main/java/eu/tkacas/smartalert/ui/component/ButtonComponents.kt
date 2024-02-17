@@ -126,7 +126,6 @@ fun AlertLevelButtonsRowComponent() {
     }
 }
 
-@Preview
 @Composable
 fun GeneralButtonComponent(value: String, onButtonClicked: () -> Unit) {
     Button(
