@@ -36,6 +36,32 @@ import eu.tkacas.smartalert.ui.theme.BgColor
 import eu.tkacas.smartalert.ui.theme.Primary
 import eu.tkacas.smartalert.ui.theme.componentShapes
 
+@Composable
+fun CityTextFieldComponent(
+    labelValue: String
+){
+    val city = remember {
+        mutableStateOf("")
+    }
+
+    OutlinedTextField(
+        modifier = Modifier
+            .fillMaxWidth(),
+        label = { Text(text = labelValue) },
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = Primary,
+            focusedLabelColor = Primary,
+            cursorColor = Primary,
+            backgroundColor = BgColor
+        ),
+        singleLine = true,
+        maxLines = 1,
+        value = city.value,
+        onValueChange = {
+            city.value = it
+        }
+    )
+}
 
 @Composable
 fun TextFieldComponent(
@@ -47,7 +73,6 @@ fun TextFieldComponent(
     val textValue = remember {
         mutableStateOf("")
     }
-    val localFocusManager = LocalFocusManager.current
 
     OutlinedTextField(
         modifier = Modifier
