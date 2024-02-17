@@ -48,7 +48,7 @@ fun HomeCitizenScreen(navController: NavController? = null) {
                 contentColor = Color.White,
                 backgroundColor = Color.Black,
                 onClick = {
-
+                    navController?.navigate("preciseLocationPermission")
                 }
             ){
                 androidx.compose.material.Icon(imageVector = Icons.Default.Add, contentDescription = null)

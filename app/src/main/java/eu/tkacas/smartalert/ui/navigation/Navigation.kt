@@ -28,6 +28,7 @@ import eu.tkacas.smartalert.ui.screen.auth.SignUpScreen
 import eu.tkacas.smartalert.ui.screen.auth.TermsAndConditionsScreen
 import eu.tkacas.smartalert.ui.screen.citizen.AlertFormScreen
 import eu.tkacas.smartalert.ui.screen.citizen.AlertScreen
+import eu.tkacas.smartalert.ui.screen.citizen.PreciseLocationPermissionScreen
 import eu.tkacas.smartalert.ui.screen.employee.AlertCitizensFormScreen
 import eu.tkacas.smartalert.ui.screen.employee.GroupEventsByLocationScreen
 import eu.tkacas.smartalert.ui.screen.employee.HomeEmployeeScreen
@@ -60,6 +61,8 @@ fun Navigation(navController: NavController = rememberNavController()) {
         composable("termsAndConditions") { TermsAndConditionsScreen() }
         composable("forgotPassword") { ForgotPasswordScreen(navController) }
         composable("alertcitizensform") { AlertCitizensFormScreen(navController) }
+        composable("preciseLocationPermission") { PreciseLocationPermissionScreen(navController) }
+        composable("alertForm") { AlertFormScreen(navController) }
         composable("home") {
             if (FirebaseAuth.getInstance().currentUser != null && FirebaseAuth.getInstance().currentUser?.email?.contains("@civilprotection.gr") == true) {
                 HomeEmployeeScreen(navController)

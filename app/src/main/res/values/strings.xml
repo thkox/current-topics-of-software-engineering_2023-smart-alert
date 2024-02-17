@@ -31,5 +31,8 @@
     <string name="emergency_level">Level of emergency</string>
     <string name="wheather_phenomenon_selection">Weather Phenomenon Type</string>
     <string name="forgot_password_instructions">Please type your email</string>
+    <string name="takeAPicture">Take a Picture (Optional): </string>
+    <string name="writeADescription">Write a description for the emergency</string>
+    <string name="allow">Allow</string>
     <string name="submit">Submit</string>
 </resources>
