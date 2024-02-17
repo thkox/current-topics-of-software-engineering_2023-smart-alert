@@ -9,8 +9,6 @@ import android.net.Uri
 import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -19,6 +17,7 @@ import androidx.compose.foundation.layout.size
 import eu.tkacas.smartalert.R
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -54,7 +53,7 @@ fun PermissionsScreen(navController: NavController? = null) {
     val isExpandedLocation = remember { mutableStateOf(false) }
     val isExpandedCamera = remember { mutableStateOf(false) }
 
-    val switchStateLocation = remember { mutableStateOf(false) }
+    val switchStateCoarseLocation = remember { mutableStateOf(false) }
     val switchStateCamera = remember { mutableStateOf(false) }
 
     val viewModel = viewModel<PermissionsViewModel>()
@@ -92,6 +91,19 @@ fun PermissionsScreen(navController: NavController? = null) {
         }
     )
 
+    // Check the permission status when the composable becomes active
+    LaunchedEffect(Unit) {
+        switchStateCamera.value = ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.CAMERA
+        ) == PackageManager.PERMISSION_GRANTED
+
+        switchStateCoarseLocation.value = ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -101,15 +113,19 @@ fun PermissionsScreen(navController: NavController? = null) {
         Text(text = "Permissions Screen", style = TextStyle(fontSize = 24.sp))
         Spacer(modifier = Modifier.size(20.dp))
 
+
+
         PermissionCard(
             iconResId = R.drawable.location_pin,
             permissionName = "Location",
             isExpanded = isExpandedLocation,
-            switchState = switchStateLocation,
+            switchState = switchStateCoarseLocation,
             onToggleClick = {
-                locationPermissionResultLauncher.launch(
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                )
+                if (!switchStateCoarseLocation.value) {
+                    locationPermissionResultLauncher.launch(
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    )
+                }
             })
 
         Spacer(modifier = Modifier.size(2.dp))
@@ -120,9 +136,11 @@ fun PermissionsScreen(navController: NavController? = null) {
             isExpanded = isExpandedCamera,
             switchState = switchStateCamera,
             onToggleClick = {
-                cameraPermissionResultLauncher.launch(
-                    Manifest.permission.CAMERA
-                )
+                if (!switchStateCamera.value) {
+                    cameraPermissionResultLauncher.launch(
+                        Manifest.permission.CAMERA
+                    )
+                }
             })
 
 
