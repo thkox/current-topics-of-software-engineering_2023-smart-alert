@@ -32,8 +32,7 @@ fun <T : Enum<T>> EnumDropdownComponent(enumClass: Class<T>) {
         ) {
             Text(selectedValue.name)
             Icon(painter = if (expanded) painterResource(id = R.drawable.arrow_up) else painterResource(id = R.drawable.arrow_down),
-                contentDescription = if (expanded) "Arrow Up" else "Arrow Down",
-                tint = Color.White)
+                contentDescription = if (expanded) "Arrow Up" else "Arrow Down")
         }
 
         DropdownMenu(
