@@ -3,7 +3,6 @@ package eu.tkacas.smartalert.ui.component
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -20,7 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Switch
 import androidx.compose.material.Text
@@ -29,8 +28,12 @@ import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.ui.screen.Screen
@@ -68,7 +71,7 @@ fun CardComponent(iconResId: Int) {
 
 @Preview
 @Composable
-fun cardComponentWithImage() {
+fun CardComponentWithImage() {
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(10.dp),
@@ -188,4 +191,102 @@ fun SettingCard(screen: Screen.SettingsScreen, onClick: () -> Unit) {
             }
         }
     }
+}
+
+@Composable
+fun PermissionCard(
+    iconResId: Int,
+    permissionName: String,
+    isExpanded: MutableState<Boolean>,
+    switchState: MutableState<Boolean>,
+    onToggleClick: () -> Unit = {}
+) {
+    Card(
+        modifier = Modifier.padding(8.dp), elevation = 4.dp
+    ) {
+        Column(modifier = Modifier.padding(8.dp)) {
+            Row (
+                Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column(
+                    modifier = Modifier.padding(start = 8.dp),
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ){
+                        Icon(
+                            painter = painterResource(id = iconResId),
+                            modifier = Modifier
+                                .padding(horizontal = 5.dp)
+                                .size(40.dp),
+                            contentDescription = null)
+                        Text(
+                            text = permissionName,
+                            modifier = Modifier.padding(start = 8.dp),
+                            style = TextStyle(fontSize = 20.sp)
+                        )
+                    }
+                }
+                Column(
+                    modifier = Modifier.padding(start = 8.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ){
+                    Switch(
+                        checked = switchState.value,
+                        onCheckedChange = {
+                            //switchState.value = it
+                            //onToggleClick()
+                            if (it) {
+                                switchState.value = it
+                                onToggleClick()
+                            } else {
+                                switchState.value = false
+                            }
+                        },
+                        enabled = !switchState.value
+                    )
+                }
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ){
+                IconButton(onClick = { isExpanded.value = !isExpanded.value }){
+                    Icon(
+                        painter = if (isExpanded.value) painterResource(id = R.drawable.arrow_up) else painterResource(id = R.drawable.arrow_down),
+                        modifier = Modifier
+                            .padding(horizontal = 5.dp),
+                        contentDescription = null
+                    )
+                }
+            }
+            if (isExpanded.value) {
+                Row {
+                    Text(
+                        text = "Allow SmartAlert to access this device's $permissionName?",
+                        modifier = Modifier.padding(start = 8.dp),
+                        style = TextStyle(fontSize = 14.sp)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+fun PermissionCardPreview() {
+    val isExpanded = remember { mutableStateOf(false) }
+    val switchState = remember { mutableStateOf(false) }
+    PermissionCard(
+        iconResId = R.drawable.location_pin,
+        permissionName = "Location",
+        isExpanded = isExpanded,
+        switchState = switchState
+    )
 }
