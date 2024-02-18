@@ -239,8 +239,14 @@ fun PermissionCard(
                     Switch(
                         checked = switchState.value,
                         onCheckedChange = {
-                            switchState.value = it
-                            onToggleClick()
+                            //switchState.value = it
+                            //onToggleClick()
+                            if (it) {
+                                switchState.value = it
+                                onToggleClick()
+                            } else {
+                                switchState.value = false
+                            }
                         },
                         enabled = !switchState.value
                     )
