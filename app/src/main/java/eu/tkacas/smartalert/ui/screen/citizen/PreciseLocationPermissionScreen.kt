@@ -1,6 +1,16 @@
 package eu.tkacas.smartalert.ui.screen.citizen
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.provider.Settings
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,23 +21,65 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.ui.component.GeneralButtonComponent
 import eu.tkacas.smartalert.ui.component.HeadingTextComponent
+import eu.tkacas.smartalert.ui.component.LocationPermissionTextProvider
 import eu.tkacas.smartalert.ui.component.NormalTextComponent
+import eu.tkacas.smartalert.ui.component.PermissionDialog
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
+import eu.tkacas.smartalert.viewmodel.PreciseLocationViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun PreciseLocationPermissionScreen(navController: NavController? = null){
     val scaffoldState = rememberScaffoldState()
+
+    val context = LocalContext.current
+
+    val permissionsToRequest = arrayOf(
+        Manifest.permission.ACCESS_FINE_LOCATION
+    )
+
+    val viewModel = viewModel<PreciseLocationViewModel>()
+    val dialogQueue = viewModel.visiblePermissionDialogQueue
+
+    val locationPermissionResultLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission(),
+        onResult = {isGranted ->
+            viewModel.onPermissionResult(
+                permission = Manifest.permission.ACCESS_FINE_LOCATION,
+                isGranted = isGranted
+            )
+            if (isGranted && areAllPermissionsGranted(context, permissionsToRequest)) {
+                navController?.navigate("alertForm")
+            }
+        }
+    )
+
+    val multiplePermissionResultLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestMultiplePermissions(),
+        onResult = { perms ->
+            permissionsToRequest.forEach { permission ->
+                viewModel.onPermissionResult(
+                    permission = permission,
+                    isGranted = perms[permission] == true
+                )
+            }
+        }
+    )
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -56,16 +108,60 @@ fun PreciseLocationPermissionScreen(navController: NavController? = null){
             GeneralButtonComponent(
                 value = stringResource(id = R.string.allow),
                 onButtonClicked = {
-                    //TODO : Add precise location permission logic
-                    navController?.navigate("alertForm")
+                    locationPermissionResultLauncher.launch(
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    )
                 }
             )
         }
+
+        dialogQueue
+            .reversed()
+            .forEach { permission ->
+                PermissionDialog(
+                    permissionTextProvider = when (permission) {
+                        Manifest.permission.ACCESS_FINE_LOCATION -> {
+                            LocationPermissionTextProvider()
+                        }
+                        else -> return@forEach
+                    },
+                    isPermanentlyDeclined = !ActivityCompat.shouldShowRequestPermissionRationale(
+                        context as Activity,
+                        permission
+                    ),
+                    onDismiss = {
+                        viewModel.dismissDialog()
+                    },
+                    onOkClick = {
+                        viewModel.dismissDialog()
+                        multiplePermissionResultLauncher.launch(
+                            arrayOf(permission)
+                        )
+                    },
+                    onGoToAppSettingsClick = { openAppSettings(context) }
+                )
+            }
     }
+}
+
+fun openAppSettings(context: Context) {
+    val intent = Intent().apply {
+        action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+        val uri = Uri.fromParts("package", context.packageName, null)
+        data = uri
+        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+    }
+    context.startActivity(intent)
 }
 
 @Preview
 @Composable
 fun PreciseLocationPermissionScreenPreview(){
     PreciseLocationPermissionScreen()
+}
+
+fun areAllPermissionsGranted(context: Context, permissions: Array<String>): Boolean {
+    return permissions.all { permission ->
+        ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
+    }
 }
