@@ -81,7 +81,6 @@ fun PermissionsScreen(navController: NavController? = null) {
         }
     )
 
-
     // Check the permission status when the composable becomes active
     LaunchedEffect(Unit) {
         switchStateBackgroundLocation.value = ContextCompat.checkSelfPermission(

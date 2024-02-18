@@ -11,6 +11,7 @@ class PermissionsViewModel: ViewModel() {
     val visiblePermissionDialogQueue = mutableStateListOf<String>()
     val switchStateCoarseLocation: MutableState<Boolean> = mutableStateOf(false)
 
+
     fun dismissDialog() {
         visiblePermissionDialogQueue.removeFirst()
     }
