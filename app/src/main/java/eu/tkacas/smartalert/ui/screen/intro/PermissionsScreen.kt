@@ -83,10 +83,10 @@ fun PermissionsScreen(navController: NavController? = null) {
         contract = ActivityResultContracts.RequestMultiplePermissions(),
         onResult = { perms ->
             permissionsToRequest.forEach { permission ->
-                viewModel.onPermissionResult(
-                    permission = permission,
-                    isGranted = perms[permission] == true
-                )
+                when (permission) {
+                    Manifest.permission.CAMERA -> switchStateCamera.value = perms[permission] == true
+                    Manifest.permission.ACCESS_COARSE_LOCATION -> switchStateCoarseLocation.value = perms[permission] == true
+                }
             }
         }
     )
@@ -120,6 +120,7 @@ fun PermissionsScreen(navController: NavController? = null) {
             permissionName = "Location",
             isExpanded = isExpandedLocation,
             switchState = switchStateCoarseLocation,
+            //isEnabled = !switchStateCoarseLocation.value,
             onToggleClick = {
                 if (switchStateCoarseLocation.value) {
                     locationPermissionResultLauncher.launch(
@@ -135,6 +136,7 @@ fun PermissionsScreen(navController: NavController? = null) {
             permissionName = "Camera",
             isExpanded = isExpandedCamera,
             switchState = switchStateCamera,
+            //isEnabled = !switchStateCamera.value,
             onToggleClick = {
                 if (switchStateCamera.value) {
                     cameraPermissionResultLauncher.launch(

@@ -29,6 +29,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -240,7 +241,9 @@ fun PermissionCard(
                         onCheckedChange = {
                             switchState.value = it
                             onToggleClick()
-                        })
+                        },
+                        enabled = !switchState.value
+                    )
                 }
             }
             Row(
@@ -272,8 +275,8 @@ fun PermissionCard(
 @Preview
 @Composable
 fun PermissionCardPreview() {
-    val isExpanded = mutableStateOf(false)
-    val switchState = mutableStateOf(false)
+    val isExpanded = remember { mutableStateOf(false) }
+    val switchState = remember { mutableStateOf(false) }
     PermissionCard(
         iconResId = R.drawable.location_pin,
         permissionName = "Location",
