@@ -6,13 +6,13 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.smartalert.R
@@ -32,6 +32,19 @@ fun NormalTextComponent(value: String) {
         textAlign = TextAlign.Center
     )
 }
+
+@Composable
+fun SimpleTextComponent(value: String) {
+    Text(
+        text = value,
+        style = TextStyle(
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Normal,
+            fontStyle = FontStyle.Normal
+        ), color = colorResource(id = R.color.colorText)
+    )
+}
+
 
 @Composable
 fun HeadingTextComponent(value: String) {
@@ -62,6 +75,24 @@ fun UnderLinedTextComponent(value: String, onClick: () -> Unit) {
             fontWeight = FontWeight.Normal,
             fontStyle = FontStyle.Normal
         ), color = colorResource(id = R.color.colorGray),
+        textAlign = TextAlign.Center,
+        textDecoration = TextDecoration.Underline
+    )
+}
+
+@Composable
+fun REDUnderLinedTextComponent(value: String, onClick: () -> Unit) {
+    Text(
+        text = value,
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(min = 40.dp)
+            .clickable(onClick = onClick),
+        style = TextStyle(
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Normal,
+            fontStyle = FontStyle.Normal
+        ), color = colorResource(id = R.color.red),
         textAlign = TextAlign.Center,
         textDecoration = TextDecoration.Underline
     )
