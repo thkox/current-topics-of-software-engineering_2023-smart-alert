@@ -65,7 +65,12 @@ fun CameraScreen(navController: NavHostController? = null) {
             PhotoBottomSheetContent(
                 bitmaps = bitmaps,
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+                onPhotoSelected = { bitmap ->
+                    // TODO upload photo
+                    // TODO keep the url of the photo
+                    // TODO return to AlertFormScreen
+                }
             )
         }
     ) { padding ->
