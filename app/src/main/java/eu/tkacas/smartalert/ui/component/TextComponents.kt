@@ -34,6 +34,19 @@ fun NormalTextComponent(value: String) {
 }
 
 @Composable
+fun SimpleTextComponent(value: String) {
+    Text(
+        text = value,
+        style = TextStyle(
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Normal,
+            fontStyle = FontStyle.Normal
+        ), color = colorResource(id = R.color.colorText)
+    )
+}
+
+
+@Composable
 fun HeadingTextComponent(value: String) {
     Text(
         text = value,
