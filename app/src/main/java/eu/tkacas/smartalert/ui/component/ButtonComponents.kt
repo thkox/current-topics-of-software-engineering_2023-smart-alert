@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -184,5 +185,30 @@ fun CameraButton(onButtonClicked: () -> Unit) {
         IconButton(onClick = onButtonClicked) {
             Icon(painter = painterResource(id = R.drawable.photo_camera), contentDescription = "Open Camera")
         }
+    }
+}
+
+@Composable
+fun UploadPhotoButton(
+    onButtonClicked: () -> Unit
+) {
+    Button(
+        modifier = Modifier
+            .width(100.dp)
+            .height(40.dp)
+            .background(
+                color = BlueColor,
+                shape = RoundedCornerShape(10.dp)
+            ),
+        onClick = {
+            onButtonClicked.invoke()
+        },
+        contentPadding = PaddingValues(),
+        colors = ButtonDefaults.buttonColors(Color.Transparent),
+        shape = RoundedCornerShape(10.dp)
+    ){
+        SimpleTextComponent(value = "Upload")
+        Spacer(modifier = Modifier.size(4.dp))
+        Icon(painter = painterResource(id = R.drawable.upload), contentDescription = "Upload Photo")
     }
 }

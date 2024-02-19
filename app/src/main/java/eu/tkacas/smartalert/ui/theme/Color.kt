@@ -24,6 +24,7 @@ val WhiteColor = Color(0xFFFFFFFF)
 val YellowColor = Color(0xFFE6EF0E)
 val OrangeColor = Color(0xFFEF920E)
 val BlueColor = Color(0xFF219EBC)
+val RedColor = Color(0xFFFF0000)
 
 //We have to take a look here and on Theme.kt in order to check the colors depending on the Theme (Light or Dark)
 val PrimaryDark = Color(0xFF92A3FD)

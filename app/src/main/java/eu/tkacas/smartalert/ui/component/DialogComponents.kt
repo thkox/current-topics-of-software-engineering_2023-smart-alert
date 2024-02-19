@@ -70,22 +70,22 @@ interface PermissionTextProvider {
     fun getDescription(isPermanentlyDeclined: Boolean): String
 }
 
-class CameraPermissionTextProvider: PermissionTextProvider {
-    override fun getDescription(isPermanentlyDeclined: Boolean): String {
-        return if (isPermanentlyDeclined) {
-            "Camera permission is required to take photos and videos. Please go to app settings and enable the camera permission."
-        } else {
-            "Camera permission is required to take photos. Please enable the camera permission."
-        }
-    }
-}
-
 class LocationPermissionTextProvider: PermissionTextProvider {
     override fun getDescription(isPermanentlyDeclined: Boolean): String {
         return if (isPermanentlyDeclined) {
             "Location permission is required to get your current location. Please go to app settings and enable the location permission."
         } else {
             "Location permission is required to get your current location. Please enable the location permission."
+        }
+    }
+}
+
+class CameraPermissionTextProvider: PermissionTextProvider {
+    override fun getDescription(isPermanentlyDeclined: Boolean): String {
+        return if (isPermanentlyDeclined) {
+            "Camera permission is required to take a picture. Please go to app settings and enable the camera permission."
+        } else {
+            "Camera permission is required to take a picture. Please enable the camera permission."
         }
     }
 }
