@@ -1,6 +1,5 @@
 package eu.tkacas.smartalert.ui.navigation
 
-import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
@@ -9,18 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import eu.tkacas.smartalert.ui.screen.Screen
 import eu.tkacas.smartalert.ui.screen.citizen.HomeCitizenScreen
 import eu.tkacas.smartalert.ui.screen.settings.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.firebase.auth.FirebaseAuth
 import eu.tkacas.smartalert.ui.screen.auth.ForgotPasswordScreen
 import eu.tkacas.smartalert.ui.screen.auth.LoginScreen
@@ -28,6 +16,7 @@ import eu.tkacas.smartalert.ui.screen.auth.SignUpScreen
 import eu.tkacas.smartalert.ui.screen.auth.TermsAndConditionsScreen
 import eu.tkacas.smartalert.ui.screen.citizen.AlertFormScreen
 import eu.tkacas.smartalert.ui.screen.citizen.AlertScreen
+import eu.tkacas.smartalert.ui.screen.citizen.Camera.CameraScreen
 import eu.tkacas.smartalert.ui.screen.citizen.PreciseLocationPermissionScreen
 import eu.tkacas.smartalert.ui.screen.employee.AlertCitizensFormScreen
 import eu.tkacas.smartalert.ui.screen.employee.GroupEventsByLocationScreen
@@ -63,6 +52,7 @@ fun Navigation(navController: NavController = rememberNavController()) {
         composable("alertcitizensform") { AlertCitizensFormScreen(navController) }
         composable("preciseLocationPermission") { PreciseLocationPermissionScreen(navController) }
         composable("alertForm") { AlertFormScreen(navController) }
+        composable("camera") { CameraScreen(navController) }
         composable("home") {
             if (FirebaseAuth.getInstance().currentUser != null && FirebaseAuth.getInstance().currentUser?.email?.contains("@civilprotection.gr") == true) {
                 HomeEmployeeScreen(navController)
