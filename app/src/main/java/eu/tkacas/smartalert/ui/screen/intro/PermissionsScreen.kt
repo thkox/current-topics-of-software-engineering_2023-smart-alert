@@ -2,11 +2,7 @@ package eu.tkacas.smartalert.ui.screen.intro
 
 import android.Manifest
 import android.app.Activity
-import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
-import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -32,6 +28,8 @@ import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import eu.tkacas.smartalert.permissions.areAllPermissionsGranted
+import eu.tkacas.smartalert.permissions.openAppSettings
 import eu.tkacas.smartalert.ui.component.GeneralButtonComponent
 import eu.tkacas.smartalert.ui.component.LocationPermissionTextProvider
 import eu.tkacas.smartalert.ui.component.PermissionCard
@@ -171,25 +169,8 @@ fun PermissionsScreen(navController: NavController? = null) {
         }
 }
 
-fun openAppSettings(context: Context) {
-    val intent = Intent().apply {
-        action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-        val uri = Uri.fromParts("package", context.packageName, null)
-        data = uri
-        flags = Intent.FLAG_ACTIVITY_NEW_TASK
-    }
-    context.startActivity(intent)
-}
-
 @Preview(backgroundColor = 0xFFFFFF, showBackground = true)
 @Composable
 fun PermissionsScreenPreview() {
     PermissionsScreen()
 }
-
-fun areAllPermissionsGranted(context: Context, permissions: Array<String>): Boolean {
-    return permissions.all { permission ->
-        ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
-    }
-}
-

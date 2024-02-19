@@ -79,3 +79,13 @@ class LocationPermissionTextProvider: PermissionTextProvider {
         }
     }
 }
+
+class CameraPermissionTextProvider: PermissionTextProvider {
+    override fun getDescription(isPermanentlyDeclined: Boolean): String {
+        return if (isPermanentlyDeclined) {
+            "Camera permission is required to take a picture. Please go to app settings and enable the camera permission."
+        } else {
+            "Camera permission is required to take a picture. Please enable the camera permission."
+        }
+    }
+}
