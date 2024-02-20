@@ -51,4 +51,7 @@
     <string name="map">Map</string>
     <string name="precise_location_permission">Precise Location Permission</string>
     <string name="create_a_new_alert">Create a new Alert</string>
+    <string name="low">Low</string>
+    <string name="medium">Medium</string>
+    <string name="high">High</string>
 </resources>
