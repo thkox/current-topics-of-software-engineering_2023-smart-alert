@@ -130,7 +130,9 @@ fun PermissionsScreen(navController: NavController? = null) {
             value = stringResource(id = R.string.next),
             onButtonClicked = {
                 if (areAllPermissionsGranted(context, permissionsToRequest)) {
-                    navController?.navigate("home")
+                    navController?.navigate("home") {
+                        popUpTo("welcome") { inclusive = true }
+                    }
                 } else {
                     Toast.makeText(context, "Please grant all permissions", Toast.LENGTH_SHORT).show()
                 }
