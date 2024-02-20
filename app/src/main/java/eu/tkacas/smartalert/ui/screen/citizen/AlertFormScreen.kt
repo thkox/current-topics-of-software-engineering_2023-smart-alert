@@ -74,7 +74,7 @@ fun AlertFormScreen(navController: NavHostController? = null) {
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            AppBarBackView(title = "Create a new Alert", navController = navController)
+            AppBarBackView(title = stringResource(id = R.string.create_a_new_alert), navController = navController)
         }
     ) {
         Column(
@@ -93,7 +93,7 @@ fun AlertFormScreen(navController: NavHostController? = null) {
                 NormalTextComponent(value = stringResource(id = R.string.emergency_level))
                 AlertLevelButtonsRowComponent()
                 Spacer(modifier = Modifier.size(16.dp))
-                NormalTextComponent(value = stringResource(id = R.string.wheather_phenomenon_selection))
+                NormalTextComponent(value = stringResource(id = R.string.weather_phenomenon_selection))
                 EnumDropdownComponent(CriticalWeatherPhenomenon::class.java)
                 Spacer(modifier = Modifier.size(16.dp))
                 NormalTextComponent(value = stringResource(id = R.string.writeADescription))

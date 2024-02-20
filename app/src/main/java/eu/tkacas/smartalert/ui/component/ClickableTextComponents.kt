@@ -1,11 +1,13 @@
 package eu.tkacas.smartalert.ui.component
 
+import android.content.Context
 import android.util.Log
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -15,15 +17,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.ui.theme.Primary
 
 
 @Composable
 fun ClickableTextComponent(value: String, onTextSelected: (String) -> Unit) {
-    val initialText = "By continuing you accept our "
-    val privacyPolicyText = "Privacy Policy"
-    val andText = " and "
-    val termsAndConditionsText = "Term of Use"
+    val initialText = stringResource(id = R.string.terms_and_conditions)
+    val privacyPolicyText = stringResource(id = R.string.privacy_policy)
+    val andText = stringResource(id = R.string.and)
+    val termsAndConditionsText = stringResource(id = R.string.terms_of_use)
 
     val annotatedString = buildAnnotatedString {
         append(initialText)
@@ -55,10 +58,11 @@ fun ClickableTextComponent(value: String, onTextSelected: (String) -> Unit) {
 
 
 @Composable
-fun ClickableLoginTextComponent(tryingToLogin: Boolean = true, onTextSelected: (String) -> Unit) {
+fun ClickableLoginTextComponent(tryingToLogin: Boolean = true, onTextSelected: (String) -> Unit, context: Context) {
     val initialText =
-        if (tryingToLogin) "Already have an account? " else "Don’t have an account yet? "
-    val loginText = if (tryingToLogin) "Login" else "Register"
+        if (tryingToLogin) stringResource(R.string.Already_have_an_account, context)
+        else stringResource(R.string.Dont_have_an_account_yet, context)
+    val loginText = if (tryingToLogin) stringResource(R.string.login, context) else stringResource(R.string.register, context)
 
     val annotatedString = buildAnnotatedString {
         append(initialText)
@@ -96,8 +100,8 @@ fun ClickableLoginTextComponent(tryingToLogin: Boolean = true, onTextSelected: (
 
 @Composable
 fun BackToLoginComponent(onTextSelected: (String) -> Unit) {
-    val initialText = "Return back to "
-    val loginText = "Login"
+    val initialText = stringResource(id = R.string.return_back_to)
+    val loginText = stringResource(id = R.string.login)
 
     val annotatedString = buildAnnotatedString {
         append(initialText)
