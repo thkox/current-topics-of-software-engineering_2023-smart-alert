@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -93,7 +94,7 @@ fun AlertLevelButtonsRowComponent() {
                 .let { if (selectedDangerLevelButton == 1) it.border(2.dp, Color.Black, RoundedCornerShape(10.dp)) else it }
         ){
             Text(
-                text = "Low",
+                text = stringResource(id = R.string.low),
                 color = if (selectedDangerLevelButton == 1) Color.Black else Color.White
             )
         }
@@ -109,7 +110,7 @@ fun AlertLevelButtonsRowComponent() {
                 .let { if (selectedDangerLevelButton == 2) it.border(2.dp, Color.Black, RoundedCornerShape(10.dp)) else it }
         ){
             Text(
-                text = "Medium",
+                text = stringResource(id = R.string.medium),
                 color = if (selectedDangerLevelButton == 2) Color.Black else Color.White
                 )
         }
@@ -125,7 +126,7 @@ fun AlertLevelButtonsRowComponent() {
                 .let { if (selectedDangerLevelButton == 3) it.border(2.dp, Color.Black, RoundedCornerShape(10.dp)) else it }
         ){
             Text(
-                text = "High",
+                text = stringResource(id = R.string.high),
                 color = if (selectedDangerLevelButton == 3) Color.Black else Color.White
             )
         }

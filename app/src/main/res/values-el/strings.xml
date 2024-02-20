@@ -48,4 +48,7 @@
     <string name="map">Χάρτης</string>
     <string name="precise_location_permission">Άδεια ακριβούς τοποθεσίας</string>
     <string name="create_a_new_alert">Καταγραφή νέου συμβάντος</string>
+    <string name="low">Χαμηλό</string>
+    <string name="medium">Μέτριο</string>
+    <string name="high">Υψηλό</string>
 </resources>
