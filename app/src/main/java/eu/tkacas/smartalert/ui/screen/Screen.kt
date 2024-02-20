@@ -1,78 +1,79 @@
 package eu.tkacas.smartalert.ui.screen
 
 import androidx.annotation.DrawableRes
+import androidx.compose.ui.res.stringResource
 import eu.tkacas.smartalert.R
 
-sealed class Screen<ImageVector>(val title: String, val route: String) {
+sealed class Screen<ImageVector>(val titleResId: Int, val route: String) {
 
-    sealed class SettingsScreen(title: String, route: String, @DrawableRes  val icon: Int) : Screen<Any?>(title, route) {
+    sealed class SettingsScreen(titleResId: Int, route: String, @DrawableRes  val icon: Int) : Screen<Any?>(titleResId, route) {
 
         object Account : SettingsScreen(
-            "Account",
+            R.string.account,
             "Account",
             R.drawable.account_box
         )
 
         object MyReportsHistory : SettingsScreen(
-            "Reports History",
+            R.string.reports_history,
             "MyReportsHistory",
             R.drawable.manage_history
         )
 
         object Language : SettingsScreen(
-            "Language",
+            R.string.language,
             "Language",
             R.drawable.language
         )
 
         object Analytics : SettingsScreen(
-            "Analytics",
+            R.string.analytics,
             "Analytics",
             R.drawable.analytics
         )
 
         object About : SettingsScreen(
-            "About",
+            R.string.about,
             "About",
             R.drawable.about
         )
 
         object Logout : SettingsScreen(
-            "Logout",
+            R.string.logout,
             "Logout",
             R.drawable.logout
         )
     }
 
-    sealed class HomeCitizen(title: String, route: String, @DrawableRes val icon: Int) : Screen<Any?>(title, route) {
+    sealed class HomeCitizen(titleResId: Int, route: String, @DrawableRes val icon: Int) : Screen<Any?>(titleResId, route) {
         object AlertForm : HomeCitizen(
-            "AlertForm",
+            R.string.alert_form,
             "AlertForm",
             R.drawable.alert
         )
 
         object Alert : HomeCitizen(
-            "My Reports",
+            R.string.my_reports,
             "MyReports",
             R.drawable.important
         )
     }
 
-    sealed class HomeEmployee(title: String, route: String, @DrawableRes val icon: Int) : Screen<Any?>(title, route) {
+    sealed class HomeEmployee(titleResId: Int, route: String, @DrawableRes val icon: Int) : Screen<Any?>(titleResId, route) {
         object AlertCitizenForm : HomeEmployee(
-            "AlertForm",
+            R.string.alert_form,
             "AlertForm",
             R.drawable.alert
         )
 
         object GroupEventsByLocation : HomeEmployee(
-            "Events",
+            R.string.events,
             "GroupEventsByLocation",
             R.drawable.event
         )
 
         object MapWithPinnedReports : HomeEmployee(
-            "Map",
+            R.string.map,
             "Map",
             R.drawable.map
         )
