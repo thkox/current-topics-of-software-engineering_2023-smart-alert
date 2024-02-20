@@ -32,7 +32,7 @@ fun HomeEmployeeScreen(navController: NavController? = null){
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            AppBarWithoutBackView(title = "Home Employee Screen", navController = navController)
+            AppBarWithoutBackView(title = stringResource(id = R.string.home), navController = navController)
         },
         floatingActionButton = {
             FloatingActionButton(

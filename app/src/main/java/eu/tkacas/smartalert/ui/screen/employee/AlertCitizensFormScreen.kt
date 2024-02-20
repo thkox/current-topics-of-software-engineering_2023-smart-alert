@@ -22,7 +22,6 @@ import eu.tkacas.smartalert.ui.component.CityTextFieldComponent
 import eu.tkacas.smartalert.ui.component.EnumDropdownComponent
 import eu.tkacas.smartalert.ui.component.GeneralButtonComponent
 import eu.tkacas.smartalert.ui.component.NormalTextComponent
-import eu.tkacas.smartalert.ui.event.ForgotPasswordUIEvent
 
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
 
@@ -33,7 +32,7 @@ fun AlertCitizensFormScreen(navController: NavHostController? = null){
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            AppBarBackView(title = "Alert Citizens Form", navController = navController)
+            AppBarBackView(title = stringResource(id = R.string.alert_form), navController = navController)
         }
     ) {
         Column(
@@ -52,7 +51,7 @@ fun AlertCitizensFormScreen(navController: NavHostController? = null){
                 NormalTextComponent(value = stringResource(id = R.string.city_of_emergency))
                 CityTextFieldComponent(labelValue = stringResource(id = R.string.city))
                 Spacer(modifier = Modifier.size(16.dp))
-                NormalTextComponent(value = stringResource(id = R.string.wheather_phenomenon_selection))
+                NormalTextComponent(value = stringResource(id = R.string.weather_phenomenon_selection))
                 EnumDropdownComponent(CriticalWeatherPhenomenon::class.java)
                 Spacer(modifier = Modifier.size(16.dp))
                 NormalTextComponent(value = stringResource(id = R.string.emergency_level))

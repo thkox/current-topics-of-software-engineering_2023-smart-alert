@@ -78,7 +78,7 @@ fun PreciseLocationPermissionScreen(navController: NavController? = null){
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            AppBarBackView(title = "Precise Location Permission", navController = navController)
+            AppBarBackView(title = stringResource(id = R.string.precise_location_permission), navController = navController)
         }
     ) {
         Column(

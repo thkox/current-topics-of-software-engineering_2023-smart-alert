@@ -39,7 +39,7 @@ fun HomeCitizenScreen(navController: NavController? = null) {
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            AppBarWithoutBackView(title = "Home Citizen Screen", navController = navController)
+            AppBarWithoutBackView(title = stringResource(id = R.string.home), navController = navController)
         },
         floatingActionButton = {
             FloatingActionButton(

@@ -8,9 +8,11 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
 import eu.tkacas.smartalert.ui.navigation.AppBarWithoutBackView
 
@@ -22,7 +24,7 @@ fun AboutScreen(navController: NavController? = null) {
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            AppBarBackView(title = "About", navController = navController)
+            AppBarBackView(title = stringResource(id = R.string.about), navController = navController)
         }
     ) {
         Card(

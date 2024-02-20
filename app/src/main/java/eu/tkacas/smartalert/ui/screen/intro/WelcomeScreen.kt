@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.ui.component.ButtonComponent
+import eu.tkacas.smartalert.ui.component.CenteredCreatorsText
 
 @Composable
 fun WelcomeScreen( navController: NavController? = null) {
@@ -60,12 +61,9 @@ fun WelcomeScreen( navController: NavController? = null) {
                             style = typography.body1
                         )
                     }
-                    Spacer(modifier = Modifier.height(20.dp))
+                    Spacer(modifier = Modifier.height(35.dp))
                     Row {
-                        Text(
-                            text = stringResource(id = R.string.creators),
-                            style = typography.body2.copy(fontSize = 12.sp)
-                        )
+                        CenteredCreatorsText()
                     }
                 }
             }
