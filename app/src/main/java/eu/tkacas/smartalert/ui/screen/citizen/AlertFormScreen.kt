@@ -2,10 +2,8 @@ package eu.tkacas.smartalert.ui.screen.citizen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Scaffold
@@ -21,7 +19,6 @@ import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.ui.component.AlertLevelButtonsRowComponent
 import eu.tkacas.smartalert.ui.component.CameraButton
-import eu.tkacas.smartalert.ui.component.CityTextFieldComponent
 import eu.tkacas.smartalert.ui.component.EnumDropdownComponent
 import eu.tkacas.smartalert.ui.component.GeneralButtonComponent
 import eu.tkacas.smartalert.ui.component.MultilineTextFieldComponent
@@ -35,7 +32,7 @@ fun AlertFormScreen(navController: NavHostController? = null) {
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            AppBarBackView(title = "Create a new Alert", navController = navController)
+            AppBarBackView(title = stringResource(id = R.string.create_a_new_alert), navController = navController)
         }
     ) {
         Column(
@@ -54,7 +51,7 @@ fun AlertFormScreen(navController: NavHostController? = null) {
                 NormalTextComponent(value = stringResource(id = R.string.emergency_level))
                 AlertLevelButtonsRowComponent()
                 Spacer(modifier = Modifier.size(16.dp))
-                NormalTextComponent(value = stringResource(id = R.string.wheather_phenomenon_selection))
+                NormalTextComponent(value = stringResource(id = R.string.weather_phenomenon_selection))
                 EnumDropdownComponent(CriticalWeatherPhenomenon::class.java)
                 Spacer(modifier = Modifier.size(16.dp))
                 NormalTextComponent(value = stringResource(id = R.string.writeADescription))

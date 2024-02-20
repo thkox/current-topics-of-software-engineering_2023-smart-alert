@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -43,6 +44,8 @@ fun SignUpScreen(navController: NavController? = null) {
 
     val signupViewModel: SignupViewModel = viewModel()
     signupViewModel.navController = navController
+
+    val context = LocalContext.current
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -113,8 +116,7 @@ fun SignUpScreen(navController: NavController? = null) {
                 DividerTextComponent()
 
                 ClickableLoginTextComponent(tryingToLogin = true, onTextSelected = {
-                    navController?.navigate("login")
-                })
+                    navController?.navigate("login") }, context = context)
             }
 
 

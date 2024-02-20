@@ -31,6 +31,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
@@ -140,7 +141,9 @@ fun CriticalWeatherPhenomenonCardComponent(weatherPhenomenon: CriticalWeatherPhe
                     painter = painterResource(id = imageResId),
                     //painter = painterResource(id = R.drawable.storm),
                     contentDescription = "Button Image",
-                    modifier = Modifier.size(80.dp).padding(bottom = 8.dp) // Make the image fill the button
+                    modifier = Modifier
+                        .size(80.dp)
+                        .padding(bottom = 8.dp) // Make the image fill the button
                 )
                 Text(
                     text = weatherPhenomenon.name,
@@ -153,7 +156,7 @@ fun CriticalWeatherPhenomenonCardComponent(weatherPhenomenon: CriticalWeatherPhe
 
 @Composable
 fun SettingCard(screen: Screen.SettingsScreen, onClick: () -> Unit) {
-    val color = if(screen.title == "Logout") Color.Red else Color.Black
+    val color = if(screen.titleResId == R.string.logout) Color.Red else Color.Black
 
     Card(
         modifier = Modifier
@@ -177,13 +180,13 @@ fun SettingCard(screen: Screen.SettingsScreen, onClick: () -> Unit) {
                     tint = color
                 )
                 Text(
-                    text = screen.title,
+                    text = stringResource(id = screen.titleResId),
                     style = MaterialTheme.typography.h6,
                     modifier = Modifier.padding(start = 10.dp),
                     color = color
                 )
             }
-            if(screen.title != "Logout") {
+            if(screen.titleResId != R.string.logout) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowForward,
                     contentDescription = "Arrow Icon"
