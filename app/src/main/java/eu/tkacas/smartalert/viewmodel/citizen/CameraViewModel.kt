@@ -1,4 +1,4 @@
-package eu.tkacas.smartalert.viewmodel
+package eu.tkacas.smartalert.viewmodel.citizen
 
 import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel

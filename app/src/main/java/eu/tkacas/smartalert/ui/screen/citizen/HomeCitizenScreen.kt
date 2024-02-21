@@ -1,6 +1,7 @@
 package eu.tkacas.smartalert.ui.screen.citizen
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.IconButton
@@ -20,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -28,6 +30,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import eu.tkacas.smartalert.R
+import eu.tkacas.smartalert.permissions.areAllPermissionsGranted
 import eu.tkacas.smartalert.ui.navigation.AppBarWithoutBackView
 import kotlinx.coroutines.CoroutineScope
 
@@ -35,6 +38,7 @@ import kotlinx.coroutines.CoroutineScope
 @Composable
 fun HomeCitizenScreen(navController: NavController? = null) {
     val scaffoldState = rememberScaffoldState()
+
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -47,10 +51,10 @@ fun HomeCitizenScreen(navController: NavController? = null) {
                 contentColor = Color.White,
                 backgroundColor = Color.Black,
                 onClick = {
-                    navController?.navigate("preciseLocationPermission")
+                    navController?.navigate("alertForm")
                 }
             ){
-                androidx.compose.material.Icon(imageVector = Icons.Default.Add, contentDescription = null)
+                Icon(imageVector = Icons.Default.Add, contentDescription = null)
             }
         }
     ) {

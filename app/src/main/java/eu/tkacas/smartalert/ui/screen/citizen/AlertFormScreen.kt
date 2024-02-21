@@ -34,7 +34,7 @@ import eu.tkacas.smartalert.ui.component.MultilineTextFieldComponent
 import eu.tkacas.smartalert.ui.component.NormalTextComponent
 import eu.tkacas.smartalert.ui.component.PermissionDialog
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
-import eu.tkacas.smartalert.viewmodel.AlertFormViewModel
+import eu.tkacas.smartalert.viewmodel.citizen.AlertFormViewModel
 
 @Composable
 fun AlertFormScreen(navController: NavHostController? = null) {

@@ -29,7 +29,7 @@ import eu.tkacas.smartalert.ui.component.TextFieldComponent
 import eu.tkacas.smartalert.ui.component.PasswordTextFieldComponent
 import eu.tkacas.smartalert.ui.component.UnderLinedTextComponent
 import eu.tkacas.smartalert.ui.event.LoginUIEvent
-import eu.tkacas.smartalert.viewmodel.LoginViewModel
+import eu.tkacas.smartalert.viewmodel.auth.LoginViewModel
 import eu.tkacas.smartalert.R.string.welcome_to_smart_alert_app
 
 @Composable

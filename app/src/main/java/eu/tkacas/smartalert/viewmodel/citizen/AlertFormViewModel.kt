@@ -1,9 +1,9 @@
-package eu.tkacas.smartalert.viewmodel
+package eu.tkacas.smartalert.viewmodel.citizen
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 
-class PreciseLocationViewModel: ViewModel() {
+class AlertFormViewModel: ViewModel() {
 
     val visiblePermissionDialogQueue = mutableStateListOf<String>()
 
@@ -21,5 +21,4 @@ class PreciseLocationViewModel: ViewModel() {
             }
         }
     }
-
 }

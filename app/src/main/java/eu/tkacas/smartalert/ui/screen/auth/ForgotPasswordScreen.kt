@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -22,15 +20,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.ui.component.BackToLoginComponent
-import eu.tkacas.smartalert.ui.component.ClickableLoginTextComponent
 import eu.tkacas.smartalert.ui.component.GeneralButtonComponent
 import eu.tkacas.smartalert.ui.component.HeadingTextComponent
 import eu.tkacas.smartalert.ui.component.NormalTextComponent
 import eu.tkacas.smartalert.ui.component.TextFieldComponent
 import eu.tkacas.smartalert.ui.event.ForgotPasswordUIEvent
-import eu.tkacas.smartalert.ui.event.LoginUIEvent
-import eu.tkacas.smartalert.viewmodel.ForgotPasswordViewModel
-import eu.tkacas.smartalert.viewmodel.LoginViewModel
+import eu.tkacas.smartalert.viewmodel.auth.ForgotPasswordViewModel
 
 
 @Composable
