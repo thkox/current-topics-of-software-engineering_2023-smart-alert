@@ -169,8 +169,11 @@ fun PasswordTextFieldComponent(
 
 @Preview
 @Composable
-fun MultilineTextFieldComponent(){
-    var text by remember { mutableStateOf("") }
+fun MultilineTextFieldComponent(
+    value: String,
+    onTextChanged: (String) -> Unit
+){
+    var text by remember { mutableStateOf(value) }
 
     OutlinedTextField(
         modifier = Modifier
@@ -183,6 +186,7 @@ fun MultilineTextFieldComponent(){
         onValueChange = {input ->
             if (input.length <= 250) {
                 text = input
+                onTextChanged(input)
             }
         },
         trailingIcon = {
