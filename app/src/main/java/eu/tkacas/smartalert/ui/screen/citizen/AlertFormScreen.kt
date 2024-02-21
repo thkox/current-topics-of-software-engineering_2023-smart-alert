@@ -76,7 +76,7 @@ fun AlertFormScreen(navController: NavHostController? = null) {
         topBar = {
             AppBarBackView(title = stringResource(id = R.string.create_a_new_alert), navController = navController)
         }
-    ) {
+    ) { it ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -91,13 +91,29 @@ fun AlertFormScreen(navController: NavHostController? = null) {
             ){
                 Spacer(modifier = Modifier.size(80.dp))
                 NormalTextComponent(value = stringResource(id = R.string.emergency_level))
-                AlertLevelButtonsRowComponent()
+                AlertLevelButtonsRowComponent(
+                    initialValue = viewModel.selectedDangerLevelButton.value,
+                    onButtonClicked = {
+                        viewModel.setSelectedDangerLevelButton(it)
+                    }
+                )
                 Spacer(modifier = Modifier.size(16.dp))
                 NormalTextComponent(value = stringResource(id = R.string.weather_phenomenon_selection))
-                EnumDropdownComponent(CriticalWeatherPhenomenon::class.java)
+                EnumDropdownComponent(
+                    CriticalWeatherPhenomenon::class.java,
+                    initialSelection = viewModel.selectedWeatherPhenomenon.value,
+                    onSelected = {
+                        viewModel.setSelectedWeatherPhenomenon(it)
+                    }
+                )
                 Spacer(modifier = Modifier.size(16.dp))
                 NormalTextComponent(value = stringResource(id = R.string.writeADescription))
-                MultilineTextFieldComponent()
+                MultilineTextFieldComponent(
+                    value = viewModel.alertDescription.value,
+                    onTextChanged = {
+                        viewModel.setAlertDescription(it)
+                    }
+                )
                 Spacer(modifier = Modifier.size(16.dp))
                 NormalTextComponent(value = stringResource(id = R.string.takeAPicture))
                 Spacer(modifier = Modifier.size(8.dp))
@@ -113,7 +129,7 @@ fun AlertFormScreen(navController: NavHostController? = null) {
                 GeneralButtonComponent(
                     value = stringResource(id = R.string.submit),
                     onButtonClicked = {
-                        //TODO Add the logic to submit the alert
+                        viewModel.sentAlert()
                     }
                 )
             }
