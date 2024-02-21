@@ -40,7 +40,7 @@ fun HomeEmployeeScreen(navController: NavController? = null){
                 contentColor = Color.White,
                 backgroundColor = Color.Black,
                 onClick = {
-                    navController?.navigate("alertcitizensform")
+                    navController?.navigate("alertCitizensForm")
                 }
             ){
                 Icon(imageVector = Icons.Default.Add, contentDescription = null)

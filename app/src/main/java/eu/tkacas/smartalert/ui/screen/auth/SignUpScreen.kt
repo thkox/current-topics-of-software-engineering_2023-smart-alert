@@ -36,7 +36,7 @@ import eu.tkacas.smartalert.ui.component.DividerTextComponent
 import eu.tkacas.smartalert.ui.component.TextFieldComponent
 import eu.tkacas.smartalert.ui.component.PasswordTextFieldComponent
 import eu.tkacas.smartalert.ui.event.SignupUIEvent
-import eu.tkacas.smartalert.viewmodel.SignupViewModel
+import eu.tkacas.smartalert.viewmodel.auth.SignupViewModel
 
 
 @Composable

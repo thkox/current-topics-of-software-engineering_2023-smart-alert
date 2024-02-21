@@ -1,10 +1,9 @@
-package eu.tkacas.smartalert.viewmodel
+package eu.tkacas.smartalert.viewmodel.auth
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import eu.tkacas.smartalert.data.rules.Validator

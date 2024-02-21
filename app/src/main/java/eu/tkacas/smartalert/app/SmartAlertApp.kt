@@ -5,15 +5,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import eu.tkacas.smartalert.viewmodel.HomeViewModel
+import eu.tkacas.smartalert.viewmodel.citizen.HomeCitizenViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import eu.tkacas.smartalert.ui.navigation.Navigation
-import eu.tkacas.smartalert.ui.screen.citizen.HomeCitizenScreen
 
 
 @Composable
-fun SmartAlertApp(homeViewModel: HomeViewModel = viewModel()) {
+fun SmartAlertApp(homeViewModel: HomeCitizenViewModel = viewModel()) {
 
     // homeViewModel.checkForActiveSession()
 

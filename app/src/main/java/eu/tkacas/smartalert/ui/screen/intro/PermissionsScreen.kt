@@ -35,7 +35,7 @@ import eu.tkacas.smartalert.ui.component.LocationPermissionTextProvider
 import eu.tkacas.smartalert.ui.component.PermissionCard
 import eu.tkacas.smartalert.ui.component.PermissionDialog
 import eu.tkacas.smartalert.ui.component.REDUnderLinedTextComponent
-import eu.tkacas.smartalert.viewmodel.PermissionsViewModel
+import eu.tkacas.smartalert.viewmodel.intro.PermissionsViewModel
 
 
 @Composable
@@ -44,7 +44,7 @@ fun PermissionsScreen(navController: NavController? = null) {
     val context = LocalContext.current
 
     val permissionsToRequest = arrayOf(
-        Manifest.permission.ACCESS_COARSE_LOCATION,
+        Manifest.permission.ACCESS_FINE_LOCATION,
         Manifest.permission.ACCESS_BACKGROUND_LOCATION,
     )
 
@@ -61,7 +61,7 @@ fun PermissionsScreen(navController: NavController? = null) {
         contract = ActivityResultContracts.RequestPermission(),
         onResult = { isGranted ->
             viewModel.onPermissionResult(
-                permission = Manifest.permission.ACCESS_COARSE_LOCATION,
+                permission = Manifest.permission.ACCESS_FINE_LOCATION,
                 isGranted = isGranted
             )
             switchStateCoarseLocation.value = isGranted
@@ -73,7 +73,7 @@ fun PermissionsScreen(navController: NavController? = null) {
         onResult = { perms ->
             permissionsToRequest.forEach { permission ->
                 when (permission) {
-                    Manifest.permission.ACCESS_COARSE_LOCATION -> switchStateCoarseLocation.value = perms[permission] == true
+                    Manifest.permission.ACCESS_FINE_LOCATION -> switchStateCoarseLocation.value = perms[permission] == true
                 }
             }
         }
@@ -88,7 +88,7 @@ fun PermissionsScreen(navController: NavController? = null) {
 
         switchStateCoarseLocation.value = ContextCompat.checkSelfPermission(
             context,
-            Manifest.permission.ACCESS_COARSE_LOCATION
+            Manifest.permission.ACCESS_FINE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
     }
 
@@ -111,7 +111,7 @@ fun PermissionsScreen(navController: NavController? = null) {
             onToggleClick = {
                 if (switchStateCoarseLocation.value) {
                     locationPermissionResultLauncher.launch(
-                        Manifest.permission.ACCESS_COARSE_LOCATION
+                        Manifest.permission.ACCESS_FINE_LOCATION
                     )
                 }
             })
@@ -145,7 +145,7 @@ fun PermissionsScreen(navController: NavController? = null) {
         .forEach { permission ->
             PermissionDialog(
                 permissionTextProvider = when (permission) {
-                    Manifest.permission.ACCESS_COARSE_LOCATION -> {
+                    Manifest.permission.ACCESS_FINE_LOCATION -> {
                         LocationPermissionTextProvider()
                     }
                     Manifest.permission.ACCESS_BACKGROUND_LOCATION -> {

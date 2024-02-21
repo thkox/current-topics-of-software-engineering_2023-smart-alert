@@ -1,4 +1,4 @@
-package eu.tkacas.smartalert.viewmodel
+package eu.tkacas.smartalert.viewmodel.auth
 
 import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf

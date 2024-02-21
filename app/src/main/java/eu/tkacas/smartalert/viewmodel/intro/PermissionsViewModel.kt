@@ -1,4 +1,4 @@
-package eu.tkacas.smartalert.viewmodel
+package eu.tkacas.smartalert.viewmodel.intro
 
 import android.Manifest
 import androidx.compose.runtime.MutableState
@@ -22,7 +22,7 @@ class PermissionsViewModel: ViewModel() {
     ) {
         if(!isGranted) {
             when (permission) {
-                Manifest.permission.ACCESS_COARSE_LOCATION -> switchStateCoarseLocation.value = false
+                Manifest.permission.ACCESS_FINE_LOCATION -> switchStateCoarseLocation.value = false
             }
             if (!visiblePermissionDialogQueue.contains(permission)) {
                 visiblePermissionDialogQueue.add(permission)
