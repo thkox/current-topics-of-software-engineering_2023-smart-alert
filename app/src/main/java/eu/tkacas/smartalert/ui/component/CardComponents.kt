@@ -127,15 +127,12 @@ fun CriticalWeatherPhenomenonCardComponent(navController : NavController? = null
     Card(
         modifier = Modifier
             .fillMaxSize()
-            .padding(12.dp)
-            .clickable {
-                       navController?.navigate("GroupEventsByLocation")
-            },
+            .padding(12.dp),
         shape = RoundedCornerShape(20.dp),
         elevation = 4.dp
     ) {
         Button(
-            onClick = { /* Do something when button is clicked */ },
+            onClick = { navController?.navigate("GroupEventsByLocation") },
             modifier = Modifier.fillMaxSize(),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.White),
