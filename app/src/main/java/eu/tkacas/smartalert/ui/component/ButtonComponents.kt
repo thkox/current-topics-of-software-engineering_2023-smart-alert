@@ -203,6 +203,8 @@ fun CameraButton(onButtonClicked: () -> Unit) {
 fun UploadPhotoButton(
     onButtonClicked: () -> Unit
 ) {
+
+    
     Button(
         modifier = Modifier
             .width(100.dp)
