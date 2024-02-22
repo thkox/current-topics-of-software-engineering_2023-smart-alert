@@ -58,4 +58,6 @@
     <string name="heatwave">Καύσωνας</string>
     <string name="snowstorm">Χιονοθύελλα</string>
     <string name="storm">Καταιγίδα</string>
+    <string name="greek_language">Ελληνικά (EL)</string>
+    <string name="english_language">Αγγλικά (US)</string>
 </resources>

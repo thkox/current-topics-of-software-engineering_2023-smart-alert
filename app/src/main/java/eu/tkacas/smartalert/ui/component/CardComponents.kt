@@ -1,5 +1,7 @@
 package eu.tkacas.smartalert.ui.component
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -280,6 +282,44 @@ fun PermissionCard(
                         style = TextStyle(fontSize = 14.sp)
                     )
                 }
+            }
+        }
+    }
+}
+
+@Composable
+fun LanguageCard(
+    onClick: () -> Unit,
+    @DrawableRes imageResId: Int,
+    @StringRes textResId: Int
+) {
+
+    Card(
+        modifier = Modifier
+            .clickable(onClick = onClick)
+            .fillMaxWidth()
+            .padding(6.dp),
+        elevation = 8.dp
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Image(
+                    painter = painterResource(id = imageResId),
+                    contentDescription = null,
+                    modifier = Modifier.size(35.dp),
+                )
+                Text(
+                    text = stringResource(id = textResId),
+                    style = MaterialTheme.typography.h6,
+                    modifier = Modifier.padding(start = 10.dp),
+                    color = Color.Black
+                )
             }
         }
     }
