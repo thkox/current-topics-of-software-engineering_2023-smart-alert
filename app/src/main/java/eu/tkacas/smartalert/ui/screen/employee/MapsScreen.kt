@@ -17,7 +17,7 @@ import eu.tkacas.smartalert.ui.navigation.AppBarBackView
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun MapWithPinnedReportsScreen(navController: NavController? = null){
+fun MapsScreen(navController: NavController? = null) {
     val scaffoldState = rememberScaffoldState()
 
     var cameraPositioState = rememberCameraPositionState{
@@ -45,6 +45,6 @@ fun MapWithPinnedReportsScreen(navController: NavController? = null){
 
 @Preview
 @Composable
-fun MapWithPinnedReportsScreenPreview(){
-    MapWithPinnedReportsScreen()
+fun MapsScreenPreview() {
+    MapsScreen()
 }
