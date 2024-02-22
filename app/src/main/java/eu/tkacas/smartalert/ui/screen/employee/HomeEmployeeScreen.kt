@@ -21,7 +21,6 @@ import androidx.navigation.NavController
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.ui.component.CriticalWeatherPhenomenonCardComponent
-import eu.tkacas.smartalert.ui.component.NormalTextComponent
 import eu.tkacas.smartalert.ui.navigation.AppBarWithoutBackView
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
