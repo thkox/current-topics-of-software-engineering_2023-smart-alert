@@ -58,4 +58,6 @@
     <string name="heatwave">Heatwave</string>
     <string name="snowstorm">Snowstorm</string>
     <string name="storm">Storm</string>
+    <string name="greek_language">Greek (EL)</string>
+    <string name="english_language">English (US)</string>
 </resources>
