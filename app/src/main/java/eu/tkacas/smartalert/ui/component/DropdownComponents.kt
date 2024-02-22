@@ -18,12 +18,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import eu.tkacas.smartalert.R
+import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 
 @Composable
-fun <T : Enum<T>> EnumDropdownComponent(enumClass: Class<T>) {
+fun <T : Enum<T>> EnumDropdownComponent(
+    enumClass: Class<T>,
+    initialSelection: T,
+    onSelected: (T) -> Unit
+) {
     var expanded by remember { mutableStateOf(false) }
     val enumValues = enumClass.enumConstants
-    var selectedValue by remember { mutableStateOf(enumValues[0]) }
+    var selectedValue by remember { mutableStateOf(initialSelection) }
 
     Box {
         Button(
@@ -44,6 +49,7 @@ fun <T : Enum<T>> EnumDropdownComponent(enumClass: Class<T>) {
                 DropdownMenuItem(
                     onClick = {
                         selectedValue = value
+                        onSelected(value)
                         expanded = false
                     },
                     modifier = Modifier.background(colorResource(id = R.color.colorBlue))

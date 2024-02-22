@@ -3,7 +3,9 @@ package eu.tkacas.smartalert.ui.screen.citizen.Camera
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Matrix
+import android.util.JsonReader
 import android.util.Log
+import android.widget.Toast
 import androidx.camera.core.ImageCapture.OnImageCapturedCallback
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.ImageProxy
@@ -29,22 +31,26 @@ import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import eu.tkacas.smartalert.models.CitizenMessage
 import eu.tkacas.smartalert.ui.theme.BlueColor
 import eu.tkacas.smartalert.viewmodel.citizen.CameraViewModel
 import kotlinx.coroutines.launch
 
+
+
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CameraScreen(navController: NavHostController? = null) {
+fun CameraScreen(navController: NavHostController? = null){
     val scope = rememberCoroutineScope()
     val scaffoldState = rememberBottomSheetScaffoldState()
     val context = LocalContext.current
@@ -67,9 +73,18 @@ fun CameraScreen(navController: NavHostController? = null) {
                 modifier = Modifier
                     .fillMaxWidth(),
                 onPhotoSelected = { bitmap ->
-                    // TODO upload photo
-                    // TODO keep the url of the photo
-                    // TODO return to AlertFormScreen
+                    scope.launch {
+                        val citizenMessage = viewModel.getCitizenMessageFromPrefs(context)
+                        citizenMessage?.imageURL = viewModel.uploadPhotoToCloudStorage(bitmap = bitmap)
+                        if (citizenMessage?.imageURL != "") {
+                            viewModel.saveCitizenMessageToPrefs(context, citizenMessage)
+                            Toast.makeText(context, "Image uploaded successfully", Toast.LENGTH_SHORT).show()
+                            navController?.navigate("alertForm")
+                        } else {
+                            Log.d("CameraScreen", "Image URL is empty")
+                            Toast.makeText(context, "The image did not upload correctly, please try again later", Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 }
             )
         }
@@ -118,7 +133,7 @@ fun CameraScreen(navController: NavHostController? = null) {
                             shape = RoundedCornerShape(30.dp)
                         ),
                     onClick = {
-                        takePhoto(
+                        viewModel.takePhoto(
                             controller = controller,
                             onPhotoTaken = viewModel::onTakePhoto,
                             context = context
@@ -140,38 +155,3 @@ fun CameraScreen(navController: NavHostController? = null) {
     }
 }
 
-private fun takePhoto(
-    controller: LifecycleCameraController,
-    onPhotoTaken: (Bitmap) -> Unit,
-    context: Context
-) {
-    controller.takePicture(
-        ContextCompat.getMainExecutor(context),
-        object : OnImageCapturedCallback() {
-            override fun onCaptureSuccess(image: ImageProxy) {
-                super.onCaptureSuccess(image)
-
-                val matrix = Matrix().apply{
-                    postRotate(image.imageInfo.rotationDegrees.toFloat())
-                }
-
-                val rotatedBitmap = Bitmap.createBitmap(
-                    image.toBitmap(),
-                    0,
-                    0,
-                    image.width,
-                    image.height,
-                    matrix,
-                    true
-                )
-
-                onPhotoTaken(rotatedBitmap)
-            }
-
-            override fun onError(exception: ImageCaptureException) {
-                super.onError(exception)
-                Log.e("Camera", "Coudn't take photo: ", exception)
-            }
-        }
-    )
-}

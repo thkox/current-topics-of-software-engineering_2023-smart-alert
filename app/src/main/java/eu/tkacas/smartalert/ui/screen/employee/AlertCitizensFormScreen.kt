@@ -52,10 +52,19 @@ fun AlertCitizensFormScreen(navController: NavHostController? = null){
                 CityTextFieldComponent(labelValue = stringResource(id = R.string.city))
                 Spacer(modifier = Modifier.size(16.dp))
                 NormalTextComponent(value = stringResource(id = R.string.weather_phenomenon_selection))
-                EnumDropdownComponent(CriticalWeatherPhenomenon::class.java)
+                EnumDropdownComponent(
+                    CriticalWeatherPhenomenon::class.java,
+                    initialSelection = CriticalWeatherPhenomenon.EARTHQUAKE,
+                    onSelected = {
+
+                    })
                 Spacer(modifier = Modifier.size(16.dp))
                 NormalTextComponent(value = stringResource(id = R.string.emergency_level))
-                AlertLevelButtonsRowComponent()
+                AlertLevelButtonsRowComponent(
+                    onButtonClicked = {
+
+                    }
+                )
                 Spacer(modifier = Modifier.size(80.dp))
                 GeneralButtonComponent(
                     value = stringResource(id = R.string.submit),
