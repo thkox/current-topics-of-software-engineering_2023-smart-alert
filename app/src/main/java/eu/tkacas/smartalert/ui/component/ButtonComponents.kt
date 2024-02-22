@@ -76,58 +76,68 @@ fun ButtonComponent(value: String, onButtonClicked: () -> Unit, isEnabled: Boole
 }
 
 @Composable
-fun AlertLevelButtonsRowComponent() {
-    var selectedDangerLevelButton by remember { mutableStateOf(1) }
+fun AlertLevelButtonsRowComponent(
+    initialValue: Int = 1,
+    onButtonClicked: (Int) -> Unit) {
+    var value by remember { mutableStateOf(initialValue) }
 
     Row(
         horizontalArrangement = Arrangement.SpaceEvenly
         ){
         Button(
-            onClick = { selectedDangerLevelButton = 1 },
+            onClick = {
+                value = 1
+                onButtonClicked(value)
+            },
             enabled = true,
             colors = ButtonDefaults.buttonColors(
-                containerColor = if (selectedDangerLevelButton == 1) YellowColor else Color.LightGray,
+                containerColor = if (value == 1) YellowColor else Color.LightGray,
             ),
             shape = RoundedCornerShape(10.dp),
             modifier = Modifier
                 .height(50.dp)
-                .let { if (selectedDangerLevelButton == 1) it.border(2.dp, Color.Black, RoundedCornerShape(10.dp)) else it }
+                .let { if (value == 1) it.border(2.dp, Color.Black, RoundedCornerShape(10.dp)) else it }
         ){
             Text(
                 text = stringResource(id = R.string.low),
-                color = if (selectedDangerLevelButton == 1) Color.Black else Color.White
+                color = if (value == 1) Color.Black else Color.White
             )
         }
         Button(
-            onClick = { selectedDangerLevelButton = 2 },
+            onClick = {
+                value = 2
+                onButtonClicked(value)
+            },
             enabled = true,
             colors = ButtonDefaults.buttonColors(
-                containerColor = if (selectedDangerLevelButton == 2) OrangeColor else Color.LightGray,
+                containerColor = if (value == 2) OrangeColor else Color.LightGray,
             ),
             shape = RoundedCornerShape(10.dp),
             modifier = Modifier
                 .height(50.dp)
-                .let { if (selectedDangerLevelButton == 2) it.border(2.dp, Color.Black, RoundedCornerShape(10.dp)) else it }
+                .let { if (value == 2) it.border(2.dp, Color.Black, RoundedCornerShape(10.dp)) else it }
         ){
             Text(
                 text = stringResource(id = R.string.medium),
-                color = if (selectedDangerLevelButton == 2) Color.Black else Color.White
+                color = if (value == 2) Color.Black else Color.White
                 )
         }
         Button(
-            onClick = { selectedDangerLevelButton = 3 },
+            onClick = { value = 3
+                onButtonClicked(value)
+            },
             enabled = true,
             colors = ButtonDefaults.buttonColors(
-                containerColor = if (selectedDangerLevelButton == 3) Color.Red else Color.LightGray,
+                containerColor = if (value == 3) Color.Red else Color.LightGray,
             ),
             shape = RoundedCornerShape(10.dp),
             modifier = Modifier
                 .height(50.dp)
-                .let { if (selectedDangerLevelButton == 3) it.border(2.dp, Color.Black, RoundedCornerShape(10.dp)) else it }
+                .let { if (value == 3) it.border(2.dp, Color.Black, RoundedCornerShape(10.dp)) else it }
         ){
             Text(
                 text = stringResource(id = R.string.high),
-                color = if (selectedDangerLevelButton == 3) Color.Black else Color.White
+                color = if (value == 3) Color.Black else Color.White
             )
         }
     }
@@ -193,6 +203,8 @@ fun CameraButton(onButtonClicked: () -> Unit) {
 fun UploadPhotoButton(
     onButtonClicked: () -> Unit
 ) {
+
+    
     Button(
         modifier = Modifier
             .width(100.dp)

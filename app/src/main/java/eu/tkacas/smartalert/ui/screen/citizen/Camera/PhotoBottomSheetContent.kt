@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,6 +28,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.unit.dp
 import eu.tkacas.smartalert.ui.component.UploadPhotoButton
 import eu.tkacas.smartalert.ui.theme.BlueColor
+import kotlinx.coroutines.launch
 
 @Composable
 fun PhotoBottomSheetContent(
@@ -35,6 +37,7 @@ fun PhotoBottomSheetContent(
     onPhotoSelected: (Bitmap) -> Unit
 ) {
     var selectedBitmap by remember { mutableStateOf<Bitmap?>(null) }
+    val scope = rememberCoroutineScope()
 
     if(bitmaps.isEmpty()) {
         Box(
@@ -70,7 +73,13 @@ fun PhotoBottomSheetContent(
                     .padding(16.dp),
                 horizontalArrangement = Arrangement.End
             ){
-                UploadPhotoButton { onPhotoSelected(selectedBitmap!!) }
+                UploadPhotoButton(
+                    onButtonClicked = {
+                        scope.launch {
+                            onPhotoSelected(selectedBitmap!!)
+                        }
+                    }
+                )
             }
         }
     }

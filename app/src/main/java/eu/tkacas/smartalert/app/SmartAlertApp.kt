@@ -13,8 +13,6 @@ import eu.tkacas.smartalert.ui.navigation.Navigation
 @Composable
 fun SmartAlertApp(homeViewModel: HomeCitizenViewModel = viewModel()) {
 
-    // homeViewModel.checkForActiveSession()
-
     Surface (
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
