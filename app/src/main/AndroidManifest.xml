@@ -25,6 +25,11 @@
         android:theme="@style/Theme.SmartAlert"
         android:localeConfig="@xml/locale_config"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyB8zZbZamf3E8FDVv_tsdFuI_w6NWjxyXw" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
