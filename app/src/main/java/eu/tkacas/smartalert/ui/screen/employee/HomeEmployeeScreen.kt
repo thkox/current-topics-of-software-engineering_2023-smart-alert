@@ -53,8 +53,8 @@ fun HomeEmployeeScreen(navController: NavController? = null){
             LazyVerticalGrid(
                 GridCells.Fixed(2)
             ) {
-                items(CriticalWeatherPhenomenon.values().size) {index ->
-                    CriticalWeatherPhenomenonCardComponent(CriticalWeatherPhenomenon.values()[index])
+                items(CriticalWeatherPhenomenon.entries.size) { index ->
+                    CriticalWeatherPhenomenonCardComponent(navController, CriticalWeatherPhenomenon.entries[index])
                 }
             }
         }

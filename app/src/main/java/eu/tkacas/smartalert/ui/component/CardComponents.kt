@@ -28,13 +28,12 @@ import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.ui.screen.Screen
@@ -72,11 +71,21 @@ fun CardComponent(iconResId: Int) {
 
 @Preview
 @Composable
-fun CardComponentWithImage() {
+fun CardComponentWithImage(
+    address: String = "Kifissia, Athens",
+    emLevel: String = "Emergency level",
+    message: String = "Tap to show the message",
+) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp)
+            .clickable {
+
+        },
         shape = RoundedCornerShape(10.dp),
-        elevation = 4.dp){
+        elevation = 4.dp,
+        ){
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(8.dp)
@@ -94,21 +103,18 @@ fun CardComponentWithImage() {
                             .padding(horizontal = 5.dp)
                     )
                     Column(){
-                        Text(text = "Address")
-                        Text(text = "Emergency level")
-                        Text(text = "Tap to show the message")
+                        Text(text = address)
+                        Text(text = emLevel)
+                        Text(text = message)
                     }
                 }
-            }
-            Column(){
-
             }
         }
     }
 }
 
 @Composable
-fun CriticalWeatherPhenomenonCardComponent(weatherPhenomenon: CriticalWeatherPhenomenon) {
+fun CriticalWeatherPhenomenonCardComponent(navController : NavController? = null, weatherPhenomenon: CriticalWeatherPhenomenon) {
     val imageResId = when(weatherPhenomenon) {
         CriticalWeatherPhenomenon.EARTHQUAKE -> R.drawable.earthquake
         CriticalWeatherPhenomenon.FLOOD -> R.drawable.flood
@@ -121,7 +127,10 @@ fun CriticalWeatherPhenomenonCardComponent(weatherPhenomenon: CriticalWeatherPhe
     Card(
         modifier = Modifier
             .fillMaxSize()
-            .padding(12.dp),
+            .padding(12.dp)
+            .clickable {
+                       navController?.navigate("GroupEventsByLocation")
+            },
         shape = RoundedCornerShape(20.dp),
         elevation = 4.dp
     ) {
@@ -277,17 +286,4 @@ fun PermissionCard(
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun PermissionCardPreview() {
-    val isExpanded = remember { mutableStateOf(false) }
-    val switchState = remember { mutableStateOf(false) }
-    PermissionCard(
-        iconResId = R.drawable.location_pin,
-        permissionName = "Location",
-        isExpanded = isExpanded,
-        switchState = switchState
-    )
 }
