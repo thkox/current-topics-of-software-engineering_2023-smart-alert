@@ -18,6 +18,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,7 +31,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.smartalert.R
@@ -96,7 +96,13 @@ fun AlertLevelButtonsRowComponent(
             shape = RoundedCornerShape(10.dp),
             modifier = Modifier
                 .height(50.dp)
-                .let { if (value == 1) it.border(2.dp, Color.Black, RoundedCornerShape(10.dp)) else it }
+                .let {
+                    if (value == 1) it.border(
+                        2.dp,
+                        Color.Black,
+                        RoundedCornerShape(10.dp)
+                    ) else it
+                }
         ){
             Text(
                 text = stringResource(id = R.string.low),
@@ -115,7 +121,13 @@ fun AlertLevelButtonsRowComponent(
             shape = RoundedCornerShape(10.dp),
             modifier = Modifier
                 .height(50.dp)
-                .let { if (value == 2) it.border(2.dp, Color.Black, RoundedCornerShape(10.dp)) else it }
+                .let {
+                    if (value == 2) it.border(
+                        2.dp,
+                        Color.Black,
+                        RoundedCornerShape(10.dp)
+                    ) else it
+                }
         ){
             Text(
                 text = stringResource(id = R.string.medium),
@@ -133,7 +145,13 @@ fun AlertLevelButtonsRowComponent(
             shape = RoundedCornerShape(10.dp),
             modifier = Modifier
                 .height(50.dp)
-                .let { if (value == 3) it.border(2.dp, Color.Black, RoundedCornerShape(10.dp)) else it }
+                .let {
+                    if (value == 3) it.border(
+                        2.dp,
+                        Color.Black,
+                        RoundedCornerShape(10.dp)
+                    ) else it
+                }
         ){
             Text(
                 text = stringResource(id = R.string.high),
@@ -225,3 +243,12 @@ fun UploadPhotoButton(
         Icon(painter = painterResource(id = R.drawable.upload), contentDescription = "Upload Photo")
     }
 }
+
+//@Composable
+//fun FloatingActionButtonSample(onClick: () -> Unit, function: () -> Unit) {
+//    FloatingActionButton(
+//        onClick = { /*TODO*/ },
+//    ) {
+//        Icon(painterResource(id = R.drawable.edit), contentDescription = "Localized description")
+//    }
+//}
