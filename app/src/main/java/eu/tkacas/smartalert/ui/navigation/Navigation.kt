@@ -13,10 +13,10 @@ import eu.tkacas.smartalert.ui.screen.Screen
 import eu.tkacas.smartalert.ui.screen.citizen.HomeCitizenScreen
 import eu.tkacas.smartalert.ui.screen.settings.*
 import androidx.navigation.NavHostController
-import com.google.firebase.auth.FirebaseAuth
-import com.google.gson.Gson
-import eu.tkacas.smartalert.models.CitizenMessage
+import eu.tkacas.smartalert.cloud.userExists
+import eu.tkacas.smartalert.cloud.userIsEmployee
 import eu.tkacas.smartalert.ui.screen.auth.ForgotPasswordScreen
+import eu.tkacas.smartalert.cloud.signOutUser
 import eu.tkacas.smartalert.ui.screen.auth.LoginScreen
 import eu.tkacas.smartalert.ui.screen.auth.SignUpScreen
 import eu.tkacas.smartalert.ui.screen.auth.TermsAndConditionsScreen
@@ -37,7 +37,7 @@ import eu.tkacas.smartalert.ui.screen.screensInSettings
 fun Navigation(navController: NavController = rememberNavController()) {
 
     val startDestination =
-        if (FirebaseAuth.getInstance().currentUser != null ) {
+        if (userExists()) {
             "home"
         } else {
             "welcome"
@@ -70,9 +70,9 @@ fun Navigation(navController: NavController = rememberNavController()) {
         composable("camera") { CameraScreen(navController) }
         composable("home") {
             if(ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                if (FirebaseAuth.getInstance().currentUser != null && FirebaseAuth.getInstance().currentUser?.email?.contains("@civilprotection.gr") == true) {
+                if (userExists() && userIsEmployee()) {
                     HomeEmployeeScreen(navController)
-                } else if (FirebaseAuth.getInstance().currentUser != null) {
+                } else if (userExists()) {
                     HomeCitizenScreen(navController)
                 } else {
                     // Redirect to login screen if user is not authenticated
@@ -87,7 +87,7 @@ fun Navigation(navController: NavController = rememberNavController()) {
 
         screensInHomeCitizen.forEach { screen ->
             composable(screen.route) {
-                if (FirebaseAuth.getInstance().currentUser != null) {
+                if (userExists()) {
                     when (screen) {
                         is Screen.HomeCitizen.AlertForm -> AlertFormScreen(navController)
                         is Screen.HomeCitizen.Alert -> AlertScreen(navController)
@@ -101,7 +101,7 @@ fun Navigation(navController: NavController = rememberNavController()) {
 
         screensInHomeEmployee.forEach { screen ->
             composable(screen.route) {
-                if (FirebaseAuth.getInstance().currentUser != null && FirebaseAuth.getInstance().currentUser?.email?.contains("@civilprotection.gr") == true) {
+                if (userExists() && userIsEmployee()) {
                     when (screen) {
                         is Screen.HomeEmployee.AlertCitizenForm -> AlertCitizensFormScreen(navController)
                         is Screen.HomeEmployee.GroupEventsByLocation -> GroupEventsByLocationScreen(navController)
@@ -122,7 +122,7 @@ fun Navigation(navController: NavController = rememberNavController()) {
                     is Screen.SettingsScreen.Analytics -> AnalyticsScreen(navController)
                     is Screen.SettingsScreen.About -> AboutScreen(navController)
                     is Screen.SettingsScreen.Logout -> {
-                        FirebaseAuth.getInstance().signOut()
+                        signOutUser()
                         navController.navigate("welcome")
                     }
                 }

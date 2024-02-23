@@ -1,6 +1,8 @@
 package eu.tkacas.smartalert.ui.screen.citizen
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.FloatingActionButton
@@ -27,18 +29,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import eu.tkacas.smartalert.R
-import eu.tkacas.smartalert.permissions.areAllPermissionsGranted
 import eu.tkacas.smartalert.ui.navigation.AppBarWithoutBackView
-import kotlinx.coroutines.CoroutineScope
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun HomeCitizenScreen(navController: NavController? = null) {
     val scaffoldState = rememberScaffoldState()
-
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -60,7 +57,6 @@ fun HomeCitizenScreen(navController: NavController? = null) {
     ) {
         Card (
             modifier = Modifier.padding(16.dp)
-
         ) {
             Text("Home Citizen Screen")
         }
