@@ -5,6 +5,7 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -29,6 +30,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -321,6 +323,19 @@ fun LanguageCard(
                     color = Color.Black
                 )
             }
+        }
+    }
+}
+
+
+@Composable
+fun ClickableElevatedCardSample() {
+    ElevatedCard(
+        //onClick = { /* Do something */ },
+        modifier = Modifier.size(width = 150.dp, height = 500.dp)
+    ) {
+        Box(Modifier.fillMaxSize()) {
+            Text("Clickable", Modifier.align(Alignment.Center))
         }
     }
 }
