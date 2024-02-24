@@ -3,7 +3,12 @@ package eu.tkacas.smartalert.cloud
 import android.widget.Toast
 import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import eu.tkacas.smartalert.models.ListOfLocationCriticalWeatherPhenomenonData
+import eu.tkacas.smartalert.models.LocationCriticalWeatherPhenomenonData
 
 fun userExists() : Boolean {
     return FirebaseAuth.getInstance().currentUser != null
@@ -12,10 +17,6 @@ fun userExists() : Boolean {
 fun getUserID() : String {
     return FirebaseAuth.getInstance().currentUser?.uid ?: ""
 }
-
-//fun userIsEmployee() : Boolean {
-//    return userExists() && FirebaseAuth.getInstance().currentUser?.email?.contains("@civilprotection.gr") == true
-//}
 
 fun signOutUser() {
     FirebaseAuth.getInstance().signOut()
@@ -68,4 +69,29 @@ fun createUser(email: String, password: String, firstName: String, lastName: Str
 }
 
 fun storageRef() = FirebaseDatabase.getInstance()
+
+fun getAlertByPhenomenonAndLocation(phenomenon: String, onComplete: (Boolean, ListOfLocationCriticalWeatherPhenomenonData?, String?) -> Unit) {
+    val db = storageRef()
+    val ref = db.getReference("alertsByPhenomenonAndLocationCount").child(phenomenon) // Assuming a structure like 'alerts/<phenomenon>'
+
+    ref.addListenerForSingleValueEvent(object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            if (dataSnapshot.exists()) {
+                val data = ListOfLocationCriticalWeatherPhenomenonData(ArrayList())
+                for (snapshot in dataSnapshot.children) {
+                    val location = snapshot.key ?: continue
+                    val numOfReports = snapshot.getValue(Int::class.java) ?: continue
+                    data.list.add(LocationCriticalWeatherPhenomenonData(location, numOfReports))
+                }
+                onComplete(true, data, null)
+            } else {
+                onComplete(false, null, "No alert found for $phenomenon")
+            }
+        }
+
+        override fun onCancelled(databaseError: DatabaseError) {
+            onComplete(false, null, "Error fetching data: ${databaseError.message}")
+        }
+    })
+}
 

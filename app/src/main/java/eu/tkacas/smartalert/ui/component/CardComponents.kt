@@ -33,12 +33,14 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import eu.tkacas.smartalert.R
+import eu.tkacas.smartalert.app.SharedPrefManager
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.ui.screen.Screen
 
@@ -119,15 +121,9 @@ fun CardComponentWithImage(
 
 @Composable
 fun CriticalWeatherPhenomenonCardComponent(navController : NavController? = null, weatherPhenomenon: CriticalWeatherPhenomenon) {
-    val imageResId = when(weatherPhenomenon) {
-        CriticalWeatherPhenomenon.EARTHQUAKE -> R.drawable.earthquake
-        CriticalWeatherPhenomenon.FLOOD -> R.drawable.flood
-        CriticalWeatherPhenomenon.WILDFIRE -> R.drawable.wildfire
-        CriticalWeatherPhenomenon.RIVER_FLOOD -> R.drawable.river_flood
-        CriticalWeatherPhenomenon.HEATWAVE -> R.drawable.heatwave
-        CriticalWeatherPhenomenon.SNOWSTORM -> R.drawable.snowstorm
-        CriticalWeatherPhenomenon.STORM -> R.drawable.storm
-    }
+    val imageResId = weatherPhenomenon.getImage()
+    val sharedPrefManager = SharedPrefManager(LocalContext.current)
+
     Card(
         modifier = Modifier
             .fillMaxSize()
@@ -136,7 +132,10 @@ fun CriticalWeatherPhenomenonCardComponent(navController : NavController? = null
         elevation = 4.dp
     ) {
         Button(
-            onClick = { navController?.navigate("GroupEventsByLocation") },
+            onClick = {
+                sharedPrefManager.setCriticalWeatherPhenomenon(weatherPhenomenon.name)
+                navController?.navigate("GroupEventsByLocation")
+            },
             modifier = Modifier.fillMaxSize(),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.White),
