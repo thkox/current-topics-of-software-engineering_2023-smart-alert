@@ -1,11 +1,8 @@
 package eu.tkacas.smartalert.ui.navigation
 
-import android.Manifest
 import android.annotation.SuppressLint
-import android.content.pm.PackageManager
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -15,7 +12,6 @@ import eu.tkacas.smartalert.ui.screen.citizen.HomeCitizenScreen
 import eu.tkacas.smartalert.ui.screen.settings.*
 import androidx.navigation.NavHostController
 import eu.tkacas.smartalert.app.SharedPrefManager
-import eu.tkacas.smartalert.cloud.CloudFunctionsUtils
 import eu.tkacas.smartalert.cloud.userExists
 import eu.tkacas.smartalert.ui.screen.auth.ForgotPasswordScreen
 import eu.tkacas.smartalert.cloud.signOutUser
@@ -34,51 +30,25 @@ import eu.tkacas.smartalert.ui.screen.intro.WelcomeScreen
 import eu.tkacas.smartalert.ui.screen.screensInHomeCitizen
 import eu.tkacas.smartalert.ui.screen.screensInHomeEmployee
 import eu.tkacas.smartalert.ui.screen.screensInSettings
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import eu.tkacas.smartalert.viewmodel.navigation.NavigationViewModel
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun Navigation(navController: NavController = rememberNavController()) {
-
-    lateinit var cloudFunctionsUtils: CloudFunctionsUtils
-    lateinit var sharedPrefManager: SharedPrefManager
-
-    cloudFunctionsUtils = CloudFunctionsUtils()
-    sharedPrefManager = SharedPrefManager(LocalContext.current)
-
-
-
-
-    val startDestination =
-        if (userExists()) {
-            "home"
-        } else {
-            "welcome"
-        }
-
+    val sharedPrefManager = SharedPrefManager(LocalContext.current)
     val context = LocalContext.current
+    val viewModel = NavigationViewModel(context)
 
     NavHost(
         navController = navController as NavHostController,
-        startDestination = startDestination
+        startDestination = viewModel.findStartDestination()
     ) {
-        // TODO: Needs to be changed to "homeEmployee" when the employee screen is ready
         composable("welcome") { WelcomeScreen(navController) }
         composable("permissions") {
-            CoroutineScope(Dispatchers.IO).launch {
-                val isEmployee = cloudFunctionsUtils.userIsEmployee()
-                sharedPrefManager.setIsEmployee(isEmployee)
-            }
-            if(ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                navController.navigate("home")
-            }
-            else {
-                PermissionsScreen(navController)
-            }
-
-        } // TODO: Add conditions whether to show this screen or not based on the app give permissions.
+            viewModel.setUserIdentity()
+            if(viewModel.permissionsAreGranted()) navController.navigate("home")
+            else PermissionsScreen(navController)
+        }
         composable("login") { LoginScreen(navController) }
         composable("signUp") { SignUpScreen(navController) }
         composable("termsAndConditions") { TermsAndConditionsScreen() }
@@ -87,24 +57,12 @@ fun Navigation(navController: NavController = rememberNavController()) {
         composable("alertForm") { AlertFormScreen(navController) }
         composable("camera") { CameraScreen(navController) }
         composable("home") {
-            CoroutineScope(Dispatchers.IO).launch {
-                val isEmployee = cloudFunctionsUtils.userIsEmployee()
-                sharedPrefManager.setIsEmployee(isEmployee)
+            when {
+                !viewModel.permissionsAreGranted() -> navController.navigate("permissions")
+                !userExists() -> navController.navigate("welcome")
+                sharedPrefManager.isEmployee() -> HomeEmployeeScreen(navController)
+                else -> HomeCitizenScreen(navController)
             }
-
-            if(ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                if (userExists() && sharedPrefManager.isEmployee()) {
-                    HomeEmployeeScreen(navController)
-                } else if (userExists()) {
-                    HomeCitizenScreen(navController)
-                } else {
-                    // Redirect to login screen if user is not authenticated
-                    navController.navigate("welcome")
-                }
-            } else {
-                navController.navigate("permissions")
-            }
-
         }
         composable("settings") { SettingsScreen(navController) }
 
@@ -131,11 +89,11 @@ fun Navigation(navController: NavController = rememberNavController()) {
                         is Screen.HomeEmployee.MapWithPinnedReports -> MapWithPinnedReportsScreen(navController)
                     }
                 } else {
-                    // Redirect to login screen if user is not authenticated
                     navController.navigate("welcome")
                 }
             }
         }
+
         screensInSettings.forEach { screen ->
             composable(screen.route) {
                 when (screen) {
@@ -146,6 +104,7 @@ fun Navigation(navController: NavController = rememberNavController()) {
                     is Screen.SettingsScreen.About -> AboutScreen(navController)
                     is Screen.SettingsScreen.Logout -> {
                         signOutUser()
+                        sharedPrefManager.removeIsEmployee()
                         navController.navigate("welcome")
                     }
                 }

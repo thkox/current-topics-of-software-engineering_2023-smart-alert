@@ -13,4 +13,8 @@ class SharedPrefManager(context: Context) {
     fun isEmployee(): Boolean {
         return sharedPreferences.getBoolean("is_employee", false)
     }
+
+    fun removeIsEmployee() {
+        sharedPreferences.edit().remove("is_employee").apply()
+    }
 }
