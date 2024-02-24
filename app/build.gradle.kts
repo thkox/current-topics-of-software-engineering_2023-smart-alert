@@ -51,6 +51,7 @@ dependencies {
 
 
     implementation("com.google.firebase:firebase-storage-ktx:20.3.0")
+    implementation("com.google.firebase:firebase-functions:20.4.0")
     val nav_version = "2.7.7"
     val compose_version = "1.6.1"
 

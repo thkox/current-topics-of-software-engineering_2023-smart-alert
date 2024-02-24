@@ -1,21 +1,20 @@
 package eu.tkacas.smartalert.viewmodel.citizen
 
 import android.content.Context
-import androidx.compose.runtime.currentCompositionLocalContext
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
 import eu.tkacas.smartalert.models.CitizenMessage
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.models.LocationData
 import com.google.gson.Gson
+import eu.tkacas.smartalert.cloud.getUserID
+import eu.tkacas.smartalert.cloud.storageRef
 import eu.tkacas.smartalert.viewmodel.LocationViewModel
 
 class AlertFormViewModel(context: Context): ViewModel() {
 
-    val userId = FirebaseAuth.getInstance().currentUser?.uid
+    val userId = getUserID()
     val visiblePermissionDialogQueue = mutableStateListOf<String>()
     val selectedDangerLevelButton = mutableStateOf(1)
     val selectedWeatherPhenomenon = mutableStateOf(CriticalWeatherPhenomenon.EARTHQUAKE)
@@ -96,11 +95,9 @@ class AlertFormViewModel(context: Context): ViewModel() {
 
         val locationData = locationViewModel.getLastLocation()
 
-        // Get the current user ID from Firebase
         val userId = userId
 
-        // Create a reference to the Firebase database
-        val database = FirebaseDatabase.getInstance()
+        val database = storageRef()
 
         // Create a reference to the "alertForms" node
         val myRef = database.getReference("alertForms")
@@ -110,10 +107,10 @@ class AlertFormViewModel(context: Context): ViewModel() {
 
         // Create an instance of CitizenMessage
         val citizenMessage = CitizenMessage(
-            userId = userId ?: "", // Use the user ID from Firebase
+            userId = userId,
             message = description,
             criticalWeatherPhenomenon = selectedPhenomenon,
-            location = locationData, // Replace with actual location data
+            location = locationData,
             criticalLevel = selectedLevel,
             imageURL = photoURL
         )

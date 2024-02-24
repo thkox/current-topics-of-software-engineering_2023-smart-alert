@@ -4,10 +4,10 @@ import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
-import com.google.firebase.auth.FirebaseAuth
 import eu.tkacas.smartalert.data.rules.Validator
 import eu.tkacas.smartalert.ui.event.ForgotPasswordUIEvent
 import eu.tkacas.smartalert.ui.state.ForgotPasswordUIState
+import eu.tkacas.smartalert.cloud.sendPasswordResetEmail
 
 class ForgotPasswordViewModel : ViewModel() {
 
@@ -47,25 +47,7 @@ class ForgotPasswordViewModel : ViewModel() {
     }
 
     private fun resetPassword() {
-
         val email = forgotPasswordUIState.value.email
-
-        FirebaseAuth
-            .getInstance()
-            .sendPasswordResetEmail(email)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Toast.makeText(
-                        navController?.context,
-                        "Password reset email sent successfully",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    //navController?.navigate("login")
-                }
-            }
-
+        sendPasswordResetEmail(email, navController)
     }
-
-
-
 }
