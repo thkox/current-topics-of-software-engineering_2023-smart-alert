@@ -8,32 +8,55 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Map
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import eu.tkacas.smartalert.app.SharedPrefManager
+import eu.tkacas.smartalert.cloud.getAlertByPhenomenonAndLocation
+import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
+import eu.tkacas.smartalert.models.ListOfLocationCriticalWeatherPhenomenonData
 import eu.tkacas.smartalert.ui.component.CardComponentWithImage
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
 
 @Composable
 fun GroupEventsByLocationScreen(navController: NavHostController? = null){
+    val sharedPrefManager = SharedPrefManager(LocalContext.current)
     val scaffoldState = rememberScaffoldState()
     val context = LocalContext.current
 
-    // TODO: create a val that loads the data from the db using a fun from the viewModel
+    val weatherPhenomenon = sharedPrefManager.getCriticalWeatherPhenomenon()
+    val criticalWeatherPhenomenon = CriticalWeatherPhenomenon.valueOf(weatherPhenomenon.name)
 
+    val data = remember { mutableStateOf<ListOfLocationCriticalWeatherPhenomenonData?>(null) }
+    val error = remember { mutableStateOf<String?>(null) }
+
+    LaunchedEffect(key1 = criticalWeatherPhenomenon) {
+        getAlertByPhenomenonAndLocation(criticalWeatherPhenomenon.name) { success, result, err ->
+            if (success) {
+                data.value = result
+            } else {
+                error.value = err
+            }
+        }
+    }
 
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            AppBarBackView(title = "Wildfire appeared!", navController = navController)
+            AppBarBackView(title = stringResource(id = criticalWeatherPhenomenon.getStringId()), navController = navController)
         },
         floatingActionButton = {
             FloatingActionButton(
@@ -60,13 +83,20 @@ fun GroupEventsByLocationScreen(navController: NavHostController? = null){
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize()
-                ){
-                    items(5) {
-                        // TODO: import the values from the database (in a list)
-                        CardComponentWithImage()
+                if (data.value != null) {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize()
+                    ){
+                        items(data.value?.list?.size ?: 0) { index ->
+                            CardComponentWithImage(
+                                address = data.value?.list?.get(index)?.location ?: "",
+                                emLevel = "Emergency level: ${data.value?.list?.get(index)?.numOfReports ?: 0}",
+                                message = "Tap to show the message"
+                            )
+                        }
                     }
+                } else if (error.value != null) {
+                    Text("Error: ${error.value}")
                 }
             }
         }

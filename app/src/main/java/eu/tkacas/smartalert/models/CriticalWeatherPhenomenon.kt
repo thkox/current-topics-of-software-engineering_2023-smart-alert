@@ -16,4 +16,16 @@ enum class CriticalWeatherPhenomenon {
             CriticalWeatherPhenomenon.STORM -> R.string.storm
         }
     }
+
+    fun getImage(): Int {
+        return when (this) {
+            CriticalWeatherPhenomenon.EARTHQUAKE -> R.drawable.earthquake
+            CriticalWeatherPhenomenon.FLOOD -> R.drawable.flood
+            CriticalWeatherPhenomenon.WILDFIRE -> R.drawable.wildfire
+            CriticalWeatherPhenomenon.RIVER_FLOOD -> R.drawable.river_flood
+            CriticalWeatherPhenomenon.HEATWAVE -> R.drawable.heatwave
+            CriticalWeatherPhenomenon.SNOWSTORM -> R.drawable.snowstorm
+            CriticalWeatherPhenomenon.STORM -> R.drawable.storm
+        }
+    }
 }
