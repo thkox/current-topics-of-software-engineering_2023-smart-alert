@@ -79,9 +79,12 @@ fun CardComponent(iconResId: Int) {
 @Composable
 fun CardComponentWithImage(
     address: String = "Kifissia, Athens",
-    emLevel: String = "Emergency level",
-    message: String = "Tap to show the message",
+    emLevel: String = "Emergency level"
 ) {
+    val sharedPrefManager = SharedPrefManager(LocalContext.current)
+    val weatherPhenomenon = sharedPrefManager.getCriticalWeatherPhenomenon()
+
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -102,7 +105,7 @@ fun CardComponentWithImage(
             ){
                 Row(){
                     Image(
-                        painter = painterResource(id = R.drawable.flood),
+                        painter = painterResource(id = weatherPhenomenon.getImage()),
                         contentDescription = null,
                         modifier = Modifier
                             .size(80.dp)
@@ -111,7 +114,6 @@ fun CardComponentWithImage(
                     Column(){
                         Text(text = address)
                         Text(text = emLevel)
-                        Text(text = message)
                     }
                 }
             }
