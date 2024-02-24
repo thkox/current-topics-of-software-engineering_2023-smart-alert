@@ -14,9 +14,9 @@ import eu.tkacas.smartalert.ui.screen.citizen.HomeCitizenScreen
 import eu.tkacas.smartalert.ui.screen.settings.*
 import androidx.navigation.NavHostController
 import eu.tkacas.smartalert.cloud.userExists
-import eu.tkacas.smartalert.cloud.userIsEmployee
 import eu.tkacas.smartalert.ui.screen.auth.ForgotPasswordScreen
 import eu.tkacas.smartalert.cloud.signOutUser
+import eu.tkacas.smartalert.cloud.userIsEmployee
 import eu.tkacas.smartalert.ui.screen.auth.LoginScreen
 import eu.tkacas.smartalert.ui.screen.auth.SignUpScreen
 import eu.tkacas.smartalert.ui.screen.auth.TermsAndConditionsScreen
@@ -35,6 +35,7 @@ import eu.tkacas.smartalert.ui.screen.screensInSettings
 
 @Composable
 fun Navigation(navController: NavController = rememberNavController()) {
+
 
     val startDestination =
         if (userExists()) {
