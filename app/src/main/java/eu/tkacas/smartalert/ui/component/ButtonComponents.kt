@@ -28,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -244,11 +245,12 @@ fun UploadPhotoButton(
     }
 }
 
-//@Composable
-//fun FloatingActionButtonSample(onClick: () -> Unit, function: () -> Unit) {
-//    FloatingActionButton(
-//        onClick = { /*TODO*/ },
-//    ) {
-//        Icon(painterResource(id = R.drawable.edit), contentDescription = "Localized description")
-//    }
-//}
+@Composable
+fun FloatingActionButton(onClick: () -> Unit) {
+    FloatingActionButton(
+        containerColor = colorResource(id = R.color.colorBlue),
+        onClick = { /*TODO*/ },
+    ) {
+        Icon(painterResource(id = R.drawable.edit), contentDescription = "Localized description")
+    }
+}
