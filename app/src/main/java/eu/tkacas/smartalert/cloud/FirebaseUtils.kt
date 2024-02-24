@@ -13,9 +13,9 @@ fun getUserID() : String {
     return FirebaseAuth.getInstance().currentUser?.uid ?: ""
 }
 
-fun userIsEmployee() : Boolean {
-    return userExists() && FirebaseAuth.getInstance().currentUser?.email?.contains("@civilprotection.gr") == true
-}
+//fun userIsEmployee() : Boolean {
+//    return userExists() && FirebaseAuth.getInstance().currentUser?.email?.contains("@civilprotection.gr") == true
+//}
 
 fun signOutUser() {
     FirebaseAuth.getInstance().signOut()
