@@ -236,66 +236,6 @@ fun EmailDisplayComponent(email: String, painterResource: Painter) {
 }
 
 
-//    FloatingActionButton(
-//        onClick = { enabled = !enabled },
-//    ) {
-//        Icon(
-//            painter = painterResource(id = R.drawable.edit),
-//            contentDescription = "Edit"
-//        )
-//    }
-
-//@Composable
-//fun NameFieldComponent(
-//    firstNameLabel: String,
-//    lastNameLabel: String
-//){
-//    var firstName by remember {
-//        mutableStateOf("")
-//    }
-//
-//    var lastName by remember {
-//        mutableStateOf("")
-//    }
-//
-//    OutlinedTextField(
-//        modifier = Modifier
-//            .fillMaxWidth(),
-//        label = { Text(text = firstNameLabel) },
-//        colors = TextFieldDefaults.outlinedTextFieldColors(
-//            focusedBorderColor = Primary,
-//            focusedLabelColor = Primary,
-//            cursorColor = Primary,
-//            backgroundColor = BgColor
-//        ),
-//        singleLine = true,
-//        maxLines = 1,
-//        value = firstName,
-//        onValueChange = {
-//            firstName = it
-//        }
-//    )
-//
-//    OutlinedTextField(
-//        modifier = Modifier
-//            .fillMaxWidth(),
-//        label = { Text(text = lastNameLabel) },
-//        colors = TextFieldDefaults.outlinedTextFieldColors(
-//            focusedBorderColor = Primary,
-//            focusedLabelColor = Primary,
-//            cursorColor = Primary,
-//            backgroundColor = BgColor
-//        ),
-//        singleLine = true,
-//        maxLines = 1,
-//        value = lastName,
-//        onValueChange = {
-//            lastName = it
-//        }
-//    )
-//}
-
-
 @Composable
 fun NameFieldComponent(
     firstName: String,

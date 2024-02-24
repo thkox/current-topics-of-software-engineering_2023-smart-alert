@@ -27,6 +27,7 @@ import androidx.navigation.NavController
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.ui.component.CircleImage
 import eu.tkacas.smartalert.ui.component.EmailDisplayComponent
+import eu.tkacas.smartalert.ui.component.FloatingActionButton
 import eu.tkacas.smartalert.ui.component.NameFieldComponent
 import eu.tkacas.smartalert.ui.component.PasswordDisplayComponent
 import eu.tkacas.smartalert.ui.component.PasswordTextFieldComponent
@@ -93,18 +94,34 @@ fun AccountScreen (navController: NavController? = null) {
                 lastName = lastName
             )
 
-            //NameDisplayComponentTest(firstName = firstName, painterResource(R.drawable.profile))
-
             Spacer(modifier = Modifier.height(40.dp))
 
             EmailDisplayComponent(email = email, painterResource(id = R.drawable.email))
 
-            Spacer(modifier = Modifier.height(40.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
             PasswordDisplayComponent(password = password, painterResource(id = R.drawable.password))
 
-
           }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = 40.dp, end = 30.dp)
+                    .padding(top = 10.dp),
+            ) {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.BottomEnd
+                ){
+                    FloatingActionButton(
+                        onClick = {
+                            //value
+                        }
+                    )
+                }
+
+            }
         }
     }
 }
