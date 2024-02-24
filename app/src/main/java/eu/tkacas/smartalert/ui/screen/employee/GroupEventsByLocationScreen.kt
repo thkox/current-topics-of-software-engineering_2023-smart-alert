@@ -23,6 +23,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import eu.tkacas.smartalert.app.SharedPrefManager
 import eu.tkacas.smartalert.cloud.getAlertByPhenomenonAndLocation
@@ -83,6 +84,14 @@ fun GroupEventsByLocationScreen(navController: NavHostController? = null){
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
+                Text(text = "The reports history from the last 6 hours.",
+                    color = Color.Black,
+                    style = androidx.compose.ui.text.TextStyle(
+                        color = Color.Black,
+                        fontSize = 20.sp
+                    ),
+                    modifier = Modifier.padding(16.dp)
+                )
                 if (data.value != null) {
                     LazyColumn(
                         modifier = Modifier.fillMaxSize()
@@ -90,8 +99,7 @@ fun GroupEventsByLocationScreen(navController: NavHostController? = null){
                         items(data.value?.list?.size ?: 0) { index ->
                             CardComponentWithImage(
                                 address = data.value?.list?.get(index)?.location ?: "",
-                                emLevel = "Emergency level: ${data.value?.list?.get(index)?.numOfReports ?: 0}",
-                                message = "Tap to show the message"
+                                emLevel = "Number of Reports: ${data.value?.list?.get(index)?.numOfReports ?: 0}"
                             )
                         }
                     }
