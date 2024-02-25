@@ -45,65 +45,39 @@ import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.ui.screen.Screen
 
 
-@Composable
-fun CardComponent(iconResId: Int) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(20.dp),
-        elevation = 4.dp
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Image(
-                //painter = painterResource(id = R.drawable.wildfire),
-                painter = painterResource(id = iconResId),
-                contentDescription = "Card Icon",
-                modifier = Modifier.size(34.dp)
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            Column(
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(text = "15/02/2024")
-                Text(text = "Kifissia, Athens")
-                Text(text = "Number of Events: 3")
-            }
-
-        }
-    }
-}
-
 @Preview
 @Composable
 fun CardComponentWithImage(
     address: String = "Kifissia, Athens",
-    emLevel: String = "Emergency level"
+    emLevel: String = "Emergency level",
+    beDeletedEnabled : Boolean = false,
+    onClick: () -> Unit = {}
 ) {
     val sharedPrefManager = SharedPrefManager(LocalContext.current)
     val weatherPhenomenon = sharedPrefManager.getCriticalWeatherPhenomenon()
-
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(10.dp)
             .clickable {
-
+            onClick()
         },
         shape = RoundedCornerShape(10.dp),
         elevation = 4.dp,
         ){
         Row(
             verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.padding(8.dp)
         ){
             Column(
                 modifier = Modifier.padding(start = 8.dp),
                 verticalArrangement = Arrangement.Center
             ){
-                Row(){
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ){
                     Image(
                         painter = painterResource(id = weatherPhenomenon.getImage()),
                         contentDescription = null,
@@ -115,6 +89,20 @@ fun CardComponentWithImage(
                         Text(text = address)
                         Text(text = emLevel)
                     }
+                }
+            }
+            if(beDeletedEnabled){
+                Column(
+                    modifier = Modifier.padding(end = 8.dp),
+                    verticalArrangement = Arrangement.Center
+                ){
+                    Icon(
+                        painter = painterResource(id = R.drawable.delete),
+                        contentDescription = "Delete Icon",
+                        modifier = Modifier.clickable {
+
+                        }
+                    )
                 }
             }
         }
