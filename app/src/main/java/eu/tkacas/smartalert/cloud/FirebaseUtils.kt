@@ -98,29 +98,25 @@ fun getAlertByPhenomenonAndLocation(phenomenon: String, onComplete: (Boolean, Li
     })
 }
 
-fun getSpecificAlertByPhenomenonAndLocation(phenomenon: String, location: String, onComplete: (Boolean, ListOfSingleLocationCriticalWeatherPhenomenonData?, String?) -> Unit) {
+fun getSpecificAlertByPhenomenonAndLocation(phenomenon: String, location: String, onComplete: (Boolean, ListOfSingleLocationCriticalWeatherPhenomenonData?, String) -> Unit) {
     val db = storageRef()
     val ref = db.getReference("alertsByPhenomenonAndLocationLast24h").child(phenomenon).child(location) // Assuming a structure like 'alerts/<phenomenon>/<location>'
-    var locData: LocationData? = null
 
     ref.addListenerForSingleValueEvent(object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             if (dataSnapshot.exists()) {
                 val data = ListOfSingleLocationCriticalWeatherPhenomenonData(ArrayList())
                 for (snapshot in dataSnapshot.children) {
-                    val imageURL = snapshot.child("imageURL").getValue(String::class.java) ?: continue
-                    val latitude = snapshot.child("location").child("latitude").getValue(Double::class.java) ?: continue
-                    val longitude = snapshot.child("location").child("longitude").getValue(Double::class.java) ?: continue
-                    locData = LocationData(latitude, longitude)
-                    val message = snapshot.child("message").getValue(String::class.java) ?: continue
-                    val emLevel = snapshot.child("criticalLevel").getValue(Int::class.java) ?: continue
-                    val timeStamp = snapshot.child("timeStamp").getValue(Int::class.java) ?: continue
-
-                    val location = "${locData?.latitude}, ${locData?.longitude}"
-
+                    val imageURL = snapshot.child("imageURL").getValue(String::class.java)?:""
+                    val latitude = snapshot.child("location").child("latitude").getValue(Double::class.java)?:""
+                    val longitude = snapshot.child("location").child("longitude").getValue(Double::class.java)?:""
+                    val message = snapshot.child("message").getValue(String::class.java)?:""
+                    val emLevel = snapshot.child("criticalLevel").getValue(Int::class.java)?:0
+                    val timeStamp = snapshot.child("timeStamp").getValue(Long::class.java)?:0
+                    val location = "$latitude, $longitude"
                     data.list.add(SingleLocationCriticalWeatherPhenomenonData(location, emLevel, message, imageURL, timeStamp))
                 }
-                onComplete(true, data, null)
+                onComplete(true, data, "Success")
             } else {
                 onComplete(false, null, "No alert found for $phenomenon at $location")
             }

@@ -5,7 +5,7 @@ data class SingleLocationCriticalWeatherPhenomenonData(
     val emLevel: Int,
     val message: String,
     val imageURL: String,
-    val timeStamp: Int
+    val timeStamp: Long
 )
 
 data class ListOfSingleLocationCriticalWeatherPhenomenonData(
