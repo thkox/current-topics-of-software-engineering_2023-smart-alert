@@ -23,6 +23,7 @@ import eu.tkacas.smartalert.ui.screen.citizen.AlertFormScreen
 import eu.tkacas.smartalert.ui.screen.citizen.AlertScreen
 import eu.tkacas.smartalert.ui.screen.citizen.Camera.CameraScreen
 import eu.tkacas.smartalert.ui.screen.employee.AlertCitizensFormScreen
+import eu.tkacas.smartalert.ui.screen.employee.EventsByLocationScreen
 import eu.tkacas.smartalert.ui.screen.employee.GroupEventsByLocationScreen
 import eu.tkacas.smartalert.ui.screen.employee.HomeEmployeeScreen
 import eu.tkacas.smartalert.ui.screen.employee.MapWithPinnedReportsScreen
@@ -88,6 +89,9 @@ fun Navigation(navController: NavController = rememberNavController()) {
                         is Screen.HomeEmployee.AlertCitizenForm -> AlertCitizensFormScreen(navController)
                         is Screen.HomeEmployee.GroupEventsByLocation -> {
                             GroupEventsByLocationScreen(navController)
+                        }
+                        is Screen.HomeEmployee.EventsByLocation -> {
+                            EventsByLocationScreen(navController)
                         }
                         is Screen.HomeEmployee.MapWithPinnedReports -> MapWithPinnedReportsScreen(navController)
                     }
