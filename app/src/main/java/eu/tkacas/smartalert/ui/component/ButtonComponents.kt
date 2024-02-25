@@ -186,7 +186,6 @@ fun GeneralButtonComponent(value: String, onButtonClicked: () -> Unit) {
             contentAlignment = Alignment.Center
         ) {
             Text(
-                //text = "High",
                 text = value,
                 fontSize = 18.sp,
                 color = Color.White,
