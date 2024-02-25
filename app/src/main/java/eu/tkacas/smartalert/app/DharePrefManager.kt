@@ -27,4 +27,13 @@ class SharedPrefManager(context: Context) {
         val name = sharedPreferences.getString("critical_weather_phenomenon", "WILDFIRE")
         return CriticalWeatherPhenomenon.valueOf(name!!)
     }
+
+    fun setAddress(address: String) {
+        sharedPreferences.edit().putString("address", address).apply()
+    }
+
+    fun getAddress(): String {
+        val address = sharedPreferences.getString("address", "Kifissia")
+        return address!!
+    }
 }
