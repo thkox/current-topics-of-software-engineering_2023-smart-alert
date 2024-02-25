@@ -3,6 +3,7 @@ package eu.tkacas.smartalert.ui.component
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -89,6 +90,19 @@ fun CenteredCreatorsText() {
 
     Text(
         text = creators,
+        textAlign = TextAlign.Center,
+        modifier = Modifier.fillMaxWidth()
+    )
+}
+
+@Composable
+fun CenteredAboutText() {
+    val context = LocalContext.current
+    val about = stringResource(id = R.string.about_us_text, context)
+
+    Text(
+        text = about,
+        style = MaterialTheme.typography.body1,
         textAlign = TextAlign.Center,
         modifier = Modifier.fillMaxWidth()
     )

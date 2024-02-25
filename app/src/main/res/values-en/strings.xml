@@ -60,4 +60,6 @@
     <string name="storm">Storm</string>
     <string name="greek_language">Greek (EL)</string>
     <string name="english_language">English (US)</string>
+    <string name="about_us_text">Our mission is to provide timely and accurate alerts to individuals located near potential weather hazards. With a focus on user-generated reports and prompt notifications, we aim to empower individuals and local authorities to take proactive measures to mitigate risks and ensure the well-being of our communities.</string>
+    <string name="connect_with_us">Connect with us</string>
 </resources>
