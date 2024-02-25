@@ -1,10 +1,16 @@
 package eu.tkacas.smartalert.ui.screen.employee
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.AlertDialog
+import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
@@ -19,16 +25,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import coil.compose.rememberAsyncImagePainter
 import eu.tkacas.smartalert.app.SharedPrefManager
 import eu.tkacas.smartalert.cloud.getSpecificAlertByPhenomenonAndLocation
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.models.ListOfSingleLocationCriticalWeatherPhenomenonData
+import eu.tkacas.smartalert.ui.component.AlertWithImageDialog
 import eu.tkacas.smartalert.ui.component.CardComponentWithImage
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
 
@@ -36,6 +45,10 @@ import eu.tkacas.smartalert.ui.navigation.AppBarBackView
 fun EventsByLocationScreen(navController: NavHostController? = null) {
     val sharedPrefManager = SharedPrefManager(LocalContext.current)
     val scaffoldState = rememberScaffoldState()
+
+    val showDialog = remember { mutableStateOf(false) }
+    val selectedMessage = remember { mutableStateOf<String?>(null) }
+    val selectedImageUrl = remember { mutableStateOf<String?>(null) }
 
     val weatherPhenomenon = sharedPrefManager.getCriticalWeatherPhenomenon()
     val criticalWeatherPhenomenon = CriticalWeatherPhenomenon.valueOf(weatherPhenomenon.name)
@@ -101,9 +114,19 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                             CardComponentWithImage(
                                 row1 = data.value?.list?.get(index)?.location ?: "",
                                 row2 = data.value?.list?.get(index)?.emLevel.toString(),
-                                beDeletedEnabled = true
-                            ){
-
+                                beDeletedEnabled = true,
+                                onClick = {
+                                    selectedMessage.value = data.value?.list?.get(index)?.message
+                                    selectedImageUrl.value = data.value?.list?.get(index)?.imageURL
+                                    showDialog.value = true
+                                }
+                            )
+                            if (showDialog.value) {
+                                AlertWithImageDialog(
+                                    message = selectedMessage.value,
+                                    imageURL = selectedImageUrl.value,
+                                    onDismiss = { showDialog.value = false }
+                                )
                             }
                         }
                     }
