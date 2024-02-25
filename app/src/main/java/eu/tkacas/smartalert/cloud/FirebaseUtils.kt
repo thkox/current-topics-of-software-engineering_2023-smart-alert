@@ -8,7 +8,10 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import eu.tkacas.smartalert.models.ListOfLocationCriticalWeatherPhenomenonData
+import eu.tkacas.smartalert.models.ListOfSingleLocationCriticalWeatherPhenomenonData
 import eu.tkacas.smartalert.models.LocationCriticalWeatherPhenomenonData
+import eu.tkacas.smartalert.models.LocationData
+import eu.tkacas.smartalert.models.SingleLocationCriticalWeatherPhenomenonData
 
 fun userExists() : Boolean {
     return FirebaseAuth.getInstance().currentUser != null
@@ -72,7 +75,7 @@ fun storageRef() = FirebaseDatabase.getInstance()
 
 fun getAlertByPhenomenonAndLocation(phenomenon: String, onComplete: (Boolean, ListOfLocationCriticalWeatherPhenomenonData?, String?) -> Unit) {
     val db = storageRef()
-    val ref = db.getReference("alertsByPhenomenonAndLocationCount").child(phenomenon) // Assuming a structure like 'alerts/<phenomenon>'
+    val ref = db.getReference("alertsByPhenomenonAndLocationCountLast24h").child(phenomenon) // Assuming a structure like 'alerts/<phenomenon>'
 
     ref.addListenerForSingleValueEvent(object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -95,3 +98,32 @@ fun getAlertByPhenomenonAndLocation(phenomenon: String, onComplete: (Boolean, Li
     })
 }
 
+fun getSpecificAlertByPhenomenonAndLocation(phenomenon: String, location: String, onComplete: (Boolean, ListOfSingleLocationCriticalWeatherPhenomenonData?, String) -> Unit) {
+    val db = storageRef()
+    val ref = db.getReference("alertsByPhenomenonAndLocationLast24h").child(phenomenon).child(location) // Assuming a structure like 'alerts/<phenomenon>/<location>'
+
+    ref.addListenerForSingleValueEvent(object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            if (dataSnapshot.exists()) {
+                val data = ListOfSingleLocationCriticalWeatherPhenomenonData(ArrayList())
+                for (snapshot in dataSnapshot.children) {
+                    val imageURL = snapshot.child("imageURL").getValue(String::class.java)?:""
+                    val latitude = snapshot.child("location").child("latitude").getValue(Double::class.java)?:""
+                    val longitude = snapshot.child("location").child("longitude").getValue(Double::class.java)?:""
+                    val message = snapshot.child("message").getValue(String::class.java)?:""
+                    val emLevel = snapshot.child("criticalLevel").getValue(Int::class.java)?:0
+                    val timeStamp = snapshot.child("timeStamp").getValue(Long::class.java)?:0
+                    val location = "$latitude, $longitude"
+                    data.list.add(SingleLocationCriticalWeatherPhenomenonData(location, emLevel, message, imageURL, timeStamp))
+                }
+                onComplete(true, data, "Success")
+            } else {
+                onComplete(false, null, "No alert found for $phenomenon at $location")
+            }
+        }
+
+        override fun onCancelled(databaseError: DatabaseError) {
+            onComplete(false, null, "Error fetching data: ${databaseError.message}")
+        }
+    })
+}

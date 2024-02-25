@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -21,7 +20,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Switch
@@ -48,9 +46,9 @@ import eu.tkacas.smartalert.ui.screen.Screen
 @Preview
 @Composable
 fun CardComponentWithImage(
-    address: String = "Kifissia, Athens",
-    emLevel: String = "Emergency level",
-    beDeletedEnabled : Boolean = false,
+    row1: String = "Kifissia, Athens",
+    row2: String = "Emergency level",
+    beDeletedEnabled: Boolean = false,
     onClick: () -> Unit = {}
 ) {
     val sharedPrefManager = SharedPrefManager(LocalContext.current)
@@ -86,8 +84,8 @@ fun CardComponentWithImage(
                             .padding(horizontal = 5.dp)
                     )
                     Column(){
-                        Text(text = address)
-                        Text(text = emLevel)
+                        Text(text = row1)
+                        Text(text = row2)
                     }
                 }
             }
@@ -138,7 +136,6 @@ fun CriticalWeatherPhenomenonCardComponent(navController : NavController? = null
             ){
                 Image(
                     painter = painterResource(id = imageResId),
-                    //painter = painterResource(id = R.drawable.storm),
                     contentDescription = "Button Image",
                     modifier = Modifier
                         .size(80.dp)

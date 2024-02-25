@@ -131,7 +131,7 @@ fun AlertLevelButtonsRowComponent(
                 }
         ){
             Text(
-                text = stringResource(id = R.string.medium),
+                text = stringResource(id = R.string.normal),
                 color = if (value == 2) Color.Black else Color.White
                 )
         }

@@ -72,6 +72,12 @@ sealed class Screen<ImageVector>(val titleResId: Int, val route: String) {
             R.drawable.event
         )
 
+        object EventsByLocation : HomeEmployee(
+            R.string.events,
+            "EventsByLocation",
+            R.drawable.event
+        )
+
         object MapWithPinnedReports : HomeEmployee(
             R.string.map,
             "Map",
@@ -97,5 +103,6 @@ val screensInHomeCitizen = listOf(
 val screensInHomeEmployee = listOf(
     Screen.HomeEmployee.AlertCitizenForm,
     Screen.HomeEmployee.GroupEventsByLocation,
+    Screen.HomeEmployee.EventsByLocation,
     Screen.HomeEmployee.MapWithPinnedReports
 )
