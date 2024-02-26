@@ -1,10 +1,8 @@
 package eu.tkacas.smartalert.ui.navigation
 
-import android.Manifest
-import android.content.pm.PackageManager
+import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -13,10 +11,11 @@ import eu.tkacas.smartalert.ui.screen.Screen
 import eu.tkacas.smartalert.ui.screen.citizen.HomeCitizenScreen
 import eu.tkacas.smartalert.ui.screen.settings.*
 import androidx.navigation.NavHostController
-import com.google.firebase.auth.FirebaseAuth
-import com.google.gson.Gson
-import eu.tkacas.smartalert.models.CitizenMessage
+import eu.tkacas.smartalert.app.SharedPrefManager
+import eu.tkacas.smartalert.cloud.userExists
 import eu.tkacas.smartalert.ui.screen.auth.ForgotPasswordScreen
+import eu.tkacas.smartalert.cloud.signOutUser
+import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.ui.screen.auth.LoginScreen
 import eu.tkacas.smartalert.ui.screen.auth.SignUpScreen
 import eu.tkacas.smartalert.ui.screen.auth.TermsAndConditionsScreen
@@ -24,6 +23,7 @@ import eu.tkacas.smartalert.ui.screen.citizen.AlertFormScreen
 import eu.tkacas.smartalert.ui.screen.citizen.AlertScreen
 import eu.tkacas.smartalert.ui.screen.citizen.Camera.CameraScreen
 import eu.tkacas.smartalert.ui.screen.employee.AlertCitizensFormScreen
+import eu.tkacas.smartalert.ui.screen.employee.EventsByLocationScreen
 import eu.tkacas.smartalert.ui.screen.employee.GroupEventsByLocationScreen
 import eu.tkacas.smartalert.ui.screen.employee.HomeEmployeeScreen
 import eu.tkacas.smartalert.ui.screen.employee.MapWithPinnedReportsScreen
@@ -32,35 +32,25 @@ import eu.tkacas.smartalert.ui.screen.intro.WelcomeScreen
 import eu.tkacas.smartalert.ui.screen.screensInHomeCitizen
 import eu.tkacas.smartalert.ui.screen.screensInHomeEmployee
 import eu.tkacas.smartalert.ui.screen.screensInSettings
+import eu.tkacas.smartalert.viewmodel.navigation.NavigationViewModel
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun Navigation(navController: NavController = rememberNavController()) {
-
-    val startDestination =
-        if (FirebaseAuth.getInstance().currentUser != null ) {
-            "home"
-        } else {
-            "welcome"
-        }
-
+    val sharedPrefManager = SharedPrefManager(LocalContext.current)
     val context = LocalContext.current
+    val viewModel = NavigationViewModel(context)
 
     NavHost(
         navController = navController as NavHostController,
-        startDestination = startDestination
+        startDestination = viewModel.findStartDestination()
     ) {
-        // TODO: Needs to be changed to "homeEmployee" when the employee screen is ready
         composable("welcome") { WelcomeScreen(navController) }
         composable("permissions") {
-            if(ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                navController.navigate("home")
-
-            }
-            else {
-                PermissionsScreen(navController)
-            }
-
-        } // TODO: Add conditions whether to show this screen or not based on the app give permissions.
+            viewModel.setUserIdentity()
+            if(viewModel.permissionsAreGranted()) navController.navigate("home")
+            else PermissionsScreen(navController)
+        }
         composable("login") { LoginScreen(navController) }
         composable("signUp") { SignUpScreen(navController) }
         composable("termsAndConditions") { TermsAndConditionsScreen() }
@@ -69,25 +59,18 @@ fun Navigation(navController: NavController = rememberNavController()) {
         composable("alertForm") { AlertFormScreen(navController) }
         composable("camera") { CameraScreen(navController) }
         composable("home") {
-            if(ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                if (FirebaseAuth.getInstance().currentUser != null && FirebaseAuth.getInstance().currentUser?.email?.contains("@civilprotection.gr") == true) {
-                    HomeEmployeeScreen(navController)
-                } else if (FirebaseAuth.getInstance().currentUser != null) {
-                    HomeCitizenScreen(navController)
-                } else {
-                    // Redirect to login screen if user is not authenticated
-                    navController.navigate("welcome")
-                }
-            } else {
-                navController.navigate("permissions")
+            when {
+                !viewModel.permissionsAreGranted() -> navController.navigate("permissions")
+                !userExists() -> navController.navigate("welcome")
+                sharedPrefManager.isEmployee() -> HomeEmployeeScreen(navController)
+                else -> HomeCitizenScreen(navController)
             }
-
         }
         composable("settings") { SettingsScreen(navController) }
 
         screensInHomeCitizen.forEach { screen ->
             composable(screen.route) {
-                if (FirebaseAuth.getInstance().currentUser != null) {
+                if (userExists()) {
                     when (screen) {
                         is Screen.HomeCitizen.AlertForm -> AlertFormScreen(navController)
                         is Screen.HomeCitizen.Alert -> AlertScreen(navController)
@@ -101,18 +84,23 @@ fun Navigation(navController: NavController = rememberNavController()) {
 
         screensInHomeEmployee.forEach { screen ->
             composable(screen.route) {
-                if (FirebaseAuth.getInstance().currentUser != null && FirebaseAuth.getInstance().currentUser?.email?.contains("@civilprotection.gr") == true) {
+                if (userExists() && sharedPrefManager.isEmployee()) {
                     when (screen) {
                         is Screen.HomeEmployee.AlertCitizenForm -> AlertCitizensFormScreen(navController)
-                        is Screen.HomeEmployee.GroupEventsByLocation -> GroupEventsByLocationScreen(navController)
+                        is Screen.HomeEmployee.GroupEventsByLocation -> {
+                            GroupEventsByLocationScreen(navController)
+                        }
+                        is Screen.HomeEmployee.EventsByLocation -> {
+                            EventsByLocationScreen(navController)
+                        }
                         is Screen.HomeEmployee.MapWithPinnedReports -> MapWithPinnedReportsScreen(navController)
                     }
                 } else {
-                    // Redirect to login screen if user is not authenticated
                     navController.navigate("welcome")
                 }
             }
         }
+
         screensInSettings.forEach { screen ->
             composable(screen.route) {
                 when (screen) {
@@ -122,7 +110,8 @@ fun Navigation(navController: NavController = rememberNavController()) {
                     is Screen.SettingsScreen.Analytics -> AnalyticsScreen(navController)
                     is Screen.SettingsScreen.About -> AboutScreen(navController)
                     is Screen.SettingsScreen.Logout -> {
-                        FirebaseAuth.getInstance().signOut()
+                        signOutUser()
+                        sharedPrefManager.removeIsEmployee()
                         navController.navigate("welcome")
                     }
                 }
