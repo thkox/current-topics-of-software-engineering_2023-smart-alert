@@ -39,6 +39,7 @@ import eu.tkacas.smartalert.ui.component.AlertWithImageDialog
 import eu.tkacas.smartalert.ui.component.CardComponentWithImage
 import eu.tkacas.smartalert.ui.component.GeneralButtonComponent
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
+import eu.tkacas.smartalert.viewmodel.employee.EventsByLocationViewModel
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -48,6 +49,8 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
     val sharedPrefManager = SharedPrefManager(LocalContext.current)
     sharedPrefManager.setPreviousScreen("EventsByLocationScreen")
     val scaffoldState = rememberScaffoldState()
+
+    val viewModel = EventsByLocationViewModel()
 
     val showDialog = remember { mutableStateOf(false) }
     val selectedMessage = remember { mutableStateOf<String?>(null) }
@@ -132,7 +135,9 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                 ){
                     GeneralButtonComponent(
                         value = "Delete All",
-                        onButtonClicked = {}
+                        onButtonClicked = {
+                            viewModel.deleteAllEventsByPhenomenonAndLocation(criticalWeatherPhenomenon.name, address)
+                        }
                     )
                 }
                 if (data.value != null) {
@@ -154,6 +159,7 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                                     selectedMessage.value = data.value?.list?.get(index)?.message
                                     selectedImageUrl.value = data.value?.list?.get(index)?.imageURL
                                     showDialog.value = true
+
                                 }
                             )
                             if (showDialog.value) {
