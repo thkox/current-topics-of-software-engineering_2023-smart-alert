@@ -48,6 +48,7 @@ import eu.tkacas.smartalert.ui.screen.Screen
 fun CardComponentWithImage(
     row1: String = "Kifissia, Athens",
     row2: String = "Emergency level",
+    row3: String = "",
     beDeletedEnabled: Boolean = false,
     onClick: () -> Unit = {}
 ) {
@@ -86,6 +87,9 @@ fun CardComponentWithImage(
                     Column(){
                         Text(text = row1)
                         Text(text = row2)
+                        if (row3.isNotEmpty()) {
+                            Text(text = row3)
+                        }
                     }
                 }
             }
