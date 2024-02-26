@@ -12,6 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.google.maps.android.compose.GoogleMap
 import androidx.navigation.NavController
@@ -69,7 +70,7 @@ fun MapWithPinnedReportsScreen(navController: NavController? = null){
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            AppBarBackView(title = "Wildfires' Map", navController = navController)
+            AppBarBackView(title = stringResource(id = criticalWeatherPhenomenon.getStringId())+ "'s Map", navController = navController)
         }
     ) {
         Column(
