@@ -6,7 +6,7 @@ data class CitizenMessage(
     val criticalLevel: Int,
     val location: LocationData? = null,
     val timestamp: Long = System.currentTimeMillis(),
-    var imageURL: String? = null // Replace with actual photo URL
+    var imageURL: String? = null
 )
 
 data class ArchivedMessages(

@@ -85,7 +85,7 @@ fun CardComponentWithImage(
                             .size(80.dp)
                             .padding(horizontal = 5.dp)
                     )
-                    Column(){
+                    Column {
                         Text(text = row1)
                         Text(text = row2)
                         if (row3.isNotEmpty()) {

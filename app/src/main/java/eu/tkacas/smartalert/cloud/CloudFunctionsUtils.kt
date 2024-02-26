@@ -20,7 +20,7 @@ class CloudFunctionsUtils {
                 }.await()
             result
         } catch (e: Exception) {
-            // Handle exception here, you might want to return false or rethrow the exception
+            // TODO: Handle exception here, you might want to return false or rethrow the exception
             false
         }
     }

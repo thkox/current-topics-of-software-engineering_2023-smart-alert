@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
-import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -38,12 +37,12 @@ fun DividerTextComponent() {
             fontSize = 18.sp,
             color = TextColor
         )
-        Divider(
+        HorizontalDivider(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f),
-            color = GrayColor,
-            thickness = 1.dp
+            thickness = 1.dp,
+            color = GrayColor
         )
     }
 }
@@ -63,12 +62,12 @@ fun DividerComponentWithoutText() {
             color = GrayColor
         )
 
-        Divider(
+        HorizontalDivider(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f),
-            color = GrayColor,
-            thickness = 1.dp
+            thickness = 1.dp,
+            color = GrayColor
         )
     }
 }
