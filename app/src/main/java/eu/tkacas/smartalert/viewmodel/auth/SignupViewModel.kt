@@ -4,8 +4,7 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
+import eu.tkacas.smartalert.cloud.createUser
 import eu.tkacas.smartalert.data.rules.Validator
 import eu.tkacas.smartalert.ui.state.RegistrationUIState
 import eu.tkacas.smartalert.ui.event.SignupUIEvent
@@ -68,17 +67,6 @@ class SignupViewModel() : ViewModel(){
     }
 
 
-    private fun signUp() {
-        Log.d(TAG, "Inside_signUp")
-        printState()
-        createUserInFirebase(
-            email = registrationUIState.value.email,
-            password = registrationUIState.value.password,
-            firstName = registrationUIState.value.firstName,
-            lastName = registrationUIState.value.lastName
-        )
-    }
-
     private fun validateDataWithRules() {
         val fNameResult = Validator.validateFirstName(
             fName = registrationUIState.value.firstName
@@ -130,37 +118,20 @@ class SignupViewModel() : ViewModel(){
     }
 
 
-    private fun createUserInFirebase(email: String, password: String, firstName: String, lastName: String) {
+    private fun signUp() {
+        val email = registrationUIState.value.email
+        val password = registrationUIState.value.password
+        val firstName = registrationUIState.value.firstName
+        val lastName = registrationUIState.value.lastName
 
-        signUpInProgress.value = true
-
-        val auth = FirebaseAuth.getInstance()
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener {
-                Log.d(TAG, "Inside_OnCompleteListener")
-                Log.d(TAG, " isSuccessful = ${it.isSuccessful}")
-
-                signUpInProgress.value = false
-                if (it.isSuccessful) {
-                    // Get the user's UID
-                    val uid = auth.currentUser?.uid
-
-                    // Create a reference to the user's data in the Realtime Database
-                    val db = FirebaseDatabase.getInstance()
-                    val userRef = db.getReference("users").child(uid!!)
-
-                    // Create a map to hold the user's first name and last name
-                    val userData = mapOf("firstName" to firstName, "lastName" to lastName)
-
-                    // Save the user's first name and last name in the Realtime Database
-                    userRef.setValue(userData)
-                    navController?.navigate("permissions")
-                }
+        createUser(email, password, firstName, lastName) { success, errorMessage ->
+            signUpInProgress.value = false
+            if (success) {
+                navController?.navigate("permissions")
+            } else {
+                // Handle the error message
+                Log.d(TAG, "Sign up failed: $errorMessage")
             }
-            .addOnFailureListener {
-                Log.d(TAG, "Inside_OnFailureListener")
-                Log.d(TAG, "Exception= ${it.message}")
-                Log.d(TAG, "Exception= ${it.localizedMessage}")
-            }
+        }
     }
 }

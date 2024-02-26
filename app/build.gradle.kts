@@ -51,6 +51,7 @@ dependencies {
 
 
     implementation("com.google.firebase:firebase-storage-ktx:20.3.0")
+    implementation("com.google.firebase:firebase-functions:20.4.0")
     val nav_version = "2.7.7"
     val compose_version = "1.6.1"
 
@@ -74,6 +75,8 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx:22.3.1")
     implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-database:20.3.0")
+
+    implementation("io.coil-kt:coil-compose:2.4.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

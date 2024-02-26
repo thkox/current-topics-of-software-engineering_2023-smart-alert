@@ -1,11 +1,13 @@
 package eu.tkacas.smartalert.ui.component
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -18,7 +20,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Switch
@@ -27,97 +28,94 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import eu.tkacas.smartalert.R
+import eu.tkacas.smartalert.app.SharedPrefManager
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.ui.screen.Screen
 
 
-@Composable
-fun CardComponent(iconResId: Int) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(20.dp),
-        elevation = 4.dp
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Image(
-                //painter = painterResource(id = R.drawable.wildfire),
-                painter = painterResource(id = iconResId),
-                contentDescription = "Card Icon",
-                modifier = Modifier.size(34.dp)
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            Column(
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(text = "15/02/2024")
-                Text(text = "Kifissia, Athens")
-                Text(text = "Number of Events: 3")
-            }
-
-        }
-    }
-}
-
 @Preview
 @Composable
-fun CardComponentWithImage() {
+fun CardComponentWithImage(
+    row1: String = "Kifissia, Athens",
+    row2: String = "Emergency level",
+    row3: String = "",
+    beDeletedEnabled: Boolean = false,
+    onClick: () -> Unit = {}
+) {
+    val sharedPrefManager = SharedPrefManager(LocalContext.current)
+    val weatherPhenomenon = sharedPrefManager.getCriticalWeatherPhenomenon()
+
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp)
+            .clickable {
+            onClick()
+        },
         shape = RoundedCornerShape(10.dp),
-        elevation = 4.dp){
+        elevation = 4.dp,
+        ){
         Row(
             verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.padding(8.dp)
         ){
             Column(
                 modifier = Modifier.padding(start = 8.dp),
                 verticalArrangement = Arrangement.Center
             ){
-                Row(){
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ){
                     Image(
-                        painter = painterResource(id = R.drawable.flood),
+                        painter = painterResource(id = weatherPhenomenon.getImage()),
                         contentDescription = null,
                         modifier = Modifier
                             .size(80.dp)
                             .padding(horizontal = 5.dp)
                     )
                     Column(){
-                        Text(text = "Address")
-                        Text(text = "Emergency level")
-                        Text(text = "Tap to show the message")
+                        Text(text = row1)
+                        Text(text = row2)
+                        if (row3.isNotEmpty()) {
+                            Text(text = row3)
+                        }
                     }
                 }
             }
-            Column(){
+            if(beDeletedEnabled){
+                Column(
+                    modifier = Modifier.padding(end = 8.dp),
+                    verticalArrangement = Arrangement.Center
+                ){
+                    Icon(
+                        painter = painterResource(id = R.drawable.delete),
+                        contentDescription = "Delete Icon",
+                        modifier = Modifier.clickable {
 
+                        }
+                    )
+                }
             }
         }
     }
 }
 
 @Composable
-fun CriticalWeatherPhenomenonCardComponent(weatherPhenomenon: CriticalWeatherPhenomenon) {
-    val imageResId = when(weatherPhenomenon) {
-        CriticalWeatherPhenomenon.EARTHQUAKE -> R.drawable.earthquake
-        CriticalWeatherPhenomenon.FLOOD -> R.drawable.flood
-        CriticalWeatherPhenomenon.WILDFIRE -> R.drawable.wildfire
-        CriticalWeatherPhenomenon.RIVER_FLOOD -> R.drawable.river_flood
-        CriticalWeatherPhenomenon.HEATWAVE -> R.drawable.heatwave
-        CriticalWeatherPhenomenon.SNOWSTORM -> R.drawable.snowstorm
-        CriticalWeatherPhenomenon.STORM -> R.drawable.storm
-    }
+fun CriticalWeatherPhenomenonCardComponent(navController : NavController? = null, weatherPhenomenon: CriticalWeatherPhenomenon) {
+    val imageResId = weatherPhenomenon.getImage()
+    val sharedPrefManager = SharedPrefManager(LocalContext.current)
+
     Card(
         modifier = Modifier
             .fillMaxSize()
@@ -126,7 +124,10 @@ fun CriticalWeatherPhenomenonCardComponent(weatherPhenomenon: CriticalWeatherPhe
         elevation = 4.dp
     ) {
         Button(
-            onClick = { /* Do something when button is clicked */ },
+            onClick = {
+                sharedPrefManager.setCriticalWeatherPhenomenon(weatherPhenomenon.name)
+                navController?.navigate("GroupEventsByLocation")
+            },
             modifier = Modifier.fillMaxSize(),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.White),
@@ -139,7 +140,6 @@ fun CriticalWeatherPhenomenonCardComponent(weatherPhenomenon: CriticalWeatherPhe
             ){
                 Image(
                     painter = painterResource(id = imageResId),
-                    //painter = painterResource(id = R.drawable.storm),
                     contentDescription = "Button Image",
                     modifier = Modifier
                         .size(80.dp)
@@ -279,15 +279,53 @@ fun PermissionCard(
     }
 }
 
-@Preview
 @Composable
-fun PermissionCardPreview() {
-    val isExpanded = remember { mutableStateOf(false) }
-    val switchState = remember { mutableStateOf(false) }
-    PermissionCard(
-        iconResId = R.drawable.location_pin,
-        permissionName = "Location",
-        isExpanded = isExpanded,
-        switchState = switchState
-    )
+fun LanguageCard(
+    onClick: () -> Unit,
+    @DrawableRes imageResId: Int,
+    @StringRes textResId: Int
+) {
+
+    Card(
+        modifier = Modifier
+            .clickable(onClick = onClick)
+            .fillMaxWidth()
+            .padding(6.dp),
+        elevation = 8.dp
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Image(
+                    painter = painterResource(id = imageResId),
+                    contentDescription = null,
+                    modifier = Modifier.size(35.dp),
+                )
+                Text(
+                    text = stringResource(id = textResId),
+                    style = MaterialTheme.typography.h6,
+                    modifier = Modifier.padding(start = 10.dp),
+                    color = Color.Black
+                )
+            }
+        }
+    }
+}
+
+
+@Composable
+fun ClickableElevatedCardSample() {
+    ElevatedCard(
+        //onClick = { /* Do something */ },
+        modifier = Modifier.size(width = 150.dp, height = 500.dp)
+    ) {
+        Box(Modifier.fillMaxSize()) {
+            Text("Clickable", Modifier.align(Alignment.Center))
+        }
+    }
 }

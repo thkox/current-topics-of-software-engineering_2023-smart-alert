@@ -17,25 +17,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 
+
 @Composable
-fun <T : Enum<T>> EnumDropdownComponent(
-    enumClass: Class<T>,
-    initialSelection: T,
-    onSelected: (T) -> Unit
-) {
+fun EnumDropdownComponent(enumClass: Class<CriticalWeatherPhenomenon>, initialSelection: CriticalWeatherPhenomenon, onSelected: (CriticalWeatherPhenomenon) -> Unit) {
+
     var expanded by remember { mutableStateOf(false) }
     val enumValues = enumClass.enumConstants
     var selectedValue by remember { mutableStateOf(initialSelection) }
+
 
     Box {
         Button(
             onClick = { expanded = true },
             colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.colorBlue)),
         ) {
-            Text(selectedValue.name)
+            //Text(selectedValue.name)
+            Text(stringResource(id = selectedValue.getStringId()))
             Icon(painter = if (expanded) painterResource(id = R.drawable.arrow_up) else painterResource(id = R.drawable.arrow_down),
                 contentDescription = if (expanded) "Arrow Up" else "Arrow Down")
         }
@@ -43,7 +44,7 @@ fun <T : Enum<T>> EnumDropdownComponent(
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
-            modifier = Modifier.background(colorResource(id = R.color.colorBlue))
+            modifier = Modifier.background(colorResource(id = R.color.colorBlue)),
         ) {
             enumValues.forEach { value ->
                 DropdownMenuItem(
@@ -54,7 +55,9 @@ fun <T : Enum<T>> EnumDropdownComponent(
                     },
                     modifier = Modifier.background(colorResource(id = R.color.colorBlue))
                 ) {
-                    Text(value.name)
+                    //Text(value.name)
+                    //Text(stringResource(id = value.getStringId()))
+                    Text(text = stringResource(id = value.getStringId()))
                 }
             }
         }

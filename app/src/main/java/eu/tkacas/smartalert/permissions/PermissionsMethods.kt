@@ -7,6 +7,13 @@ import android.net.Uri
 import android.provider.Settings
 import androidx.core.content.ContextCompat
 
+
+fun areAllPermissionsGranted(context: Context, permissions: Array<String>): Boolean {
+    return permissions.all { permission ->
+        ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
+    }
+}
+
 fun openAppSettings(context: Context) {
     val intent = Intent().apply {
         action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
@@ -15,10 +22,4 @@ fun openAppSettings(context: Context) {
         flags = Intent.FLAG_ACTIVITY_NEW_TASK
     }
     context.startActivity(intent)
-}
-
-fun areAllPermissionsGranted(context: Context, permissions: Array<String>): Boolean {
-    return permissions.all { permission ->
-        ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
-    }
 }

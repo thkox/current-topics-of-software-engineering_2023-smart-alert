@@ -47,3 +47,28 @@ fun DividerTextComponent() {
         )
     }
 }
+
+@Composable
+fun DividerComponentWithoutText() {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+
+        HorizontalDivider(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f),
+            thickness = 1.dp,
+            color = GrayColor
+        )
+
+        Divider(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f),
+            color = GrayColor,
+            thickness = 1.dp
+        )
+    }
+}

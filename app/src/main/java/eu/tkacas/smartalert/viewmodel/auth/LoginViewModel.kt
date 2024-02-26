@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
-import com.google.firebase.auth.FirebaseAuth
+import eu.tkacas.smartalert.cloud.signInUser
 import eu.tkacas.smartalert.ui.event.LoginUIEvent
 import eu.tkacas.smartalert.ui.state.LoginUIState
 import eu.tkacas.smartalert.data.rules.Validator
@@ -63,30 +63,18 @@ class LoginViewModel : ViewModel() {
     }
 
     private fun login() {
-
         loginInProgress.value = true
         val email = loginUIState.value.email
         val password = loginUIState.value.password
 
-        FirebaseAuth
-            .getInstance()
-            .signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener {
-                Log.d(TAG,"Inside_login_success")
-                Log.d(TAG,"${it.isSuccessful}")
-
-                if(it.isSuccessful){
-                    loginInProgress.value = false
-                    navController?.navigate("permissions")
-                }
+        signInUser(email, password) { success, errorMessage ->
+            loginInProgress.value = false
+            if (success) {
+                navController?.navigate("permissions")
+            } else {
+                // Handle the error message
+                Log.d(TAG, "Login failed: $errorMessage")
             }
-            .addOnFailureListener {
-                Log.d(TAG,"Inside_login_failure")
-                Log.d(TAG,"${it.localizedMessage}")
-
-                loginInProgress.value = false
-
-            }
-
+        }
     }
 }
