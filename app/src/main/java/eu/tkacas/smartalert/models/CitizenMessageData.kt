@@ -9,7 +9,3 @@ data class CitizenMessage(
     var imageURL: String? = null
 )
 
-data class ArchivedMessages(
-    val messages: List<CitizenMessage>
-)
-
