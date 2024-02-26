@@ -41,6 +41,11 @@ import eu.tkacas.smartalert.models.ListOfSingleLocationCriticalWeatherPhenomenon
 import eu.tkacas.smartalert.ui.component.AlertWithImageDialog
 import eu.tkacas.smartalert.ui.component.CardComponentWithImage
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun EventsByLocationScreen(navController: NavHostController? = null) {
@@ -113,9 +118,15 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                         modifier = Modifier.fillMaxSize()
                     ){
                         items(data.value?.list?.size ?: 0) { index ->
+                            // TODO: Convert timestamp in cloud function
+                            val timestamp = data.value?.list?.get(index)?.timeStamp ?: 0
+                            val instant = Instant.ofEpochMilli(timestamp)
+                            val formatter = DateTimeFormatter.ofPattern("HH:mm").withZone(ZoneId.systemDefault())
+                            val time = formatter.format(instant)
                             CardComponentWithImage(
                                 row1 = data.value?.list?.get(index)?.location ?: "",
-                                row2 = data.value?.list?.get(index)?.emLevel.toString(),
+                                row2 = "Critical Level: ${data.value?.list?.get(index)?.emLevel.toString()}",
+                                row3 = "Time: $time",
                                 beDeletedEnabled = true,
                                 onClick = {
                                     selectedMessage.value = data.value?.list?.get(index)?.message
