@@ -44,6 +44,7 @@ import eu.tkacas.smartalert.ui.navigation.AppBarBackView
 @Composable
 fun EventsByLocationScreen(navController: NavHostController? = null) {
     val sharedPrefManager = SharedPrefManager(LocalContext.current)
+    sharedPrefManager.setPreviousScreen("EventsByLocationScreen")
     val scaffoldState = rememberScaffoldState()
 
     val showDialog = remember { mutableStateOf(false) }
