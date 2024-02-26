@@ -7,9 +7,9 @@ enum class EmergencyLevel {
 
     fun getStringId(): Int {
         return when (this) {
-            EmergencyLevel.LOW -> R.string.low
-            EmergencyLevel.NORMAL -> R.string.normal
-            EmergencyLevel.HIGH -> R.string.high
+            LOW -> R.string.low
+            NORMAL -> R.string.normal
+            HIGH -> R.string.high
         }
     }
 }

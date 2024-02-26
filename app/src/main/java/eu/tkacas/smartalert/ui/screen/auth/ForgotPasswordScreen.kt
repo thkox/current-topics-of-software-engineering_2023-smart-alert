@@ -78,15 +78,6 @@ fun ForgotPasswordScreen(navController: NavController? = null) {
                 BackToLoginComponent(onTextSelected = {
                     navController?.navigate("login")
                 })
-
-
-
-
-                //MyTextFieldComponent(labelValue = stringResource(id = R.string.email))
-//                ButtonComponent(value = stringResource(id = R.string.submit)) {
-//                    // Handle submit button click
-//                }
-
             }
         }
     }
