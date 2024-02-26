@@ -1,6 +1,7 @@
 package eu.tkacas.smartalert.models
 
 data class SingleLocationCriticalWeatherPhenomenonData(
+    val alertID: String,
     val location: String,
     val emLevel: Int,
     val message: String,

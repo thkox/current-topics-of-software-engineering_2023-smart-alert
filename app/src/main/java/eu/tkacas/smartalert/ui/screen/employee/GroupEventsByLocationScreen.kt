@@ -101,13 +101,14 @@ fun GroupEventsByLocationScreen(navController: NavHostController? = null){
                             CardComponentWithImage(
                                 row1 = data.value?.list?.get(index)?.location ?: "",
                                 row2 = "Number of Reports: ${data.value?.list?.get(index)?.numOfReports ?: 0}",
-                                beDeletedEnabled = false
-                            ) {
-                                sharedPrefManager.setAddress(
-                                    data.value?.list?.get(index)?.location ?: ""
-                                )
-                                navController?.navigate("EventsByLocation")
-                            }
+                                beDeletedEnabled = false,
+                                onClick = {
+                                    sharedPrefManager.setAddress(
+                                        data.value?.list?.get(index)?.location ?: ""
+                                    )
+                                    navController?.navigate("EventsByLocation")
+                                }
+                            )
                         }
                     }
                 } else if (error.value != null) {
