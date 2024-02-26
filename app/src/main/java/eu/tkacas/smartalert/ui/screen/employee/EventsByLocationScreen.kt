@@ -1,22 +1,21 @@
 package eu.tkacas.smartalert.ui.screen.employee
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Map
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -25,7 +24,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -33,18 +31,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import coil.compose.rememberAsyncImagePainter
 import eu.tkacas.smartalert.app.SharedPrefManager
 import eu.tkacas.smartalert.cloud.getSpecificAlertByPhenomenonAndLocation
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.models.ListOfSingleLocationCriticalWeatherPhenomenonData
 import eu.tkacas.smartalert.ui.component.AlertWithImageDialog
 import eu.tkacas.smartalert.ui.component.CardComponentWithImage
+import eu.tkacas.smartalert.ui.component.GeneralButtonComponent
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
 import java.time.Instant
-import java.time.LocalDateTime
 import java.time.ZoneId
-import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
 @Composable
@@ -81,15 +77,30 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
             AppBarBackView(title = "Specific " + stringResource(id = criticalWeatherPhenomenon.getStringId()), navController = navController)
         },
         floatingActionButton = {
-            FloatingActionButton(
-                modifier = Modifier.padding(all = 20.dp),
-                contentColor = Color.White,
-                backgroundColor = Color.Black,
-                onClick = {
-                    navController?.navigate("Map")
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                FloatingActionButton(
+                    modifier = Modifier
+                        .size(40.dp), // This will make the button smaller
+                    contentColor = Color.White,
+                    backgroundColor = Color.Black,
+                    onClick = {
+
+                    }
+                ) {
+                    Icon(imageVector = Icons.Default.Add, contentDescription = "add")
                 }
-            ){
-                Icon(imageVector = Icons.Default.Map, contentDescription = "Map")
+                FloatingActionButton(
+                    modifier = Modifier.padding(all = 15.dp),
+                    contentColor = Color.White,
+                    backgroundColor = Color.Black,
+                    onClick = {
+                        navController?.navigate("Map")
+                    }
+                ) {
+                    Icon(imageVector = Icons.Default.Map, contentDescription = "Map")
+                }
             }
         }
     ){ it ->
@@ -109,10 +120,21 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                     color = Color.Black,
                     style = TextStyle(
                         color = Color.Black,
-                        fontSize = 20.sp
+                        fontSize = 16.sp
                     ),
                     modifier = Modifier.padding(16.dp)
                 )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.End
+                ){
+                    GeneralButtonComponent(
+                        value = "Delete All",
+                        onButtonClicked = {}
+                    )
+                }
                 if (data.value != null) {
                     LazyColumn(
                         modifier = Modifier.fillMaxSize()
