@@ -36,6 +36,7 @@ import eu.tkacas.smartalert.ui.navigation.AppBarBackView
 @Composable
 fun GroupEventsByLocationScreen(navController: NavHostController? = null){
     val sharedPrefManager = SharedPrefManager(LocalContext.current)
+    sharedPrefManager.setPreviousScreen("GroupEventsByLocationScreen")
     val scaffoldState = rememberScaffoldState()
 
     val weatherPhenomenon = sharedPrefManager.getCriticalWeatherPhenomenon()

@@ -36,4 +36,14 @@ class SharedPrefManager(context: Context) {
         val address = sharedPreferences.getString("address", "Kifissia")
         return address!!
     }
+
+    fun setPreviousScreen(screen: String) {
+        sharedPreferences.edit().putString("previous_screen", screen).apply()
+    }
+
+    fun getPreviousScreen(): String {
+        val screen = sharedPreferences.getString("previous_screen", "Home")
+        return screen!!
+    }
+
 }
