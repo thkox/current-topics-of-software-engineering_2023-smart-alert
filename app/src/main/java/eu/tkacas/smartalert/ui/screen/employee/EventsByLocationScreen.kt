@@ -145,15 +145,10 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                         modifier = Modifier.fillMaxSize()
                     ){
                         items(data.value?.list?.size ?: 0) { index ->
-                            // TODO: Convert timestamp in cloud function
-                            val timestamp = data.value?.list?.get(index)?.timeStamp ?: 0
-                            val instant = Instant.ofEpochMilli(timestamp)
-                            val formatter = DateTimeFormatter.ofPattern("HH:mm").withZone(ZoneId.systemDefault())
-                            val time = formatter.format(instant)
                             CardComponentWithImage(
                                 row1 = data.value?.list?.get(index)?.location ?: "",
                                 row2 = "Critical Level: ${data.value?.list?.get(index)?.emLevel.toString()}",
-                                row3 = "Time: $time",
+                                row3 = "Time: ${data.value?.list?.get(index)?.timeStamp}",
                                 beDeletedEnabled = true,
                                 onDelete = {
                                     viewModel.deleteEventByPhenomenonAndLocation(criticalWeatherPhenomenon.name, address, data.value?.list?.get(index)?.alertID ?: "")
