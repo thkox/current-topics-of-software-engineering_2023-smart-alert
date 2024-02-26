@@ -1,7 +1,7 @@
 package eu.tkacas.smartalert.ui.screen.citizen
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.FloatingActionButton
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import eu.tkacas.smartalert.R
-import eu.tkacas.smartalert.ui.navigation.AppBarWithoutBackView
+import eu.tkacas.smartalert.ui.navigation.AppBarBackView
 
 @Composable
 fun HomeCitizenScreen(navController: NavController? = null) {
@@ -26,13 +26,12 @@ fun HomeCitizenScreen(navController: NavController? = null) {
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            AppBarWithoutBackView(title = stringResource(id = R.string.home), navController = navController)
+            AppBarBackView(title = stringResource(id = R.string.home), navController = navController, enableBackButton = false)
         },
         floatingActionButton = {
             FloatingActionButton(
                 modifier = Modifier.padding(all = 20.dp),
                 contentColor = Color.White,
-                backgroundColor = Color.Black,
                 onClick = {
                     navController?.navigate("alertForm")
                 }

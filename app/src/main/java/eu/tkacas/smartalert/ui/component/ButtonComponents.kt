@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -250,7 +251,7 @@ fun UploadPhotoButton(
 fun FloatingActionButton(onClick: () -> Unit) {
     FloatingActionButton(
         containerColor = colorResource(id = R.color.colorBlue),
-        onClick = { /*TODO*/ },
+        onClick = { onClick() },
     ) {
         Icon(painterResource(id = R.drawable.edit), contentDescription = "Localized description")
     }

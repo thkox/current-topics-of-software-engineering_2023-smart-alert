@@ -58,16 +58,16 @@ class CameraViewModel: ViewModel() {
 
                 override fun onError(exception: ImageCaptureException) {
                     super.onError(exception)
-                    Log.e("Camera", "Coudn't take photo: ", exception)
+                    Log.e("Camera", "Couldn't take photo: ", exception)
                 }
             }
         )
     }
     suspend fun uploadPhotoToCloudStorage(bitmap: Bitmap): String {
         // Convert the Bitmap to a byte array
-        val baos = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-        val data = baos.toByteArray()
+        val boas = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, boas)
+        val data = boas.toByteArray()
 
         // Get a reference to Firebase Storage
         val storage = FirebaseStorage.getInstance()
@@ -92,11 +92,11 @@ class CameraViewModel: ViewModel() {
         }.await().toString()
     }
 
-    fun citizenMessageToJson(citizenMessage: CitizenMessage): String {
+    private fun citizenMessageToJson(citizenMessage: CitizenMessage): String {
         return Gson().toJson(citizenMessage)
     }
 
-    fun jsonToCitizenMessage(jsonString: String): CitizenMessage {
+    private fun jsonToCitizenMessage(jsonString: String): CitizenMessage {
         return Gson().fromJson(jsonString, CitizenMessage::class.java)
     }
 

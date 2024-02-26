@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.material.FloatingActionButton
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
@@ -21,7 +21,7 @@ import androidx.navigation.NavController
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.ui.component.CriticalWeatherPhenomenonCardComponent
-import eu.tkacas.smartalert.ui.navigation.AppBarWithoutBackView
+import eu.tkacas.smartalert.ui.navigation.AppBarBackView
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -31,13 +31,12 @@ fun HomeEmployeeScreen(navController: NavController? = null){
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            AppBarWithoutBackView(title = stringResource(id = R.string.home), navController = navController)
+            AppBarBackView(title = stringResource(id = R.string.home), navController = navController, enableBackButton = false)
         },
         floatingActionButton = {
             FloatingActionButton(
                 modifier = Modifier.padding(all = 20.dp),
                 contentColor = Color.White,
-                backgroundColor = Color.Black,
                 onClick = {
                     navController?.navigate("alertCitizensForm")
                 }

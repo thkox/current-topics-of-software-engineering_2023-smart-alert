@@ -116,7 +116,7 @@ fun AccountScreen (navController: NavController? = null) {
                 ){
                     FloatingActionButton(
                         onClick = {
-                            //value
+                            // TODO: Implement the logic for updating the user's account
                         }
                     )
                 }

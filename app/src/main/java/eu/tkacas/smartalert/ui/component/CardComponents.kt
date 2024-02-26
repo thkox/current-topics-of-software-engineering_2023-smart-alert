@@ -144,7 +144,7 @@ fun CriticalWeatherPhenomenonCardComponent(navController : NavController? = null
                     contentDescription = "Button Image",
                     modifier = Modifier
                         .size(80.dp)
-                        .padding(bottom = 8.dp) // Make the image fill the button
+                        .padding(bottom = 8.dp)
                 )
                 Text(
                     text = weatherPhenomenon.name,
@@ -314,19 +314,6 @@ fun LanguageCard(
                     color = Color.Black
                 )
             }
-        }
-    }
-}
-
-
-@Composable
-fun ClickableElevatedCardSample() {
-    ElevatedCard(
-        //onClick = { /* Do something */ },
-        modifier = Modifier.size(width = 150.dp, height = 500.dp)
-    ) {
-        Box(Modifier.fillMaxSize()) {
-            Text("Clickable", Modifier.align(Alignment.Center))
         }
     }
 }

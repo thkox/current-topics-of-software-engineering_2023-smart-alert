@@ -12,7 +12,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.material.FloatingActionButton
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -37,12 +37,10 @@ import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.models.ListOfSingleLocationCriticalWeatherPhenomenonData
 import eu.tkacas.smartalert.ui.component.AlertWithImageDialog
 import eu.tkacas.smartalert.ui.component.CardComponentWithImage
+import eu.tkacas.smartalert.ui.component.ConfirmDeleteDialog
 import eu.tkacas.smartalert.ui.component.GeneralButtonComponent
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
 import eu.tkacas.smartalert.viewmodel.employee.EventsByLocationViewModel
-import java.time.Instant
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 
 @Composable
 fun EventsByLocationScreen(navController: NavHostController? = null) {
@@ -53,6 +51,9 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
     val viewModel = EventsByLocationViewModel()
 
     val showDialog = remember { mutableStateOf(false) }
+    val showWarningDialog = remember { mutableStateOf(false) }
+    val showMassWarningDialog = remember { mutableStateOf(false) }
+
     val selectedMessage = remember { mutableStateOf<String?>(null) }
     val selectedImageUrl = remember { mutableStateOf<String?>(null) }
 
@@ -87,7 +88,6 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                     modifier = Modifier
                         .size(40.dp), // This will make the button smaller
                     contentColor = Color.White,
-                    backgroundColor = Color.Black,
                     onClick = {
                         navController?.navigate("alertCitizensForm")
                     }
@@ -97,7 +97,6 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                 FloatingActionButton(
                     modifier = Modifier.padding(all = 15.dp),
                     contentColor = Color.White,
-                    backgroundColor = Color.Black,
                     onClick = {
                         navController?.navigate("Map")
                     }
@@ -106,7 +105,7 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                 }
             }
         }
-    ){ it ->
+    ){
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -136,7 +135,7 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                     GeneralButtonComponent(
                         value = "Delete All",
                         onButtonClicked = {
-                            viewModel.deleteAllEventsByPhenomenonAndLocation(criticalWeatherPhenomenon.name, address)
+                            showMassWarningDialog.value = true
                         }
                     )
                 }
@@ -151,7 +150,7 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                                 row3 = "Time: ${data.value?.list?.get(index)?.timeStamp}",
                                 beDeletedEnabled = true,
                                 onDelete = {
-                                    viewModel.deleteEventByPhenomenonAndLocation(criticalWeatherPhenomenon.name, address, data.value?.list?.get(index)?.alertID ?: "")
+                                    showWarningDialog.value = true
                                 },
                                 onClick = {
                                     selectedMessage.value = data.value?.list?.get(index)?.message
@@ -160,13 +159,32 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
 
                                 }
                             )
-                            if (showDialog.value) {
-                                AlertWithImageDialog(
-                                    message = selectedMessage.value,
-                                    imageURL = selectedImageUrl.value,
-                                    onDismiss = { showDialog.value = false }
-                                )
-                            }
+                            AlertWithImageDialog(
+                                showDialog = showDialog.value,
+                                message = selectedMessage.value,
+                                imageURL = selectedImageUrl.value,
+                                onDismiss = { showDialog.value = false }
+                            )
+                            ConfirmDeleteDialog(
+                                showDialog = showWarningDialog.value,
+                                title = "Warning",
+                                message = "You are about to delete an alert warning. Are you sure?",
+                                onDismiss = { showWarningDialog.value = false },
+                                onConfirm = {
+                                    viewModel.deleteEventByPhenomenonAndLocation(criticalWeatherPhenomenon.name, address, data.value?.list?.get(index)?.alertID ?: "")
+                                    showWarningDialog.value = false
+                                }
+                            )
+                            ConfirmDeleteDialog(
+                                showDialog = showMassWarningDialog.value,
+                                title =  "Warning",
+                                message =  "You are about to delete all alert warnings. Are you sure?",
+                                onDismiss = { showMassWarningDialog.value = false },
+                                onConfirm = {
+                                    viewModel.deleteAllEventsByPhenomenonAndLocation(criticalWeatherPhenomenon.name, address)
+                                    showMassWarningDialog.value = false
+                                }
+                            )
                         }
                     }
                 } else if (error.value != null) {

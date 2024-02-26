@@ -93,8 +93,7 @@ fun ClickableLoginTextComponent(tryingToLogin: Boolean = true, onTextSelected: (
                         onTextSelected(span.item)
                     }
                 }
-
-        },
+        }
     )
 }
 
@@ -132,7 +131,6 @@ fun BackToLoginComponent(onTextSelected: (String) -> Unit) {
                         onTextSelected(span.item)
                     }
                 }
-
-        },
+        }
     )
 }
