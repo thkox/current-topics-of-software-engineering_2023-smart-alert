@@ -155,6 +155,9 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                                 row2 = "Critical Level: ${data.value?.list?.get(index)?.emLevel.toString()}",
                                 row3 = "Time: $time",
                                 beDeletedEnabled = true,
+                                onDelete = {
+                                    viewModel.deleteEventByPhenomenonAndLocation(criticalWeatherPhenomenon.name, address, data.value?.list?.get(index)?.alertID ?: "")
+                                },
                                 onClick = {
                                     selectedMessage.value = data.value?.list?.get(index)?.message
                                     selectedImageUrl.value = data.value?.list?.get(index)?.imageURL

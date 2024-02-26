@@ -45,4 +45,26 @@ class CloudFunctionsUtils {
             false
         }
     }
+
+    suspend fun deleteAlertByPhenomenonAndLocation(phenomenon: String, location: String, alertID: String): Boolean {
+    val data = hashMapOf(
+        "phenomenon" to phenomenon,
+        "place" to location,
+        "alertID" to alertID
+    )
+
+    return try {
+        val result = functions
+            .getHttpsCallable("delete_alert_by_phenomenon_and_location")
+            .call(data)
+            .continueWith { task ->
+                val result = task.result?.data as Map<String, Any>
+                result["success"] as Boolean
+            }.await()
+        result
+    } catch (e: Exception) {
+        println("Error calling Firebase Function: ${e.message}")
+        false
+    }
+}
 }

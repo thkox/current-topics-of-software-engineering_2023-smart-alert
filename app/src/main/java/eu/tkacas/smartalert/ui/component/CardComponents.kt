@@ -50,7 +50,8 @@ fun CardComponentWithImage(
     row2: String = "Emergency level",
     row3: String = "",
     beDeletedEnabled: Boolean = false,
-    onClick: () -> Unit = {}
+    onClick: () -> Unit = {},
+    onDelete: () -> Unit = {}
 ) {
     val sharedPrefManager = SharedPrefManager(LocalContext.current)
     val weatherPhenomenon = sharedPrefManager.getCriticalWeatherPhenomenon()
@@ -102,7 +103,7 @@ fun CardComponentWithImage(
                         painter = painterResource(id = R.drawable.delete),
                         contentDescription = "Delete Icon",
                         modifier = Modifier.clickable {
-
+                            onDelete()
                         }
                     )
                 }
