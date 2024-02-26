@@ -86,7 +86,7 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                     contentColor = Color.White,
                     backgroundColor = Color.Black,
                     onClick = {
-
+                        navController?.navigate("alertCitizensForm")
                     }
                 ) {
                     Icon(imageVector = Icons.Default.Add, contentDescription = "add")
