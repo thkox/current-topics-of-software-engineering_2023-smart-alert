@@ -134,7 +134,6 @@ fun AlertFormScreen(navController: NavHostController? = null) {
                             Manifest.permission.CAMERA
                         )
                         val citizenMessage = CitizenMessage(
-                            userId = viewModel.userId,
                             message = viewModel.alertDescription.value,
                             criticalWeatherPhenomenon = viewModel.selectedWeatherPhenomenon.value,
                             location = viewModel.locationData,
