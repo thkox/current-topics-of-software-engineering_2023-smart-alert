@@ -12,13 +12,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -33,10 +30,8 @@ import androidx.navigation.NavController
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.ui.component.ButtonWithImageComponent
 import eu.tkacas.smartalert.ui.component.CenteredAboutText
-import eu.tkacas.smartalert.ui.component.CenteredCreatorsText
 import eu.tkacas.smartalert.ui.component.DividerComponentWithoutText
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
-import eu.tkacas.smartalert.ui.navigation.AppBarWithoutBackView
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable

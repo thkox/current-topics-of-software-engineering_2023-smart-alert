@@ -266,8 +266,6 @@ fun NameFieldComponent(
 
 @Composable
 fun PasswordDisplayComponent(password: String, painterResource: Painter) {
-    var enabled by remember { mutableStateOf(false) }
-
     OutlinedTextField(
         modifier = Modifier
             .fillMaxWidth()

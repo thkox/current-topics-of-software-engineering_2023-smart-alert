@@ -1,8 +1,6 @@
 package eu.tkacas.smartalert.viewmodel
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.ktx.auth
@@ -16,19 +14,19 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 class AccountViewModel : ViewModel() {
 
-    private val _email = MutableStateFlow<String>("")
+    private val _email = MutableStateFlow("")
     val email: StateFlow<String> get() = _email
 
-    private val _firstName = MutableStateFlow<String>("")
+    private val _firstName = MutableStateFlow("")
     val firstName: StateFlow<String> get() = _firstName
 
-    private val _lastName = MutableStateFlow<String>("")
+    private val _lastName = MutableStateFlow("")
     val lastName: StateFlow<String> get() = _lastName
 
-    private val _password = MutableStateFlow<String>("")
+    private val _password = MutableStateFlow("")
     val password: StateFlow<String> get() = _password
 
-    private val _isLoading = MutableStateFlow<Boolean>(false)
+    private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> get() = _isLoading
 
     init {
@@ -76,6 +74,7 @@ class AccountViewModel : ViewModel() {
         }
     }
 
+    // TODO: Implement the changePassword function
     fun changePassword(newPassword: String) {
         val user = Firebase.auth.currentUser
         user?.updatePassword(newPassword)?.addOnCompleteListener { task ->

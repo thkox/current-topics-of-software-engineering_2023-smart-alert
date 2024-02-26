@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
-import eu.tkacas.smartalert.ui.navigation.AppBarWithoutBackView
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable

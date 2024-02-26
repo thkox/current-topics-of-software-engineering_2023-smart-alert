@@ -14,7 +14,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -26,7 +25,6 @@ import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 fun EnumDropdownComponent(enumClass: Class<CriticalWeatherPhenomenon>, initialSelection: CriticalWeatherPhenomenon, onSelected: (CriticalWeatherPhenomenon) -> Unit) {
 
     var expanded by remember { mutableStateOf(false) }
-    val enumValues = enumClass.enumConstants
     var selectedValue by remember { mutableStateOf(initialSelection) }
 
 
@@ -46,7 +44,7 @@ fun EnumDropdownComponent(enumClass: Class<CriticalWeatherPhenomenon>, initialSe
             onDismissRequest = { expanded = false },
             modifier = Modifier.background(colorResource(id = R.color.colorBlue)),
         ) {
-            enumValues.forEach { value ->
+            enumClass.enumConstants?.forEach { value ->
                 DropdownMenuItem(
                     onClick = {
                         selectedValue = value
@@ -55,8 +53,6 @@ fun EnumDropdownComponent(enumClass: Class<CriticalWeatherPhenomenon>, initialSe
                     },
                     modifier = Modifier.background(colorResource(id = R.color.colorBlue))
                 ) {
-                    //Text(value.name)
-                    //Text(stringResource(id = value.getStringId()))
                     Text(text = stringResource(id = value.getStringId()))
                 }
             }

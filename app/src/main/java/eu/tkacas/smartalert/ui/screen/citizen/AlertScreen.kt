@@ -9,7 +9,6 @@ fun AlertScreen(navController: NavHostController? = null){
 
 }
 
-
 @Preview
 @Composable
 fun AlertScreenPreview(){

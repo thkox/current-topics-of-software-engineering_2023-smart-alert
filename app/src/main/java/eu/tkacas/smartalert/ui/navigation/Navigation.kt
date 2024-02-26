@@ -15,13 +15,12 @@ import eu.tkacas.smartalert.app.SharedPrefManager
 import eu.tkacas.smartalert.cloud.userExists
 import eu.tkacas.smartalert.ui.screen.auth.ForgotPasswordScreen
 import eu.tkacas.smartalert.cloud.signOutUser
-import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.ui.screen.auth.LoginScreen
 import eu.tkacas.smartalert.ui.screen.auth.SignUpScreen
 import eu.tkacas.smartalert.ui.screen.auth.TermsAndConditionsScreen
 import eu.tkacas.smartalert.ui.screen.citizen.AlertFormScreen
 import eu.tkacas.smartalert.ui.screen.citizen.AlertScreen
-import eu.tkacas.smartalert.ui.screen.citizen.Camera.CameraScreen
+import eu.tkacas.smartalert.ui.screen.citizen.camera.CameraScreen
 import eu.tkacas.smartalert.ui.screen.employee.AlertCitizensFormScreen
 import eu.tkacas.smartalert.ui.screen.employee.EventsByLocationScreen
 import eu.tkacas.smartalert.ui.screen.employee.GroupEventsByLocationScreen
@@ -76,7 +75,6 @@ fun Navigation(navController: NavController = rememberNavController()) {
                         is Screen.HomeCitizen.Alert -> AlertScreen(navController)
                     }
                 } else {
-                    // Redirect to login screen if user is not authenticated
                     navController.navigate("welcome")
                 }
             }

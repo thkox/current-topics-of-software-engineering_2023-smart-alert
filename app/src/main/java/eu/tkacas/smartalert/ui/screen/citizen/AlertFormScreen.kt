@@ -22,7 +22,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.models.CitizenMessage
@@ -37,7 +36,6 @@ import eu.tkacas.smartalert.ui.component.MultilineTextFieldComponent
 import eu.tkacas.smartalert.ui.component.NormalTextComponent
 import eu.tkacas.smartalert.ui.component.PermissionDialog
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
-import eu.tkacas.smartalert.viewmodel.LocationViewModel
 import eu.tkacas.smartalert.viewmodel.citizen.AlertFormViewModel
 import kotlinx.coroutines.launch
 
@@ -74,12 +72,12 @@ fun AlertFormScreen(navController: NavHostController? = null) {
             }
         }
     )
-    val citizenMessage = viewModel.getCitizenMessageFromPrefs(context)
-    if(citizenMessage != null){
-        viewModel.setAlertDescription(citizenMessage.message)
-        viewModel.setSelectedWeatherPhenomenon(citizenMessage.criticalWeatherPhenomenon)
-        viewModel.setPhotoURL(citizenMessage.imageURL)
-        viewModel.setSelectedDangerLevelButton(citizenMessage.criticalLevel)
+    val citizenMessagePref = viewModel.getCitizenMessageFromPrefs(context)
+    if(citizenMessagePref != null){
+        viewModel.setAlertDescription(citizenMessagePref.message)
+        viewModel.setSelectedWeatherPhenomenon(citizenMessagePref.criticalWeatherPhenomenon)
+        viewModel.setPhotoURL(citizenMessagePref.imageURL)
+        viewModel.setSelectedDangerLevelButton(citizenMessagePref.criticalLevel)
     }
 
     Scaffold(

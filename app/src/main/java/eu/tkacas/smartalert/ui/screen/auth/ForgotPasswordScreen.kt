@@ -30,8 +30,8 @@ import eu.tkacas.smartalert.viewmodel.auth.ForgotPasswordViewModel
 
 @Composable
 fun ForgotPasswordScreen(navController: NavController? = null) {
-    val forgotpasswordViewModel: ForgotPasswordViewModel = viewModel()
-    forgotpasswordViewModel.navController = navController
+    val forgotPasswordViewModel: ForgotPasswordViewModel = viewModel()
+    forgotPasswordViewModel.navController = navController
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -62,16 +62,16 @@ fun ForgotPasswordScreen(navController: NavController? = null) {
                 TextFieldComponent(labelValue = stringResource(id = R.string.email),
                     painterResource(id = R.drawable.email),
                     onTextChanged = {
-                        forgotpasswordViewModel.onEvent(ForgotPasswordUIEvent.EmailChanged(it))
+                        forgotPasswordViewModel.onEvent(ForgotPasswordUIEvent.EmailChanged(it))
                     },
-                    errorStatus = forgotpasswordViewModel.forgotPasswordUIState.value.emailError
+                    errorStatus = forgotPasswordViewModel.forgotPasswordUIState.value.emailError
                 )
                 Spacer(modifier = Modifier.size(15.dp))
 
                 GeneralButtonComponent(
                     value = stringResource(id = R.string.submit),
                     onButtonClicked = {
-                    forgotpasswordViewModel.onEvent(ForgotPasswordUIEvent.ResetPasswordButtonClicked)
+                    forgotPasswordViewModel.onEvent(ForgotPasswordUIEvent.ResetPasswordButtonClicked)
                     }
                 )
                 Spacer(modifier = Modifier.size(50.dp))

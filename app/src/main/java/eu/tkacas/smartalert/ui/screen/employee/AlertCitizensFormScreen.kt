@@ -22,7 +22,6 @@ import eu.tkacas.smartalert.ui.component.CityTextFieldComponent
 import eu.tkacas.smartalert.ui.component.EnumDropdownComponent
 import eu.tkacas.smartalert.ui.component.GeneralButtonComponent
 import eu.tkacas.smartalert.ui.component.NormalTextComponent
-
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
 
 @Composable

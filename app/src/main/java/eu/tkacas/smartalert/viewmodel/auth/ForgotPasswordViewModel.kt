@@ -1,6 +1,5 @@
 package eu.tkacas.smartalert.viewmodel.auth
 
-import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
@@ -10,8 +9,6 @@ import eu.tkacas.smartalert.ui.state.ForgotPasswordUIState
 import eu.tkacas.smartalert.cloud.sendPasswordResetEmail
 
 class ForgotPasswordViewModel : ViewModel() {
-
-    private val TAG = ForgotPasswordViewModel::class.simpleName
 
     var navController: NavController? = null
 
@@ -38,7 +35,6 @@ class ForgotPasswordViewModel : ViewModel() {
                     email = event.email
                 )
             }
-
             is ForgotPasswordUIEvent.ResetPasswordButtonClicked -> {
                 resetPassword()
             }

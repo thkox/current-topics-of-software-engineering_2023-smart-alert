@@ -15,7 +15,7 @@ class CloudFunctionsUtils {
                 .getHttpsCallable("user_is_employee")
                 .call()
                 .continueWith { task ->
-                    val result = task.result?.data as Map<String, Any>
+                    val result = task.result?.data as Map<*, *>
                     result["isCP"] as Boolean
                 }.await()
             result
@@ -36,7 +36,7 @@ class CloudFunctionsUtils {
                 .getHttpsCallable("delete_alerts_by_location")
                 .call(data)
                 .continueWith { task ->
-                    val result = task.result?.data as Map<String, Any>
+                    val result = task.result?.data as Map<*, *>
                     result["success"] as Boolean
                 }.await()
             result
@@ -58,7 +58,7 @@ class CloudFunctionsUtils {
             .getHttpsCallable("delete_alert_by_phenomenon_and_location")
             .call(data)
             .continueWith { task ->
-                val result = task.result?.data as Map<String, Any>
+                val result = task.result?.data as Map<*, *>
                 result["success"] as Boolean
             }.await()
         result

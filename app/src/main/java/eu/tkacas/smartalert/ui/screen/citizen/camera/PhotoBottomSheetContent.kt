@@ -1,4 +1,4 @@
-package eu.tkacas.smartalert.ui.screen.citizen.Camera
+package eu.tkacas.smartalert.ui.screen.citizen.camera
 
 import android.graphics.Bitmap
 import androidx.compose.foundation.Image

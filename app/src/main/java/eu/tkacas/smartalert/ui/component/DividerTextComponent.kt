@@ -22,7 +22,6 @@ fun DividerTextComponent() {
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-
         HorizontalDivider(
             modifier = Modifier
                 .fillMaxWidth()
@@ -30,7 +29,6 @@ fun DividerTextComponent() {
             thickness = 1.dp,
             color = GrayColor
         )
-
         Text(
             modifier = Modifier.padding(8.dp),
             text = stringResource(id = R.string.or),
@@ -53,7 +51,6 @@ fun DividerComponentWithoutText() {
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-
         HorizontalDivider(
             modifier = Modifier
                 .fillMaxWidth()

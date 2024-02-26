@@ -11,6 +11,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -97,39 +98,79 @@ class CameraPermissionTextProvider: PermissionTextProvider {
 
 @Composable
 fun AlertWithImageDialog(
+    showDialog: Boolean,
     message: String?,
     imageURL: String?,
     onDismiss: () -> Unit
 ){
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text(text = "Citizen's message Alert") },
-        text = {
-            Column(
-                modifier = Modifier
-                    .size(400.dp)
-                    .padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(text = message ?: "")
-                imageURL?.let {
-                    Image(
-                        painter = rememberAsyncImagePainter(model = imageURL),
-                        contentDescription = "Image",
-                        modifier = Modifier
-                            .wrapContentSize()
-                            .clip(RoundedCornerShape(15.dp))
-                    )
+    if(showDialog){
+        AlertDialog(
+            onDismissRequest = onDismiss,
+            title = { Text(text = "Citizen's message Alert") },
+            text = {
+                Column(
+                    modifier = Modifier
+                        .size(400.dp)
+                        .padding(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(text = message ?: "")
+                    // TODO: Text should be replaced with Image once the image is available
+                    if (!imageURL.isNullOrEmpty()) {
+                        Image(
+                            painter = rememberAsyncImagePainter(model = imageURL),
+                            contentDescription = "Image",
+                            modifier = Modifier
+                                .wrapContentSize()
+                                .clip(RoundedCornerShape(15.dp))
+                        )
+                    } else {
+                        Text(
+                            text = "No image available",
+                        )
+                    }
+                }
+            },
+            confirmButton = {
+                GeneralButtonComponent(
+                    value = "Close",
+                    onButtonClicked = { onDismiss() }
+                )
+            },
+            modifier = Modifier
+                .clip(RoundedCornerShape(10.dp))
+        )
+    }
+
+}
+
+@Composable
+fun ConfirmDeleteDialog(
+    showDialog: Boolean,
+    title: String,
+    message: String,
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { onDismiss() },
+            title = { Text(title) },
+            text = { Text(message) },
+            confirmButton = {
+                TextButton(
+                    onClick = { onConfirm() }
+                ) {
+                    Text("Confirm")
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = { onDismiss() }
+                ) {
+                    Text("Cancel")
                 }
             }
-        },
-        confirmButton = {
-            GeneralButtonComponent(
-                value = "Close",
-                onButtonClicked = { onDismiss() }
-            )
-        },
-        modifier = Modifier
-            .clip(RoundedCornerShape(10.dp))
-    )
+        )
+    }
 }

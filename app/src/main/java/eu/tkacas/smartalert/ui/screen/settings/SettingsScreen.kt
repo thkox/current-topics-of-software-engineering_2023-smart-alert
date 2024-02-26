@@ -29,7 +29,7 @@ import eu.tkacas.smartalert.ui.screen.screensInSettings
 fun SettingsScreen(navController: NavController) {
     Scaffold(
         topBar = {
-            AppBarBackView(title = stringResource(id = R.string.settings), navController = navController)
+            AppBarBackView(title = stringResource(id = R.string.settings), navController = navController, enableSettingsButton = false)
         },
         content = {
             LazyColumn (
