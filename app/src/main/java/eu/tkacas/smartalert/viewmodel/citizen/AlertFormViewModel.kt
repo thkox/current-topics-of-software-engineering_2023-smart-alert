@@ -100,14 +100,14 @@ class AlertFormViewModel(context: Context): ViewModel() {
         val database = storageRef()
 
         // Create a reference to the "alertForms" node
-        val myRef = database.getReference("alertForms")
+        val uid = getUserID()
+        val myRef = database.getReference("alertForms/$uid")
 
         // Create a unique key for the new alert form
         val key = myRef.push().key
 
         // Create an instance of CitizenMessage
         val citizenMessage = CitizenMessage(
-            userId = userId,
             message = description,
             criticalWeatherPhenomenon = selectedPhenomenon,
             location = locationData,
