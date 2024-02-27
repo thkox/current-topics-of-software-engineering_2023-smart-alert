@@ -95,6 +95,7 @@ fun CityTextFieldComponent(
             value = city.value,
             onValueChange = {
                 city.value = it
+                onTextChanged(it)
                 coroutineScope.launch(Dispatchers.IO) {
                     try {
                         val response = placesAPI.getPlacesAutocomplete(it, apiKey).execute()
@@ -102,11 +103,6 @@ fun CityTextFieldComponent(
                         withContext(Dispatchers.Main) {
                             predictions = newPredictions
                             isDropdownExpanded = newPredictions.isNotEmpty()
-                            if (!newPredictions.contains(it)) {
-                                city.value = ""
-                            } else {
-                                city.value = it
-                            }
                         }
                     } catch (e: Exception) {
                         println("Network request failed: ${e.message}")
