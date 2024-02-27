@@ -1,27 +1,34 @@
 package eu.tkacas.smartalert.ui.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,39 +45,90 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.smartalert.R
+import eu.tkacas.smartalert.interfacesAPI.PlacesAPI
 import eu.tkacas.smartalert.ui.theme.BgColor
 import eu.tkacas.smartalert.ui.theme.Primary
 import eu.tkacas.smartalert.ui.theme.componentShapes
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @Composable
 fun CityTextFieldComponent(
-    labelValue: String
+    labelValue: String,
+    placesAPI: PlacesAPI,
+    apiKey: String
 ){
-    val city = remember {
+    var city = remember {
         mutableStateOf("")
     }
 
-    OutlinedTextField(
-        modifier = Modifier
-            .fillMaxWidth(),
-        label = { Text(text = labelValue) },
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = Primary,
-            focusedLabelColor = Primary,
-            cursorColor = Primary,
-            backgroundColor = BgColor
-        ),
-        singleLine = true,
-        maxLines = 1,
-        value = city.value,
-        onValueChange = {
-            city.value = it
+    var predictions by remember {
+        mutableStateOf(listOf<String>())
+    }
+
+    var isDropdownExpanded by remember {
+        mutableStateOf(false)
+    }
+
+    val coroutineScope = rememberCoroutineScope()
+
+    BoxWithConstraints {
+        val textFieldWidth = this.maxWidth
+
+        OutlinedTextField(
+            modifier = Modifier
+                .fillMaxWidth(),
+            label = { Text(text = labelValue) },
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = Primary,
+                focusedLabelColor = Primary,
+                cursorColor = Primary,
+                backgroundColor = BgColor
+            ),
+            singleLine = true,
+            maxLines = 1,
+            value = city.value,
+            onValueChange = {
+                println("OutlinedTextField text: $it")
+                city.value = it
+                coroutineScope.launch(Dispatchers.IO) {
+                    try {
+                        val response = placesAPI.getPlacesAutocomplete(it, apiKey).execute()
+                        val newPredictions = response.body()?.predictions?.map { it.description } ?: listOf()
+                        withContext(Dispatchers.Main) {
+                            predictions = newPredictions
+                            isDropdownExpanded = newPredictions.isNotEmpty()
+                        }
+                    } catch (e: Exception) {
+                        println("Network request failed: ${e.message}")
+                    }
+                }
+            }
+        )
+
+        DropdownMenu(
+            expanded = isDropdownExpanded,
+            onDismissRequest = { isDropdownExpanded = false },
+            modifier = Modifier
+                .width(textFieldWidth)
+                .align(Alignment.BottomStart)
+                .height(112.dp)
+                .focusable(false)
+        ) {
+            predictions.forEach { prediction ->
+                DropdownMenuItem(onClick = {
+                    city.value = prediction
+                    isDropdownExpanded = false
+                }) {
+                    Text(text = prediction)
+                }
+            }
         }
-    )
+    }
 }
 
 @Composable
