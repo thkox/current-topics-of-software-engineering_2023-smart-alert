@@ -66,7 +66,7 @@ fun AboutScreen(navController: NavController? = null) {
                     horizontalArrangement = Arrangement.Absolute.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Image(painterResource(id = R.drawable.smart_alert_logo_full), contentDescription = "Logo of the Smart Alert App")
+                    Image(painterResource(id = R.drawable.smart_alert_logo_full_transparent), contentDescription = "Logo of the Smart Alert App")
                 }
                 Row (
                     modifier = Modifier.fillMaxWidth(),
@@ -101,7 +101,7 @@ fun AboutScreen(navController: NavController? = null) {
                     }
                 }
             }
-
+            //add GitHub Links
             Column(modifier = Modifier.fillMaxWidth().padding(top = 20.dp), verticalArrangement = Arrangement.Bottom, horizontalAlignment = Alignment.CenterHorizontally) {
                 val context = LocalContext.current
 
@@ -114,82 +114,6 @@ fun AboutScreen(navController: NavController? = null) {
                 val url3 = remember { Uri.parse("https://github.com/AlexanderCholis") }
                 ButtonWithImageComponent(onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, url3)) }, imageId = R.drawable.github_logo, buttonText = "AlexanderCholis")
             }
-//            //add github links
-//            Column(modifier = Modifier
-//                .fillMaxSize()
-//                .padding(120.dp),
-//                verticalArrangement = Arrangement.Bottom,
-//                horizontalAlignment = Alignment.CenterHorizontally
-//            ){
-//                Row(
-//                    modifier = Modifier.fillMaxWidth(),
-//                    horizontalArrangement = Arrangement.Center,
-//                    verticalAlignment = Alignment.CenterVertically
-//                ) {
-//                    val context = LocalContext.current
-//
-//                    val url1 = remember { Uri.parse("https://github.com/thkox") }
-//                    ButtonWithImageComponent(onClick = {
-//                        context.startActivity(
-//                            Intent(
-//                                Intent.ACTION_VIEW,
-//                                url1
-//                            )
-//                        )
-//                    }, imageId = R.drawable.github_logo, buttonText = "thkox")
-//                }
-//            }
-//
-//            Column(modifier = Modifier
-//                .fillMaxSize()
-//                .padding(75.dp),
-//                verticalArrangement = Arrangement.Bottom,
-//                horizontalAlignment = Alignment.CenterHorizontally
-//            ) {
-//                Row(
-//                    modifier = Modifier.fillMaxWidth(),
-//                    horizontalArrangement = Arrangement.Center,
-//                    verticalAlignment = Alignment.CenterVertically
-//                ) {
-//                    val context = LocalContext.current
-//
-//                    val url2 = remember { Uri.parse("https://github.com/Apostolis2002") }
-//                    ButtonWithImageComponent(onClick = {
-//                        context.startActivity(
-//                            Intent(
-//                                Intent.ACTION_VIEW,
-//                                url2
-//                            )
-//                        )
-//                    }, imageId = R.drawable.github_logo, buttonText = "ApostolisSiampanis")
-//
-//                }
-//            }
-//
-//            Column(modifier = Modifier
-//                .fillMaxSize()
-//                .padding(30.dp),
-//                verticalArrangement = Arrangement.Bottom,
-//                horizontalAlignment = Alignment.CenterHorizontally
-//            ) {
-//                Row(
-//                    modifier = Modifier.fillMaxWidth(),
-//                    horizontalArrangement = Arrangement.Center,
-//                    verticalAlignment = Alignment.CenterVertically
-//                ) {
-//                    val context = LocalContext.current
-//
-//                    val url3 = remember { Uri.parse("https://github.com/AlexanderCholis") }
-//                    ButtonWithImageComponent(onClick = {
-//                        context.startActivity(
-//                            Intent(
-//                                Intent.ACTION_VIEW,
-//                                url3
-//                            )
-//                        )
-//                    }, imageId = R.drawable.github_logo, buttonText = "AlexanderCholis")
-//                }
-//            }
         }
     }
 }

@@ -33,7 +33,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import coil.compose.rememberAsyncImagePainter
 import eu.tkacas.smartalert.app.SharedPrefManager
 import eu.tkacas.smartalert.cloud.getSpecificAlertByPhenomenonAndLocation
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon

@@ -143,7 +143,7 @@ fun CriticalWeatherPhenomenonCardComponent(navController : NavController? = null
                     contentDescription = "Button Image",
                     modifier = Modifier
                         .size(80.dp)
-                        .padding(bottom = 8.dp) // Make the image fill the button
+                        .padding(bottom = 8.dp)
                 )
                 Text(
                     text = weatherPhenomenon.name,

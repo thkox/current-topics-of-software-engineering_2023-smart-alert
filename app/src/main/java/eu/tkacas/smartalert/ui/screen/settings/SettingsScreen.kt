@@ -41,7 +41,6 @@ fun SettingsScreen(navController: NavController) {
                         navController.navigate(screen.route)
                     }
                 }
-
             }
         }
     )
