@@ -45,6 +45,7 @@ fun GroupEventsByLocationScreen(navController: NavHostController? = null){
     val data = remember { mutableStateOf<ListOfLocationCriticalWeatherPhenomenonData?>(null) }
     val error = remember { mutableStateOf<String?>(null) }
 
+
     LaunchedEffect(key1 = criticalWeatherPhenomenon) {
         getAlertByPhenomenonAndLocation(criticalWeatherPhenomenon.name) { success, result, err ->
             if (success) {
