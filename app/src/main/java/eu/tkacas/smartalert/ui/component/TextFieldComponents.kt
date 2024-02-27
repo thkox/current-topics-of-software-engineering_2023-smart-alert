@@ -274,7 +274,7 @@ fun PasswordDisplayComponent(password: String, painterResource: Painter) {
         textStyle = TextStyle(fontSize = 18.sp),
         value = password,
         onValueChange = {},
-        label = { Text(text = "Password") },
+        label = { Text(text = stringResource(id = R.string.password)) },
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = Primary,
             focusedLabelColor = Primary,
@@ -287,4 +287,3 @@ fun PasswordDisplayComponent(password: String, painterResource: Painter) {
         enabled = false
     )
 }
-

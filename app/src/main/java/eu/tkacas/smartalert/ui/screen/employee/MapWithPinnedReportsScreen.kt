@@ -19,12 +19,14 @@ import androidx.navigation.NavController
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
+import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.app.SharedPrefManager
 import eu.tkacas.smartalert.cloud.getAlertByPhenomenonAndLocationForMaps
 import eu.tkacas.smartalert.cloud.getSpecificAlertByPhenomenonAndLocationForMaps
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.models.LocationData
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
+import java.util.Locale
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -42,6 +44,14 @@ fun MapWithPinnedReportsScreen(navController: NavController? = null){
     var cameraPositioState = rememberCameraPositionState{
         mutableStateOf(LatLng(39.0742, 21.8243))
     }
+
+    val currentLanguage = Locale.getDefault().language
+    val title = if (currentLanguage == "el") {
+        stringResource(id = R.string.map_title, stringResource(id = criticalWeatherPhenomenon.getStringId()))
+    } else {
+        stringResource(id = R.string.map_title, stringResource(id = criticalWeatherPhenomenon.getStringId()))
+    }
+
 
     LaunchedEffect(key1 = criticalWeatherPhenomenon) {
         when (previousScreen) {
@@ -70,7 +80,8 @@ fun MapWithPinnedReportsScreen(navController: NavController? = null){
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            AppBarBackView(title = stringResource(id = criticalWeatherPhenomenon.getStringId())+ "'s Map", navController = navController)
+            //AppBarBackView(title = stringResource(id = criticalWeatherPhenomenon.getStringId())+ "'s Map", navController = navController)
+            AppBarBackView(title = title, navController = navController)
         }
     ) {
         Column(

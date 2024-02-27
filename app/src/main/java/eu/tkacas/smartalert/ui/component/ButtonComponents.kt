@@ -228,7 +228,7 @@ fun UploadPhotoButton(
     
     Button(
         modifier = Modifier
-            .width(100.dp)
+            .width(110.dp)
             .height(40.dp)
             .background(
                 color = BlueColor,
@@ -241,7 +241,8 @@ fun UploadPhotoButton(
         colors = ButtonDefaults.buttonColors(Color.Transparent),
         shape = RoundedCornerShape(10.dp)
     ){
-        SimpleTextComponent(value = "Upload")
+        //SimpleTextComponent(value = "Upload")
+        SimpleTextComponent(value = stringResource(id = R.string.upload))
         Spacer(modifier = Modifier.size(4.dp))
         Icon(painter = painterResource(id = R.drawable.upload), contentDescription = "Upload Photo")
     }
