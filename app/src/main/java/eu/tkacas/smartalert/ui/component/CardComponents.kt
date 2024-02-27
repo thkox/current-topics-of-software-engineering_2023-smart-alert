@@ -41,6 +41,7 @@ import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.app.SharedPrefManager
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.ui.screen.Screen
+import java.util.Locale
 
 
 @Preview
@@ -269,9 +270,15 @@ fun PermissionCard(
                 }
             }
             if (isExpanded.value) {
+                val currentLanguage = Locale.getDefault().language
+                val permissionRequestText = when (currentLanguage) {
+                    "en" -> "Allow SmartAlert to access this device's $permissionName?"
+                    "el" -> "Επιτρέπετε στο SmartAlert να έχει πρόσβαση στην $permissionName της συσκευής σας;"
+                    else -> "Allow SmartAlert to access this device's $permissionName?"
+                }
                 Row {
                     Text(
-                        text = "Allow SmartAlert to access this device's $permissionName?",
+                        text = permissionRequestText,
                         modifier = Modifier.padding(start = 8.dp),
                         style = TextStyle(fontSize = 14.sp)
                     )

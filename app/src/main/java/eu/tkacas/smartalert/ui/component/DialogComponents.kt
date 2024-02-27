@@ -108,7 +108,7 @@ fun AlertWithImageDialog(
     if(showDialog){
         AlertDialog(
             onDismissRequest = onDismiss,
-            title = { Text(text = "Citizen's message Alert") },
+            title = { Text(text = stringResource(id = R.string.Citizen_message)) },
             text = {
                 Column(
                     modifier = Modifier
@@ -128,14 +128,14 @@ fun AlertWithImageDialog(
                         )
                     } else {
                         Text(
-                            text = "No image available",
+                            text = stringResource(id = R.string.No_image_available),
                         )
                     }
                 }
             },
             confirmButton = {
                 GeneralButtonComponent(
-                    value = "Close",
+                    value = stringResource(id = R.string.close),
                     onButtonClicked = { onDismiss() }
                 )
             },

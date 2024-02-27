@@ -81,4 +81,11 @@
     <string name="cancel">Cancel</string>
     <string name="error">Error</string>
     <string name="map_title">%1$s\'s Map</string>
+    <string name="Citizen_message">Citizen\'s message</string>
+    <string name="No_image_available">No image available</string>
+    <string name="close">Close</string>
+    <string name="Permissions">Permissions</string>
+    <string name="Location">Location</string>
+    <string name="Always_allow_location_permission">Always Allow Location Permission</string>
+    <string name="Allow_SmartAlert_to_access_this_device">Allow SmartAlert to access this device\'s</string>
 </resources>

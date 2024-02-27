@@ -36,6 +36,7 @@ import eu.tkacas.smartalert.ui.component.PermissionCard
 import eu.tkacas.smartalert.ui.component.PermissionDialog
 import eu.tkacas.smartalert.ui.component.REDUnderLinedTextComponent
 import eu.tkacas.smartalert.viewmodel.intro.PermissionsViewModel
+import java.util.Locale
 
 
 @Composable
@@ -98,14 +99,14 @@ fun PermissionsScreen(navController: NavController? = null) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.size(20.dp))
-        Text(text = "Permissions Screen", style = TextStyle(fontSize = 24.sp))
+        Text(text = stringResource(id = R.string.Permissions), style = TextStyle(fontSize = 24.sp))
         Spacer(modifier = Modifier.size(20.dp))
 
 
 
         PermissionCard(
             iconResId = R.drawable.location_pin,
-            permissionName = "Location",
+            permissionName = stringResource(id = R.string.Location),
             isExpanded = isExpandedLocation,
             switchState = switchStateCoarseLocation,
             onToggleClick = {
@@ -119,7 +120,7 @@ fun PermissionsScreen(navController: NavController? = null) {
         Spacer(modifier = Modifier.size(15.dp))
 
         REDUnderLinedTextComponent(
-            value = "Always Allow Location Permission",
+            value = stringResource(id = R.string.Always_allow_location_permission),
             onClick = {openAppSettings(context)}
         )
 
@@ -134,7 +135,13 @@ fun PermissionsScreen(navController: NavController? = null) {
                         popUpTo("welcome") { inclusive = true }
                     }
                 } else {
-                    Toast.makeText(context, "Please grant all permissions", Toast.LENGTH_SHORT).show()
+                    val currentLanguage = Locale.getDefault().language
+                    val toastPermissionMessage = when (currentLanguage) {
+                        "en" -> "Please grant all permissions"
+                        "el" -> "Παρακαλώ επιτρέψτε όλα τα δικαιώματα"
+                        else -> "Please grant all permissions"
+                    }
+                    Toast.makeText(context, toastPermissionMessage, Toast.LENGTH_SHORT).show()
                 }
             }
         )
