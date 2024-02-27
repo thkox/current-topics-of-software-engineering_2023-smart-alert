@@ -81,4 +81,11 @@
     <string name="cancel">Ακύρωση</string>
     <string name="error">Σφάλμα</string>
     <string name="map_title">Χάρτης για: %1$s</string>
+    <string name="Citizen_message">Μήνυμα του Πολίτη</string>
+    <string name="No_image_available">Δεν υπάρχει διαθέσιμη εικόνα</string>
+    <string name="close">Κλείσιμο</string>
+    <string name="Permissions">Δικαιώματα Χρήσης</string>
+    <string name="Location">Τοποθεσία</string>
+    <string name="Always_allow_location_permission">Να επιτρέπετε πάντα η άδεια τοποθεσίας</string>
+    <string name="Allow_SmartAlert_to_access_this_device">Επιτρέψτε στο SmartAlert να έχει πρόσβαση στην </string>
 </resources>
