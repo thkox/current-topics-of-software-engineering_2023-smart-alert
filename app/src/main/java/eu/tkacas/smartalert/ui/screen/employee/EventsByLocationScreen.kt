@@ -31,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.app.SharedPrefManager
 import eu.tkacas.smartalert.cloud.getSpecificAlertByPhenomenonAndLocation
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
@@ -78,7 +79,7 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            AppBarBackView(title = "Specific " + stringResource(id = criticalWeatherPhenomenon.getStringId()), navController = navController)
+            AppBarBackView(title = stringResource(id = criticalWeatherPhenomenon.getStringId()), navController = navController)
         },
         floatingActionButton = {
             Column(
@@ -86,7 +87,7 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
             ) {
                 FloatingActionButton(
                     modifier = Modifier
-                        .size(40.dp), // This will make the button smaller
+                        .size(40.dp),
                     contentColor = Color.White,
                     onClick = {
                         navController?.navigate("alertCitizensForm")
@@ -118,7 +119,8 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
-                Text(text = "The reports about this location from the last 24 hours.",
+                Text(text = stringResource(id = R.string.The_reports_about_this_location_from_the_last_24_hours_),
+                //Text(text = "The reports about this location from the last 24 hours.",
                     color = Color.Black,
                     style = TextStyle(
                         color = Color.Black,
@@ -133,7 +135,8 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                     horizontalArrangement = Arrangement.End
                 ){
                     GeneralButtonComponent(
-                        value = "Delete All",
+                        value = stringResource(id = R.string.delete_all),
+                        //value = "Delete All",
                         onButtonClicked = {
                             showMassWarningDialog.value = true
                         }
@@ -146,8 +149,8 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                         items(data.value?.list?.size ?: 0) { index ->
                             CardComponentWithImage(
                                 row1 = data.value?.list?.get(index)?.location ?: "",
-                                row2 = "Critical Level: ${data.value?.list?.get(index)?.emLevel.toString()}",
-                                row3 = "Time: ${data.value?.list?.get(index)?.timeStamp}",
+                                row2 = stringResource(id = R.string.critical_level) + ": ${data.value?.list?.get(index)?.emLevel.toString()}",
+                                row3 = stringResource(id = R.string.time) + ": ${data.value?.list?.get(index)?.timeStamp}",
                                 beDeletedEnabled = true,
                                 onDelete = {
                                     showWarningDialog.value = true
@@ -167,8 +170,10 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                             )
                             ConfirmDeleteDialog(
                                 showDialog = showWarningDialog.value,
-                                title = "Warning",
-                                message = "You are about to delete an alert warning. Are you sure?",
+                                //title = "Warning",
+                                title = stringResource(id = R.string.Warning),
+                                //message = "You are about to delete an alert warning. Are you sure?",
+                                message = stringResource(id = R.string.You_are_about_to_delete_an_alert_warning_Are_you_sure),
                                 onDismiss = { showWarningDialog.value = false },
                                 onConfirm = {
                                     viewModel.deleteEventByPhenomenonAndLocation(criticalWeatherPhenomenon.name, address, data.value?.list?.get(index)?.alertID ?: "")
@@ -177,8 +182,10 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                             )
                             ConfirmDeleteDialog(
                                 showDialog = showMassWarningDialog.value,
-                                title =  "Warning",
-                                message =  "You are about to delete all alert warnings. Are you sure?",
+                                //title =  "Warning",
+                                title = stringResource(id = R.string.Warning),
+                                //message =  "You are about to delete all alert warnings. Are you sure?",
+                                message = stringResource(id = R.string.You_are_about_to_delete_all_alert_warnings_Are_you_sure),
                                 onDismiss = { showMassWarningDialog.value = false },
                                 onConfirm = {
                                     viewModel.deleteAllEventsByPhenomenonAndLocation(criticalWeatherPhenomenon.name, address)
@@ -188,7 +195,8 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                         }
                     }
                 } else if (error.value != null) {
-                    Text("Error: ${error.value}")
+                    //Text("Error: ${error.value}")
+                    Text(stringResource(id = R.string.error) + ": ${error.value}")
                 }
             }
         }

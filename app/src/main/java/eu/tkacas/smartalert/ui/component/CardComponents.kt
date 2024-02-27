@@ -147,7 +147,8 @@ fun CriticalWeatherPhenomenonCardComponent(navController : NavController? = null
                         .padding(bottom = 8.dp)
                 )
                 Text(
-                    text = weatherPhenomenon.name,
+                    //text = weatherPhenomenon.name, //change
+                    text = stringResource(id = weatherPhenomenon.getStringId()),
                     color = Color.Black
                 )
             }
