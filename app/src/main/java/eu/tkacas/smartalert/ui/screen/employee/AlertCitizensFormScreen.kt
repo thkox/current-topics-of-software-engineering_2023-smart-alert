@@ -89,13 +89,9 @@ fun AlertCitizensFormScreen(navController: NavHostController? = null){
                     value = stringResource(id = R.string.submit),
                     onButtonClicked = {
                         scope.launch {
-                            if (viewModel.selectedArea.value.isNotEmpty()) {
-                                viewModel.sendAlertToCitizens()
-                                navController?.navigate("home")
-                                Toast.makeText(context, "Alert to citizens sent successfully", Toast.LENGTH_SHORT).show()
-                            } else {
-                                Toast.makeText(context, "Please enter a city", Toast.LENGTH_SHORT).show()
-                            }
+                            viewModel.sendAlertToCitizens()
+                            navController?.navigate("home")
+                            Toast.makeText(context, "Alert to citizens sent successfully", Toast.LENGTH_SHORT).show()
                         }
                     }
                 )
