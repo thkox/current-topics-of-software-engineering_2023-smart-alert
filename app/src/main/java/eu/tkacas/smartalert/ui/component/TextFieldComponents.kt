@@ -60,7 +60,8 @@ import kotlinx.coroutines.withContext
 fun CityTextFieldComponent(
     labelValue: String,
     placesAPI: PlacesAPI,
-    apiKey: String
+    apiKey: String,
+    onTextChanged: (String) -> Unit
 ){
     var city = remember {
         mutableStateOf("")
@@ -93,7 +94,6 @@ fun CityTextFieldComponent(
             maxLines = 1,
             value = city.value,
             onValueChange = {
-                println("OutlinedTextField text: $it")
                 city.value = it
                 coroutineScope.launch(Dispatchers.IO) {
                     try {
@@ -102,6 +102,11 @@ fun CityTextFieldComponent(
                         withContext(Dispatchers.Main) {
                             predictions = newPredictions
                             isDropdownExpanded = newPredictions.isNotEmpty()
+                            if (!newPredictions.contains(it)) {
+                                city.value = ""
+                            } else {
+                                city.value = it
+                            }
                         }
                     } catch (e: Exception) {
                         println("Network request failed: ${e.message}")
@@ -123,6 +128,7 @@ fun CityTextFieldComponent(
                 DropdownMenuItem(onClick = {
                     city.value = prediction
                     isDropdownExpanded = false
+                    onTextChanged(prediction)
                 }) {
                     Text(text = prediction)
                 }
@@ -133,7 +139,8 @@ fun CityTextFieldComponent(
 
 @Composable
 fun TextFieldComponent(
-    labelValue: String, painterResource: Painter,
+    labelValue: String,
+    painterResource: Painter,
     onTextChanged: (String) -> Unit,
     errorStatus: Boolean = false
 ) {
