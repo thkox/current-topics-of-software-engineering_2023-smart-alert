@@ -408,6 +408,7 @@ fun EmailDisplayComponent(email: String, painterResource: Painter) {
 }
 
 
+
 @Composable
 fun NameFieldComponent(
     firstName: String,
@@ -458,4 +459,89 @@ fun PasswordDisplayComponent(password: String, painterResource: Painter) {
         },
         enabled = false
     )
+}
+
+
+
+@Composable
+fun CityTextFieldLandscapeComponent(
+    labelValue: String,
+    placesAPI: PlacesAPI,
+    apiKey: String,
+    onTextChanged: (String) -> Unit
+){
+    var city = remember {
+        mutableStateOf("")
+    }
+    var predictions by remember {
+        mutableStateOf(listOf<String>())
+    }
+
+    var isDropdownExpanded by remember {
+        mutableStateOf(false)
+    }
+
+    val coroutineScope = rememberCoroutineScope()
+
+
+    Column {
+        NormalTextComponent(value = stringResource(id = R.string.city_of_emergency))
+        BoxWithConstraints {
+            val textFieldWidth = this.maxWidth
+
+            OutlinedTextField(
+                modifier = Modifier
+                    .fillMaxWidth(),
+//                    .width(200.dp)
+//                    .height(50.dp),
+                label = { Text(text = labelValue) },
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = PrussianBlue,
+                    focusedLabelColor = PrussianBlue,
+                    cursorColor = PrussianBlue,
+                    backgroundColor = BgColor
+                ),
+                singleLine = true,
+                maxLines = 1,
+                value = city.value,
+                onValueChange = {
+                    city.value = it
+                    onTextChanged(it)
+                    coroutineScope.launch(Dispatchers.IO) {
+                        try {
+                            val response = placesAPI.getPlacesAutocomplete(it, apiKey).execute()
+                            val newPredictions =
+                                response.body()?.predictions?.map { it.description } ?: listOf()
+                            withContext(Dispatchers.Main) {
+                                predictions = newPredictions
+                                isDropdownExpanded = newPredictions.isNotEmpty()
+                            }
+                        } catch (e: Exception) {
+                            println("Network request failed: ${e.message}")
+                        }
+                    }
+                }
+            )
+
+            DropdownMenu(
+                expanded = isDropdownExpanded,
+                onDismissRequest = { isDropdownExpanded = false },
+                modifier = Modifier
+                    .width(textFieldWidth)
+                    .align(Alignment.BottomStart)
+                    .height(112.dp)
+                    .focusable(false)
+            ) {
+                predictions.forEach { prediction ->
+                    DropdownMenuItem(onClick = {
+                        city.value = prediction
+                        isDropdownExpanded = false
+                        onTextChanged(prediction)
+                    }) {
+                        Text(text = prediction)
+                    }
+                }
+            }
+        }
+    }
 }

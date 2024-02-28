@@ -1,8 +1,12 @@
 package eu.tkacas.smartalert.ui.screen.settings
 
 import android.annotation.SuppressLint
+import android.app.LocaleConfig
+import android.content.res.Configuration
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -18,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -50,80 +55,139 @@ fun AccountScreen (navController: NavController? = null) {
 
     val isLoading = accountViewModel.isLoading.collectAsState().value
 
+    val config = LocalConfiguration.current
 
-    Scaffold(
-        scaffoldState = scaffoldState,
-        topBar = {
-            AppBarBackView(
-                title = stringResource(id = R.string.account),
-                navController = navController
-            )
-        }
-    ) {
-        if (isLoading) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator(color = SkyBlue)
+    val portraitMode = remember { mutableStateOf(config.orientation ) }
+
+    if (portraitMode.value == Configuration.ORIENTATION_PORTRAIT) {
+        //PortraitLayout()
+        Scaffold(
+            scaffoldState = scaffoldState,
+            topBar = {
+                AppBarBackView(
+                    title = stringResource(id = R.string.account),
+                    navController = navController
+                )
             }
-        } else {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = 15.dp),
-                contentAlignment = Alignment.TopCenter
-            ) {
-                CircleImage(imageResId = R.drawable.account)
-            }
-
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 15.dp),
-            contentAlignment = Alignment.TopCenter
         ) {
-            CircleImage(imageResId = R.drawable.account)
-        }
-
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 50.dp),
-        ) {
-            Spacer(modifier = Modifier.height(90.dp))
-
-            NameFieldComponent(
-                firstName = firstName,
-                lastName = lastName
-            )
-
-            Spacer(modifier = Modifier.height(40.dp))
-
-            EmailDisplayComponent(email = email, painterResource(id = R.drawable.email))
-
-            Spacer(modifier = Modifier.height(10.dp))
-
-            PasswordDisplayComponent(password = password, painterResource(id = R.drawable.password))
-
-          }
-
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(bottom = 40.dp, end = 30.dp)
-                    .padding(top = 10.dp),
-            ) {
+            if (isLoading) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator(color = SkyBlue)
+                }
+            } else {
                 Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.BottomEnd
-                ){
-                    FloatingActionButton(
-                        onClick = {
-                            // TODO: Implement the logic for updating the user's account
-                        }
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(top = 15.dp),
+                    contentAlignment = Alignment.TopCenter
+                ) {
+                    CircleImage(imageResId = R.drawable.account)
+                }
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(top = 50.dp),
+                ) {
+                    Spacer(modifier = Modifier.height(90.dp))
+
+                    NameFieldComponent(
+                        firstName = firstName,
+                        lastName = lastName
                     )
+
+                    Spacer(modifier = Modifier.height(40.dp))
+
+                    EmailDisplayComponent(email = email, painterResource(id = R.drawable.email))
+
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    PasswordDisplayComponent(password = password, painterResource(id = R.drawable.password))
+
                 }
 
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(bottom = 40.dp, end = 30.dp)
+                        .padding(top = 10.dp),
+                ) {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.BottomEnd
+                    ){
+                        FloatingActionButton(
+                            onClick = {
+                                // TODO: Implement the logic for updating the user's account
+                            }
+                        )
+                    }
+
+                }
             }
         }
+    } else{
+        //LandscapeLayout()
+        Scaffold(
+            scaffoldState = scaffoldState,
+            topBar = {
+                AppBarBackView(
+                    title = stringResource(id = R.string.account),
+                    navController = navController
+                )
+            }
+        ) {
+            if (isLoading) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator(color = SkyBlue)
+                }
+            } else {
+                Row(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize(0.5f)
+                            .padding(top = 15.dp),
+                        contentAlignment = Alignment.TopCenter
+                    ) {
+                        CircleImage(imageResId = R.drawable.account)
+
+                        Box(modifier = Modifier.fillMaxSize() .padding(top = 105.dp), contentAlignment = Alignment.TopCenter) {
+                            NameFieldComponent(
+                                firstName = firstName,
+                                lastName = lastName
+                            )
+                        }
+                    }
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(top = 50.dp),
+                    ) {
+                        EmailDisplayComponent(email = email, painterResource(id = R.drawable.email))
+
+                        Spacer(modifier = Modifier.height(30.dp))
+
+                        PasswordDisplayComponent(password = password, painterResource(id = R.drawable.password))
+
+                        Spacer(modifier = Modifier.height(20.dp))
+
+                        Box(
+                            modifier = Modifier.fillMaxSize() .padding(start = 320.dp),
+                            //contentAlignment = Alignment.BottomEnd
+                        ) {
+                            FloatingActionButton(
+                                onClick = {
+                                    // TODO: Implement the logic for updating the user's account
+                                }
+                            )
+                        }
+                    }
+                }
+            }
+        }
+
     }
 }
 
