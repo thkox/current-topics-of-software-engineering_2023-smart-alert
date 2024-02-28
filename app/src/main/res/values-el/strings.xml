@@ -4,6 +4,7 @@
     <string name="hello">Γεια σου</string>
     <string name="create_account">Δημιουργία Λογαριασμού</string>
     <string name="welcome_to_smart_alert_app">Καλωσήρθες στο \nSmart Alert!</string>
+    <string name="welcome_to_smart_alert_app_landscape">Καλωσήρθες στο Smart Alert!</string>
     <string name="firstname">Όνομα</string>
     <string name="lastname">Επίθετο</string>
     <string name="password">Κωδικός</string>

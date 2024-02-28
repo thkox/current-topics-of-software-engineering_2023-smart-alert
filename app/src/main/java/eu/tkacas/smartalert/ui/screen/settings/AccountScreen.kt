@@ -62,7 +62,7 @@ fun AccountScreen (navController: NavController? = null) {
     ) {
         if (isLoading) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator(color = SkyBlue) // This is the loading indicator
+                CircularProgressIndicator(color = SkyBlue)
             }
         } else {
             Box(

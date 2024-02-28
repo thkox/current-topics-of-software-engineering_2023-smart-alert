@@ -67,6 +67,23 @@ fun HeadingTextComponent(value: String) {
 }
 
 @Composable
+fun HeadingTextLandscapeComponent(value: String) {
+    Text(
+        text = value,
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(),
+        style = TextStyle(
+            fontSize = 30.sp,
+            fontWeight = FontWeight.Bold,
+            fontStyle = FontStyle.Normal
+        ), color = PrussianBlue,
+        textAlign = TextAlign.Center,
+        maxLines = 1
+    )
+}
+
+@Composable
 fun UnderLinedTextComponent(value: String, onClick: () -> Unit) {
     Text(
         text = value,

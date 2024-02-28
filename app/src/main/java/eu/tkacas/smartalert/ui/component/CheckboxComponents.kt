@@ -38,3 +38,4 @@ fun CheckboxComponent(
         ClickableTextComponent(value = value, onTextSelected)
     }
 }
+
