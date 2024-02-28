@@ -38,6 +38,23 @@ fun NormalTextComponent(value: String) {
 }
 
 @Composable
+fun NormalTextLandscapeComponent(value: String) {
+    Text(
+        text = value,
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(min = 40.dp),
+        style = TextStyle(
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Normal,
+            fontStyle = FontStyle.Normal
+        ), color = PrussianBlue,
+        textAlign = TextAlign.Center,
+        maxLines = 1
+    )
+}
+
+@Composable
 fun SimpleTextComponent(value: String) {
     Text(
         text = value,
