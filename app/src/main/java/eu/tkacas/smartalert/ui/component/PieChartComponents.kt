@@ -43,6 +43,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import eu.tkacas.smartalert.R
+import eu.tkacas.smartalert.ui.theme.PrussianBlue
+import eu.tkacas.smartalert.ui.theme.UTOrange
 
 
 @Composable
@@ -208,7 +210,7 @@ fun DetailsPieChartItem(
                     text = data.first,
                     fontWeight = FontWeight.Medium,
                     fontSize = 22.sp,
-                    color = Black
+                    color = PrussianBlue
                 )
                 Text(
                     modifier = Modifier.padding(start = 15.dp),

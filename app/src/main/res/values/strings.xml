@@ -69,11 +69,11 @@
     <string name="upload">Upload</string>
     <string name="Image_uploaded_successfully">Image uploaded successfully</string>
     <string name="number_of_reports">Number of Reports</string>
-    <string name="The_reports_history_from_the_last_24_hours.">The reports history from the last 24 hours.</string>
+    <string name="The_reports_history_from_the_last_24_hours.">The reports history from the last 24 hours</string>
     <string name="critical_level">Critical Level</string>
     <string name="time">Time</string>
     <string name="delete_all">Delete All</string>
-    <string name="The_reports_about_this_location_from_the_last_24_hours.">The reports about this location from the last 24 hours.</string>
+    <string name="The_reports_about_this_location_from_the_last_24_hours.">The reports about this location from the last 24 hours</string>
     <string name="Specific">Specific</string>
     <string name="no_alert_found">No alert found</string>
     <string name="password_reset_email_sent">Password reset email sent successfully</string>

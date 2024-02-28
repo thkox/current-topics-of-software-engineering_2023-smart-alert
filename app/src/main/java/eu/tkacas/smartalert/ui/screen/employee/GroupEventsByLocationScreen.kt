@@ -1,5 +1,6 @@
 package eu.tkacas.smartalert.ui.screen.employee
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -34,6 +36,10 @@ import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.models.ListOfLocationCriticalWeatherPhenomenonData
 import eu.tkacas.smartalert.ui.component.CardComponentWithImage
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
+import eu.tkacas.smartalert.ui.theme.BlueGreen
+import eu.tkacas.smartalert.ui.theme.PrussianBlue
+import eu.tkacas.smartalert.ui.theme.SkyBlue
+import eu.tkacas.smartalert.ui.theme.UTOrange
 
 @Composable
 fun GroupEventsByLocationScreen(navController: NavHostController? = null){
@@ -66,12 +72,12 @@ fun GroupEventsByLocationScreen(navController: NavHostController? = null){
         floatingActionButton = {
             FloatingActionButton(
                 modifier = Modifier.padding(all = 20.dp),
-                contentColor = Color.White,
+                containerColor = SkyBlue,
                 onClick = {
                     navController?.navigate("Map")
                 }
             ){
-                Icon(imageVector = Icons.Default.Map, contentDescription = "Map")
+                Image(painterResource(id = R.drawable.map), contentDescription = "Map")
             }
         }
     ) { it ->
@@ -87,11 +93,11 @@ fun GroupEventsByLocationScreen(navController: NavHostController? = null){
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
-                Text(text = stringResource(id = R.string.The_reports_history_from_the_last_24_hours_), //align in the center
+                Text(text = stringResource(id = R.string.The_reports_history_from_the_last_24_hours_),
                 //Text(text = "The reports history from the last 24 hours.",
-                    color = Color.Black,
+                    color = PrussianBlue,
                     style = TextStyle(
-                        color = Color.Black,
+                        color = PrussianBlue,
                         fontSize = 20.sp
                     ),
                     modifier = Modifier.padding(16.dp),
@@ -117,7 +123,7 @@ fun GroupEventsByLocationScreen(navController: NavHostController? = null){
                     }
                 } else if (error.value != null) {
                     //Text("Error: ${error.value}")
-                    Text(stringResource(id = R.string.error) + ": ${error.value}")
+                    Text(stringResource(id = R.string.error) + ": ${error.value}", color = UTOrange)
                 }
             }
         }

@@ -32,6 +32,7 @@ import eu.tkacas.smartalert.ui.component.NameFieldComponent
 import eu.tkacas.smartalert.ui.component.PasswordDisplayComponent
 import eu.tkacas.smartalert.ui.component.PasswordTextFieldComponent
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
+import eu.tkacas.smartalert.ui.theme.SkyBlue
 import eu.tkacas.smartalert.viewmodel.AccountViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "StateFlowValueCalledInComposition")
@@ -61,7 +62,7 @@ fun AccountScreen (navController: NavController? = null) {
     ) {
         if (isLoading) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator() // This is the loading indicator
+                CircularProgressIndicator(color = SkyBlue) // This is the loading indicator
             }
         } else {
             Box(

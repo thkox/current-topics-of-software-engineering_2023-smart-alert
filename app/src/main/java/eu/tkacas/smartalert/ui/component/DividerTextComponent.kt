@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.ui.theme.GrayColor
+import eu.tkacas.smartalert.ui.theme.PrussianBlue
 import eu.tkacas.smartalert.ui.theme.TextColor
 
 
@@ -33,7 +34,7 @@ fun DividerTextComponent() {
             modifier = Modifier.padding(8.dp),
             text = stringResource(id = R.string.or),
             fontSize = 18.sp,
-            color = TextColor
+            color = PrussianBlue
         )
         HorizontalDivider(
             modifier = Modifier

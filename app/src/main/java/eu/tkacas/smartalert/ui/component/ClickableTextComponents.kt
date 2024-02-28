@@ -18,7 +18,8 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.smartalert.R
-import eu.tkacas.smartalert.ui.theme.Primary
+import eu.tkacas.smartalert.ui.theme.PrussianBlue
+import eu.tkacas.smartalert.ui.theme.SkyBlue
 
 
 @Composable
@@ -30,12 +31,12 @@ fun ClickableTextComponent(value: String, onTextSelected: (String) -> Unit) {
 
     val annotatedString = buildAnnotatedString {
         append(initialText)
-        withStyle(style = SpanStyle(color = Primary)) {
+        withStyle(style = SpanStyle(color = SkyBlue)) {
             pushStringAnnotation(tag = privacyPolicyText, annotation = privacyPolicyText)
             append(privacyPolicyText)
         }
         append(andText)
-        withStyle(style = SpanStyle(color = Primary)) {
+        withStyle(style = SpanStyle(color = SkyBlue)) {
             pushStringAnnotation(tag = termsAndConditionsText, annotation = termsAndConditionsText)
             append(termsAndConditionsText)
         }
@@ -66,7 +67,7 @@ fun ClickableLoginTextComponent(tryingToLogin: Boolean = true, onTextSelected: (
 
     val annotatedString = buildAnnotatedString {
         append(initialText)
-        withStyle(style = SpanStyle(color = Primary)) {
+        withStyle(style = SpanStyle(color = SkyBlue, fontWeight = FontWeight.Bold)) {
             pushStringAnnotation(tag = loginText, annotation = loginText)
             append(loginText)
         }
@@ -104,7 +105,7 @@ fun BackToLoginComponent(onTextSelected: (String) -> Unit) {
 
     val annotatedString = buildAnnotatedString {
         append(initialText)
-        withStyle(style = SpanStyle(color = Primary)) {
+        withStyle(style = SpanStyle(color = SkyBlue, fontWeight = FontWeight.Bold)) {
             pushStringAnnotation(tag = loginText, annotation = loginText)
             append(loginText)
         }

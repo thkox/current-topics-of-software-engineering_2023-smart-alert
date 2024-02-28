@@ -1,5 +1,6 @@
 package eu.tkacas.smartalert.ui.component
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material.Button
@@ -19,6 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
+import eu.tkacas.smartalert.ui.theme.BlueGreen
 
 
 @Composable
@@ -31,7 +33,7 @@ fun EnumDropdownComponent(enumClass: Class<CriticalWeatherPhenomenon>, initialSe
     Box {
         Button(
             onClick = { expanded = true },
-            colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.colorBlue)),
+            colors = ButtonDefaults.buttonColors(backgroundColor = BlueGreen),
         ) {
             //Text(selectedValue.name)
             Text(stringResource(id = selectedValue.getStringId()))
@@ -42,7 +44,7 @@ fun EnumDropdownComponent(enumClass: Class<CriticalWeatherPhenomenon>, initialSe
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
-            modifier = Modifier.background(colorResource(id = R.color.colorBlue)),
+            modifier = Modifier.background(BlueGreen),
         ) {
             enumClass.enumConstants?.forEach { value ->
                 DropdownMenuItem(
@@ -51,7 +53,7 @@ fun EnumDropdownComponent(enumClass: Class<CriticalWeatherPhenomenon>, initialSe
                         onSelected(value)
                         expanded = false
                     },
-                    modifier = Modifier.background(colorResource(id = R.color.colorBlue))
+                    modifier = Modifier.background(BlueGreen)
                 ) {
                     Text(text = stringResource(id = value.getStringId()))
                 }

@@ -35,6 +35,7 @@ import eu.tkacas.smartalert.ui.component.LocationPermissionTextProvider
 import eu.tkacas.smartalert.ui.component.PermissionCard
 import eu.tkacas.smartalert.ui.component.PermissionDialog
 import eu.tkacas.smartalert.ui.component.REDUnderLinedTextComponent
+import eu.tkacas.smartalert.ui.theme.PrussianBlue
 import eu.tkacas.smartalert.viewmodel.intro.PermissionsViewModel
 import java.util.Locale
 
@@ -99,7 +100,7 @@ fun PermissionsScreen(navController: NavController? = null) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.size(20.dp))
-        Text(text = stringResource(id = R.string.Permissions), style = TextStyle(fontSize = 24.sp))
+        Text(text = stringResource(id = R.string.Permissions), style = TextStyle(fontSize = 24.sp), color = PrussianBlue)
         Spacer(modifier = Modifier.size(20.dp))
 
 

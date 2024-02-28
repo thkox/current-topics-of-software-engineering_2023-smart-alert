@@ -32,6 +32,7 @@ import eu.tkacas.smartalert.ui.component.ButtonWithImageComponent
 import eu.tkacas.smartalert.ui.component.CenteredAboutText
 import eu.tkacas.smartalert.ui.component.DividerComponentWithoutText
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
+import eu.tkacas.smartalert.ui.theme.PrussianBlue
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -89,9 +90,9 @@ fun AboutScreen(navController: NavController? = null) {
                                 Text(
                                     text = stringResource(id = R.string.connect_with_us),
                                     modifier = Modifier.fillMaxWidth(),
-                                    textAlign = TextAlign.Center
+                                    textAlign = TextAlign.Center,
+                                    color = PrussianBlue
                                 )
-
                         }
                     }
                 }

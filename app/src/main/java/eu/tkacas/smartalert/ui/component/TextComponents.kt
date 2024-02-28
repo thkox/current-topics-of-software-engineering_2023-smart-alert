@@ -18,6 +18,8 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.smartalert.R
+import eu.tkacas.smartalert.ui.theme.BlueGreen
+import eu.tkacas.smartalert.ui.theme.PrussianBlue
 
 @Composable
 fun NormalTextComponent(value: String) {
@@ -30,7 +32,7 @@ fun NormalTextComponent(value: String) {
             fontSize = 24.sp,
             fontWeight = FontWeight.Normal,
             fontStyle = FontStyle.Normal
-        ), color = colorResource(id = R.color.colorText),
+        ), color = PrussianBlue,
         textAlign = TextAlign.Center
     )
 }
@@ -43,7 +45,7 @@ fun SimpleTextComponent(value: String) {
             fontSize = 16.sp,
             fontWeight = FontWeight.Normal,
             fontStyle = FontStyle.Normal
-        ), color = colorResource(id = R.color.colorText)
+        ), color = PrussianBlue
     )
 }
 
@@ -59,7 +61,7 @@ fun HeadingTextComponent(value: String) {
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold,
             fontStyle = FontStyle.Normal
-        ), color = colorResource(id = R.color.colorText),
+        ), color = PrussianBlue,
         textAlign = TextAlign.Center
     )
 }
@@ -90,7 +92,8 @@ fun CenteredCreatorsText() {
     Text(
         text = creators,
         textAlign = TextAlign.Center,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
+        color = PrussianBlue,
     )
 }
 
@@ -103,6 +106,7 @@ fun CenteredAboutText() {
         text = about,
         style = MaterialTheme.typography.body1,
         textAlign = TextAlign.Center,
+        color = BlueGreen,
         modifier = Modifier.fillMaxWidth()
     )
 }

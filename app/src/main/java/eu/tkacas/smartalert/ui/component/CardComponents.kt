@@ -41,6 +41,8 @@ import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.app.SharedPrefManager
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.ui.screen.Screen
+import eu.tkacas.smartalert.ui.theme.BlueGreen
+import eu.tkacas.smartalert.ui.theme.PrussianBlue
 import java.util.Locale
 
 
@@ -62,15 +64,15 @@ fun CardComponentWithImage(
             .fillMaxWidth()
             .padding(10.dp)
             .clickable {
-            onClick()
-        },
+                onClick()
+            },
         shape = RoundedCornerShape(10.dp),
         elevation = 4.dp,
         ){
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier.padding(8.dp),
         ){
             Column(
                 modifier = Modifier.padding(start = 8.dp),
@@ -87,10 +89,10 @@ fun CardComponentWithImage(
                             .padding(horizontal = 5.dp)
                     )
                     Column {
-                        Text(text = row1)
-                        Text(text = row2)
+                        Text(text = row1, color = PrussianBlue)
+                        Text(text = row2, color = PrussianBlue)
                         if (row3.isNotEmpty()) {
-                            Text(text = row3)
+                            Text(text = row3, color = PrussianBlue)
                         }
                     }
                 }
@@ -100,7 +102,7 @@ fun CardComponentWithImage(
                     modifier = Modifier.padding(end = 8.dp),
                     verticalArrangement = Arrangement.Center
                 ){
-                    Icon(
+                    Image(
                         painter = painterResource(id = R.drawable.delete),
                         contentDescription = "Delete Icon",
                         modifier = Modifier.clickable {
@@ -150,7 +152,7 @@ fun CriticalWeatherPhenomenonCardComponent(navController : NavController? = null
                 Text(
                     //text = weatherPhenomenon.name, //change
                     text = stringResource(id = weatherPhenomenon.getStringId()),
-                    color = Color.Black
+                    color = PrussianBlue
                 )
             }
         }
@@ -159,7 +161,7 @@ fun CriticalWeatherPhenomenonCardComponent(navController : NavController? = null
 
 @Composable
 fun SettingCard(screen: Screen.SettingsScreen, onClick: () -> Unit) {
-    val color = if(screen.titleResId == R.string.logout) Color.Red else Color.Black
+    val color = if(screen.titleResId == R.string.logout) Color.Red else PrussianBlue
 
     Card(
         modifier = Modifier
@@ -190,8 +192,8 @@ fun SettingCard(screen: Screen.SettingsScreen, onClick: () -> Unit) {
                 )
             }
             if(screen.titleResId != R.string.logout) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                Image(
+                    painterResource(id = R.drawable.arrow_forward),
                     contentDescription = "Arrow Icon"
                 )
             }
@@ -224,8 +226,8 @@ fun PermissionCard(
                     Row(
                         verticalAlignment = Alignment.CenterVertically
                     ){
-                        Icon(
-                            painter = painterResource(id = iconResId),
+                        Image(
+                            painter = painterResource(id = R.drawable.location_pin),
                             modifier = Modifier
                                 .padding(horizontal = 5.dp)
                                 .size(40.dp),
@@ -233,7 +235,8 @@ fun PermissionCard(
                         Text(
                             text = permissionName,
                             modifier = Modifier.padding(start = 8.dp),
-                            style = TextStyle(fontSize = 20.sp)
+                            style = TextStyle(fontSize = 20.sp),
+                            color = BlueGreen
                         )
                     }
                 }
@@ -261,7 +264,7 @@ fun PermissionCard(
                 horizontalArrangement = Arrangement.Center
             ){
                 IconButton(onClick = { isExpanded.value = !isExpanded.value }){
-                    Icon(
+                    Image(
                         painter = if (isExpanded.value) painterResource(id = R.drawable.arrow_up) else painterResource(id = R.drawable.arrow_down),
                         modifier = Modifier
                             .padding(horizontal = 5.dp),
@@ -319,7 +322,7 @@ fun LanguageCard(
                     text = stringResource(id = textResId),
                     style = MaterialTheme.typography.h6,
                     modifier = Modifier.padding(start = 10.dp),
-                    color = Color.Black
+                    color = PrussianBlue
                 )
             }
         }

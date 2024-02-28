@@ -22,6 +22,7 @@ import eu.tkacas.smartalert.ui.component.CityTextFieldComponent
 import eu.tkacas.smartalert.ui.component.EnumDropdownComponent
 import eu.tkacas.smartalert.ui.component.GeneralButtonComponent
 import eu.tkacas.smartalert.ui.component.NormalTextComponent
+import eu.tkacas.smartalert.ui.component.UploadButtonComponent
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
 
 @Composable
@@ -65,7 +66,7 @@ fun AlertCitizensFormScreen(navController: NavHostController? = null){
                     }
                 )
                 Spacer(modifier = Modifier.size(80.dp))
-                GeneralButtonComponent(
+                UploadButtonComponent(
                     value = stringResource(id = R.string.submit),
                     onButtonClicked = {
 

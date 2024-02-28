@@ -1,5 +1,6 @@
 package eu.tkacas.smartalert.ui.screen.employee
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,8 +26,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -41,6 +44,9 @@ import eu.tkacas.smartalert.ui.component.CardComponentWithImage
 import eu.tkacas.smartalert.ui.component.ConfirmDeleteDialog
 import eu.tkacas.smartalert.ui.component.GeneralButtonComponent
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
+import eu.tkacas.smartalert.ui.theme.BlueGreen
+import eu.tkacas.smartalert.ui.theme.PrussianBlue
+import eu.tkacas.smartalert.ui.theme.SkyBlue
 import eu.tkacas.smartalert.viewmodel.employee.EventsByLocationViewModel
 
 @Composable
@@ -88,21 +94,21 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                 FloatingActionButton(
                     modifier = Modifier
                         .size(40.dp),
-                    contentColor = Color.White,
+                    containerColor = SkyBlue,
                     onClick = {
                         navController?.navigate("alertCitizensForm")
                     }
                 ) {
-                    Icon(imageVector = Icons.Default.Add, contentDescription = "add")
+                    Image(painterResource(id = R.drawable.add), contentDescription = "Map")
                 }
                 FloatingActionButton(
                     modifier = Modifier.padding(all = 15.dp),
-                    contentColor = Color.White,
+                    containerColor = SkyBlue,
                     onClick = {
                         navController?.navigate("Map")
                     }
                 ) {
-                    Icon(imageVector = Icons.Default.Map, contentDescription = "Map")
+                    Image(painterResource(id = R.drawable.map), contentDescription = "Map")
                 }
             }
         }
@@ -121,10 +127,11 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
             ){
                 Text(text = stringResource(id = R.string.The_reports_about_this_location_from_the_last_24_hours_),
                 //Text(text = "The reports about this location from the last 24 hours.",
-                    color = Color.Black,
+                    color = PrussianBlue,
                     style = TextStyle(
-                        color = Color.Black,
-                        fontSize = 16.sp
+                        color = PrussianBlue,
+                        fontSize = 16.sp,
+                        textAlign = TextAlign.Center
                     ),
                     modifier = Modifier.padding(16.dp)
                 )

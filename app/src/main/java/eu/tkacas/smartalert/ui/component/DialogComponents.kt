@@ -16,12 +16,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import eu.tkacas.smartalert.R
+import eu.tkacas.smartalert.ui.theme.PrussianBlue
 
 @Composable
 fun PermissionDialog(
@@ -108,7 +110,7 @@ fun AlertWithImageDialog(
     if(showDialog){
         AlertDialog(
             onDismissRequest = onDismiss,
-            title = { Text(text = stringResource(id = R.string.Citizen_message)) },
+            title = { Text(text = stringResource(id = R.string.Citizen_message), color = PrussianBlue) },
             text = {
                 Column(
                     modifier = Modifier
@@ -128,7 +130,7 @@ fun AlertWithImageDialog(
                         )
                     } else {
                         Text(
-                            text = stringResource(id = R.string.No_image_available),
+                            text = stringResource(id = R.string.No_image_available), color = Color.Red,
                         )
                     }
                 }
@@ -164,7 +166,7 @@ fun ConfirmDeleteDialog(
                     onClick = { onConfirm() }
                 ) {
                     //Text("Confirm")
-                    Text(text = stringResource(id = R.string.confirm))
+                    Text(text = stringResource(id = R.string.confirm), color = PrussianBlue)
                 }
             },
             dismissButton = {
@@ -172,7 +174,7 @@ fun ConfirmDeleteDialog(
                     onClick = { onDismiss() }
                 ) {
                     //Text("Cancel")
-                    Text(text = stringResource(id = R.string.cancel))
+                    Text(text = stringResource(id = R.string.cancel), color = Color.Red)
                 }
             }
         )

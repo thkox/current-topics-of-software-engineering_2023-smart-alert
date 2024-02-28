@@ -66,11 +66,11 @@
     <string name="upload">Ανέβασμα</string>
     <string name="Image_uploaded_successfully">Η εικόνα μεταφορτώθηκε με επιτυχία</string>
     <string name="number_of_reports">Αριθμός αναφορών</string>
-    <string name="The_reports_history_from_the_last_24_hours.">Το ιστορικό αναφορών των τελευταίων 24 ωρών.</string>
+    <string name="The_reports_history_from_the_last_24_hours.">Το ιστορικό αναφορών των τελευταίων 24 ωρών</string>
     <string name="critical_level">Κρίσιμο επίπεδο</string>
     <string name="time">Ώρα</string>
     <string name="delete_all">Διαγραφή όλων</string>
-    <string name="The_reports_about_this_location_from_the_last_24_hours.">Οι αναφορές σχετικά με αυτή την τοποθεσία από τις τελευταίες 24 ώρες.</string>
+    <string name="The_reports_about_this_location_from_the_last_24_hours.">Οι αναφορές σχετικά με αυτή την τοποθεσία από τις τελευταίες 24 ώρες</string>
     <string name="Specific">Συγκεκριμένο/η:\u00A0</string>
     <string name="no_alert_found">Δεν βρέθηκε καμία ειδοποίηση</string>
     <string name="password_reset_email_sent">Το email επαναφοράς κωδικού στάλθηκε επιτυχώς</string>
