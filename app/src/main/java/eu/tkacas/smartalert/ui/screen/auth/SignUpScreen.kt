@@ -158,81 +158,81 @@ fun SignUpScreen(navController: NavController? = null) {
                     .padding(28.dp)
             ) {
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
-                item {
-                    Row(modifier = Modifier.fillMaxSize()) {
-                        Column(modifier = Modifier.weight(1f)) {
-                            HeadingTextLandscapeComponent(value = stringResource(id = create_account))
-                            Spacer(modifier = Modifier.height(20.dp))
-                            TextFieldLandscapeComponent(
-                                labelValue = stringResource(id = firstname),
-                                painterResource(id = R.drawable.profile),
-                                onTextChanged = {
-                                    signupViewModel.onEvent(SignupUIEvent.FirstNameChanged(it))
-                                },
-                                errorStatus = signupViewModel.registrationUIState.value.firstNameError
-                            )
-                            TextFieldLandscapeComponent(
-                                labelValue = stringResource(id = email),
-                                painterResource(id = R.drawable.email),
-                                onTextChanged = {
-                                    signupViewModel.onEvent(SignupUIEvent.EmailChanged(it))
-                                },
-                                errorStatus = signupViewModel.registrationUIState.value.emailError
-                            )
-                            CheckboxComponent(
-                                value = stringResource(id = terms_and_conditions),
-                                onTextSelected = {
-                                    navController?.navigate("termsAndConditionsScreen")
-                                },
-                                onCheckedChange = {
-                                    signupViewModel.onEvent(
-                                        SignupUIEvent.PrivacyPolicyCheckBoxClicked(
-                                            it
+                    item {
+                        Row(modifier = Modifier.fillMaxSize()) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                HeadingTextLandscapeComponent(value = stringResource(id = create_account))
+                                Spacer(modifier = Modifier.height(20.dp))
+                                TextFieldLandscapeComponent(
+                                    labelValue = stringResource(id = firstname),
+                                    painterResource(id = R.drawable.profile),
+                                    onTextChanged = {
+                                        signupViewModel.onEvent(SignupUIEvent.FirstNameChanged(it))
+                                    },
+                                    errorStatus = signupViewModel.registrationUIState.value.firstNameError
+                                )
+                                TextFieldLandscapeComponent(
+                                    labelValue = stringResource(id = email),
+                                    painterResource(id = R.drawable.email),
+                                    onTextChanged = {
+                                        signupViewModel.onEvent(SignupUIEvent.EmailChanged(it))
+                                    },
+                                    errorStatus = signupViewModel.registrationUIState.value.emailError
+                                )
+                                CheckboxComponent(
+                                    value = stringResource(id = terms_and_conditions),
+                                    onTextSelected = {
+                                        navController?.navigate("termsAndConditionsScreen")
+                                    },
+                                    onCheckedChange = {
+                                        signupViewModel.onEvent(
+                                            SignupUIEvent.PrivacyPolicyCheckBoxClicked(
+                                                it
+                                            )
                                         )
-                                    )
-                                }
-                            )
-                        }
-                        Spacer(modifier = Modifier.width(10.dp))
-                        Column(modifier = Modifier.weight(1f)) {
-                            Spacer(modifier = Modifier.height(55.dp))
+                                    }
+                                )
+                            }
+                            Spacer(modifier = Modifier.width(10.dp))
+                            Column(modifier = Modifier.weight(1f)) {
+                                Spacer(modifier = Modifier.height(55.dp))
 
-                            TextFieldLandscapeComponent(
-                                labelValue = stringResource(id = lastname),
-                                painterResource(id = R.drawable.profile),
-                                onTextChanged = {
-                                    signupViewModel.onEvent(SignupUIEvent.LastNameChanged(it))
-                                },
-                                errorStatus = signupViewModel.registrationUIState.value.lastNameError
-                            )
-                            PasswordTextFieldLandscapeComponent(
-                                labelValue = stringResource(id = password),
-                                painterResource(id = R.drawable.password),
-                                onTextSelected = {
-                                    signupViewModel.onEvent(SignupUIEvent.PasswordChanged(it))
-                                },
-                                errorStatus = signupViewModel.registrationUIState.value.passwordError
-                            )
-                            Spacer(modifier = Modifier.height(40.dp))
-                            ButtonLandscapeComponent(
-                                value = stringResource(id = register),
-                                onButtonClicked = {
-                                    signupViewModel.onEvent(SignupUIEvent.RegisterButtonClicked)
-                                },
-                                isEnabled = signupViewModel.allValidationsPassed.value
-                            )
-                            Spacer(modifier = Modifier.height(20.dp))
+                                TextFieldLandscapeComponent(
+                                    labelValue = stringResource(id = lastname),
+                                    painterResource(id = R.drawable.profile),
+                                    onTextChanged = {
+                                        signupViewModel.onEvent(SignupUIEvent.LastNameChanged(it))
+                                    },
+                                    errorStatus = signupViewModel.registrationUIState.value.lastNameError
+                                )
+                                PasswordTextFieldLandscapeComponent(
+                                    labelValue = stringResource(id = password),
+                                    painterResource(id = R.drawable.password),
+                                    onTextSelected = {
+                                        signupViewModel.onEvent(SignupUIEvent.PasswordChanged(it))
+                                    },
+                                    errorStatus = signupViewModel.registrationUIState.value.passwordError
+                                )
+                                Spacer(modifier = Modifier.height(40.dp))
+                                ButtonLandscapeComponent(
+                                    value = stringResource(id = register),
+                                    onButtonClicked = {
+                                        signupViewModel.onEvent(SignupUIEvent.RegisterButtonClicked)
+                                    },
+                                    isEnabled = signupViewModel.allValidationsPassed.value
+                                )
+                                Spacer(modifier = Modifier.height(20.dp))
+                            }
                         }
+                        DividerTextComponent()
+
+                        Spacer(modifier = Modifier.height(10.dp))
+
+                        ClickableLoginTextComponent(tryingToLogin = true, onTextSelected = {
+                            navController?.navigate("login")
+                        }, context = context)
+
                     }
-                    DividerTextComponent()
-
-                    Spacer(modifier = Modifier.height(10.dp))
-
-                    ClickableLoginTextComponent(tryingToLogin = true, onTextSelected = {
-                        navController?.navigate("login")
-                    }, context = context)
-
-                }
                 }
             }
             if (signupViewModel.signUpInProgress.value) {
@@ -240,85 +240,6 @@ fun SignUpScreen(navController: NavController? = null) {
             }
         }
     }
-
-//    Box(
-//        modifier = Modifier.fillMaxSize(),
-//        contentAlignment = Alignment.Center
-//    ) {
-//
-//        Surface(
-//            color = Color.White,
-//            modifier = Modifier
-//                .fillMaxSize()
-//                .background(Color.White)
-//                .padding(28.dp)
-//        ) {
-//            Column(modifier = Modifier.fillMaxSize()) {
-//                HeadingTextComponent(value = stringResource(id = create_account))
-//                Spacer(modifier = Modifier.height(20.dp))
-//                TextFieldComponent(
-//                    labelValue = stringResource(id = firstname),
-//                    painterResource(id = R.drawable.profile),
-//                    onTextChanged = {
-//                        signupViewModel.onEvent(SignupUIEvent.FirstNameChanged(it))
-//                    },
-//                    errorStatus = signupViewModel.registrationUIState.value.firstNameError
-//                )
-//                TextFieldComponent(
-//                    labelValue = stringResource(id = lastname),
-//                    painterResource(id = R.drawable.profile),
-//                    onTextChanged = {
-//                        signupViewModel.onEvent(SignupUIEvent.LastNameChanged(it))
-//                    },
-//                    errorStatus = signupViewModel.registrationUIState.value.lastNameError
-//                )
-//                TextFieldComponent(
-//                    labelValue = stringResource(id = email),
-//                    painterResource(id = R.drawable.email),
-//                    onTextChanged = {
-//                        signupViewModel.onEvent(SignupUIEvent.EmailChanged(it))
-//                    },
-//                    errorStatus = signupViewModel.registrationUIState.value.emailError
-//                )
-//                PasswordTextFieldComponent(
-//                    labelValue = stringResource(id = password),
-//                    painterResource(id = R.drawable.password),
-//                    onTextSelected = {
-//                        signupViewModel.onEvent(SignupUIEvent.PasswordChanged(it))
-//                    },
-//                    errorStatus = signupViewModel.registrationUIState.value.passwordError
-//                )
-//                CheckboxComponent(
-//                    value = stringResource(id = terms_and_conditions),
-//                    onTextSelected = {
-//                        navController?.navigate("termsAndConditionsScreen")
-//                    },
-//                    onCheckedChange = {
-//                        signupViewModel.onEvent(SignupUIEvent.PrivacyPolicyCheckBoxClicked(it))
-//                    }
-//                )
-//                Spacer(modifier = Modifier.height(40.dp))
-//                ButtonComponent(
-//                    value = stringResource(id = register),
-//                    onButtonClicked = {
-//                        signupViewModel.onEvent(SignupUIEvent.RegisterButtonClicked)
-//                    },
-//                    isEnabled = signupViewModel.allValidationsPassed.value
-//                )
-//                Spacer(modifier = Modifier.height(20.dp))
-//
-//                DividerTextComponent()
-//
-//                ClickableLoginTextComponent(tryingToLogin = true, onTextSelected = {
-//                    navController?.navigate("login") }, context = context)
-//            }
-//
-//
-//        }
-//        if (signupViewModel.signUpInProgress.value) {
-//            CircularProgressIndicator(color = SkyBlue)
-//        }
-//    }
 }
 
 
