@@ -1,5 +1,6 @@
 package eu.tkacas.smartalert.ui.screen.employee
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,18 +21,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.app.SharedPrefManager
 import eu.tkacas.smartalert.cloud.getAlertByPhenomenonAndLocation
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.models.ListOfLocationCriticalWeatherPhenomenonData
 import eu.tkacas.smartalert.ui.component.CardComponentWithImage
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
+import eu.tkacas.smartalert.ui.theme.BlueGreen
+import eu.tkacas.smartalert.ui.theme.PrussianBlue
+import eu.tkacas.smartalert.ui.theme.SkyBlue
+import eu.tkacas.smartalert.ui.theme.UTOrange
 
 @Composable
 fun GroupEventsByLocationScreen(navController: NavHostController? = null){
@@ -64,12 +72,12 @@ fun GroupEventsByLocationScreen(navController: NavHostController? = null){
         floatingActionButton = {
             FloatingActionButton(
                 modifier = Modifier.padding(all = 20.dp),
-                contentColor = Color.White,
+                containerColor = SkyBlue,
                 onClick = {
                     navController?.navigate("Map")
                 }
             ){
-                Icon(imageVector = Icons.Default.Map, contentDescription = "Map")
+                Image(painterResource(id = R.drawable.map), contentDescription = "Map")
             }
         }
     ) { it ->
@@ -85,13 +93,15 @@ fun GroupEventsByLocationScreen(navController: NavHostController? = null){
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
-                Text(text = "The reports history from the last 24 hours.",
-                    color = Color.Black,
+                Text(text = stringResource(id = R.string.The_reports_history_from_the_last_24_hours_),
+                //Text(text = "The reports history from the last 24 hours.",
+                    color = PrussianBlue,
                     style = TextStyle(
-                        color = Color.Black,
+                        color = PrussianBlue,
                         fontSize = 20.sp
                     ),
-                    modifier = Modifier.padding(16.dp)
+                    modifier = Modifier.padding(16.dp),
+                    textAlign = TextAlign.Center
                 )
                 if (data.value != null) {
                     LazyColumn(
@@ -100,7 +110,7 @@ fun GroupEventsByLocationScreen(navController: NavHostController? = null){
                         items(data.value?.list?.size ?: 0) { index ->
                             CardComponentWithImage(
                                 row1 = data.value?.list?.get(index)?.location ?: "",
-                                row2 = "Number of Reports: ${data.value?.list?.get(index)?.numOfReports ?: 0}",
+                                row2 = stringResource(id = R.string.number_of_reports) + ": ${data.value?.list?.get(index)?.numOfReports ?: 0}",
                                 beDeletedEnabled = false,
                                 onClick = {
                                     sharedPrefManager.setAddress(
@@ -112,7 +122,8 @@ fun GroupEventsByLocationScreen(navController: NavHostController? = null){
                         }
                     }
                 } else if (error.value != null) {
-                    Text("Error: ${error.value}")
+                    //Text("Error: ${error.value}")
+                    Text(stringResource(id = R.string.error) + ": ${error.value}", color = UTOrange)
                 }
             }
         }

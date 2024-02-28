@@ -8,6 +8,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.models.CitizenMessage2
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.models.ListOfLocationCriticalWeatherPhenomenonData
@@ -15,6 +16,7 @@ import eu.tkacas.smartalert.models.ListOfSingleLocationCriticalWeatherPhenomenon
 import eu.tkacas.smartalert.models.LocationCriticalWeatherPhenomenonData
 import eu.tkacas.smartalert.models.LocationData
 import eu.tkacas.smartalert.models.SingleLocationCriticalWeatherPhenomenonData
+import java.util.Locale
 
 fun userExists() : Boolean {
     return FirebaseAuth.getInstance().currentUser != null
@@ -36,7 +38,8 @@ fun sendPasswordResetEmail(email: String, navController: NavController?) {
             if (task.isSuccessful) {
                 Toast.makeText(
                     navController?.context,
-                    "Password reset email sent successfully",
+                    navController?.context?.getString(R.string.password_reset_email_sent),
+                    //"Password reset email sent successfully",
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -76,9 +79,25 @@ fun createUser(email: String, password: String, firstName: String, lastName: Str
 
 fun storageRef() = FirebaseDatabase.getInstance()
 
+
+fun getTranslatedPhenomenon(phenomenon: String): String {
+    val currentLanguage = Locale.getDefault().language
+    return when (phenomenon) {
+        "EARTHQUAKE" -> if (currentLanguage == "el") "ΣΕΙΣΜΟΣ" else "EARTHQUAKE"
+        "FLOOD" -> if (currentLanguage == "el") "ΠΛΗΜΜΥΡΑ" else "FLOOD"
+        "WILDFIRE" -> if (currentLanguage == "el") "ΠΥΡΚΑΓΙΑ" else "WILDFIRE"
+        "RIVER_FLOOD" -> if (currentLanguage == "el") "ΥΠΕΡΧ. ΠΟΤΑΜΟΥ" else "RIVER FLOOD"
+        "HEATWAVE" -> if (currentLanguage == "el") "ΚΑΥΣΩΝΑΣ" else "HEATWAVE"
+        "SNOWSTORM" -> if (currentLanguage == "el") "ΧΙΟΝΟΘΥΕΛΛΑ" else "SNOWSTORM"
+        "STORM" -> if (currentLanguage == "el") "ΚΑΤΑΙΓΙΔΑ" else "STORM"
+        else -> phenomenon
+    }
+}
+
+
 fun getAlertByPhenomenonAndLocation(phenomenon: String, onComplete: (Boolean, ListOfLocationCriticalWeatherPhenomenonData?, String?) -> Unit) {
     val db = storageRef()
-    val ref = db.getReference("alertsByPhenomenonAndLocationCountLast24h").child(phenomenon) // Assuming a structure like 'alerts/<phenomenon>'
+    val ref = db.getReference("alertsByPhenomenonAndLocationCountLast24h").child(phenomenon)
 
     ref.addListenerForSingleValueEvent(object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -91,12 +110,39 @@ fun getAlertByPhenomenonAndLocation(phenomenon: String, onComplete: (Boolean, Li
                 }
                 onComplete(true, data, null)
             } else {
-                onComplete(false, null, "No alert found for $phenomenon")
+                //onComplete(false, null, "No alert found for $phenomenon")
+
+                val translatedPhenomenon = getTranslatedPhenomenon(phenomenon)
+                val currentLanguage = Locale.getDefault().language
+                when (currentLanguage) {
+                    "en" -> {
+                        onComplete(false, null, "No alert found for $translatedPhenomenon")
+                    }
+                    "el" -> {
+                        onComplete(false, null, "Δεν βρέθηκε ειδοποίηση για $translatedPhenomenon")
+                    }
+                    else -> {
+                        onComplete(false, null, "No alert found for $translatedPhenomenon")
+                    }
+                }
             }
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
-            onComplete(false, null, "Error fetching data: ${databaseError.message}")
+            //onComplete(false, null, "Error fetching data: ${databaseError.message}")
+
+            val currentLanguage = Locale.getDefault().language
+            when (currentLanguage) {
+                "en" -> {
+                    onComplete(false, null, "Error fetching data: ${databaseError.message}")
+                }
+                "el" -> {
+                    onComplete(false, null, "Σφάλμα ανάκτησης δεδομένων: ${databaseError.message}")
+                }
+                else -> {
+                    onComplete(false, null, "Error fetching data: ${databaseError.message}")
+                }
+            }
         }
     })
 }
@@ -119,12 +165,39 @@ fun getAlertByPhenomenonAndLocationForMaps(phenomenon: String, onComplete: (Bool
                 }
                 onComplete(true, data, null)
             } else {
-                onComplete(false, null, "No alert found for $phenomenon")
+                //onComplete(false, null, "No alert found for $phenomenon")
+
+                val translatedPhenomenon = getTranslatedPhenomenon(phenomenon)
+                val currentLanguage = Locale.getDefault().language
+                when (currentLanguage) {
+                    "en" -> {
+                        onComplete(false, null, "No alert found for $translatedPhenomenon")
+                    }
+                    "el" -> {
+                        onComplete(false, null, "Δεν βρέθηκε ειδοποίηση για $translatedPhenomenon")
+                    }
+                    else -> {
+                        onComplete(false, null, "No alert found for $translatedPhenomenon")
+                    }
+                }
             }
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
-            onComplete(false, null, "Error fetching data: ${databaseError.message}")
+            //onComplete(false, null, "Error fetching data: ${databaseError.message}")
+
+            val currentLanguage = Locale.getDefault().language
+            when (currentLanguage) {
+                "en" -> {
+                    onComplete(false, null, "Error fetching data: ${databaseError.message}")
+                }
+                "el" -> {
+                    onComplete(false, null, "Σφάλμα ανάκτησης δεδομένων: ${databaseError.message}")
+                }
+                else -> {
+                    onComplete(false, null, "Error fetching data: ${databaseError.message}")
+                }
+            }
         }
     })
 }
@@ -150,12 +223,39 @@ fun getSpecificAlertByPhenomenonAndLocation(phenomenon: String, location: String
                 }
                 onComplete(true, data, "Success")
             } else {
-                onComplete(false, null, "No alert found for $phenomenon at $location")
+                //onComplete(false, null, "No alert found for $phenomenon at $location")
+                val translatedPhenomenon = getTranslatedPhenomenon(phenomenon)
+                val currentLanguage = Locale.getDefault().language
+                when (currentLanguage) {
+                    "en" -> {
+                        onComplete(false, null, "No alert found for $translatedPhenomenon at $location")
+                    }
+                    "el" -> {
+                        onComplete(false, null, "Δεν βρέθηκε ειδοποίηση για $translatedPhenomenon στην τοποθεσία $location")
+                    }
+                    else -> {
+                        onComplete(false, null, "No alert found for $translatedPhenomenon at $location")
+                    }
+                }
+
             }
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
-            onComplete(false, null, "Error fetching data: ${databaseError.message}")
+            //onComplete(false, null, "Error fetching data: ${databaseError.message}")
+
+            val currentLanguage = Locale.getDefault().language
+            when (currentLanguage) {
+                "en" -> {
+                    onComplete(false, null, "Error fetching data: ${databaseError.message}")
+                }
+                "el" -> {
+                    onComplete(false, null, "Σφάλμα ανάκτησης δεδομένων: ${databaseError.message}")
+                }
+                else -> {
+                    onComplete(false, null, "Error fetching data: ${databaseError.message}")
+                }
+            }
         }
     })
 }
@@ -176,12 +276,39 @@ fun getSpecificAlertByPhenomenonAndLocationForMaps(phenomenon: String, location:
                 }
                 onComplete(true, data, null)
             } else {
-                onComplete(false, null, "No alert found for $phenomenon at $location")
+                //onComplete(false, null, "No alert found for $phenomenon at $location")
+
+                val translatedPhenomenon = getTranslatedPhenomenon(phenomenon)
+                val currentLanguage = Locale.getDefault().language
+                when (currentLanguage) {
+                    "en" -> {
+                        onComplete(false, null, "No alert found for $translatedPhenomenon")
+                    }
+                    "el" -> {
+                        onComplete(false, null, "Δεν βρέθηκε ειδοποίηση για $translatedPhenomenon")
+                    }
+                    else -> {
+                        onComplete(false, null, "No alert found for $translatedPhenomenon")
+                    }
+                }
             }
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
-            onComplete(false, null, "Error fetching data: ${databaseError.message}")
+            //onComplete(false, null, "Error fetching data: ${databaseError.message}")
+
+            val currentLanguage = Locale.getDefault().language
+            when (currentLanguage) {
+                "en" -> {
+                    onComplete(false, null, "Error fetching data: ${databaseError.message}")
+                }
+                "el" -> {
+                    onComplete(false, null, "Σφάλμα ανάκτησης δεδομένων: ${databaseError.message}")
+                }
+                else -> {
+                    onComplete(false, null, "Error fetching data: ${databaseError.message}")
+                }
+            }
         }
     })
 }

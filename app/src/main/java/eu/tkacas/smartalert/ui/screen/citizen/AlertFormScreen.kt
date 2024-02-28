@@ -35,9 +35,11 @@ import eu.tkacas.smartalert.ui.component.GeneralButtonComponent
 import eu.tkacas.smartalert.ui.component.MultilineTextFieldComponent
 import eu.tkacas.smartalert.ui.component.NormalTextComponent
 import eu.tkacas.smartalert.ui.component.PermissionDialog
+import eu.tkacas.smartalert.ui.component.UploadButtonComponent
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
 import eu.tkacas.smartalert.viewmodel.citizen.AlertFormViewModel
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 @Composable
 fun AlertFormScreen(navController: NavHostController? = null) {
@@ -143,14 +145,20 @@ fun AlertFormScreen(navController: NavHostController? = null) {
                     }
                 )
                 Spacer(modifier = Modifier.size(25.dp))
-                GeneralButtonComponent(
+                UploadButtonComponent(
                     value = stringResource(id = R.string.submit),
                     onButtonClicked = {
                         scope.launch {
                             viewModel.sentAlert()
                             viewModel.clearCitizenMessageFromPrefs(context)
                             navController?.navigate("home")
-                            Toast.makeText(context, "Alert sent successfully", Toast.LENGTH_SHORT).show()
+                            val currentLanguage = Locale.getDefault().language
+                            val toastSentMessage = when (currentLanguage) {
+                                "en" -> "Alert sent successfully"
+                                "el" -> "Το συμβάν στάλθηκε επιτυχώς"
+                                else -> "Alert sent successfully"
+                            }
+                            Toast.makeText(context, toastSentMessage, Toast.LENGTH_SHORT).show()
                         }
 
                     }
