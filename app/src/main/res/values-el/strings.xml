@@ -103,4 +103,6 @@
     <string name="november">Νοέμβριος</string>
     <string name="december">Δεκέμβριος</string>
     <string name="all_months">Όλοι οι μήνες</string>
+    <string name="select_month">Επέλεξε Μήνα</string>
+    <string name="select_year">Επέλεξε Χρονιά</string>
 </resources>

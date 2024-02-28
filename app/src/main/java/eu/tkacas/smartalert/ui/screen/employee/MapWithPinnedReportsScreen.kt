@@ -16,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.google.maps.android.compose.GoogleMap
 import androidx.navigation.NavController
+import com.google.android.gms.maps.model.CameraPosition
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
@@ -41,8 +42,8 @@ fun MapWithPinnedReportsScreen(navController: NavController? = null){
     val data = remember { mutableStateOf<List<LocationData>?>(null) }
     val error = remember { mutableStateOf<String?>(null) }
 
-    var cameraPositioState = rememberCameraPositionState{
-        mutableStateOf(LatLng(39.0742, 21.8243))
+    var cameraPositionState = rememberCameraPositionState{
+        position = CameraPosition.fromLatLngZoom(LatLng(38.0742, 23.8243), 5.8f)
     }
 
     val currentLanguage = Locale.getDefault().language
@@ -80,7 +81,6 @@ fun MapWithPinnedReportsScreen(navController: NavController? = null){
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            //AppBarBackView(title = stringResource(id = criticalWeatherPhenomenon.getStringId())+ "'s Map", navController = navController)
             AppBarBackView(title = title, navController = navController)
         }
     ) {
@@ -89,7 +89,7 @@ fun MapWithPinnedReportsScreen(navController: NavController? = null){
         ){
             GoogleMap(
                 modifier = Modifier.fillMaxSize(),
-                cameraPositionState = cameraPositioState
+                cameraPositionState = cameraPositionState
             ){
                 data.value?.forEach { locationData ->
                     val position = LatLng(locationData.latitude, locationData.longitude)
