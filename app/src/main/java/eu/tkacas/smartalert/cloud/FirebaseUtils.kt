@@ -358,3 +358,23 @@ fun getAlertFormsByUser(onComplete: (Boolean, List<CitizenMessage2>?, String?) -
         }
     })
 }
+
+fun getStatisticsPerYear(onComplete: (Boolean, Map<String, Any>?, String?) -> Unit) {
+    val db = FirebaseDatabase.getInstance()
+    val ref = db.getReference("statisticsPerYear")
+
+    ref.addListenerForSingleValueEvent(object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            if (dataSnapshot.exists()) {
+                val data = dataSnapshot.value as Map<String, Any>
+                onComplete(true, data, null)
+            } else {
+                onComplete(false, null, "No statistics found for year")
+            }
+        }
+
+        override fun onCancelled(databaseError: DatabaseError) {
+            onComplete(false, null, "Error fetching data: ${databaseError.message}")
+        }
+    })
+}
