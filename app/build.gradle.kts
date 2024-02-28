@@ -105,6 +105,8 @@ dependencies {
     implementation("com.google.android.gms:play-services-location:21.1.0")
 
     implementation("androidx.compose.runtime:runtime-livedata:1.0.5")
+
+    implementation ("com.google.accompanist:accompanist-swiperefresh:0.20.0")
 }
 
 kapt {
