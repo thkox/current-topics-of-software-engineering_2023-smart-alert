@@ -1,5 +1,6 @@
 package eu.tkacas.smartalert.ui.navigation
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
@@ -38,8 +39,8 @@ fun AppBarBackView(
             if (enableBackButton) {
             {
                 IconButton(onClick = { navController?.navigateUp() }) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    Image(
+                        painterResource(id = R.drawable.arrow_back),
                         contentDescription = null
                     )
                 }
@@ -54,7 +55,7 @@ fun AppBarBackView(
                         navController?.navigate("settings")
                     }
                 ) {
-                    Icon(
+                    Image(
                         painter = painterResource(id = R.drawable.settings),
                         contentDescription = null
                     )

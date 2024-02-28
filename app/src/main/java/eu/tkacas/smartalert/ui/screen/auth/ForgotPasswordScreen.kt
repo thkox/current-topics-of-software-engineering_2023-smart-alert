@@ -24,6 +24,7 @@ import eu.tkacas.smartalert.ui.component.GeneralButtonComponent
 import eu.tkacas.smartalert.ui.component.HeadingTextComponent
 import eu.tkacas.smartalert.ui.component.NormalTextComponent
 import eu.tkacas.smartalert.ui.component.TextFieldComponent
+import eu.tkacas.smartalert.ui.component.UploadButtonComponent
 import eu.tkacas.smartalert.ui.event.ForgotPasswordUIEvent
 import eu.tkacas.smartalert.viewmodel.auth.ForgotPasswordViewModel
 
@@ -68,7 +69,7 @@ fun ForgotPasswordScreen(navController: NavController? = null) {
                 )
                 Spacer(modifier = Modifier.size(15.dp))
 
-                GeneralButtonComponent(
+                UploadButtonComponent(
                     value = stringResource(id = R.string.submit),
                     onButtonClicked = {
                     forgotPasswordViewModel.onEvent(ForgotPasswordUIEvent.ResetPasswordButtonClicked)

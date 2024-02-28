@@ -25,7 +25,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.ui.component.UploadPhotoButton
 import eu.tkacas.smartalert.ui.theme.BlueColor
 import kotlinx.coroutines.launch
@@ -45,7 +47,7 @@ fun PhotoBottomSheetContent(
                 .padding(16.dp),
             contentAlignment = Alignment.Center
         ){
-            Text("There are no photos yet")
+            Text(stringResource(id = R.string.there_are_no_photos_yet))
         }
     } else {
         LazyVerticalStaggeredGrid(
