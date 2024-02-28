@@ -172,6 +172,45 @@ fun TextFieldComponent(
     )
 }
 
+@Composable
+fun TextFieldLandscapeComponent(
+    labelValue: String,
+    painterResource: Painter,
+    onTextChanged: (String) -> Unit,
+    errorStatus: Boolean = false
+) {
+
+    val textValue = remember {
+        mutableStateOf("")
+    }
+
+    OutlinedTextField(
+        modifier = Modifier
+            .width(400.dp)
+            .height(65.dp)
+            .clip(componentShapes.small),
+        label = { Text(text = labelValue) },
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = PrussianBlue,
+            focusedLabelColor = PrussianBlue,
+            cursorColor = PrussianBlue,
+            backgroundColor = BgColor
+        ),
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        singleLine = true,
+        maxLines = 1,
+        value = textValue.value,
+        onValueChange = {
+            textValue.value = it
+            onTextChanged(it)
+        },
+        leadingIcon = {
+            Icon(painter = painterResource, contentDescription = "")
+        },
+        isError = !errorStatus
+    )
+}
+
 
 @Composable
 fun PasswordTextFieldComponent(
@@ -193,6 +232,73 @@ fun PasswordTextFieldComponent(
     OutlinedTextField(
         modifier = Modifier
             .fillMaxWidth()
+            .clip(componentShapes.small),
+        label = { Text(text = labelValue) },
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = PrussianBlue,
+            focusedLabelColor = PrussianBlue,
+            cursorColor = PrussianBlue,
+            backgroundColor = BgColor
+        ),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Password,
+            imeAction = ImeAction.Done
+        ),
+        singleLine = true,
+        keyboardActions = KeyboardActions {
+            localFocusManager.clearFocus()
+        },
+        maxLines = 1,
+        value = password.value,
+        onValueChange = {
+            password.value = it
+            onTextSelected(it)
+        },
+        leadingIcon = {
+            Icon(painter = painterResource, contentDescription = "")
+        },
+        trailingIcon = {
+            val iconImage = if(passwordVisible.value) {
+                painterResource(id = R.drawable.visibility)
+            } else{
+                painterResource(id = R.drawable.visibility_off)
+            }
+            val description = if(passwordVisible.value){
+                stringResource(id = R.string.hide_password)
+            } else {
+                stringResource(id = R.string.show_password)
+            }
+
+            IconButton(onClick = { passwordVisible.value = !passwordVisible.value }) {
+                Icon(painter = iconImage, contentDescription = description)
+            }
+        },
+        visualTransformation = if(passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
+        isError = !errorStatus
+    )
+}
+
+@Composable
+fun PasswordTextFieldLandscapeComponent(
+    labelValue: String,
+    painterResource: Painter,
+    onTextSelected: (String) -> Unit,
+    errorStatus: Boolean = false
+){
+
+    val localFocusManager = LocalFocusManager.current
+    val password = remember {
+        mutableStateOf("")
+    }
+
+    val passwordVisible = remember {
+        mutableStateOf(false)
+    }
+
+    OutlinedTextField(
+        modifier = Modifier
+            .width(400.dp)
+            .height(65.dp)
             .clip(componentShapes.small),
         label = { Text(text = labelValue) },
         colors = TextFieldDefaults.outlinedTextFieldColors(

@@ -57,7 +57,6 @@ fun ClickableTextComponent(value: String, onTextSelected: (String) -> Unit) {
 }
 
 
-
 @Composable
 fun ClickableLoginTextComponent(tryingToLogin: Boolean = true, onTextSelected: (String) -> Unit, context: Context) {
     val initialText =
