@@ -85,6 +85,7 @@ fun AlertCitizensFormScreen(navController: NavHostController? = null){
                     }
                 )
                 Spacer(modifier = Modifier.size(80.dp))
+                // TODO: add check for city type
                 GeneralButtonComponent(
                     value = stringResource(id = R.string.submit),
                     onButtonClicked = {

@@ -1,5 +1,6 @@
 package eu.tkacas.smartalert.cloud
 
+import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
@@ -7,6 +8,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import eu.tkacas.smartalert.models.CitizenMessage2
+import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.models.ListOfLocationCriticalWeatherPhenomenonData
 import eu.tkacas.smartalert.models.ListOfSingleLocationCriticalWeatherPhenomenonData
 import eu.tkacas.smartalert.models.LocationCriticalWeatherPhenomenonData
@@ -174,6 +177,52 @@ fun getSpecificAlertByPhenomenonAndLocationForMaps(phenomenon: String, location:
                 onComplete(true, data, null)
             } else {
                 onComplete(false, null, "No alert found for $phenomenon at $location")
+            }
+        }
+
+        override fun onCancelled(databaseError: DatabaseError) {
+            onComplete(false, null, "Error fetching data: ${databaseError.message}")
+        }
+    })
+}
+
+fun getAlertFormsByUser(onComplete: (Boolean, List<CitizenMessage2>?, String?) -> Unit) {
+    val db = storageRef()
+    val ref = db.getReference("alertForms").child(getUserID())
+
+    // Get all the citizenMessages
+    ref.addListenerForSingleValueEvent(object : ValueEventListener {
+        @SuppressLint("SimpleDateFormat")
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            if (dataSnapshot.exists()) {
+                val data = mutableListOf<CitizenMessage2>()
+                for (snapshot in dataSnapshot.children) {
+                    // Create a citizen message object from the snapshot
+                    val message = snapshot.child("message").getValue(String::class.java) ?: ""
+                    val phenomenonString = snapshot.child("criticalWeatherPhenomenon").getValue(String::class.java) ?: ""
+                    val phenomenon = CriticalWeatherPhenomenon.valueOf(phenomenonString)
+                    val criticalLevel = snapshot.child("criticalLevel").getValue(Int::class.java) ?: 0
+                    val latitude = snapshot.child("location").child("latitude").getValue(Double::class.java) ?: 0.0
+                    val longitude = snapshot.child("location").child("longitude").getValue(Double::class.java) ?: 0.0
+                    val location = LocationData(latitude, longitude)
+                    // Convert timestamp to string "year-month-day hour:minute"
+                    val tempTimestamp = snapshot.child("timestamp").getValue(Long::class.java) ?: 0
+                    val convertedTimestamp = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm").format(java.util.Date(tempTimestamp))
+                    val imageURL = snapshot.child("imageURL").getValue(String::class.java) ?: ""
+
+                    val citizenMessage2 = CitizenMessage2(
+                        message,
+                        phenomenon,
+                        criticalLevel,
+                        location,
+                        convertedTimestamp,
+                        imageURL
+                    )
+                    data.add(citizenMessage2)
+                }
+                onComplete(true, data, null)
+            } else {
+                onComplete(false, null, "No alert forms found for user")
             }
         }
 

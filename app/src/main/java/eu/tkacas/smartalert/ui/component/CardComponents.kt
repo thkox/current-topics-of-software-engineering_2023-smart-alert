@@ -5,7 +5,6 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,7 +27,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -50,6 +48,7 @@ fun CardComponentWithImage(
     row2: String = "Emergency level",
     row3: String = "",
     beDeletedEnabled: Boolean = false,
+    image: CriticalWeatherPhenomenon? = null,
     onClick: () -> Unit = {},
     onDelete: () -> Unit = {}
 ) {
@@ -78,13 +77,23 @@ fun CardComponentWithImage(
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ){
-                    Image(
-                        painter = painterResource(id = weatherPhenomenon.getImage()),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(80.dp)
-                            .padding(horizontal = 5.dp)
-                    )
+                    if (image != null) {
+                        Image(
+                            painter = painterResource(id = image.getImage()),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(80.dp)
+                                .padding(horizontal = 5.dp)
+                        )
+                    } else {
+                        Image(
+                            painter = painterResource(id = weatherPhenomenon.getImage()),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(80.dp)
+                                .padding(horizontal = 5.dp)
+                        )
+                    }
                     Column {
                         Text(text = row1)
                         Text(text = row2)
