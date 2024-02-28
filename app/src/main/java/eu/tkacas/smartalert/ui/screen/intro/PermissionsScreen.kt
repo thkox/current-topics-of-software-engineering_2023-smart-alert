@@ -3,6 +3,7 @@ package eu.tkacas.smartalert.ui.screen.intro
 import android.Manifest
 import android.app.Activity
 import android.content.pm.PackageManager
+import android.os.Build
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -32,6 +33,7 @@ import eu.tkacas.smartalert.permissions.areAllPermissionsGranted
 import eu.tkacas.smartalert.permissions.openAppSettings
 import eu.tkacas.smartalert.ui.component.GeneralButtonComponent
 import eu.tkacas.smartalert.ui.component.LocationPermissionTextProvider
+import eu.tkacas.smartalert.ui.component.NotificationPermissionTextProvider
 import eu.tkacas.smartalert.ui.component.PermissionCard
 import eu.tkacas.smartalert.ui.component.PermissionDialog
 import eu.tkacas.smartalert.ui.component.REDUnderLinedTextComponent
@@ -48,16 +50,29 @@ fun PermissionsScreen(navController: NavController? = null) {
     val permissionsToRequest = arrayOf(
         Manifest.permission.ACCESS_FINE_LOCATION,
         Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+        Manifest.permission.POST_NOTIFICATIONS
     )
 
+    val isExpandedNotifications = remember { mutableStateOf(false) }
     val isExpandedLocation = remember { mutableStateOf(false) }
 
+    val switchStateNotifications = remember { mutableStateOf(false) }
     val switchStateCoarseLocation = remember { mutableStateOf(false) }
     val switchStateBackgroundLocation = remember { mutableStateOf(false) }
 
     val viewModel = viewModel<PermissionsViewModel>()
     val dialogQueue = viewModel.visiblePermissionDialogQueue
 
+    val notificationPermissionResultLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission(),
+        onResult = { isGranted ->
+            viewModel.onPermissionResult(
+                permission = Manifest.permission.POST_NOTIFICATIONS,
+                isGranted = isGranted
+            )
+            switchStateNotifications.value = isGranted
+        }
+    )
 
     val locationPermissionResultLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission(),
@@ -76,6 +91,11 @@ fun PermissionsScreen(navController: NavController? = null) {
             permissionsToRequest.forEach { permission ->
                 when (permission) {
                     Manifest.permission.ACCESS_FINE_LOCATION -> switchStateCoarseLocation.value = perms[permission] == true
+                    Manifest.permission.POST_NOTIFICATIONS -> {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                            switchStateNotifications.value = perms[permission] == true
+                        }
+                    }
                 }
             }
         }
@@ -92,6 +112,13 @@ fun PermissionsScreen(navController: NavController? = null) {
             context,
             Manifest.permission.ACCESS_FINE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            switchStateNotifications.value = ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED
+        }
     }
 
 
@@ -103,7 +130,23 @@ fun PermissionsScreen(navController: NavController? = null) {
         Text(text = stringResource(id = R.string.Permissions), style = TextStyle(fontSize = 24.sp), color = PrussianBlue)
         Spacer(modifier = Modifier.size(20.dp))
 
+        PermissionCard(
+            iconResId = R.drawable.notifications,
+            permissionName = stringResource(id = R.string.Notifications),
+            isExpanded = isExpandedNotifications,
+            switchState = switchStateNotifications,
+            onToggleClick = {
+                if (switchStateNotifications.value) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        notificationPermissionResultLauncher.launch(
+                            Manifest.permission.POST_NOTIFICATIONS
+                        )
+                    }
+                }
+            }
+        )
 
+        Spacer(modifier = Modifier.size(8.dp))
 
         PermissionCard(
             iconResId = R.drawable.location_pin,
@@ -116,7 +159,8 @@ fun PermissionsScreen(navController: NavController? = null) {
                         Manifest.permission.ACCESS_FINE_LOCATION
                     )
                 }
-            })
+            }
+        )
 
         Spacer(modifier = Modifier.size(15.dp))
 
@@ -158,6 +202,9 @@ fun PermissionsScreen(navController: NavController? = null) {
                     }
                     Manifest.permission.ACCESS_BACKGROUND_LOCATION -> {
                         LocationPermissionTextProvider()
+                    }
+                    Manifest.permission.POST_NOTIFICATIONS -> {
+                        NotificationPermissionTextProvider()
                     }
                     else -> return@forEach
                 },

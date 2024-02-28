@@ -86,6 +86,7 @@
     <string name="No_image_available">Δεν υπάρχει διαθέσιμη εικόνα</string>
     <string name="close">Κλείσιμο</string>
     <string name="Permissions">Δικαιώματα Χρήσης</string>
+    <string name="Notifications">Ειδοποιήσεις</string>
     <string name="Location">Τοποθεσία</string>
     <string name="Always_allow_location_permission">Να επιτρέπετε πάντα η άδεια τοποθεσίας</string>
     <string name="Allow_SmartAlert_to_access_this_device">Επιτρέψτε στο SmartAlert να έχει πρόσβαση στην </string>
