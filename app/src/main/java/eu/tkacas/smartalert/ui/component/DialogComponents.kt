@@ -80,6 +80,16 @@ interface PermissionTextProvider {
     fun getDescription(isPermanentlyDeclined: Boolean): String
 }
 
+class NotificationPermissionTextProvider: PermissionTextProvider {
+    override fun getDescription(isPermanentlyDeclined: Boolean): String {
+        return if (isPermanentlyDeclined) {
+            "Notification permission is required to send you alerts. Please go to app settings and enable the notification permission."
+        } else {
+            "Notification permission is required to send you alerts. Please enable the notification permission."
+        }
+    }
+}
+
 class LocationPermissionTextProvider: PermissionTextProvider {
     override fun getDescription(isPermanentlyDeclined: Boolean): String {
         return if (isPermanentlyDeclined) {

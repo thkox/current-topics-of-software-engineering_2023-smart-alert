@@ -236,7 +236,7 @@ fun PermissionCard(
                         verticalAlignment = Alignment.CenterVertically
                     ){
                         Image(
-                            painter = painterResource(id = R.drawable.location_pin),
+                            painter = painterResource(id = iconResId),
                             modifier = Modifier
                                 .padding(horizontal = 5.dp)
                                 .size(40.dp),

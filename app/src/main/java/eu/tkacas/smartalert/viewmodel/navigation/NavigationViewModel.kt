@@ -30,10 +30,17 @@ class NavigationViewModel(context:Context): ViewModel() {
 
     @Composable
     fun permissionsAreGranted(): Boolean {
-        return ContextCompat.checkSelfPermission(
+        val locationPermission = ContextCompat.checkSelfPermission(
             LocalContext.current,
             Manifest.permission.ACCESS_FINE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
+
+        val notificationPermission = ContextCompat.checkSelfPermission(
+            LocalContext.current,
+            Manifest.permission.POST_NOTIFICATIONS
+        ) == PackageManager.PERMISSION_GRANTED
+
+        return locationPermission && notificationPermission
     }
 
 }

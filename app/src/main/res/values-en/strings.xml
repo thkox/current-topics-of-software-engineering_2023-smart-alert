@@ -86,6 +86,7 @@
     <string name="No_image_available">No image available</string>
     <string name="close">Close</string>
     <string name="Permissions">Permissions</string>
+    <string name="Notifications">Notifications</string>
     <string name="Location">Location</string>
     <string name="Always_allow_location_permission">Always Allow Location Permission</string>
     <string name="Allow_SmartAlert_to_access_this_device">Allow SmartAlert to access this device\'s</string>
