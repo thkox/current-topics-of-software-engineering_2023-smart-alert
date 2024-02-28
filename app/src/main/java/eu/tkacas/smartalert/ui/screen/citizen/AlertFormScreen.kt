@@ -35,6 +35,7 @@ import eu.tkacas.smartalert.ui.component.GeneralButtonComponent
 import eu.tkacas.smartalert.ui.component.MultilineTextFieldComponent
 import eu.tkacas.smartalert.ui.component.NormalTextComponent
 import eu.tkacas.smartalert.ui.component.PermissionDialog
+import eu.tkacas.smartalert.ui.component.UploadButtonComponent
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
 import eu.tkacas.smartalert.viewmodel.citizen.AlertFormViewModel
 import kotlinx.coroutines.launch
@@ -144,7 +145,7 @@ fun AlertFormScreen(navController: NavHostController? = null) {
                     }
                 )
                 Spacer(modifier = Modifier.size(25.dp))
-                GeneralButtonComponent(
+                UploadButtonComponent(
                     value = stringResource(id = R.string.submit),
                     onButtonClicked = {
                         scope.launch {

@@ -43,7 +43,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.ui.theme.BgColor
-import eu.tkacas.smartalert.ui.theme.Primary
+import eu.tkacas.smartalert.ui.theme.BlueGreen
+import eu.tkacas.smartalert.ui.theme.PrussianBlue
 import eu.tkacas.smartalert.ui.theme.componentShapes
 
 @Composable
@@ -59,9 +60,9 @@ fun CityTextFieldComponent(
             .fillMaxWidth(),
         label = { Text(text = labelValue) },
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = Primary,
-            focusedLabelColor = Primary,
-            cursorColor = Primary,
+            focusedBorderColor = PrussianBlue,
+            focusedLabelColor = PrussianBlue,
+            cursorColor = PrussianBlue,
             backgroundColor = BgColor
         ),
         singleLine = true,
@@ -90,9 +91,9 @@ fun TextFieldComponent(
             .clip(componentShapes.small),
         label = { Text(text = labelValue) },
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = Primary,
-            focusedLabelColor = Primary,
-            cursorColor = Primary,
+            focusedBorderColor = PrussianBlue,
+            focusedLabelColor = PrussianBlue,
+            cursorColor = PrussianBlue,
             backgroundColor = BgColor
         ),
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
@@ -134,9 +135,9 @@ fun PasswordTextFieldComponent(
             .clip(componentShapes.small),
         label = { Text(text = labelValue) },
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = Primary,
-            focusedLabelColor = Primary,
-            cursorColor = Primary,
+            focusedBorderColor = PrussianBlue,
+            focusedLabelColor = PrussianBlue,
+            cursorColor = PrussianBlue,
             backgroundColor = BgColor
         ),
         keyboardOptions = KeyboardOptions(
@@ -198,6 +199,10 @@ fun MultilineTextFieldComponent(
                 onTextChanged(input)
             }
         },
+        textStyle = TextStyle(color = BlueGreen),
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = PrussianBlue
+        ),
         trailingIcon = {
             Row(
                 modifier = Modifier.padding(end = 10.dp, top = 80.dp)
@@ -223,9 +228,9 @@ fun EmailDisplayComponent(email: String, painterResource: Painter) {
         onValueChange = {},
         label = { Text(text = "Email") },
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = Primary,
-            focusedLabelColor = Primary,
-            cursorColor = Primary,
+            focusedBorderColor = PrussianBlue,
+            focusedLabelColor = PrussianBlue,
+            cursorColor = PrussianBlue,
             backgroundColor = BgColor
         ),
         leadingIcon = {
@@ -250,7 +255,7 @@ fun NameFieldComponent(
         Text(
             text = firstName,
             style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 24.sp),
-            color = colorResource(id = R.color.colorBlue)
+            color = PrussianBlue
         )
 
         Spacer(modifier = Modifier.width(8.dp))
@@ -258,7 +263,7 @@ fun NameFieldComponent(
         Text(
             text = lastName,
             style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 24.sp),
-            color = colorResource(id = R.color.colorBlue)
+            color = BlueGreen
         )
     }
 }
@@ -276,9 +281,9 @@ fun PasswordDisplayComponent(password: String, painterResource: Painter) {
         onValueChange = {},
         label = { Text(text = stringResource(id = R.string.password)) },
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = Primary,
-            focusedLabelColor = Primary,
-            cursorColor = Primary,
+            focusedBorderColor = PrussianBlue,
+            focusedLabelColor = PrussianBlue,
+            cursorColor = PrussianBlue,
             backgroundColor = BgColor
         ),
         leadingIcon = {
