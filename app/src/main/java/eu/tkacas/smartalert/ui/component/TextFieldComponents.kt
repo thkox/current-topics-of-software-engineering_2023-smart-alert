@@ -85,9 +85,9 @@ fun CityTextFieldComponent(
                 .fillMaxWidth(),
             label = { Text(text = labelValue) },
             colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Primary,
-                focusedLabelColor = Primary,
-                cursorColor = Primary,
+                focusedBorderColor = PrussianBlue,
+                focusedLabelColor = PrussianBlue,
+                cursorColor = PrussianBlue,
                 backgroundColor = BgColor
             ),
             singleLine = true,
