@@ -1,17 +1,19 @@
 package eu.tkacas.smartalert.viewmodel.settings
 
+import android.content.Context
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.cloud.getStatisticsPerYear
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class AnalyticsViewModel: ViewModel() {
+class AnalyticsViewModel(context : Context): ViewModel() {
     private var _data = mutableMapOf<String, Any>()
     private var _years = MutableLiveData<List<String>>(listOf())
-    private var _months = MutableLiveData<List<String>>(listOf())
 
     private var _selectedYear: String? = null
     private var _selectedMonth: String? = null
@@ -41,12 +43,6 @@ class AnalyticsViewModel: ViewModel() {
         get() = _years
         set(value) {
             _years = value
-        }
-
-    var months: MutableLiveData<List<String>>
-        get() = _months
-        set(value) {
-            _months = value
         }
 
     var earthquakeCount: MutableLiveData<Int>
@@ -103,7 +99,6 @@ class AnalyticsViewModel: ViewModel() {
                 if (success) {
                     _data = dataRetrieved?.toMutableMap() ?: mutableMapOf()
                     _years.postValue(fetchYears())
-                    _months.postValue(fetchMonths())
                 } else {
                     println("Error fetching data: $error")
                 }
@@ -113,23 +108,11 @@ class AnalyticsViewModel: ViewModel() {
 
     private fun fetchYears(): List<String> {
         val years = mutableListOf<String>()
+        years.add("Select Year")
         _data.keys.forEach { key ->
             years.add(key)
         }
         return years
-    }
-
-    private fun fetchMonths(): List<String> {
-        val months = mutableSetOf<String>()
-        _data.values.forEach { value ->
-            if (value is Map<*, *>) {
-                val sumPerMonth = value["sumPerMonth"] as? Map<String, Any>
-                sumPerMonth?.keys?.forEach { month ->
-                    months.add(month)
-                }
-            }
-        }
-        return months.toList()
     }
 
 fun fetchStatisticsPerMonth() {

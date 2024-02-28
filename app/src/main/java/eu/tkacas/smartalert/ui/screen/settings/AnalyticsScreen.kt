@@ -11,6 +11,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
@@ -26,11 +27,10 @@ import eu.tkacas.smartalert.viewmodel.settings.AnalyticsViewModel
 @Composable
 fun AnalyticsScreen(navController: NavController? = null) {
     val scaffoldState = rememberScaffoldState()
-    val viewModel = AnalyticsViewModel()
+    val viewModel = AnalyticsViewModel(LocalContext.current)
 
     // Create a list of years and a list of months based on the fetched data
     val years by viewModel.years.observeAsState(listOf())
-    val months by viewModel.months.observeAsState(listOf())
 
     // Observe the LiveData objects in your ViewModel
     val earthquakeCount by viewModel.earthquakeCount.observeAsState(0)
@@ -64,7 +64,7 @@ fun AnalyticsScreen(navController: NavController? = null) {
 
                 EnumDropdownComponentMonths(
                     enumClass = Months::class.java,
-                    initialSelection = Months.January, // or any other initial month
+                    initialSelection = Months.Select_Month, // or any other initial month
                     onSelected = { selectedMonth ->
                         // handle the selected month here
                         viewModel.selectedMonth = selectedMonth.toString()
