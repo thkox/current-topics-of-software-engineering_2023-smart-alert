@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -38,23 +39,28 @@ fun MyReportsHistoryScreen(navController: NavController? = null) {
             AppBarBackView(title = stringResource(id = R.string.my_reports), navController = navController)
         }
     ) {
-        LazyColumn(
-            modifier = Modifier.padding(16.dp)
-        ) {
-            items(alerts.size) { index ->
-                CardComponentWithImage(
-                    row1 = alerts[index].timestamp,
-                    row2 = alerts[index].message.toString(),
-                    row3 = "${alerts[index].location.latitude}, ${alerts[index].location.longitude}",
-                    image = alerts[index].criticalWeatherPhenomenon,
-                    onClick = {
-                        selectedMessage.value = alerts[index].message
-                        selectedImageUrl.value = alerts[index].imageURL
-                        showDialog.value = true
-                    }
-                )
+        if (alerts.isEmpty()) {
+            Text(text = "No reports found", modifier = Modifier.padding(16.dp))
+        } else {
+            LazyColumn(
+                modifier = Modifier.padding(16.dp)
+            ) {
+                items(alerts.size) { index ->
+                    CardComponentWithImage(
+                        row1 = alerts[index].timestamp,
+                        row2 = alerts[index].message.toString(),
+                        row3 = "${alerts[index].location.latitude}, ${alerts[index].location.longitude}",
+                        image = alerts[index].criticalWeatherPhenomenon,
+                        onClick = {
+                            selectedMessage.value = alerts[index].message
+                            selectedImageUrl.value = alerts[index].imageURL
+                            showDialog.value = true
+                        }
+                    )
+                }
             }
         }
+
         AlertWithImageDialog(
             showDialog = showDialog.value,
             message = selectedMessage.value,

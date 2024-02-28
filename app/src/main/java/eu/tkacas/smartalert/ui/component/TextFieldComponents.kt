@@ -51,6 +51,7 @@ import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.interfacesAPI.PlacesAPI
 import eu.tkacas.smartalert.ui.theme.BgColor
 import eu.tkacas.smartalert.ui.theme.BlueGreen
+import eu.tkacas.smartalert.ui.theme.Primary
 import eu.tkacas.smartalert.ui.theme.PrussianBlue
 import eu.tkacas.smartalert.ui.theme.componentShapes
 import kotlinx.coroutines.Dispatchers
