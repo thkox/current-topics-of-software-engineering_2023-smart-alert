@@ -157,55 +157,6 @@ fun ForgotPasswordScreen(navController: NavController? = null) {
             }
         }
     }
-
-//    Box(
-//        modifier = Modifier.fillMaxSize(),
-//        contentAlignment = Alignment.Center
-//    ) {
-//        Surface(
-//            modifier = Modifier.padding(16.dp),
-//            shape = MaterialTheme.shapes.medium,
-//            color = MaterialTheme.colors.surface
-//        ) {
-//            Column(
-//                modifier = Modifier
-//                    .fillMaxSize()
-//                    .padding(16.dp),
-//                horizontalAlignment = Alignment.CenterHorizontally
-//            ) {
-//                HeadingTextComponent(value = stringResource(id = R.string.forgot_password))
-//                Spacer(modifier = Modifier.size(30.dp))
-//                Image(
-//                    painter = painterResource(id = R.drawable.forgot_password_illustration),
-//                    contentDescription = "Forgot Password",
-//                    modifier = Modifier
-//                        .size(250.dp)
-//                )
-//                Spacer(modifier = Modifier.size(20.dp))
-//                NormalTextComponent(value = stringResource(id = R.string.forgot_password_instructions))
-//
-//                TextFieldComponent(labelValue = stringResource(id = R.string.email),
-//                    painterResource(id = R.drawable.email),
-//                    onTextChanged = {
-//                        forgotPasswordViewModel.onEvent(ForgotPasswordUIEvent.EmailChanged(it))
-//                    },
-//                    errorStatus = forgotPasswordViewModel.forgotPasswordUIState.value.emailError
-//                )
-//                Spacer(modifier = Modifier.size(15.dp))
-//
-//                UploadButtonComponent(
-//                    value = stringResource(id = R.string.submit),
-//                    onButtonClicked = {
-//                    forgotPasswordViewModel.onEvent(ForgotPasswordUIEvent.ResetPasswordButtonClicked)
-//                    }
-//                )
-//                Spacer(modifier = Modifier.size(50.dp))
-//                BackToLoginComponent(onTextSelected = {
-//                    navController?.navigate("login")
-//                })
-//            }
-//        }
-//    }
 }
 
 @Preview
