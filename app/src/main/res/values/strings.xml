@@ -17,7 +17,7 @@
     <string name="terms_and_conditions_header" translatable="false">Term of Use</string>
     <string name="register">Register</string>
     <string name="return_back_to">Return back to</string>
-    <string name="login">Login</string>
+    <string name="login"> Login</string>
     <string name="or">or</string>
     <string name="forgot_password">Forgot your password?</string>
     <string name="account">Account</string>
