@@ -9,3 +9,12 @@ data class CitizenMessage(
     var imageURL: String? = null
 )
 
+data class CitizenMessage2(
+    val message: String? = null,
+    val criticalWeatherPhenomenon: CriticalWeatherPhenomenon,
+    val criticalLevel: Int,
+    val location: LocationData,
+    val timestamp: String,
+    var imageURL: String? = null
+)
+
