@@ -28,14 +28,18 @@ fun AnalyticsScreen(navController: NavController? = null) {
     val scaffoldState = rememberScaffoldState()
     val viewModel = AnalyticsViewModel()
 
-    // Fetch the data from the backend when the composable is first launched
-    LaunchedEffect(Unit) {
-        viewModel.fetchData()
-    }
-
     // Create a list of years and a list of months based on the fetched data
     val years by viewModel.years.observeAsState(listOf())
     val months by viewModel.months.observeAsState(listOf())
+
+    // Observe the LiveData objects in your ViewModel
+    val earthquakeCount by viewModel.earthquakeCount.observeAsState(0)
+    val floodCount by viewModel.floodCount.observeAsState(0)
+    val wildfireCount by viewModel.wildfireCount.observeAsState(0)
+    val riverFloodCount by viewModel.riverFloodCount.observeAsState(0)
+    val heatwaveCount by viewModel.heatwaveCount.observeAsState(0)
+    val snowstormCount by viewModel.snowstormCount.observeAsState(0)
+    val stormCount by viewModel.stormCount.observeAsState(0)
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -48,30 +52,35 @@ fun AnalyticsScreen(navController: NavController? = null) {
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.Center
             ) {
+
                 YearDropdownComponent(
                     years = years,
                     initialSelection = years.first(),
                     onSelected = { selectedYear ->
                         viewModel.selectedYear = selectedYear
+                        viewModel.fetchStatisticsPerMonth()
                     }
                 )
+
                 EnumDropdownComponentMonths(
                     enumClass = Months::class.java,
-                    initialSelection = Months.JANUARY, // or any other initial month
+                    initialSelection = Months.January, // or any other initial month
                     onSelected = { selectedMonth ->
                         // handle the selected month here
                         viewModel.selectedMonth = selectedMonth.toString()
+                        viewModel.fetchStatisticsPerMonth()
                     }
                 )
+
                 PieChart(
                     data = mapOf(
-                        Pair(stringResource(R.string.earthquake), 150),
-                        Pair(stringResource(R.string.flood), 40),
-                        Pair(stringResource(R.string.wildfire), 110),
-                        Pair(stringResource(R.string.river_flood), 10),
-                        Pair(stringResource(R.string.heatwave), 8),
-                        Pair(stringResource(R.string.snowstorm), 120),
-                        Pair(stringResource(R.string.storm), 132),
+                        Pair(stringResource(R.string.earthquake), earthquakeCount),
+                        Pair(stringResource(R.string.flood), floodCount),
+                        Pair(stringResource(R.string.wildfire), wildfireCount),
+                        Pair(stringResource(R.string.river_flood), riverFloodCount),
+                        Pair(stringResource(R.string.heatwave), heatwaveCount),
+                        Pair(stringResource(R.string.snowstorm), snowstormCount),
+                        Pair(stringResource(R.string.storm), stormCount),
                     )
                 )
             }
