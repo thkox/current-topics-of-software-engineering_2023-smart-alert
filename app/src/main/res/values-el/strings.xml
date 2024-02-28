@@ -90,4 +90,17 @@
     <string name="Location">Τοποθεσία</string>
     <string name="Always_allow_location_permission">Να επιτρέπετε πάντα η άδεια τοποθεσίας</string>
     <string name="Allow_SmartAlert_to_access_this_device">Επιτρέψτε στο SmartAlert να έχει πρόσβαση στην </string>
+    <string name="january">Ιανουάριος</string>
+    <string name="february">Φεβρουάριος</string>
+    <string name="march">Μάρτιος</string>
+    <string name="april">Απρίλιος</string>
+    <string name="may">Μάιος</string>
+    <string name="june">Ιούνιος</string>
+    <string name="july">Ιούλιος</string>
+    <string name="august">Αύγουστος</string>
+    <string name="september">Σεπτέμβριος</string>
+    <string name="october">Οκτώβριος</string>
+    <string name="november">Νοέμβριος</string>
+    <string name="december">Δεκέμβριος</string>
+    <string name="all_months">Όλοι οι μήνες</string>
 </resources>

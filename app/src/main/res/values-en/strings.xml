@@ -90,4 +90,17 @@
     <string name="Location">Location</string>
     <string name="Always_allow_location_permission">Always Allow Location Permission</string>
     <string name="Allow_SmartAlert_to_access_this_device">Allow SmartAlert to access this device\'s</string>
+    <string name="january">January</string>
+    <string name="february">February</string>
+    <string name="march">March</string>
+    <string name="april">April</string>
+    <string name="may">May</string>
+    <string name="june">June</string>
+    <string name="july">July</string>
+    <string name="august">August</string>
+    <string name="september">September</string>
+    <string name="october">Οctober</string>
+    <string name="november">November</string>
+    <string name="december">December</string>
+    <string name="all_months">All Months</string>
 </resources>

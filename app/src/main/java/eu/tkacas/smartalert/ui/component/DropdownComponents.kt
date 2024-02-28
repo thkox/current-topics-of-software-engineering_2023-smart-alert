@@ -1,6 +1,5 @@
 package eu.tkacas.smartalert.ui.component
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material.Button
@@ -19,12 +18,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
+import eu.tkacas.smartalert.models.Months
 import eu.tkacas.smartalert.ui.theme.BlueGreen
+import java.time.Month
 
 
 @Composable
@@ -39,7 +39,80 @@ fun EnumDropdownComponent(enumClass: Class<CriticalWeatherPhenomenon>, initialSe
             onClick = { expanded = true },
             colors = ButtonDefaults.buttonColors(backgroundColor = BlueGreen),
         ) {
-            //Text(selectedValue.name)
+            Text(stringResource(id = selectedValue.getStringId()))
+            Icon(painter = if (expanded) painterResource(id = R.drawable.arrow_up) else painterResource(id = R.drawable.arrow_down),
+                contentDescription = if (expanded) "Arrow Up" else "Arrow Down")
+        }
+
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+            modifier = Modifier.background(BlueGreen),
+        ) {
+            enumClass.enumConstants?.forEach { value ->
+                DropdownMenuItem(
+                    onClick = {
+                        selectedValue = value
+                        onSelected(value)
+                        expanded = false
+                    },
+                    modifier = Modifier.background(BlueGreen)
+                ) {
+                    Text(text = stringResource(id = value.getStringId()))
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun YearDropdownComponent(years: List<String>?, initialSelection: String?, onSelected: (String?) -> Unit) {
+    var expanded by remember { mutableStateOf(false) }
+    var selectedValue by remember { mutableStateOf(initialSelection) }
+
+    Box {
+        Button(
+            onClick = { expanded = true },
+            colors = ButtonDefaults.buttonColors(backgroundColor = BlueGreen),
+        ) {
+            Text(selectedValue ?: "Default Value")
+            Icon(painter = if (expanded) painterResource(id = R.drawable.arrow_up) else painterResource(id = R.drawable.arrow_down),
+                contentDescription = if (expanded) "Arrow Up" else "Arrow Down")
+        }
+
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+            modifier = Modifier.background(BlueGreen),
+        ) {
+            years?.forEach { value ->
+                DropdownMenuItem(
+                    onClick = {
+                        selectedValue = value
+                        onSelected(value)
+                        expanded = false
+                    },
+                    modifier = Modifier.background(BlueGreen)
+                ) {
+                    Text(text = value)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun EnumDropdownComponentMonths(enumClass: Class<Months>, initialSelection: Months, onSelected: (Months) -> Unit) {
+
+    var expanded by remember { mutableStateOf(false) }
+    var selectedValue by remember { mutableStateOf(initialSelection) }
+
+
+    Box {
+        Button(
+            onClick = { expanded = true },
+            colors = ButtonDefaults.buttonColors(backgroundColor = BlueGreen),
+        ) {
             Text(stringResource(id = selectedValue.getStringId()))
             Icon(painter = if (expanded) painterResource(id = R.drawable.arrow_up) else painterResource(id = R.drawable.arrow_down),
                 contentDescription = if (expanded) "Arrow Up" else "Arrow Down")
