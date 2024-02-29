@@ -1,11 +1,13 @@
 package eu.tkacas.smartalert.ui.component
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
-import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -14,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.ui.theme.GrayColor
+import eu.tkacas.smartalert.ui.theme.PrussianBlue
 import eu.tkacas.smartalert.ui.theme.TextColor
 
 
@@ -23,7 +26,6 @@ fun DividerTextComponent() {
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-
         HorizontalDivider(
             modifier = Modifier
                 .fillMaxWidth()
@@ -31,19 +33,18 @@ fun DividerTextComponent() {
             thickness = 1.dp,
             color = GrayColor
         )
-
         Text(
             modifier = Modifier.padding(8.dp),
             text = stringResource(id = R.string.or),
             fontSize = 18.sp,
-            color = TextColor
+            color = PrussianBlue
         )
-        Divider(
+        HorizontalDivider(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f),
-            color = GrayColor,
-            thickness = 1.dp
+            thickness = 1.dp,
+            color = GrayColor
         )
     }
 }
@@ -54,7 +55,6 @@ fun DividerComponentWithoutText() {
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-
         HorizontalDivider(
             modifier = Modifier
                 .fillMaxWidth()
@@ -63,12 +63,36 @@ fun DividerComponentWithoutText() {
             color = GrayColor
         )
 
-        Divider(
+        HorizontalDivider(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f),
-            color = GrayColor,
-            thickness = 1.dp
+            thickness = 1.dp,
+            color = GrayColor
+        )
+    }
+}
+
+@Composable
+fun VerticalDividerComponentWithoutText() {
+    Column(
+        modifier = Modifier.fillMaxHeight(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        VerticalDivider(
+            modifier = Modifier
+                .fillMaxHeight()
+                .weight(1f),
+            thickness = 1.dp,
+            color = GrayColor
+        )
+
+        VerticalDivider(
+            modifier = Modifier
+                .fillMaxHeight()
+                .weight(1f),
+            thickness = 1.dp,
+            color = GrayColor
         )
     }
 }

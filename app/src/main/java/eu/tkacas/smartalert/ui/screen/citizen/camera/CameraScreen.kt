@@ -1,14 +1,7 @@
-package eu.tkacas.smartalert.ui.screen.citizen.Camera
+package eu.tkacas.smartalert.ui.screen.citizen.camera
 
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Matrix
-import android.util.JsonReader
 import android.util.Log
 import android.widget.Toast
-import androidx.camera.core.ImageCapture.OnImageCapturedCallback
-import androidx.camera.core.ImageCaptureException
-import androidx.camera.core.ImageProxy
 import androidx.camera.view.CameraController
 import androidx.camera.view.LifecycleCameraController
 import androidx.compose.foundation.background
@@ -20,7 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
+import androidx.compose.material3.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Photo
 import androidx.compose.material.icons.filled.PhotoCamera
@@ -31,7 +24,6 @@ import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -40,13 +32,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import eu.tkacas.smartalert.models.CitizenMessage
 import eu.tkacas.smartalert.ui.theme.BlueColor
 import eu.tkacas.smartalert.viewmodel.citizen.CameraViewModel
 import kotlinx.coroutines.launch
-
-
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -145,7 +133,6 @@ fun CameraScreen(navController: NavHostController? = null){
                         contentDescription = "Take photo"
                     )
                 }
-                // Fill the gap to center the camera button
                 Box(
                     Modifier
                         .size(48.dp)

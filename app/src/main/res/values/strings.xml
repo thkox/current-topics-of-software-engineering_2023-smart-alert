@@ -3,6 +3,7 @@
     <string name="hello">Hey there, </string>
     <string name="create_account">Create an Account </string>
     <string name="welcome_to_smart_alert_app">Welcome to \nSmart Alert!</string>
+    <string name="welcome_to_smart_alert_app_landscape">Welcome to Smart Alert!</string>
     <string name="firstname">First Name </string>
     <string name="lastname">Last Name </string>
     <string name="email" translatable="false">Email </string>
@@ -16,7 +17,7 @@
     <string name="terms_and_conditions_header" translatable="false">Term of Use</string>
     <string name="register">Register</string>
     <string name="return_back_to">Return back to</string>
-    <string name="login">Login</string>
+    <string name="login"> Login</string>
     <string name="or">or</string>
     <string name="forgot_password">Forgot your password?</string>
     <string name="account">Account</string>
@@ -65,4 +66,46 @@
     <string name="english_language">English (US)</string>
     <string name="about_us_text">Our mission is to provide timely and accurate alerts to individuals located near potential weather hazards. With a focus on user-generated reports and prompt notifications, we aim to empower individuals and local authorities to take proactive measures to mitigate risks and ensure the well-being of our communities.</string>
     <string name="connect_with_us">Connect with us</string>
+    <string name="there_are_no_photos_yet">There are no photos yet</string>
+    <string name="upload">Upload</string>
+    <string name="Image_uploaded_successfully">Image uploaded successfully</string>
+    <string name="number_of_reports">Number of Reports</string>
+    <string name="The_reports_history_from_the_last_24_hours.">The reports history from the last 24 hours</string>
+    <string name="critical_level">Critical Level</string>
+    <string name="time">Time</string>
+    <string name="delete_all">Delete All</string>
+    <string name="The_reports_about_this_location_from_the_last_24_hours.">The reports about this location from the last 24 hours</string>
+    <string name="Specific">Specific</string>
+    <string name="no_alert_found">No alert found</string>
+    <string name="password_reset_email_sent">Password reset email sent successfully</string>
+    <string name="Warning">Warning</string>
+    <string name="You_are_about_to_delete_an_alert_warning_Are_you_sure">You are about to delete an alert warning. Are you sure?</string>
+    <string name="You_are_about_to_delete_all_alert_warnings_Are_you_sure">You are about to delete all alert warnings. Are you sure?</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="error">Error</string>
+    <string name="map_title">%1$s\'s Map</string>
+    <string name="Citizen_message">Citizen\'s message</string>
+    <string name="No_image_available">No image available</string>
+    <string name="close">Close</string>
+    <string name="Permissions">Permissions</string>
+    <string name="Notifications">Notifications</string>
+    <string name="Location">Location</string>
+    <string name="Always_allow_location_permission">Always Allow Location Permission</string>
+    <string name="Allow_SmartAlert_to_access_this_device">Allow SmartAlert to access this device\'s</string>
+    <string name="january">January</string>
+    <string name="february">February</string>
+    <string name="march">March</string>
+    <string name="april">April</string>
+    <string name="may">May</string>
+    <string name="june">June</string>
+    <string name="july">July</string>
+    <string name="august">August</string>
+    <string name="september">September</string>
+    <string name="october">Οctober</string>
+    <string name="november">November</string>
+    <string name="december">December</string>
+    <string name="all_months">All Months</string>
+    <string name="select_month">Επίλεξε Μήνα</string>
+    <string name="select_year">Select Year</string>
 </resources>

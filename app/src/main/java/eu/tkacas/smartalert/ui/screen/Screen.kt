@@ -5,7 +5,6 @@ import androidx.compose.ui.res.stringResource
 import eu.tkacas.smartalert.R
 
 sealed class Screen<ImageVector>(val titleResId: Int, val route: String) {
-
     sealed class SettingsScreen(titleResId: Int, route: String, @DrawableRes  val icon: Int) : Screen<Any?>(titleResId, route) {
 
         object Account : SettingsScreen(

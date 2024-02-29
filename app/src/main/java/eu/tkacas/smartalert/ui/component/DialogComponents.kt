@@ -11,14 +11,19 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import eu.tkacas.smartalert.R
+import eu.tkacas.smartalert.ui.theme.PrussianBlue
 
 @Composable
 fun PermissionDialog(
@@ -75,6 +80,16 @@ interface PermissionTextProvider {
     fun getDescription(isPermanentlyDeclined: Boolean): String
 }
 
+class NotificationPermissionTextProvider: PermissionTextProvider {
+    override fun getDescription(isPermanentlyDeclined: Boolean): String {
+        return if (isPermanentlyDeclined) {
+            "Notification permission is required to send you alerts. Please go to app settings and enable the notification permission."
+        } else {
+            "Notification permission is required to send you alerts. Please enable the notification permission."
+        }
+    }
+}
+
 class LocationPermissionTextProvider: PermissionTextProvider {
     override fun getDescription(isPermanentlyDeclined: Boolean): String {
         return if (isPermanentlyDeclined) {
@@ -97,39 +112,81 @@ class CameraPermissionTextProvider: PermissionTextProvider {
 
 @Composable
 fun AlertWithImageDialog(
+    showDialog: Boolean,
     message: String?,
     imageURL: String?,
     onDismiss: () -> Unit
 ){
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text(text = "Citizen's message Alert") },
-        text = {
-            Column(
-                modifier = Modifier
-                    .size(400.dp)
-                    .padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(text = message ?: "")
-                imageURL?.let {
-                    Image(
-                        painter = rememberAsyncImagePainter(model = imageURL),
-                        contentDescription = "Image",
-                        modifier = Modifier
-                            .wrapContentSize()
-                            .clip(RoundedCornerShape(15.dp))
-                    )
+    if(showDialog){
+        AlertDialog(
+            onDismissRequest = onDismiss,
+            title = { Text(text = stringResource(id = R.string.Citizen_message), color = PrussianBlue) },
+            text = {
+                Column(
+                    modifier = Modifier
+                        .size(400.dp)
+                        .padding(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(text = message ?: "")
+                    // TODO: Text should be replaced with Image once the image is available
+                    if (!imageURL.isNullOrEmpty()) {
+                        Image(
+                            painter = rememberAsyncImagePainter(model = imageURL),
+                            contentDescription = "Image",
+                            modifier = Modifier
+                                .wrapContentSize()
+                                .clip(RoundedCornerShape(15.dp))
+                        )
+                    } else {
+                        Text(
+                            text = stringResource(id = R.string.No_image_available), color = Color.Red,
+                        )
+                    }
+                }
+            },
+            confirmButton = {
+                GeneralButtonComponent(
+                    value = stringResource(id = R.string.close),
+                    onButtonClicked = { onDismiss() }
+                )
+            },
+            modifier = Modifier
+                .clip(RoundedCornerShape(10.dp))
+        )
+    }
+
+}
+
+@Composable
+fun ConfirmDeleteDialog(
+    showDialog: Boolean,
+    title: String,
+    message: String,
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { onDismiss() },
+            title = { Text(title) },
+            text = { Text(message) },
+            confirmButton = {
+                TextButton(
+                    onClick = { onConfirm() }
+                ) {
+                    //Text("Confirm")
+                    Text(text = stringResource(id = R.string.confirm), color = PrussianBlue)
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = { onDismiss() }
+                ) {
+                    //Text("Cancel")
+                    Text(text = stringResource(id = R.string.cancel), color = Color.Red)
                 }
             }
-        },
-        confirmButton = {
-            GeneralButtonComponent(
-                value = "Close",
-                onButtonClicked = { onDismiss() }
-            )
-        },
-        modifier = Modifier
-            .clip(RoundedCornerShape(10.dp))
-    )
+        )
+    }
 }

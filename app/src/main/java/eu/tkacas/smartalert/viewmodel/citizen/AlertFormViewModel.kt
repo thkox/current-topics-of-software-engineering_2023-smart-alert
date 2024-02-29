@@ -1,6 +1,7 @@
 package eu.tkacas.smartalert.viewmodel.citizen
 
 import android.content.Context
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -10,13 +11,13 @@ import eu.tkacas.smartalert.models.LocationData
 import com.google.gson.Gson
 import eu.tkacas.smartalert.cloud.getUserID
 import eu.tkacas.smartalert.cloud.storageRef
+import eu.tkacas.smartalert.models.EmergencyLevel
 import eu.tkacas.smartalert.viewmodel.LocationViewModel
 
 class AlertFormViewModel(context: Context): ViewModel() {
 
-    val userId = getUserID()
     val visiblePermissionDialogQueue = mutableStateListOf<String>()
-    val selectedDangerLevelButton = mutableStateOf(1)
+    val selectedDangerLevelButton = mutableStateOf(EmergencyLevel.LOW)
     val selectedWeatherPhenomenon = mutableStateOf(CriticalWeatherPhenomenon.EARTHQUAKE)
     val alertDescription = mutableStateOf("")
     var locationData = LocationData(0.0, 0.0)
@@ -30,14 +31,12 @@ class AlertFormViewModel(context: Context): ViewModel() {
         permission: String,
         isGranted: Boolean
     ){
-        if(!isGranted){
-            if(!isGranted && !visiblePermissionDialogQueue.contains(permission)) {
-                visiblePermissionDialogQueue.add(permission)
-            }
+        if(!isGranted && !visiblePermissionDialogQueue.contains(permission)) {
+            visiblePermissionDialogQueue.add(permission)
         }
     }
 
-    fun setSelectedDangerLevelButton(level: Int){
+    fun setSelectedDangerLevelButton(level: EmergencyLevel){
         selectedDangerLevelButton.value = level
     }
     fun setSelectedWeatherPhenomenon(phenomenon: CriticalWeatherPhenomenon){
@@ -56,11 +55,11 @@ class AlertFormViewModel(context: Context): ViewModel() {
         }
     }
 
-    fun citizenMessageToJson(citizenMessage: CitizenMessage): String {
+    private fun citizenMessageToJson(citizenMessage: CitizenMessage): String {
         return Gson().toJson(citizenMessage)
     }
 
-    fun jsonToCitizenMessage(jsonString: String): CitizenMessage {
+    private fun jsonToCitizenMessage(jsonString: String): CitizenMessage {
         return Gson().fromJson(jsonString, CitizenMessage::class.java)
     }
 
@@ -73,6 +72,7 @@ class AlertFormViewModel(context: Context): ViewModel() {
     fun getCitizenMessageFromPrefs(context: Context): CitizenMessage? {
         val prefs = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         val jsonString = prefs.getString("citizenMessage", null)
+
         return if (jsonString != null) {
             jsonToCitizenMessage(jsonString)
         } else {
@@ -86,7 +86,7 @@ class AlertFormViewModel(context: Context): ViewModel() {
     }
 
 
-    val locationViewModel = LocationViewModel(context = context)
+    private val locationViewModel = LocationViewModel(context = context)
     suspend fun sentAlert() {
         val selectedLevel = selectedDangerLevelButton.value
         val selectedPhenomenon = selectedWeatherPhenomenon.value
@@ -94,8 +94,6 @@ class AlertFormViewModel(context: Context): ViewModel() {
         val photoURL = photoURL.value
 
         val locationData = locationViewModel.getLastLocation()
-
-        val userId = userId
 
         val database = storageRef()
 

@@ -35,7 +35,6 @@ fun SwitchSample() {
 @Composable
 fun SwitchWithThumbIconSample() {
     var checked by remember { mutableStateOf(true) }
-    // Icon isn't focusable, no need for content description
     val icon: (@Composable () -> Unit)? = if (checked) {
         {
             Icon(

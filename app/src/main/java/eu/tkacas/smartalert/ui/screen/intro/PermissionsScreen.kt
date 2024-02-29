@@ -3,6 +3,7 @@ package eu.tkacas.smartalert.ui.screen.intro
 import android.Manifest
 import android.app.Activity
 import android.content.pm.PackageManager
+import android.os.Build
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -11,7 +12,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import eu.tkacas.smartalert.R
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -32,10 +33,13 @@ import eu.tkacas.smartalert.permissions.areAllPermissionsGranted
 import eu.tkacas.smartalert.permissions.openAppSettings
 import eu.tkacas.smartalert.ui.component.GeneralButtonComponent
 import eu.tkacas.smartalert.ui.component.LocationPermissionTextProvider
+import eu.tkacas.smartalert.ui.component.NotificationPermissionTextProvider
 import eu.tkacas.smartalert.ui.component.PermissionCard
 import eu.tkacas.smartalert.ui.component.PermissionDialog
 import eu.tkacas.smartalert.ui.component.REDUnderLinedTextComponent
+import eu.tkacas.smartalert.ui.theme.PrussianBlue
 import eu.tkacas.smartalert.viewmodel.intro.PermissionsViewModel
+import java.util.Locale
 
 
 @Composable
@@ -46,16 +50,29 @@ fun PermissionsScreen(navController: NavController? = null) {
     val permissionsToRequest = arrayOf(
         Manifest.permission.ACCESS_FINE_LOCATION,
         Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+        Manifest.permission.POST_NOTIFICATIONS
     )
 
+    val isExpandedNotifications = remember { mutableStateOf(false) }
     val isExpandedLocation = remember { mutableStateOf(false) }
 
+    val switchStateNotifications = remember { mutableStateOf(false) }
     val switchStateCoarseLocation = remember { mutableStateOf(false) }
     val switchStateBackgroundLocation = remember { mutableStateOf(false) }
 
     val viewModel = viewModel<PermissionsViewModel>()
     val dialogQueue = viewModel.visiblePermissionDialogQueue
 
+    val notificationPermissionResultLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission(),
+        onResult = { isGranted ->
+            viewModel.onPermissionResult(
+                permission = Manifest.permission.POST_NOTIFICATIONS,
+                isGranted = isGranted
+            )
+            switchStateNotifications.value = isGranted
+        }
+    )
 
     val locationPermissionResultLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission(),
@@ -74,6 +91,11 @@ fun PermissionsScreen(navController: NavController? = null) {
             permissionsToRequest.forEach { permission ->
                 when (permission) {
                     Manifest.permission.ACCESS_FINE_LOCATION -> switchStateCoarseLocation.value = perms[permission] == true
+                    Manifest.permission.POST_NOTIFICATIONS -> {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                            switchStateNotifications.value = perms[permission] == true
+                        }
+                    }
                 }
             }
         }
@@ -90,6 +112,13 @@ fun PermissionsScreen(navController: NavController? = null) {
             context,
             Manifest.permission.ACCESS_FINE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            switchStateNotifications.value = ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED
+        }
     }
 
 
@@ -98,14 +127,30 @@ fun PermissionsScreen(navController: NavController? = null) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.size(20.dp))
-        Text(text = "Permissions Screen", style = TextStyle(fontSize = 24.sp))
+        Text(text = stringResource(id = R.string.Permissions), style = TextStyle(fontSize = 24.sp), color = PrussianBlue)
         Spacer(modifier = Modifier.size(20.dp))
 
+        PermissionCard(
+            iconResId = R.drawable.notifications,
+            permissionName = stringResource(id = R.string.Notifications),
+            isExpanded = isExpandedNotifications,
+            switchState = switchStateNotifications,
+            onToggleClick = {
+                if (switchStateNotifications.value) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        notificationPermissionResultLauncher.launch(
+                            Manifest.permission.POST_NOTIFICATIONS
+                        )
+                    }
+                }
+            }
+        )
 
+        Spacer(modifier = Modifier.size(8.dp))
 
         PermissionCard(
             iconResId = R.drawable.location_pin,
-            permissionName = "Location",
+            permissionName = stringResource(id = R.string.Location),
             isExpanded = isExpandedLocation,
             switchState = switchStateCoarseLocation,
             onToggleClick = {
@@ -114,12 +159,13 @@ fun PermissionsScreen(navController: NavController? = null) {
                         Manifest.permission.ACCESS_FINE_LOCATION
                     )
                 }
-            })
+            }
+        )
 
         Spacer(modifier = Modifier.size(15.dp))
 
         REDUnderLinedTextComponent(
-            value = "Always Allow Location Permission",
+            value = stringResource(id = R.string.Always_allow_location_permission),
             onClick = {openAppSettings(context)}
         )
 
@@ -134,7 +180,13 @@ fun PermissionsScreen(navController: NavController? = null) {
                         popUpTo("welcome") { inclusive = true }
                     }
                 } else {
-                    Toast.makeText(context, "Please grant all permissions", Toast.LENGTH_SHORT).show()
+                    val currentLanguage = Locale.getDefault().language
+                    val toastPermissionMessage = when (currentLanguage) {
+                        "en" -> "Please grant all permissions"
+                        "el" -> "Παρακαλώ επιτρέψτε όλα τα δικαιώματα"
+                        else -> "Please grant all permissions"
+                    }
+                    Toast.makeText(context, toastPermissionMessage, Toast.LENGTH_SHORT).show()
                 }
             }
         )
@@ -150,6 +202,9 @@ fun PermissionsScreen(navController: NavController? = null) {
                     }
                     Manifest.permission.ACCESS_BACKGROUND_LOCATION -> {
                         LocationPermissionTextProvider()
+                    }
+                    Manifest.permission.POST_NOTIFICATIONS -> {
+                        NotificationPermissionTextProvider()
                     }
                     else -> return@forEach
                 },
