@@ -32,6 +32,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import eu.tkacas.smartalert.ui.component.CameraPreview
+import eu.tkacas.smartalert.ui.component.PhotoBottomSheetContent
 import eu.tkacas.smartalert.ui.theme.BlueColor
 import eu.tkacas.smartalert.viewmodel.citizen.CameraViewModel
 import kotlinx.coroutines.launch

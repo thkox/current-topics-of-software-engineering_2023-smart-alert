@@ -1,6 +1,8 @@
-package eu.tkacas.smartalert.ui.screen.citizen.camera
+package eu.tkacas.smartalert.ui.component
 
 import android.graphics.Bitmap
+import androidx.camera.view.LifecycleCameraController
+import androidx.camera.view.PreviewView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -25,12 +27,30 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import eu.tkacas.smartalert.R
-import eu.tkacas.smartalert.ui.component.UploadPhotoButton
 import eu.tkacas.smartalert.ui.theme.BlueColor
 import kotlinx.coroutines.launch
+
+@Composable
+fun CameraPreview(
+    controller: LifecycleCameraController,
+    modifier: Modifier = Modifier
+) {
+    val lifecycleOwner = LocalLifecycleOwner.current
+    AndroidView(
+        factory = {
+            PreviewView(it).apply {
+                this.controller = controller
+                controller.bindToLifecycle(lifecycleOwner)
+            }
+        },
+        modifier = modifier
+    )
+}
 
 @Composable
 fun PhotoBottomSheetContent(
