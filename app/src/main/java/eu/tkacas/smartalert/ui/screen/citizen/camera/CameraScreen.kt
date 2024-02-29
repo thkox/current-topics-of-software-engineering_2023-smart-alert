@@ -133,7 +133,6 @@ fun CameraScreen(navController: NavHostController? = null){
                         contentDescription = "Take photo"
                     )
                 }
-                // TODO: Fill the gap to center the camera button
                 Box(
                     Modifier
                         .size(48.dp)

@@ -11,12 +11,13 @@ import eu.tkacas.smartalert.models.LocationData
 import com.google.gson.Gson
 import eu.tkacas.smartalert.cloud.getUserID
 import eu.tkacas.smartalert.cloud.storageRef
+import eu.tkacas.smartalert.models.EmergencyLevel
 import eu.tkacas.smartalert.viewmodel.LocationViewModel
 
 class AlertFormViewModel(context: Context): ViewModel() {
 
     val visiblePermissionDialogQueue = mutableStateListOf<String>()
-    val selectedDangerLevelButton = mutableIntStateOf(1)
+    val selectedDangerLevelButton = mutableStateOf(EmergencyLevel.LOW)
     val selectedWeatherPhenomenon = mutableStateOf(CriticalWeatherPhenomenon.EARTHQUAKE)
     val alertDescription = mutableStateOf("")
     var locationData = LocationData(0.0, 0.0)
@@ -35,8 +36,8 @@ class AlertFormViewModel(context: Context): ViewModel() {
         }
     }
 
-    fun setSelectedDangerLevelButton(level: Int){
-        selectedDangerLevelButton.intValue = level
+    fun setSelectedDangerLevelButton(level: EmergencyLevel){
+        selectedDangerLevelButton.value = level
     }
     fun setSelectedWeatherPhenomenon(phenomenon: CriticalWeatherPhenomenon){
         selectedWeatherPhenomenon.value = phenomenon
@@ -71,6 +72,7 @@ class AlertFormViewModel(context: Context): ViewModel() {
     fun getCitizenMessageFromPrefs(context: Context): CitizenMessage? {
         val prefs = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         val jsonString = prefs.getString("citizenMessage", null)
+
         return if (jsonString != null) {
             jsonToCitizenMessage(jsonString)
         } else {
@@ -86,7 +88,7 @@ class AlertFormViewModel(context: Context): ViewModel() {
 
     private val locationViewModel = LocationViewModel(context = context)
     suspend fun sentAlert() {
-        val selectedLevel = selectedDangerLevelButton.intValue
+        val selectedLevel = selectedDangerLevelButton.value
         val selectedPhenomenon = selectedWeatherPhenomenon.value
         val description = alertDescription.value
         val photoURL = photoURL.value

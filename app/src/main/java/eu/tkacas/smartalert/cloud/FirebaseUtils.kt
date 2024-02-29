@@ -11,6 +11,7 @@ import com.google.firebase.database.ValueEventListener
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.models.CitizenMessage2
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
+import eu.tkacas.smartalert.models.EmergencyLevel
 import eu.tkacas.smartalert.models.ListOfLocationCriticalWeatherPhenomenonData
 import eu.tkacas.smartalert.models.ListOfSingleLocationCriticalWeatherPhenomenonData
 import eu.tkacas.smartalert.models.LocationCriticalWeatherPhenomenonData
@@ -216,10 +217,11 @@ fun getSpecificAlertByPhenomenonAndLocation(phenomenon: String, location: String
                     val latitude = snapshot.child("location").child("latitude").getValue(Double::class.java)?:""
                     val longitude = snapshot.child("location").child("longitude").getValue(Double::class.java)?:""
                     val message = snapshot.child("message").getValue(String::class.java)?:""
-                    val emLevel = snapshot.child("criticalLevel").getValue(Int::class.java)?:0
+                    val criticalLevelString = snapshot.child("criticalLevel").getValue(String::class.java)?: ""
+                    val criticalLevel = EmergencyLevel.valueOf(criticalLevelString)
                     val time = snapshot.child("time").getValue(String::class.java)?:""
                     val location = "$latitude, $longitude"
-                    data.list.add(SingleLocationCriticalWeatherPhenomenonData(alertID, location, emLevel, message, imageURL, time))
+                    data.list.add(SingleLocationCriticalWeatherPhenomenonData(alertID, location, criticalLevel, message, imageURL, time))
                 }
                 onComplete(true, data, "Success")
             } else {
@@ -328,7 +330,8 @@ fun getAlertFormsByUser(onComplete: (Boolean, List<CitizenMessage2>?, String?) -
                     val message = snapshot.child("message").getValue(String::class.java) ?: ""
                     val phenomenonString = snapshot.child("criticalWeatherPhenomenon").getValue(String::class.java) ?: ""
                     val phenomenon = CriticalWeatherPhenomenon.valueOf(phenomenonString)
-                    val criticalLevel = snapshot.child("criticalLevel").getValue(Int::class.java) ?: 0
+                    val criticalLevelString = snapshot.child("criticalLevel").getValue(String::class.java) ?: ""
+                    val criticalLevel = EmergencyLevel.valueOf(criticalLevelString)
                     val latitude = snapshot.child("location").child("latitude").getValue(Double::class.java) ?: 0.0
                     val longitude = snapshot.child("location").child("longitude").getValue(Double::class.java) ?: 0.0
                     val location = LocationData(latitude, longitude)

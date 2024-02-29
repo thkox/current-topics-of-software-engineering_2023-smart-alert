@@ -8,6 +8,7 @@ import eu.tkacas.smartalert.cloud.storageRef
 import eu.tkacas.smartalert.interfacesAPI.PlacesAPI
 import eu.tkacas.smartalert.models.Alert
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
+import eu.tkacas.smartalert.models.EmergencyLevel
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -15,7 +16,7 @@ class AlertCitizensFormViewModel(): ViewModel() {
 
     val selectedArea = mutableStateOf("")
     val selectedWeatherPhenomenon = mutableStateOf(CriticalWeatherPhenomenon.EARTHQUAKE)
-    val selectedDangerLevelButton = mutableIntStateOf(1)
+    val selectedDangerLevelButton = mutableStateOf(EmergencyLevel.LOW)
 
     fun setSelectedArea(area: String){
         selectedArea.value = area
@@ -25,8 +26,8 @@ class AlertCitizensFormViewModel(): ViewModel() {
         selectedWeatherPhenomenon.value = phenomenon
     }
 
-    fun setSelectedDangerLevelButton(level: Int){
-        selectedDangerLevelButton.intValue = level
+    fun setSelectedDangerLevelButton(level: EmergencyLevel){
+        selectedDangerLevelButton.value = level
     }
     private val retrofit: Retrofit
         get() = setupRetrofit()
