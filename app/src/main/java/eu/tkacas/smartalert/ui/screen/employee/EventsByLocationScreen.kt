@@ -32,7 +32,6 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.app.SharedPrefManager
-import eu.tkacas.smartalert.cloud.getAlertByPhenomenonAndLocation
 import eu.tkacas.smartalert.cloud.getSpecificAlertByPhenomenonAndLocation
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.models.ListOfSingleLocationCriticalWeatherPhenomenonData
