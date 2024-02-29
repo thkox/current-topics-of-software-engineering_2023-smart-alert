@@ -105,4 +105,7 @@
     <string name="all_months">Όλοι οι Μήνες</string>
     <string name="select_month">Επέλεξε Μήνα</string>
     <string name="select_year">Επέλεξε Έτος</string>
+    <string name="current_password">Τρέχων κωδικός</string>
+    <string name="new_password">Νέος Κώδικος</string>
+    <string name="confirm_password">Επιβεβαίωση Nέου Kωδικού</string>
 </resources>

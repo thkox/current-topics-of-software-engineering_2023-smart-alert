@@ -108,4 +108,7 @@
     <string name="all_months">All Months</string>
     <string name="select_month">Select Month</string>
     <string name="select_year">Select Year</string>
+    <string name="current_password">Current Password</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_password">Confirm New Password</string>
 </resources>
