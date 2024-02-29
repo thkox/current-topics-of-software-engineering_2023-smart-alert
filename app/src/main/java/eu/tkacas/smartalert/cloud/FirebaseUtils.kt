@@ -217,9 +217,9 @@ fun getSpecificAlertByPhenomenonAndLocation(phenomenon: String, location: String
                     val longitude = snapshot.child("location").child("longitude").getValue(Double::class.java)?:""
                     val message = snapshot.child("message").getValue(String::class.java)?:""
                     val emLevel = snapshot.child("criticalLevel").getValue(Int::class.java)?:0
-                    val timeStamp = snapshot.child("timestamp").getValue(String::class.java)?:""
+                    val time = snapshot.child("time").getValue(String::class.java)?:""
                     val location = "$latitude, $longitude"
-                    data.list.add(SingleLocationCriticalWeatherPhenomenonData(alertID, location, emLevel, message, imageURL, timeStamp))
+                    data.list.add(SingleLocationCriticalWeatherPhenomenonData(alertID, location, emLevel, message, imageURL, time))
                 }
                 onComplete(true, data, "Success")
             } else {
