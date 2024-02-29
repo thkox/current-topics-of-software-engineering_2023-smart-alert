@@ -10,6 +10,7 @@ import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 class AnalyticsViewModel(context : Context): ViewModel() {
     private var _data = mutableMapOf<String, Any>()
@@ -108,7 +109,15 @@ class AnalyticsViewModel(context : Context): ViewModel() {
 
     private fun fetchYears(): List<String> {
         val years = mutableListOf<String>()
-        years.add("Select Year")
+
+        val currentLanguage = Locale.getDefault().language
+        val selectYear = when (currentLanguage) {
+            "en" -> "Select Year"
+            "el" -> "Επέλεξε Έτος"
+            else -> "Select Year"
+        }
+        years.add(selectYear)
+        //years.add("Select Year")
         _data.keys.forEach { key ->
             years.add(key)
         }
