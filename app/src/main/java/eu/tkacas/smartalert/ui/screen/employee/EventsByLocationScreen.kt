@@ -172,9 +172,8 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                                 CardComponentWithImage(
                                     row1 = data.value?.list?.get(index)?.location ?: "",
                                     row2 = stringResource(id = R.string.critical_level) + ": ${
-                                        data.value?.list?.get(
-                                            index
-                                        )?.emLevel.toString()
+                                        data.value?.list?.get(index)?.emLevel?.getStringId()
+                                            ?.let { it1 -> stringResource(id = it1) }
                                     }",
                                     row3 = stringResource(id = R.string.time) + ": ${
                                         data.value?.list?.get(
