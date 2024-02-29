@@ -125,7 +125,7 @@ fun GroupEventsByLocationScreen(navController: NavHostController? = null){
                         ) {
                             items(data.value?.list?.size ?: 0) { index ->
                                 CardComponentWithImage(
-                                    row1 = data.value?.list?.get(index)?.location ?: "",
+                                    row1 = data.value?.list?.get(index)?.name ?: "",
                                     row2 = stringResource(id = R.string.number_of_reports) + ": ${
                                         data.value?.list?.get(
                                             index

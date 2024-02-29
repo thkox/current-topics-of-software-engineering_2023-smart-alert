@@ -105,9 +105,10 @@ fun getAlertByPhenomenonAndLocation(phenomenon: String, onComplete: (Boolean, Li
             if (dataSnapshot.exists()) {
                 val data = ListOfLocationCriticalWeatherPhenomenonData(ArrayList())
                 for (snapshot in dataSnapshot.children) {
-                    val location = snapshot.key ?: continue
-                    val numOfReports = snapshot.getValue(Int::class.java) ?: continue
-                    data.list.add(LocationCriticalWeatherPhenomenonData(location, numOfReports))
+                    val location = snapshot.key ?: ""
+                    val name = snapshot.child("name").getValue(String::class.java) ?: ""
+                    val numOfReports = snapshot.child("counter").getValue(Int::class.java) ?: 0
+                    data.list.add(LocationCriticalWeatherPhenomenonData(location, name, numOfReports))
                 }
                 onComplete(true, data, null)
             } else {
@@ -203,9 +204,9 @@ fun getAlertByPhenomenonAndLocationForMaps(phenomenon: String, onComplete: (Bool
     })
 }
 
-fun getSpecificAlertByPhenomenonAndLocation(phenomenon: String, location: String, onComplete: (Boolean, ListOfSingleLocationCriticalWeatherPhenomenonData?, String) -> Unit) {
+fun getSpecificAlertByPhenomenonAndLocation(phenomenon: String, locationID: String, onComplete: (Boolean, ListOfSingleLocationCriticalWeatherPhenomenonData?, String) -> Unit) {
     val db = storageRef()
-    val ref = db.getReference("alertsByPhenomenonAndLocationLast24h").child(phenomenon).child(location)
+    val ref = db.getReference("alertsByPhenomenonAndLocationLast24h").child(phenomenon).child(locationID).child("alertForms")
 
     ref.addListenerForSingleValueEvent(object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -230,13 +231,13 @@ fun getSpecificAlertByPhenomenonAndLocation(phenomenon: String, location: String
                 val currentLanguage = Locale.getDefault().language
                 when (currentLanguage) {
                     "en" -> {
-                        onComplete(false, null, "No alert found for $translatedPhenomenon at $location")
+                        onComplete(false, null, "No alert found for $translatedPhenomenon at $locationID")
                     }
                     "el" -> {
-                        onComplete(false, null, "Δεν βρέθηκε ειδοποίηση για $translatedPhenomenon στην τοποθεσία $location")
+                        onComplete(false, null, "Δεν βρέθηκε ειδοποίηση για $translatedPhenomenon στην τοποθεσία $locationID")
                     }
                     else -> {
-                        onComplete(false, null, "No alert found for $translatedPhenomenon at $location")
+                        onComplete(false, null, "No alert found for $translatedPhenomenon at $locationID")
                     }
                 }
 
@@ -262,9 +263,9 @@ fun getSpecificAlertByPhenomenonAndLocation(phenomenon: String, location: String
     })
 }
 
-fun getSpecificAlertByPhenomenonAndLocationForMaps(phenomenon: String, location: String, onComplete: (Boolean, List<LocationData>?, String?) -> Unit) {
+fun getSpecificAlertByPhenomenonAndLocationForMaps(phenomenon: String, locationID: String, onComplete: (Boolean, List<LocationData>?, String?) -> Unit) {
     val db = storageRef()
-    val ref = db.getReference("alertsByPhenomenonAndLocationLast24h").child(phenomenon).child(location)
+    val ref = db.getReference("alertsByPhenomenonAndLocationLast24h").child(phenomenon).child(locationID).child("alertForms")
 
     ref.addListenerForSingleValueEvent(object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
