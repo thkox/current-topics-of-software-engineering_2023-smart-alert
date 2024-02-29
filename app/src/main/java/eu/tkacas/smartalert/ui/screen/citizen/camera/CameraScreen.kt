@@ -35,8 +35,10 @@ import androidx.navigation.NavHostController
 import eu.tkacas.smartalert.ui.component.CameraPreview
 import eu.tkacas.smartalert.ui.component.PhotoBottomSheetContent
 import eu.tkacas.smartalert.ui.theme.BlueColor
+import eu.tkacas.smartalert.ui.theme.BlueGreen
 import eu.tkacas.smartalert.viewmodel.citizen.CameraViewModel
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -68,11 +70,25 @@ fun CameraScreen(navController: NavHostController? = null){
                         citizenMessage?.imageURL = viewModel.uploadPhotoToCloudStorage(bitmap = bitmap)
                         if (citizenMessage?.imageURL != "") {
                             viewModel.saveCitizenMessageToPrefs(context, citizenMessage)
-                            Toast.makeText(context, "Image uploaded successfully", Toast.LENGTH_SHORT).show()
+                            val currentLanguage = Locale.getDefault().language
+                            val toastCameraTrueMessage = when (currentLanguage) {
+                                "en" -> "Image uploaded successfully"
+                                "el" -> "Η εικόνα μεταφορτώθηκε με επιτυχία"
+                                else -> "Image uploaded successfully"
+                            }
+                            Toast.makeText(context, toastCameraTrueMessage, Toast.LENGTH_SHORT).show()
+                            //Toast.makeText(context, "Image uploaded successfully", Toast.LENGTH_SHORT).show()
                             navController?.navigate("alertForm")
                         } else {
                             Log.d("CameraScreen", "Image URL is empty")
-                            Toast.makeText(context, "The image did not upload correctly, please try again later", Toast.LENGTH_SHORT).show()
+                            val currentLanguage = Locale.getDefault().language
+                            val toastCameraFalseMessage = when (currentLanguage) {
+                                "en" -> "The image did not upload correctly, please try again later"
+                                "el" -> "Η εικόνα δεν μεταφορτώθηκε σωστά, δοκιμάστε ξανά αργότερα"
+                                else -> "The image did not upload correctly, please try again later"
+                            }
+                            Toast.makeText(context, toastCameraFalseMessage, Toast.LENGTH_SHORT).show()
+                            //Toast.makeText(context, "The image did not upload correctly, please try again later", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -101,7 +117,7 @@ fun CameraScreen(navController: NavHostController? = null){
                     modifier = Modifier
                         .size(50.dp)
                         .background(
-                            color = BlueColor,
+                            color = BlueGreen,
                             shape = RoundedCornerShape(30.dp)
                         ),
                     onClick = {
@@ -119,7 +135,7 @@ fun CameraScreen(navController: NavHostController? = null){
                     modifier = Modifier
                         .size(50.dp)
                         .background(
-                            color = BlueColor,
+                            color = BlueGreen,
                             shape = RoundedCornerShape(30.dp)
                         ),
                     onClick = {

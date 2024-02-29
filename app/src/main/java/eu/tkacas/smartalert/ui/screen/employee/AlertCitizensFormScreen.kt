@@ -36,6 +36,7 @@ import eu.tkacas.smartalert.ui.component.UploadButtonComponent
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
 import eu.tkacas.smartalert.viewmodel.employee.AlertCitizensFormViewModel
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 @Composable
 fun AlertCitizensFormScreen(navController: NavHostController? = null){
@@ -105,7 +106,14 @@ fun AlertCitizensFormScreen(navController: NavHostController? = null){
                             scope.launch {
                                 viewModel.sendAlertToCitizens()
                                 navController?.navigate("home")
-                                Toast.makeText(context, "Alert to citizens sent successfully", Toast.LENGTH_SHORT).show()
+                                val currentLanguage = Locale.getDefault().language
+                                val toastAlertCitizensMessage = when (currentLanguage) {
+                                    "en" -> "Alert to citizens sent successfully"
+                                    "el" -> "Η ειδοποίηση προς τους πολίτες στάλθηκε επιτυχώς"
+                                    else -> "Alert to citizens sent successfully"
+                                }
+                                Toast.makeText(context, toastAlertCitizensMessage, Toast.LENGTH_SHORT).show()
+                                //Toast.makeText(context, "Alert to citizens sent successfully", Toast.LENGTH_SHORT).show()
                             }
                         }
                     )
