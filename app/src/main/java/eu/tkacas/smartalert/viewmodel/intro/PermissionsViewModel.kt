@@ -9,8 +9,8 @@ import androidx.lifecycle.ViewModel
 class PermissionsViewModel: ViewModel() {
 
     val visiblePermissionDialogQueue = mutableStateListOf<String>()
-    val switchStateCoarseLocation: MutableState<Boolean> = mutableStateOf(false)
-
+    private val _switchStateCoarseLocation: MutableState<Boolean> = mutableStateOf(false)
+    private val _switchStateNotifications: MutableState<Boolean> = mutableStateOf(false)
 
     fun dismissDialog() {
         visiblePermissionDialogQueue.removeFirst()
@@ -22,7 +22,8 @@ class PermissionsViewModel: ViewModel() {
     ) {
         if(!isGranted) {
             when (permission) {
-                Manifest.permission.ACCESS_FINE_LOCATION -> switchStateCoarseLocation.value = false
+                Manifest.permission.ACCESS_FINE_LOCATION -> _switchStateCoarseLocation.value = false
+                Manifest.permission.POST_NOTIFICATIONS -> _switchStateNotifications.value = false
             }
             if (!visiblePermissionDialogQueue.contains(permission)) {
                 visiblePermissionDialogQueue.add(permission)

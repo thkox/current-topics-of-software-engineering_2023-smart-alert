@@ -16,15 +16,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.google.maps.android.compose.GoogleMap
 import androidx.navigation.NavController
+import com.google.android.gms.maps.model.CameraPosition
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
+import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.app.SharedPrefManager
 import eu.tkacas.smartalert.cloud.getAlertByPhenomenonAndLocationForMaps
 import eu.tkacas.smartalert.cloud.getSpecificAlertByPhenomenonAndLocationForMaps
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.models.LocationData
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
+import java.util.Locale
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -39,9 +42,17 @@ fun MapWithPinnedReportsScreen(navController: NavController? = null){
     val data = remember { mutableStateOf<List<LocationData>?>(null) }
     val error = remember { mutableStateOf<String?>(null) }
 
-    var cameraPositioState = rememberCameraPositionState{
-        mutableStateOf(LatLng(39.0742, 21.8243))
+    var cameraPositionState = rememberCameraPositionState{
+        position = CameraPosition.fromLatLngZoom(LatLng(38.0742, 23.8243), 5.8f)
     }
+
+    val currentLanguage = Locale.getDefault().language
+    val title = if (currentLanguage == "el") {
+        stringResource(id = R.string.map_title, stringResource(id = criticalWeatherPhenomenon.getStringId()))
+    } else {
+        stringResource(id = R.string.map_title, stringResource(id = criticalWeatherPhenomenon.getStringId()))
+    }
+
 
     LaunchedEffect(key1 = criticalWeatherPhenomenon) {
         when (previousScreen) {
@@ -70,7 +81,7 @@ fun MapWithPinnedReportsScreen(navController: NavController? = null){
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            AppBarBackView(title = stringResource(id = criticalWeatherPhenomenon.getStringId())+ "'s Map", navController = navController)
+            AppBarBackView(title = title, navController = navController)
         }
     ) {
         Column(
@@ -78,7 +89,7 @@ fun MapWithPinnedReportsScreen(navController: NavController? = null){
         ){
             GoogleMap(
                 modifier = Modifier.fillMaxSize(),
-                cameraPositionState = cameraPositioState
+                cameraPositionState = cameraPositionState
             ){
                 data.value?.forEach { locationData ->
                     val position = LatLng(locationData.latitude, locationData.longitude)

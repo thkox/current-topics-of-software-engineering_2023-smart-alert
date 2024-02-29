@@ -1,4 +1,4 @@
-package eu.tkacas.smartalert.ui.screen.citizen.Camera
+package eu.tkacas.smartalert.ui.screen.citizen.camera
 
 import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView

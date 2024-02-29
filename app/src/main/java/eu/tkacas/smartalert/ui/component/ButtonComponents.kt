@@ -8,18 +8,17 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
-import androidx.compose.material3.AlertDialogDefaults.containerColor
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FloatingActionButton
@@ -39,10 +38,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.smartalert.R
+import eu.tkacas.smartalert.models.EmergencyLevel
 import eu.tkacas.smartalert.ui.theme.BlueColor
+import eu.tkacas.smartalert.ui.theme.BlueGreen
+import eu.tkacas.smartalert.ui.theme.DarkOrange
+import eu.tkacas.smartalert.ui.theme.DarkRed
+import eu.tkacas.smartalert.ui.theme.DarkYellow
 import eu.tkacas.smartalert.ui.theme.OrangeColor
 import eu.tkacas.smartalert.ui.theme.Primary
+import eu.tkacas.smartalert.ui.theme.PrussianBlue
+import eu.tkacas.smartalert.ui.theme.RedColor
 import eu.tkacas.smartalert.ui.theme.Secondary
+import eu.tkacas.smartalert.ui.theme.SelectiveYellow
+import eu.tkacas.smartalert.ui.theme.SkyBlue
 import eu.tkacas.smartalert.ui.theme.YellowColor
 
 @Composable
@@ -64,7 +72,7 @@ fun ButtonComponent(value: String, onButtonClicked: () -> Unit, isEnabled: Boole
                 .fillMaxWidth()
                 .heightIn(48.dp)
                 .background(
-                    brush = Brush.horizontalGradient(listOf(Secondary, Primary)),
+                    color = PrussianBlue,
                     shape = RoundedCornerShape(50.dp)
                 ),
             contentAlignment = Alignment.Center
@@ -81,9 +89,45 @@ fun ButtonComponent(value: String, onButtonClicked: () -> Unit, isEnabled: Boole
 }
 
 @Composable
+fun ButtonLandscapeComponent(value: String, onButtonClicked: () -> Unit, isEnabled: Boolean = false) {
+    Button(
+        modifier = Modifier
+            .width(185.dp)
+            .heightIn(48.dp),
+        onClick = {
+            onButtonClicked.invoke()
+        },
+        contentPadding = PaddingValues(),
+        colors = ButtonDefaults.buttonColors(Color.Transparent),
+        shape = RoundedCornerShape(50.dp),
+        enabled = isEnabled
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(48.dp)
+                .background(
+                    color = PrussianBlue,
+                    shape = RoundedCornerShape(50.dp)
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = value,
+                fontSize = 18.sp,
+                color = Color.White,
+                fontWeight = FontWeight.Bold
+            )
+
+        }
+    }
+}
+
+
+@Composable
 fun AlertLevelButtonsRowComponent(
-    initialValue: Int = 1,
-    onButtonClicked: (Int) -> Unit) {
+    initialValue: EmergencyLevel = EmergencyLevel.LOW,
+    onButtonClicked: (EmergencyLevel) -> Unit) {
     var value by remember { mutableStateOf(initialValue) }
 
     Row(
@@ -91,76 +135,109 @@ fun AlertLevelButtonsRowComponent(
         ){
         Button(
             onClick = {
-                value = 1
+                value = EmergencyLevel.LOW
                 onButtonClicked(value)
             },
             enabled = true,
             colors = ButtonDefaults.buttonColors(
-                containerColor = if (value == 1) YellowColor else Color.LightGray,
+                containerColor = if (value == EmergencyLevel.LOW) YellowColor else Color.LightGray,
             ),
             shape = RoundedCornerShape(10.dp),
             modifier = Modifier
                 .height(50.dp)
                 .let {
-                    if (value == 1) it.border(
+                    if (value == EmergencyLevel.LOW) it.border(
                         2.dp,
-                        Color.Black,
+                        DarkYellow,
                         RoundedCornerShape(10.dp)
                     ) else it
                 }
         ){
             Text(
                 text = stringResource(id = R.string.low),
-                color = if (value == 1) Color.Black else Color.White
+                color = if (value == EmergencyLevel.LOW) PrussianBlue else Color.White
             )
         }
         Button(
             onClick = {
-                value = 2
+                value = EmergencyLevel.NORMAL
                 onButtonClicked(value)
             },
             enabled = true,
             colors = ButtonDefaults.buttonColors(
-                containerColor = if (value == 2) OrangeColor else Color.LightGray,
+                containerColor = if (value == EmergencyLevel.NORMAL) OrangeColor else Color.LightGray,
             ),
             shape = RoundedCornerShape(10.dp),
             modifier = Modifier
                 .height(50.dp)
                 .let {
-                    if (value == 2) it.border(
+                    if (value == EmergencyLevel.NORMAL) it.border(
                         2.dp,
-                        Color.Black,
+                        DarkOrange,
                         RoundedCornerShape(10.dp)
                     ) else it
                 }
         ){
             Text(
                 text = stringResource(id = R.string.normal),
-                color = if (value == 2) Color.Black else Color.White
+                color = if (value == EmergencyLevel.NORMAL) PrussianBlue else Color.White
                 )
         }
         Button(
-            onClick = { value = 3
+            onClick = { value = EmergencyLevel.HIGH
                 onButtonClicked(value)
             },
             enabled = true,
             colors = ButtonDefaults.buttonColors(
-                containerColor = if (value == 3) Color.Red else Color.LightGray,
+                containerColor = if (value == EmergencyLevel.HIGH) RedColor else Color.LightGray,
             ),
             shape = RoundedCornerShape(10.dp),
             modifier = Modifier
                 .height(50.dp)
                 .let {
-                    if (value == 3) it.border(
+                    if (value == EmergencyLevel.HIGH) it.border(
                         2.dp,
-                        Color.Black,
+                        DarkRed,
                         RoundedCornerShape(10.dp)
                     ) else it
                 }
         ){
             Text(
                 text = stringResource(id = R.string.high),
-                color = if (value == 3) Color.Black else Color.White
+                color = if (value == EmergencyLevel.HIGH) PrussianBlue else Color.White
+            )
+        }
+    }
+}
+
+@Composable
+fun UploadButtonComponent(value: String, onButtonClicked: () -> Unit) {
+    Button(
+        modifier = Modifier
+            .width(175.dp)
+            .heightIn(48.dp),
+        onClick = {
+            onButtonClicked.invoke()
+        },
+        contentPadding = PaddingValues(),
+        colors = ButtonDefaults.buttonColors(Color.Transparent),
+        shape = RoundedCornerShape(30.dp),
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(40.dp)
+                .background(
+                    color = PrussianBlue,
+                    shape = RoundedCornerShape(30.dp)
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = value,
+                fontSize = 18.sp,
+                color = Color.White,
+                fontWeight = FontWeight.Bold
             )
         }
     }
@@ -184,7 +261,7 @@ fun GeneralButtonComponent(value: String, onButtonClicked: () -> Unit) {
                 .fillMaxWidth()
                 .heightIn(40.dp)
                 .background(
-                    color = BlueColor,
+                    color = SkyBlue,
                     shape = RoundedCornerShape(30.dp)
                 ),
             contentAlignment = Alignment.Center
@@ -192,7 +269,7 @@ fun GeneralButtonComponent(value: String, onButtonClicked: () -> Unit) {
             Text(
                 text = value,
                 fontSize = 18.sp,
-                color = Color.White,
+                color = PrussianBlue,
                 fontWeight = FontWeight.Bold
             )
         }
@@ -205,7 +282,7 @@ fun CameraButton(onButtonClicked: () -> Unit) {
         modifier = Modifier
             .size(50.dp)
             .background(
-                color = BlueColor,
+                color = BlueGreen,
                 shape = RoundedCornerShape(30.dp)
             ),
         onClick = {
@@ -216,7 +293,7 @@ fun CameraButton(onButtonClicked: () -> Unit) {
         shape = RoundedCornerShape(30.dp)
     ) {
         IconButton(onClick = onButtonClicked) {
-            Icon(painter = painterResource(id = R.drawable.photo_camera), contentDescription = "Open Camera")
+            Image(painter = painterResource(id = R.drawable.photo_camera), contentDescription = "Open Camera")
         }
     }
 }
@@ -229,7 +306,7 @@ fun UploadPhotoButton(
     
     Button(
         modifier = Modifier
-            .width(100.dp)
+            .width(110.dp)
             .height(40.dp)
             .background(
                 color = BlueColor,
@@ -242,7 +319,8 @@ fun UploadPhotoButton(
         colors = ButtonDefaults.buttonColors(Color.Transparent),
         shape = RoundedCornerShape(10.dp)
     ){
-        SimpleTextComponent(value = "Upload")
+        //SimpleTextComponent(value = "Upload")
+        SimpleTextComponent(value = stringResource(id = R.string.upload))
         Spacer(modifier = Modifier.size(4.dp))
         Icon(painter = painterResource(id = R.drawable.upload), contentDescription = "Upload Photo")
     }
@@ -251,10 +329,10 @@ fun UploadPhotoButton(
 @Composable
 fun FloatingActionButton(onClick: () -> Unit) {
     FloatingActionButton(
-        containerColor = colorResource(id = R.color.colorBlue),
-        onClick = { /*TODO*/ },
+        containerColor = SkyBlue,
+        onClick = { onClick() },
     ) {
-        Icon(painterResource(id = R.drawable.edit), contentDescription = "Localized description")
+        Image(painterResource(id = R.drawable.edit), contentDescription = "Localized description")
     }
 }
 
@@ -268,7 +346,7 @@ fun ButtonWithImageComponent(onClick: () -> Unit, imageId: Int, buttonText: Stri
             .heightIn(28.dp)
             .width(300.dp)
             .padding(top = 8.dp, bottom = 8.dp)
-            .background(color = BlueColor, shape = RoundedCornerShape(10.dp))
+            .background(color = SkyBlue, shape = RoundedCornerShape(10.dp))
             .fillMaxWidth(),
         shape = RoundedCornerShape(10.dp)
     ) {
@@ -285,7 +363,7 @@ fun ButtonWithImageComponent(onClick: () -> Unit, imageId: Int, buttonText: Stri
             Text(
                 text = buttonText,
                 fontSize = 16.sp,
-                color = Color.White
+                color = PrussianBlue
             )
         }
     }

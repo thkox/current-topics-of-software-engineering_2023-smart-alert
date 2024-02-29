@@ -9,7 +9,7 @@ import eu.tkacas.smartalert.data.rules.Validator
 import eu.tkacas.smartalert.ui.state.RegistrationUIState
 import eu.tkacas.smartalert.ui.event.SignupUIEvent
 
-class SignupViewModel() : ViewModel(){
+class SignupViewModel : ViewModel(){
     private val TAG = SignupViewModel::class.simpleName
 
     var navController: NavController? = null
