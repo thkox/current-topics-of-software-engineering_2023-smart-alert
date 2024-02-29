@@ -126,7 +126,7 @@ fun AlertFormScreen(navController: NavHostController? = null) {
                     Spacer(modifier = Modifier.size(16.dp))
                     NormalTextComponent(value = stringResource(id = R.string.weather_phenomenon_selection))
                     EnumDropdownComponent(
-                        CriticalWeatherPhenomenon::class.java,
+                        enumClass = CriticalWeatherPhenomenon::class.java,
                         initialSelection = viewModel.selectedWeatherPhenomenon.value,
                         onSelected = {
                             viewModel.setSelectedWeatherPhenomenon(it)
@@ -247,7 +247,7 @@ fun AlertFormScreen(navController: NavHostController? = null) {
                                 Spacer(modifier = Modifier.size(16.dp))
                                 NormalTextLandscapeComponent(value = stringResource(id = R.string.weather_phenomenon_selection))
                                 EnumDropdownComponent(
-                                    CriticalWeatherPhenomenon::class.java,
+                                    enumClass = CriticalWeatherPhenomenon::class.java,
                                     initialSelection = viewModel.selectedWeatherPhenomenon.value,
                                     onSelected = {
                                         viewModel.setSelectedWeatherPhenomenon(it)

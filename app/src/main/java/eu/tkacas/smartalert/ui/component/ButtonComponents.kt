@@ -38,6 +38,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.smartalert.R
+import eu.tkacas.smartalert.models.EmergencyLevel
 import eu.tkacas.smartalert.ui.theme.BlueColor
 import eu.tkacas.smartalert.ui.theme.BlueGreen
 import eu.tkacas.smartalert.ui.theme.DarkOrange
@@ -125,8 +126,8 @@ fun ButtonLandscapeComponent(value: String, onButtonClicked: () -> Unit, isEnabl
 
 @Composable
 fun AlertLevelButtonsRowComponent(
-    initialValue: Int = 1,
-    onButtonClicked: (Int) -> Unit) {
+    initialValue: EmergencyLevel = EmergencyLevel.LOW,
+    onButtonClicked: (EmergencyLevel) -> Unit) {
     var value by remember { mutableStateOf(initialValue) }
 
     Row(
@@ -134,18 +135,18 @@ fun AlertLevelButtonsRowComponent(
         ){
         Button(
             onClick = {
-                value = 1
+                value = EmergencyLevel.LOW
                 onButtonClicked(value)
             },
             enabled = true,
             colors = ButtonDefaults.buttonColors(
-                containerColor = if (value == 1) YellowColor else Color.LightGray,
+                containerColor = if (value == EmergencyLevel.LOW) YellowColor else Color.LightGray,
             ),
             shape = RoundedCornerShape(10.dp),
             modifier = Modifier
                 .height(50.dp)
                 .let {
-                    if (value == 1) it.border(
+                    if (value == EmergencyLevel.LOW) it.border(
                         2.dp,
                         DarkYellow,
                         RoundedCornerShape(10.dp)
@@ -154,23 +155,23 @@ fun AlertLevelButtonsRowComponent(
         ){
             Text(
                 text = stringResource(id = R.string.low),
-                color = if (value == 1) PrussianBlue else Color.White
+                color = if (value == EmergencyLevel.LOW) PrussianBlue else Color.White
             )
         }
         Button(
             onClick = {
-                value = 2
+                value = EmergencyLevel.NORMAL
                 onButtonClicked(value)
             },
             enabled = true,
             colors = ButtonDefaults.buttonColors(
-                containerColor = if (value == 2) OrangeColor else Color.LightGray,
+                containerColor = if (value == EmergencyLevel.NORMAL) OrangeColor else Color.LightGray,
             ),
             shape = RoundedCornerShape(10.dp),
             modifier = Modifier
                 .height(50.dp)
                 .let {
-                    if (value == 2) it.border(
+                    if (value == EmergencyLevel.NORMAL) it.border(
                         2.dp,
                         DarkOrange,
                         RoundedCornerShape(10.dp)
@@ -179,22 +180,22 @@ fun AlertLevelButtonsRowComponent(
         ){
             Text(
                 text = stringResource(id = R.string.normal),
-                color = if (value == 2) PrussianBlue else Color.White
+                color = if (value == EmergencyLevel.NORMAL) PrussianBlue else Color.White
                 )
         }
         Button(
-            onClick = { value = 3
+            onClick = { value = EmergencyLevel.HIGH
                 onButtonClicked(value)
             },
             enabled = true,
             colors = ButtonDefaults.buttonColors(
-                containerColor = if (value == 3) RedColor else Color.LightGray,
+                containerColor = if (value == EmergencyLevel.HIGH) RedColor else Color.LightGray,
             ),
             shape = RoundedCornerShape(10.dp),
             modifier = Modifier
                 .height(50.dp)
                 .let {
-                    if (value == 3) it.border(
+                    if (value == EmergencyLevel.HIGH) it.border(
                         2.dp,
                         DarkRed,
                         RoundedCornerShape(10.dp)
@@ -203,7 +204,7 @@ fun AlertLevelButtonsRowComponent(
         ){
             Text(
                 text = stringResource(id = R.string.high),
-                color = if (value == 3) PrussianBlue else Color.White
+                color = if (value == EmergencyLevel.HIGH) PrussianBlue else Color.White
             )
         }
     }
