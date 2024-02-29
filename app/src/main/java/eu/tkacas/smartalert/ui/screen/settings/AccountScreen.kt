@@ -36,9 +36,12 @@ import eu.tkacas.smartalert.ui.component.FloatingActionButton
 import eu.tkacas.smartalert.ui.component.NameFieldComponent
 import eu.tkacas.smartalert.ui.component.PasswordDisplayComponent
 import eu.tkacas.smartalert.ui.component.PasswordTextFieldComponent
+import eu.tkacas.smartalert.ui.component.UploadButtonComponent
+import eu.tkacas.smartalert.ui.event.LoginUIEvent
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
 import eu.tkacas.smartalert.ui.theme.SkyBlue
 import eu.tkacas.smartalert.viewmodel.AccountViewModel
+import eu.tkacas.smartalert.viewmodel.auth.LoginViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "StateFlowValueCalledInComposition")
 @Composable
@@ -58,6 +61,10 @@ fun AccountScreen (navController: NavController? = null) {
     val config = LocalConfiguration.current
 
     val portraitMode = remember { mutableStateOf(config.orientation ) }
+
+    var isPasswordDisplayVisible by remember { mutableStateOf(false) }
+
+    val loginViewModel: LoginViewModel = viewModel()
 
     if (portraitMode.value == Configuration.ORIENTATION_PORTRAIT) {
         //PortraitLayout()
@@ -101,8 +108,35 @@ fun AccountScreen (navController: NavController? = null) {
 
                     Spacer(modifier = Modifier.height(10.dp))
 
-                    PasswordDisplayComponent(password = password, painterResource(id = R.drawable.password))
+                    PasswordDisplayComponent(password = password, painterResource(id = R.drawable.password), label = stringResource(id = R.string.current_password))
 
+                    if (isPasswordDisplayVisible) {
+                        Spacer(modifier = Modifier.height(10.dp))
+                        PasswordDisplayComponent(
+                            password = password,
+                            painterResource(id = R.drawable.password),
+                            label = stringResource(id = R.string.new_password)
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                        PasswordDisplayComponent(
+                            password = password,
+                            painterResource(id = R.drawable.password),
+                            label = stringResource(id = R.string.confirm_password)
+                        )
+                        //Spacer(modifier = Modifier.height(20.dp))
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                                //.padding(bottom = 3.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            UploadButtonComponent(
+                                value = stringResource(id = R.string.submit),
+                                onButtonClicked = { //TODO: Implement the logic for updating the user's account
+                                    accountViewModel.changePassword(newPassword)
+                                }
+                            )
+                        }
+                    }
                 }
 
                 Column(
@@ -118,6 +152,8 @@ fun AccountScreen (navController: NavController? = null) {
                         FloatingActionButton(
                             onClick = {
                                 // TODO: Implement the logic for updating the user's account
+                                //isPasswordDisplayVisible = true
+                                isPasswordDisplayVisible = !isPasswordDisplayVisible
                             }
                         )
                     }
@@ -153,7 +189,9 @@ fun AccountScreen (navController: NavController? = null) {
                     ) {
                         CircleImage(imageResId = R.drawable.account)
 
-                        Box(modifier = Modifier.fillMaxSize() .padding(top = 105.dp), contentAlignment = Alignment.TopCenter) {
+                        Box(modifier = Modifier
+                            .fillMaxSize()
+                            .padding(top = 105.dp), contentAlignment = Alignment.TopCenter) {
                             NameFieldComponent(
                                 firstName = firstName,
                                 lastName = lastName
@@ -169,12 +207,14 @@ fun AccountScreen (navController: NavController? = null) {
 
                         Spacer(modifier = Modifier.height(30.dp))
 
-                        PasswordDisplayComponent(password = password, painterResource(id = R.drawable.password))
+                        PasswordDisplayComponent(password = password, painterResource(id = R.drawable.password), label = "Password")
 
                         Spacer(modifier = Modifier.height(20.dp))
 
                         Box(
-                            modifier = Modifier.fillMaxSize() .padding(start = 320.dp),
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(start = 320.dp),
                             //contentAlignment = Alignment.BottomEnd
                         ) {
                             FloatingActionButton(
@@ -190,6 +230,7 @@ fun AccountScreen (navController: NavController? = null) {
 
     }
 }
+
 
 
 @Preview

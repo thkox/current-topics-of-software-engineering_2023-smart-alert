@@ -25,6 +25,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -438,7 +439,7 @@ fun NameFieldComponent(
 
 
 @Composable
-fun PasswordDisplayComponent(password: String, painterResource: Painter) {
+fun PasswordDisplayComponent(password: String, painterResource: Painter, label: String){
     OutlinedTextField(
         modifier = Modifier
             .fillMaxWidth()
@@ -447,7 +448,7 @@ fun PasswordDisplayComponent(password: String, painterResource: Painter) {
         textStyle = TextStyle(fontSize = 18.sp),
         value = password,
         onValueChange = {},
-        label = { Text(text = stringResource(id = R.string.password)) },
+        label = { Text(text = label) },
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = PrussianBlue,
             focusedLabelColor = PrussianBlue,
