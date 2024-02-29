@@ -1,5 +1,15 @@
 package eu.tkacas.smartalert.models
 
+import eu.tkacas.smartalert.R
+
 enum class EmergencyLevel {
-    LOW, NORMAL, HIGH
+    LOW, NORMAL, HIGH;
+
+    fun getStringId(): Int {
+        return when (this) {
+            LOW -> R.string.low
+            NORMAL -> R.string.normal
+            HIGH -> R.string.high
+        }
+    }
 }
