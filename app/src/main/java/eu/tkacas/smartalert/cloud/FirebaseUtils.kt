@@ -98,7 +98,7 @@ fun getTranslatedPhenomenon(phenomenon: String): String {
 
 fun getAlertByPhenomenonAndLocation(phenomenon: String, onComplete: (Boolean, ListOfLocationCriticalWeatherPhenomenonData?, String?) -> Unit) {
     val db = storageRef()
-    val ref = db.getReference("alertsByPhenomenonAndLocationCountLast24h").child(phenomenon)
+    val ref = db.getReference("alertsByPhenomenonAndLocationCountLast6h").child(phenomenon)
 
     ref.addListenerForSingleValueEvent(object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -151,7 +151,7 @@ fun getAlertByPhenomenonAndLocation(phenomenon: String, onComplete: (Boolean, Li
 
 fun getAlertByPhenomenonAndLocationForMaps(phenomenon: String, onComplete: (Boolean, List<LocationData>?, String?) -> Unit) {
     val db = storageRef()
-    val ref = db.getReference("alertsByPhenomenonAndLocationLast24h").child(phenomenon)
+    val ref = db.getReference("alertsByPhenomenonAndLocationLast6h").child(phenomenon)
 
     ref.addListenerForSingleValueEvent(object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -206,7 +206,7 @@ fun getAlertByPhenomenonAndLocationForMaps(phenomenon: String, onComplete: (Bool
 
 fun getSpecificAlertByPhenomenonAndLocation(phenomenon: String, locationID: String, onComplete: (Boolean, ListOfSingleLocationCriticalWeatherPhenomenonData?, String) -> Unit) {
     val db = storageRef()
-    val ref = db.getReference("alertsByPhenomenonAndLocationLast24h").child(phenomenon).child(locationID).child("alertForms")
+    val ref = db.getReference("alertsByPhenomenonAndLocationLast6h").child(phenomenon).child(locationID).child("alertForms")
 
     ref.addListenerForSingleValueEvent(object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -265,7 +265,7 @@ fun getSpecificAlertByPhenomenonAndLocation(phenomenon: String, locationID: Stri
 
 fun getSpecificAlertByPhenomenonAndLocationForMaps(phenomenon: String, locationID: String, onComplete: (Boolean, List<LocationData>?, String?) -> Unit) {
     val db = storageRef()
-    val ref = db.getReference("alertsByPhenomenonAndLocationLast24h").child(phenomenon).child(locationID).child("alertForms")
+    val ref = db.getReference("alertsByPhenomenonAndLocationLast6h").child(phenomenon).child(locationID).child("alertForms")
 
     ref.addListenerForSingleValueEvent(object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
