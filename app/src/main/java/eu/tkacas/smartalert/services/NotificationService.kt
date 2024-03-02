@@ -25,7 +25,7 @@ class NotificationService : FirebaseMessagingService() {
     override fun onNewToken(token: String) {
         super.onNewToken(token)
         Log.d("FirebaseMessagingService", "Refreshed token: $token")
-        saveToken(listOf(token))
+        saveToken(token)
     }
 
     override fun onCreate() {

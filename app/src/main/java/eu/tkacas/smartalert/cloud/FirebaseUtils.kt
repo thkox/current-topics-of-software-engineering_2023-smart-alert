@@ -390,11 +390,8 @@ fun getStatisticsPerYear(onComplete: (Boolean, Map<String, Any>?, String?) -> Un
     })
 }
 
-fun saveToken(tokens: List<String>) {
+fun saveToken(token: String) {
     val db = FirebaseDatabase.getInstance()
     val ref = db.getReference("tokens")
-
-    tokens.forEach { token ->
-        ref.push().setValue(token)
-    }
+    ref.push().setValue(token)
 }
