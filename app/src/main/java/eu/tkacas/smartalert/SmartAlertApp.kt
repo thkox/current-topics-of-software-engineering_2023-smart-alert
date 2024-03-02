@@ -11,14 +11,5 @@ class SmartAlertApp : Application() {
         super.onCreate()
 
         FirebaseApp.initializeApp(this)
-
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.w("SmartAlertApp", "Fetching FCM registration token failed", task.exception)
-                return@OnCompleteListener
-            }
-            val token = task.result
-            Log.d("SmartAlertApp", "Token: $token")
-        })
     }
 }
