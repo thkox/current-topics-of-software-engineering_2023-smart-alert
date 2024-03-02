@@ -72,22 +72,22 @@ class SharedPrefManager(context: Context) {
     }
 
     fun getBoundsNorthEastLat(): Double {
-        val lat = sharedPreferences.getString("bounds_north_east_lat", "38.0000")
+        val lat = sharedPreferences.getString("bounds_north_east_lat", "0.0")
         return lat!!.toDouble()
     }
 
     fun getBoundsNorthEastLng(): Double {
-        val lng = sharedPreferences.getString("bounds_north_east_lng", "23.0000")
+        val lng = sharedPreferences.getString("bounds_north_east_lng", "0.0")
         return lng!!.toDouble()
     }
 
     fun getBoundsSouthWestLat(): Double {
-        val lat = sharedPreferences.getString("bounds_south_west_lat", "37.0000")
+        val lat = sharedPreferences.getString("bounds_south_west_lat", "0.0")
         return lat!!.toDouble()
     }
 
     fun getBoundsSouthWestLng(): Double {
-        val lng = sharedPreferences.getString("bounds_south_west_lng", "22.0000")
+        val lng = sharedPreferences.getString("bounds_south_west_lng", "0.0")
         return lng!!.toDouble()
     }
 
