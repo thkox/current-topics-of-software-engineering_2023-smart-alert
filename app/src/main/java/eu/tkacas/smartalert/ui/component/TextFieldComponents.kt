@@ -472,6 +472,7 @@ fun CityTextFieldLandscapeComponent(
     labelValue: String,
     placesAPI: PlacesAPI,
     apiKey: String,
+    locationName: MutableState<String>,
     onTextChanged: (String) -> Unit
 ){
     var city = remember {
@@ -484,6 +485,9 @@ fun CityTextFieldLandscapeComponent(
     var isDropdownExpanded by remember {
         mutableStateOf(false)
     }
+
+    val locName by remember { mutableStateOf(locationName)}
+    locName.value = locationName.value
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -507,7 +511,7 @@ fun CityTextFieldLandscapeComponent(
                 ),
                 singleLine = true,
                 maxLines = 1,
-                value = city.value,
+                value = (if(locName.value != "") locName.value else city.value )?: "",
                 onValueChange = {
                     city.value = it
                     onTextChanged(it)
@@ -524,7 +528,8 @@ fun CityTextFieldLandscapeComponent(
                             println("Network request failed: ${e.message}")
                         }
                     }
-                }
+                },
+                enabled = locName.value == ""
             )
 
             DropdownMenu(

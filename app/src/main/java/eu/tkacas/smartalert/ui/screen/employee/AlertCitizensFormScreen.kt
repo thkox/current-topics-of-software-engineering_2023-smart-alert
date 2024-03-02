@@ -149,10 +149,10 @@ fun AlertCitizensFormScreen(navController: NavHostController? = null){
                         labelValue = stringResource(id = R.string.city),
                         placesAPI = placesAPI,
                         apiKey = "AIzaSyBM31FS8qWSsNewQM5NGzpYm7pdr8q5azY",
-                        onTextChanged = {
-                            viewModel.setSelectedArea(it)
-                        }
-                    )
+                        locationName = locationName
+                    ){
+                        viewModel.setSelectedArea(it)
+                    }
                 }
             }
                 Row(
