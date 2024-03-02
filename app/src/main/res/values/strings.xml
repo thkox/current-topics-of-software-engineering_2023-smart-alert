@@ -14,7 +14,8 @@
     <string name="privacy_policy">Privacy Policy\u00A0</string>
     <string name="and">and\u00A0</string>
     <string name="terms_of_use">Terms of Use.</string>
-    <string name="terms_and_conditions_header" translatable="false">Term of Use</string>
+    <string name="terms_and_conditions_header">Term of Use</string>
+    <string name="privacy_policy_header">Privacy Policy</string>
     <string name="register">Register</string>
     <string name="return_back_to">Return back to</string>
     <string name="login"> Login</string>

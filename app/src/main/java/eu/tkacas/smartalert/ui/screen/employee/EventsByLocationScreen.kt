@@ -69,6 +69,7 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
 
     val isRefreshing = remember { mutableStateOf(false) }
 
+
     LaunchedEffect(key1 = criticalWeatherPhenomenon, key2 = address) {
         isRefreshing.value = true
         getSpecificAlertByPhenomenonAndLocation(criticalWeatherPhenomenon.name, address) { success, result, err ->
@@ -239,6 +240,12 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
             }
         }
     }
+}
+
+fun getCriticalLevelFromRow(row2: String): String {
+    // Split the row2 string by ": " and get the second part which is the critical level
+    val parts = row2.split(": ")
+    return if (parts.size > 1) parts[1] else "Unknown"
 }
 
 @Preview

@@ -1,9 +1,9 @@
 package eu.tkacas.smartalert.ui.screen.auth
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
@@ -50,6 +50,8 @@ fun TermsAndConditionsScreen() {
         By using the App, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions. If you do not agree with any part of these Terms and Conditions, you may not use the App.
     """.trimIndent()
 
+    //val termsAndConditionsText = stringResource(id = R.string.privacy_policy_text)
+
 
 
     Surface(modifier = Modifier
@@ -59,14 +61,16 @@ fun TermsAndConditionsScreen() {
 
         HeadingTextComponent(value = stringResource(id = R.string.terms_and_conditions_header))
 
-        Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-            HeadingTextComponent(value = stringResource(id = R.string.terms_and_conditions_header))
+        LazyColumn(modifier = Modifier.verticalScroll(rememberScrollState())) {
+            item {
+                HeadingTextComponent(value = stringResource(id = R.string.terms_and_conditions_header))
 
-            Text(
-                text = termsAndConditionsText,
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(top = 16.dp)
-            )
+                Text(
+                    text = termsAndConditionsText,
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(top = 16.dp)
+                )
+            }
         }
 
     }
