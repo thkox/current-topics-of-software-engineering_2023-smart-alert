@@ -190,6 +190,19 @@ fun PermissionsScreen(navController: NavController? = null) {
                         navController?.navigate("home") {
                             popUpTo("welcome") { inclusive = true }
                         }
+                        FirebaseMessaging.getInstance().token.addOnCompleteListener(
+                            OnCompleteListener { task ->
+                                if (!task.isSuccessful) {
+                                    Log.w(
+                                        "SmartAlertApp",
+                                        "Fetching FCM registration token failed",
+                                        task.exception
+                                    )
+                                    return@OnCompleteListener
+                                }
+                                val token = task.result
+                                Log.d("SmartAlertApp", "Token: $token")
+                            })
                     } else {
                         val currentLanguage = Locale.getDefault().language
                         val toastPermissionMessage = when (currentLanguage) {
@@ -211,82 +224,89 @@ fun PermissionsScreen(navController: NavController? = null) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item {
-            Spacer(modifier = Modifier.size(20.dp))
-            Text(
-                text = stringResource(id = R.string.Permissions),
-                style = TextStyle(fontSize = 24.sp),
-                color = PrussianBlue
-            )
-            Spacer(modifier = Modifier.size(20.dp))
+                Spacer(modifier = Modifier.size(20.dp))
+                Text(
+                    text = stringResource(id = R.string.Permissions),
+                    style = TextStyle(fontSize = 24.sp),
+                    color = PrussianBlue
+                )
+                Spacer(modifier = Modifier.size(20.dp))
 
-            PermissionCard(
-                iconResId = R.drawable.notifications,
-                permissionName = stringResource(id = R.string.Notifications),
-                isExpanded = isExpandedNotifications,
-                switchState = switchStateNotifications,
-                onToggleClick = {
-                    if (switchStateNotifications.value) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                            notificationPermissionResultLauncher.launch(
-                                Manifest.permission.POST_NOTIFICATIONS
+                PermissionCard(
+                    iconResId = R.drawable.notifications,
+                    permissionName = stringResource(id = R.string.Notifications),
+                    isExpanded = isExpandedNotifications,
+                    switchState = switchStateNotifications,
+                    onToggleClick = {
+                        if (switchStateNotifications.value) {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                notificationPermissionResultLauncher.launch(
+                                    Manifest.permission.POST_NOTIFICATIONS
+                                )
+                            }
+                        }
+                    }
+                )
+
+                Spacer(modifier = Modifier.size(8.dp))
+
+                PermissionCard(
+                    iconResId = R.drawable.location_pin,
+                    permissionName = stringResource(id = R.string.Location),
+                    isExpanded = isExpandedLocation,
+                    switchState = switchStateCoarseLocation,
+                    onToggleClick = {
+                        if (switchStateCoarseLocation.value) {
+                            locationPermissionResultLauncher.launch(
+                                Manifest.permission.ACCESS_FINE_LOCATION
                             )
                         }
                     }
-                }
-            )
+                )
 
-            Spacer(modifier = Modifier.size(8.dp))
+                Spacer(modifier = Modifier.size(15.dp))
 
-            PermissionCard(
-                iconResId = R.drawable.location_pin,
-                permissionName = stringResource(id = R.string.Location),
-                isExpanded = isExpandedLocation,
-                switchState = switchStateCoarseLocation,
-                onToggleClick = {
-                    if (switchStateCoarseLocation.value) {
-                        locationPermissionResultLauncher.launch(
-                            Manifest.permission.ACCESS_FINE_LOCATION
-                        )
-                    }
-                }
-            )
-
-            Spacer(modifier = Modifier.size(15.dp))
-
-            REDUnderLinedTextComponent(
-                value = stringResource(id = R.string.Always_allow_location_permission),
-                onClick = { openAppSettings(context) }
-            )
+                REDUnderLinedTextComponent(
+                    value = stringResource(id = R.string.Always_allow_location_permission),
+                    onClick = { openAppSettings(context) }
+                )
 
 
 
-        Spacer(modifier = Modifier.size(50.dp))
-        GeneralButtonComponent(
-            value = stringResource(id = R.string.next),
-            onButtonClicked = {
-                if (areAllPermissionsGranted(context, permissionsToRequest)) {
-                    navController?.navigate("home") {
-                        popUpTo("welcome") { inclusive = true }
-                    }
-                    FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-                        if (!task.isSuccessful) {
-                            Log.w("SmartAlertApp", "Fetching FCM registration token failed", task.exception)
-                            return@OnCompleteListener
+                Spacer(modifier = Modifier.size(50.dp))
+                GeneralButtonComponent(
+                    value = stringResource(id = R.string.next),
+                    onButtonClicked = {
+                        if (areAllPermissionsGranted(context, permissionsToRequest)) {
+                            navController?.navigate("home") {
+                                popUpTo("welcome") { inclusive = true }
+                            }
+                            FirebaseMessaging.getInstance().token.addOnCompleteListener(
+                                OnCompleteListener { task ->
+                                    if (!task.isSuccessful) {
+                                        Log.w(
+                                            "SmartAlertApp",
+                                            "Fetching FCM registration token failed",
+                                            task.exception
+                                        )
+                                        return@OnCompleteListener
+                                    }
+                                    val token = task.result
+                                    Log.d("SmartAlertApp", "Token: $token")
+                                })
+                        } else {
+                            val currentLanguage = Locale.getDefault().language
+                            val toastPermissionMessage = when (currentLanguage) {
+                                "en" -> "Please grant all permissions"
+                                "el" -> "Παρακαλώ επιτρέψτε όλα τα δικαιώματα"
+                                else -> "Please grant all permissions"
+                            }
+                            Toast.makeText(context, toastPermissionMessage, Toast.LENGTH_SHORT).show()
                         }
-                        val token = task.result
-                        Log.d("SmartAlertApp", "Token: $token")
-                    })
-                } else {
-                    val currentLanguage = Locale.getDefault().language
-                    val toastPermissionMessage = when (currentLanguage) {
-                        "en" -> "Please grant all permissions"
-                        "el" -> "Παρακαλώ επιτρέψτε όλα τα δικαιώματα"
-                        else -> "Please grant all permissions"
                     }
-                    Toast.makeText(context, toastPermissionMessage, Toast.LENGTH_SHORT).show()
-                }
+                )
             }
-        )
+        }
     }
 
 
@@ -325,7 +345,7 @@ fun PermissionsScreen(navController: NavController? = null) {
         }
 }
 
-
+@Preview(backgroundColor = 0xFFFFFF, showBackground = true)
 @Composable
 fun PermissionsScreenPreview() {
     PermissionsScreen()
