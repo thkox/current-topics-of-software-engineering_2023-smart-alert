@@ -41,9 +41,9 @@ class NotificationService : FirebaseMessagingService() {
         if(check){
             // TODO replace message, with the custom message
 
-            message.notification?.body?.let { sendNotification(it) }
-        }
 
+        }
+        message.notification?.body?.let { sendNotification(it) }
     }
 
     private fun checkCurrentLocation(): Boolean {
