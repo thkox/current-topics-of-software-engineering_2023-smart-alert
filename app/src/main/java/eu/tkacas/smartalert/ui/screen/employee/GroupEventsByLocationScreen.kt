@@ -34,7 +34,6 @@ import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.models.ListOfLocationCriticalWeatherPhenomenonData
 import eu.tkacas.smartalert.ui.component.CardComponentWithImage
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
-import eu.tkacas.smartalert.ui.theme.BlueGreen
 import eu.tkacas.smartalert.ui.theme.PrussianBlue
 import eu.tkacas.smartalert.ui.theme.SkyBlue
 import eu.tkacas.smartalert.ui.theme.UTOrange
@@ -125,7 +124,7 @@ fun GroupEventsByLocationScreen(navController: NavHostController? = null){
                         ) {
                             items(data.value?.list?.size ?: 0) { index ->
                                 CardComponentWithImage(
-                                    row1 = data.value?.list?.get(index)?.name ?: "",
+                                    row1 = data.value?.list?.get(index)?.locationName ?: "",
                                     row2 = stringResource(id = R.string.number_of_reports) + ": ${
                                         data.value?.list?.get(
                                             index
@@ -133,8 +132,8 @@ fun GroupEventsByLocationScreen(navController: NavHostController? = null){
                                     }",
                                     beDeletedEnabled = false,
                                     onClick = {
-                                        sharedPrefManager.setAddress(
-                                            data.value?.list?.get(index)?.location ?: ""
+                                        sharedPrefManager.setLocationID(
+                                            data.value?.list?.get(index)?.locationID ?: ""
                                         )
                                         navController?.navigate("EventsByLocation")
                                     }

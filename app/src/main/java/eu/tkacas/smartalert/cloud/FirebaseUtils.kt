@@ -105,10 +105,10 @@ fun getAlertByPhenomenonAndLocation(phenomenon: String, onComplete: (Boolean, Li
             if (dataSnapshot.exists()) {
                 val data = ListOfLocationCriticalWeatherPhenomenonData(ArrayList())
                 for (snapshot in dataSnapshot.children) {
-                    val location = snapshot.key ?: ""
-                    val name = snapshot.child("name").getValue(String::class.java) ?: ""
+                    val locationID = snapshot.key ?: ""
+                    val locationName = snapshot.child("name").getValue(String::class.java) ?: ""
                     val numOfReports = snapshot.child("counter").getValue(Int::class.java) ?: 0
-                    data.list.add(LocationCriticalWeatherPhenomenonData(location, name, numOfReports))
+                    data.list.add(LocationCriticalWeatherPhenomenonData(locationID, locationName, numOfReports))
                 }
                 onComplete(true, data, null)
             } else {
@@ -207,6 +207,7 @@ fun getAlertByPhenomenonAndLocationForMaps(phenomenon: String, onComplete: (Bool
 fun getSpecificAlertByPhenomenonAndLocation(phenomenon: String, locationID: String, onComplete: (Boolean, ListOfSingleLocationCriticalWeatherPhenomenonData?, String) -> Unit) {
     val db = storageRef()
     val ref = db.getReference("alertsByPhenomenonAndLocationLast6h").child(phenomenon).child(locationID).child("alertForms")
+
 
     ref.addListenerForSingleValueEvent(object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {

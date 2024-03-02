@@ -62,9 +62,10 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
     val weatherPhenomenon = sharedPrefManager.getCriticalWeatherPhenomenon()
     val criticalWeatherPhenomenon = CriticalWeatherPhenomenon.valueOf(weatherPhenomenon.name)
 
-    val address = sharedPrefManager.getAddress()
+    val address = sharedPrefManager.getLocationID()
 
     val data = remember { mutableStateOf<ListOfSingleLocationCriticalWeatherPhenomenonData?>(null) }
+
     val error = remember { mutableStateOf<String?>(null) }
 
     val isRefreshing = remember { mutableStateOf(false) }

@@ -1,10 +1,6 @@
 package eu.tkacas.smartalert.ui.screen.employee
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Canvas
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Scaffold
@@ -18,11 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.content.ContextCompat
 import com.google.maps.android.compose.GoogleMap
 import androidx.navigation.NavController
-import com.google.android.gms.maps.model.BitmapDescriptor
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
@@ -32,7 +25,6 @@ import eu.tkacas.smartalert.app.SharedPrefManager
 import eu.tkacas.smartalert.cloud.getAlertByPhenomenonAndLocationForMaps
 import eu.tkacas.smartalert.cloud.getSpecificAlertByPhenomenonAndLocationForMaps
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
-import eu.tkacas.smartalert.models.EmergencyLevel
 import eu.tkacas.smartalert.models.LocationData
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
 import java.util.Locale
@@ -74,7 +66,7 @@ fun MapWithPinnedReportsScreen(navController: NavController? = null){
                 }
             }
             "EventsByLocationScreen" -> {
-                val address = sharedPrefManager.getAddress()
+                val address = sharedPrefManager.getLocationID()
                 getSpecificAlertByPhenomenonAndLocationForMaps(criticalWeatherPhenomenon.name, address) { success, result, err ->
                     if (success) {
                         data.value = result
