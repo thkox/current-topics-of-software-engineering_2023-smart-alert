@@ -1,18 +1,22 @@
 package eu.tkacas.smartalert.viewmodel.employee
 
-import androidx.compose.runtime.mutableIntStateOf
+import android.content.Context
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import eu.tkacas.smartalert.cloud.getUserID
+import eu.tkacas.smartalert.app.SharedPrefManager
 import eu.tkacas.smartalert.cloud.storageRef
 import eu.tkacas.smartalert.interfacesAPI.PlacesAPI
 import eu.tkacas.smartalert.models.Alert
+import eu.tkacas.smartalert.models.Bounds
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.models.EmergencyLevel
+import eu.tkacas.smartalert.models.LatLng
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class AlertCitizensFormViewModel(): ViewModel() {
+class AlertCitizensFormViewModel(context: Context): ViewModel() {
+
+    val sharedPrefManager = SharedPrefManager(context)
 
     val selectedArea = mutableStateOf("")
     val selectedWeatherPhenomenon = mutableStateOf(CriticalWeatherPhenomenon.EARTHQUAKE)
@@ -43,8 +47,26 @@ class AlertCitizensFormViewModel(): ViewModel() {
         return retrofit.create(PlacesAPI::class.java)
     }
 
+    private fun getBounds(): Bounds {
+        return Bounds(
+            LatLng(
+                sharedPrefManager.getBoundsNorthEastLat(),
+                sharedPrefManager.getBoundsNorthEastLng()
+            ), LatLng(
+                sharedPrefManager.getBoundsSouthWestLat(),
+                sharedPrefManager.getBoundsSouthWestLng()
+            )
+        )
+
+    }
+
     suspend fun sendAlertToCitizens() {
-        val selectedArea = selectedArea.value
+        val selectedLocation = if (selectedArea.value.isEmpty()){
+            sharedPrefManager.getLocationName()
+        } else {
+            selectedArea.value
+        }
+
         val selectedWeatherPhenomenon = selectedWeatherPhenomenon.value
         val selectedDangerLevelButton = selectedDangerLevelButton.value
 
@@ -56,9 +78,13 @@ class AlertCitizensFormViewModel(): ViewModel() {
         // Create a unique key for the new alert
         val key = myRef.push().key
 
+        // Get the bounds from shared preferences
+        val bounds = getBounds()
+
         // Create am instance of alert
         val alert = Alert(
-            area = selectedArea,
+            locationName = selectedLocation,
+            locationBounds = bounds,
             criticalWeatherPhenomenon = selectedWeatherPhenomenon,
             criticalLevel = selectedDangerLevelButton
         )

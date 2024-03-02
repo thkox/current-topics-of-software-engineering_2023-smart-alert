@@ -206,7 +206,7 @@ fun getAlertByPhenomenonAndLocationForMaps(phenomenon: String, onComplete: (Bool
     })
 }
 
-fun getSpecificAlertByPhenomenonAndLocation(phenomenon: String, locationID: String, onComplete: (Boolean, ListOfSingleLocationCriticalWeatherPhenomenonData?, Bounds?, String) -> Unit) {
+fun getSpecificAlertByPhenomenonAndLocation(phenomenon: String, locationID: String, onComplete: (Boolean, ListOfSingleLocationCriticalWeatherPhenomenonData?, Bounds?, String?, String) -> Unit) {
     val db = storageRef()
     val ref = db.getReference("alertsByPhenomenonAndLocationLast6h").child(phenomenon).child(locationID)
 
@@ -221,6 +221,8 @@ fun getSpecificAlertByPhenomenonAndLocation(phenomenon: String, locationID: Stri
                 val southwestLng = boundsSnapshot.child("southwest").child("lng").getValue(Double::class.java) ?: 0.0
                 val bounds = Bounds(LatLng(northeastLat, northeastLng), LatLng(southwestLat, southwestLng))
 
+                val name = dataSnapshot.child("name").getValue(String::class.java) ?: ""
+
                 for (snapshot in dataSnapshot.child("alertForms").children) {
                     val alertID = snapshot.key?:""
                     val imageURL = snapshot.child("imageURL").getValue(String::class.java)?:""
@@ -233,19 +235,19 @@ fun getSpecificAlertByPhenomenonAndLocation(phenomenon: String, locationID: Stri
                     val location = "$latitude, $longitude"
                     data.list.add(SingleLocationCriticalWeatherPhenomenonData(alertID, location, criticalLevel, message, imageURL, time))
                 }
-                onComplete(true, data, bounds, "Success")
+                onComplete(true, data, bounds, name, "Success")
             } else {
                 val translatedPhenomenon = getTranslatedPhenomenon(phenomenon)
                 val currentLanguage = Locale.getDefault().language
                 when (currentLanguage) {
                     "en" -> {
-                        onComplete(false, null, null, "No alert found for $translatedPhenomenon at $locationID")
+                        onComplete(false, null, null, null, "No alert found for $translatedPhenomenon at $locationID")
                     }
                     "el" -> {
-                        onComplete(false, null, null, "Δεν βρέθηκε ειδοποίηση για $translatedPhenomenon στην τοποθεσία $locationID")
+                        onComplete(false, null, null, null, "Δεν βρέθηκε ειδοποίηση για $translatedPhenomenon στην τοποθεσία $locationID")
                     }
                     else -> {
-                        onComplete(false, null, null, "No alert found for $translatedPhenomenon at $locationID")
+                        onComplete(false, null, null, null, "No alert found for $translatedPhenomenon at $locationID")
                     }
                 }
             }
@@ -255,13 +257,13 @@ fun getSpecificAlertByPhenomenonAndLocation(phenomenon: String, locationID: Stri
             val currentLanguage = Locale.getDefault().language
             when (currentLanguage) {
                 "en" -> {
-                    onComplete(false, null, null, "Error fetching data: ${databaseError.message}")
+                    onComplete(false, null, null, null, "Error fetching data: ${databaseError.message}")
                 }
                 "el" -> {
-                    onComplete(false, null, null, "Σφάλμα ανάκτησης δεδομένων: ${databaseError.message}")
+                    onComplete(false, null, null, null, "Σφάλμα ανάκτησης δεδομένων: ${databaseError.message}")
                 }
                 else -> {
-                    onComplete(false, null, null, "Error fetching data: ${databaseError.message}")
+                    onComplete(false, null, null, null, "Error fetching data: ${databaseError.message}")
                 }
             }
         }

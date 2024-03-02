@@ -25,12 +25,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import eu.tkacas.smartalert.R
+import eu.tkacas.smartalert.app.SharedPrefManager
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.ui.component.AlertLevelButtonsRowComponent
 import eu.tkacas.smartalert.ui.component.CityTextFieldComponent
 import eu.tkacas.smartalert.ui.component.CityTextFieldLandscapeComponent
 import eu.tkacas.smartalert.ui.component.EnumDropdownComponent
-import eu.tkacas.smartalert.ui.component.GeneralButtonComponent
 import eu.tkacas.smartalert.ui.component.NormalTextComponent
 import eu.tkacas.smartalert.ui.component.UploadButtonComponent
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
@@ -42,7 +42,8 @@ import java.util.Locale
 fun AlertCitizensFormScreen(navController: NavHostController? = null){
     val scaffoldState = rememberScaffoldState()
     val context = LocalContext.current
-    val viewModel = AlertCitizensFormViewModel()
+    val viewModel = AlertCitizensFormViewModel(context)
+    val sharedPrefManager = SharedPrefManager(context)
 
     val placesAPI = viewModel.createPlacesAPI()
 
@@ -51,6 +52,10 @@ fun AlertCitizensFormScreen(navController: NavHostController? = null){
     val config = LocalConfiguration.current
 
     val portraitMode = remember { mutableStateOf(config.orientation ) }
+
+    val locationName = remember { mutableStateOf(sharedPrefManager.getLocationName()) }
+
+    val criticalWeatherPhenomenon = remember { mutableStateOf(sharedPrefManager.getCriticalWeatherPhenomenon()) }
 
     if (portraitMode.value == Configuration.ORIENTATION_PORTRAIT) {
         //PortraitLayout()
@@ -78,18 +83,19 @@ fun AlertCitizensFormScreen(navController: NavHostController? = null){
                         labelValue = stringResource(id = R.string.city),
                         placesAPI = placesAPI,
                         apiKey = "AIzaSyBM31FS8qWSsNewQM5NGzpYm7pdr8q5azY",
-                        onTextChanged = {
-                            viewModel.setSelectedArea(it)
-                        }
-                    )
+                        locationName = locationName
+                    ) {
+                        viewModel.setSelectedArea(it)
+                    }
                     Spacer(modifier = Modifier.size(16.dp))
                     NormalTextComponent(value = stringResource(id = R.string.weather_phenomenon_selection))
                     EnumDropdownComponent(
                         CriticalWeatherPhenomenon::class.java,
-                        initialSelection = viewModel.selectedWeatherPhenomenon.value,
+                        initialSelection = criticalWeatherPhenomenon.value,
                         onSelected = {
                             viewModel.setSelectedWeatherPhenomenon(it)
-                        }
+                        },
+                        enabled = locationName.value == ""
                     )
                     Spacer(modifier = Modifier.size(16.dp))
                     NormalTextComponent(value = stringResource(id = R.string.emergency_level))
