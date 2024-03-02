@@ -16,8 +16,8 @@
     <string name="terms_and_conditions">By continuing you accept our\u00A0</string>
     <string name="privacy_policy">Privacy Policy\u00A0</string>
     <string name="and">and\u00A0</string>
-    <string name="terms_of_use">Terms of Use.</string>
-    <string name="terms_and_conditions_header">Term of Use</string>
+    <string name="terms_of_use">Terms of Use</string>
+    <string name="terms_and_conditions_header">Terms of Use</string>
     <string name="privacy_policy_header">Privacy Policy</string>
     <string name="return_back_to">Return back to\u00A0</string>
     <string name="forgot_password">Forgot your password</string>
@@ -74,7 +74,7 @@
     <string name="critical_level">Critical Level</string>
     <string name="time">Time</string>
     <string name="delete_all">Delete All</string>
-    <string name="The_reports_about_this_location_from_the_last_24_hours.">The reports about this location from the last 24 hours</string>
+    <string name="The_reports_about_this_location_from_the_last_6_hours.">The reports about this location from the last 6 hours</string>
     <string name="Specific">Specific</string>
     <string name="no_alert_found">No alert found</string>
     <string name="password_reset_email_sent">Password reset email sent successfully</string>
@@ -102,7 +102,7 @@
     <string name="july">July</string>
     <string name="august">August</string>
     <string name="september">September</string>
-    <string name="october">Οctober</string>
+    <string name="october">October</string>
     <string name="november">November</string>
     <string name="december">December</string>
     <string name="all_months">All Months</string>
@@ -111,4 +111,22 @@
     <string name="current_password">Current Password</string>
     <string name="new_password">New Password</string>
     <string name="confirm_password">Confirm New Password</string>
+    <string name="terms_of_use_intro">These Terms and Conditions govern your use of the Smart Alert mobile application provided by TKACAS ("we," "us," or "our"). By downloading, installing, or using the App, you agree to comply with and be bound by these Terms and Conditions.</string>
+    <string name="terms_of_use_license">\n 1. License:\nWe grant you a limited, non-exclusive, non-transferable, revocable license to use the App for your personal, non-commercial purposes. You may not sublicense, sell, or distribute the App.</string>
+    <string name="terms_of_use_conduct">\n 2. User Conduct:\nYou agree to use the App in compliance with all applicable laws and regulations. You further agree not to:\n• Use the App for any unlawful purpose.\n• Interfere with or disrupt the operation of the App.\n• Attempt to gain unauthorized access to any part of the App.\n• Transmit any viruses, worms, or other harmful code through the App.\n• Use the App to infringe upon the rights of others.</string>
+    <string name="terms_of_use_ip">\n 3. Intellectual Property:\nAll intellectual property rights in the App, including but not limited to copyrights, trademarks, and trade secrets, belong to us or our licensors. You may not copy, modify, or distribute any part of the App without our prior written consent.</string>
+    <string name="terms_of_use_liability">\n 4. Limitation of Liability:\nTo the fullest extent permitted by law, we shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising out of or relating to your use of the App.</string>
+    <string name="terms_of_use_modifications">\n 5. Modifications:\nWe reserve the right to modify or discontinue the App at any time without prior notice. We may also update these Terms and Conditions from time to time. Your continued use of the App after any such changes constitutes acceptance of the updated Terms and Conditions.</string>
+    <string name="terms_of_use_governing_law">\n 6. Governing Law:\nThese Terms and Conditions shall be governed by and construed in accordance with the laws of Greece, without regard to its conflict of law principles.</string>
+    <string name="terms_of_use_contact_us">\n 7. Contact Us:\nIf you have any questions or concerns about these Terms and Conditions, please contact us at info@smaralert.gr.</string>
+    <string name="terms_of_use_acknowledgement">\n By using the App, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions.</string>
+    <string name="privacy_policy_intro">TKACAS ("we," "us," or "our") operates the Smart Alert mobile application. This Privacy Policy outlines how we collect, use, and disclose information obtained from users of the App.</string>
+    <string name="privacy_policy_info_collect">\n 1. Information We Collect:\n• Personal Information: We may collect personal information that you voluntarily provide to us, such as your name and email address.\n• Device Information: We may collect information about your device, including device type, operating system, unique device identifiers, and mobile network information.\n• Usage Information: We may collect information about how you use the App, including the pages you visit, the features you use, and your interactions with the App.\n• Location Information: With your consent, we may collect and process information about your precise location using GPS, Wi-Fi, or cellular network information.</string>
+    <string name="privacy_policy_use_info">\n 2. How We Use Your Information:\nWe may use the information we collect for the following purposes:\n• To provide and improve the App and our services.\n• To communicate with you, respond to your inquiries, and provide customer support.\n• To personalize your experience and tailor content and advertisements to your interests.\n• To analyze trends and usage patterns and optimize the performance of the App.\n• To comply with legal and regulatory requirements.</string>
+    <string name="privacy_policy_share_info">\n 3. How We Share Your Information:\nWe may share your information with third parties for the following purposes:\n• With service providers who assist us in operating the App and providing our services.\n• With our affiliates, partners, and other trusted third parties for marketing and promotional purposes.\n• With law enforcement agencies, government authorities, or other third parties when required by law or to protect our rights, property, or safety.</string>
+    <string name="privacy_policy_data_security">\n 4. Data Security:\nWe take reasonable measures to protect the security of your information and prevent unauthorized access, disclosure, or use. However, no method of transmission over the internet or electronic storage is 100% secure, and we cannot guarantee the absolute security of your information.</string>
+    <string name="privacy_policy_children">\n 5. Children\'s Privacy:\nThe App is not intended for children under the age of 13. We do not knowingly collect personal information from children under the age of 13. If you believe that we have inadvertently collected information from a child under 13, please contact us immediately.</string>
+    <string name="privacy_policy_changes">\n 6. Changes to this Privacy Policy:\nWe may update this Privacy Policy from time to time to reflect changes in our practices or legal requirements. We will notify you of any material changes by posting the updated Privacy Policy on the App or through other means.</string>
+    <string name="privacy_policy_contact_us">\n 7. Contact Us:\nIf you have any questions or concerns about this Privacy Policy or our privacy practices, please contact us at info@smartalert.gr.</string>
+    <string name="privacy_policy_acknowledgement">\n By using the App, you consent to the collection, use, and disclosure of your information in accordance with this Privacy Policy.</string>
 </resources>
