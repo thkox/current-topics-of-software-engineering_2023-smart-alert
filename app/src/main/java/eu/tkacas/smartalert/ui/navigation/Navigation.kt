@@ -66,6 +66,10 @@ fun Navigation(navController: NavController = rememberNavController()) {
                 sharedPrefManager.isEmployee() -> {
                     sharedPrefManager.setLocationName("")
                     sharedPrefManager.setLocationID("")
+                    sharedPrefManager.setBoundsNorthEastLat(0.0)
+                    sharedPrefManager.setBoundsNorthEastLng(0.0)
+                    sharedPrefManager.setBoundsSouthWestLat(0.0)
+                    sharedPrefManager.setBoundsSouthWestLng(0.0)
                     HomeEmployeeScreen(navController = navController)
                 }
                 else -> HomeCitizenScreen(navController)
