@@ -33,7 +33,9 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.app.SharedPrefManager
 import eu.tkacas.smartalert.cloud.getSpecificAlertByPhenomenonAndLocation
+import eu.tkacas.smartalert.models.Bounds
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
+import eu.tkacas.smartalert.models.LatLng
 import eu.tkacas.smartalert.models.ListOfSingleLocationCriticalWeatherPhenomenonData
 import eu.tkacas.smartalert.ui.component.AlertWithImageDialog
 import eu.tkacas.smartalert.ui.component.CardComponentWithImage
@@ -73,9 +75,15 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
 
     LaunchedEffect(key1 = criticalWeatherPhenomenon, key2 = address) {
         isRefreshing.value = true
-        getSpecificAlertByPhenomenonAndLocation(criticalWeatherPhenomenon.name, address) { success, result, err ->
+        getSpecificAlertByPhenomenonAndLocation(criticalWeatherPhenomenon.name, address) { success, alertForms, areaBounds, err ->
             if (success) {
-                data.value = result
+                data.value = alertForms
+
+                sharedPrefManager.setBoundsNorthEastLat(areaBounds?.northeast?.lat)
+                sharedPrefManager.setBoundsNorthEastLng(areaBounds?.northeast?.lng)
+                sharedPrefManager.setBoundsSouthWestLat(areaBounds?.southwest?.lat)
+                sharedPrefManager.setBoundsSouthWestLng(areaBounds?.southwest?.lng)
+
             } else {
                 error.value = err
             }
@@ -123,9 +131,15 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                 state = rememberSwipeRefreshState(isRefreshing = isRefreshing.value),
                 onRefresh = {
                     isRefreshing.value = true
-                    getSpecificAlertByPhenomenonAndLocation(criticalWeatherPhenomenon.name, address) { success, result, err ->
+                    getSpecificAlertByPhenomenonAndLocation(criticalWeatherPhenomenon.name, address) { success, alertForms, areaBounds, err ->
                         if (success) {
-                            data.value = result
+                            data.value = alertForms
+
+                            sharedPrefManager.setBoundsNorthEastLat(areaBounds?.northeast?.lat)
+                            sharedPrefManager.setBoundsNorthEastLng(areaBounds?.northeast?.lng)
+                            sharedPrefManager.setBoundsSouthWestLat(areaBounds?.southwest?.lat)
+                            sharedPrefManager.setBoundsSouthWestLng(areaBounds?.southwest?.lng)
+
                         } else {
                             error.value = err
                         }
@@ -218,9 +232,7 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                                 )
                                 ConfirmDeleteDialog(
                                     showDialog = showMassWarningDialog.value,
-                                    //title =  "Warning",
                                     title = stringResource(id = R.string.Warning),
-                                    //message =  "You are about to delete all alert warnings. Are you sure?",
                                     message = stringResource(id = R.string.You_are_about_to_delete_all_alert_warnings_Are_you_sure),
                                     onDismiss = { showMassWarningDialog.value = false },
                                     onConfirm = {
@@ -234,7 +246,6 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                             }
                         }
                     } else if (error.value != null) {
-                        //Text("Error: ${error.value}")
                         Text(stringResource(id = R.string.error) + ": ${error.value}")
                     }
                 }

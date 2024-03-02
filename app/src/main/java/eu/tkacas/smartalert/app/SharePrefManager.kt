@@ -37,6 +37,11 @@ class SharedPrefManager(context: Context) {
         return address!!
     }
 
+    // NOT USED YET
+    fun removeLocationID() {
+        sharedPreferences.edit().remove("location_id").apply()
+    }
+
     fun setPreviousScreen(screen: String) {
         sharedPreferences.edit().putString("previous_screen", screen).apply()
     }
@@ -46,19 +51,19 @@ class SharedPrefManager(context: Context) {
         return screen!!
     }
 
-    fun setBoundsNorthEastLat(lat: Double) {
+    fun setBoundsNorthEastLat(lat: Double?) {
         sharedPreferences.edit().putString("bounds_north_east_lat", lat.toString()).apply()
     }
 
-    fun setBoundsNorthEastLng(lng: Double) {
+    fun setBoundsNorthEastLng(lng: Double?) {
         sharedPreferences.edit().putString("bounds_north_east_lng", lng.toString()).apply()
     }
 
-    fun setBoundsSouthWestLat(lat: Double) {
+    fun setBoundsSouthWestLat(lat: Double?) {
         sharedPreferences.edit().putString("bounds_south_west_lat", lat.toString()).apply()
     }
 
-    fun setBoundsSouthWestLng(lng: Double) {
+    fun setBoundsSouthWestLng(lng: Double?) {
         sharedPreferences.edit().putString("bounds_south_west_lng", lng.toString()).apply()
     }
 

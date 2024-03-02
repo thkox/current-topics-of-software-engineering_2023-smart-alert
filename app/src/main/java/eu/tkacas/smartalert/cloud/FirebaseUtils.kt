@@ -9,9 +9,11 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import eu.tkacas.smartalert.R
+import eu.tkacas.smartalert.models.Bounds
 import eu.tkacas.smartalert.models.CitizenMessage2
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.models.EmergencyLevel
+import eu.tkacas.smartalert.models.LatLng
 import eu.tkacas.smartalert.models.ListOfLocationCriticalWeatherPhenomenonData
 import eu.tkacas.smartalert.models.ListOfSingleLocationCriticalWeatherPhenomenonData
 import eu.tkacas.smartalert.models.LocationCriticalWeatherPhenomenonData
@@ -204,60 +206,62 @@ fun getAlertByPhenomenonAndLocationForMaps(phenomenon: String, onComplete: (Bool
     })
 }
 
-fun getSpecificAlertByPhenomenonAndLocation(phenomenon: String, locationID: String, onComplete: (Boolean, ListOfSingleLocationCriticalWeatherPhenomenonData?, String) -> Unit) {
+fun getSpecificAlertByPhenomenonAndLocation(phenomenon: String, locationID: String, onComplete: (Boolean, ListOfSingleLocationCriticalWeatherPhenomenonData?, Bounds?, String) -> Unit) {
     val db = storageRef()
-    val ref = db.getReference("alertsByPhenomenonAndLocationLast6h").child(phenomenon).child(locationID).child("alertForms")
-
+    val ref = db.getReference("alertsByPhenomenonAndLocationLast6h").child(phenomenon).child(locationID)
 
     ref.addListenerForSingleValueEvent(object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             if (dataSnapshot.exists()) {
                 val data = ListOfSingleLocationCriticalWeatherPhenomenonData(ArrayList())
-                for (snapshot in dataSnapshot.children) {
+                val boundsSnapshot = dataSnapshot.child("bounds")
+                val northeastLat = boundsSnapshot.child("northeast").child("lat").getValue(Double::class.java) ?: 0.0
+                val northeastLng = boundsSnapshot.child("northeast").child("lng").getValue(Double::class.java) ?: 0.0
+                val southwestLat = boundsSnapshot.child("southwest").child("lat").getValue(Double::class.java) ?: 0.0
+                val southwestLng = boundsSnapshot.child("southwest").child("lng").getValue(Double::class.java) ?: 0.0
+                val bounds = Bounds(LatLng(northeastLat, northeastLng), LatLng(southwestLat, southwestLng))
+
+                for (snapshot in dataSnapshot.child("alertForms").children) {
                     val alertID = snapshot.key?:""
                     val imageURL = snapshot.child("imageURL").getValue(String::class.java)?:""
                     val latitude = snapshot.child("location").child("latitude").getValue(Double::class.java)?:""
                     val longitude = snapshot.child("location").child("longitude").getValue(Double::class.java)?:""
                     val message = snapshot.child("message").getValue(String::class.java)?:""
-                    val criticalLevelString = snapshot.child("criticalLevel").getValue(String::class.java)?: ""
+                    val criticalLevelString = snapshot.child("criticalLevel").getValue(String::class.java) ?: ""
                     val criticalLevel = EmergencyLevel.valueOf(criticalLevelString)
                     val time = snapshot.child("time").getValue(String::class.java)?:""
                     val location = "$latitude, $longitude"
                     data.list.add(SingleLocationCriticalWeatherPhenomenonData(alertID, location, criticalLevel, message, imageURL, time))
                 }
-                onComplete(true, data, "Success")
+                onComplete(true, data, bounds, "Success")
             } else {
-                //onComplete(false, null, "No alert found for $phenomenon at $location")
                 val translatedPhenomenon = getTranslatedPhenomenon(phenomenon)
                 val currentLanguage = Locale.getDefault().language
                 when (currentLanguage) {
                     "en" -> {
-                        onComplete(false, null, "No alert found for $translatedPhenomenon at $locationID")
+                        onComplete(false, null, null, "No alert found for $translatedPhenomenon at $locationID")
                     }
                     "el" -> {
-                        onComplete(false, null, "Δεν βρέθηκε ειδοποίηση για $translatedPhenomenon στην τοποθεσία $locationID")
+                        onComplete(false, null, null, "Δεν βρέθηκε ειδοποίηση για $translatedPhenomenon στην τοποθεσία $locationID")
                     }
                     else -> {
-                        onComplete(false, null, "No alert found for $translatedPhenomenon at $locationID")
+                        onComplete(false, null, null, "No alert found for $translatedPhenomenon at $locationID")
                     }
                 }
-
             }
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
-            //onComplete(false, null, "Error fetching data: ${databaseError.message}")
-
             val currentLanguage = Locale.getDefault().language
             when (currentLanguage) {
                 "en" -> {
-                    onComplete(false, null, "Error fetching data: ${databaseError.message}")
+                    onComplete(false, null, null, "Error fetching data: ${databaseError.message}")
                 }
                 "el" -> {
-                    onComplete(false, null, "Σφάλμα ανάκτησης δεδομένων: ${databaseError.message}")
+                    onComplete(false, null, null, "Σφάλμα ανάκτησης δεδομένων: ${databaseError.message}")
                 }
                 else -> {
-                    onComplete(false, null, "Error fetching data: ${databaseError.message}")
+                    onComplete(false, null, null, "Error fetching data: ${databaseError.message}")
                 }
             }
         }
