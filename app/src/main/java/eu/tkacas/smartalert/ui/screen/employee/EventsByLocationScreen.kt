@@ -33,9 +33,7 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.app.SharedPrefManager
 import eu.tkacas.smartalert.cloud.getSpecificAlertByPhenomenonAndLocation
-import eu.tkacas.smartalert.models.Bounds
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
-import eu.tkacas.smartalert.models.LatLng
 import eu.tkacas.smartalert.models.ListOfSingleLocationCriticalWeatherPhenomenonData
 import eu.tkacas.smartalert.ui.component.AlertWithImageDialog
 import eu.tkacas.smartalert.ui.component.CardComponentWithImage
@@ -64,7 +62,7 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
     val weatherPhenomenon = sharedPrefManager.getCriticalWeatherPhenomenon()
     val criticalWeatherPhenomenon = CriticalWeatherPhenomenon.valueOf(weatherPhenomenon.name)
 
-    val address = sharedPrefManager.getLocationID()
+    val locationID = sharedPrefManager.getLocationID()
 
     val data = remember { mutableStateOf<ListOfSingleLocationCriticalWeatherPhenomenonData?>(null) }
 
@@ -73,9 +71,9 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
     val isRefreshing = remember { mutableStateOf(false) }
 
 
-    LaunchedEffect(key1 = criticalWeatherPhenomenon, key2 = address) {
+    LaunchedEffect(key1 = criticalWeatherPhenomenon, key2 = locationID) {
         isRefreshing.value = true
-        getSpecificAlertByPhenomenonAndLocation(criticalWeatherPhenomenon.name, address) { success, alertForms, areaBounds, err ->
+        getSpecificAlertByPhenomenonAndLocation(criticalWeatherPhenomenon.name, locationID) { success, alertForms, areaBounds, areaName, err ->
             if (success) {
                 data.value = alertForms
 
@@ -83,6 +81,8 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                 sharedPrefManager.setBoundsNorthEastLng(areaBounds?.northeast?.lng)
                 sharedPrefManager.setBoundsSouthWestLat(areaBounds?.southwest?.lat)
                 sharedPrefManager.setBoundsSouthWestLng(areaBounds?.southwest?.lng)
+
+                sharedPrefManager.setLocationName(areaName)
 
             } else {
                 error.value = err
@@ -131,14 +131,16 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                 state = rememberSwipeRefreshState(isRefreshing = isRefreshing.value),
                 onRefresh = {
                     isRefreshing.value = true
-                    getSpecificAlertByPhenomenonAndLocation(criticalWeatherPhenomenon.name, address) { success, alertForms, areaBounds, err ->
+                    getSpecificAlertByPhenomenonAndLocation(criticalWeatherPhenomenon.name, locationID) { success, alertForms, locationBounds, locationName, err ->
                         if (success) {
                             data.value = alertForms
 
-                            sharedPrefManager.setBoundsNorthEastLat(areaBounds?.northeast?.lat)
-                            sharedPrefManager.setBoundsNorthEastLng(areaBounds?.northeast?.lng)
-                            sharedPrefManager.setBoundsSouthWestLat(areaBounds?.southwest?.lat)
-                            sharedPrefManager.setBoundsSouthWestLng(areaBounds?.southwest?.lng)
+                            sharedPrefManager.setBoundsNorthEastLat(locationBounds?.northeast?.lat)
+                            sharedPrefManager.setBoundsNorthEastLng(locationBounds?.northeast?.lng)
+                            sharedPrefManager.setBoundsSouthWestLat(locationBounds?.southwest?.lat)
+                            sharedPrefManager.setBoundsSouthWestLng(locationBounds?.southwest?.lng)
+
+                            sharedPrefManager.setLocationName(locationName)
 
                         } else {
                             error.value = err
@@ -224,7 +226,7 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                                     onConfirm = {
                                         viewModel.deleteEventByPhenomenonAndLocation(
                                             criticalWeatherPhenomenon.name,
-                                            address,
+                                            locationID,
                                             data.value?.list?.get(index)?.alertID ?: ""
                                         )
                                         showWarningDialog.value = false
@@ -238,7 +240,7 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                                     onConfirm = {
                                         viewModel.deleteAllEventsByPhenomenonAndLocation(
                                             criticalWeatherPhenomenon.name,
-                                            address
+                                            locationID
                                         )
                                         showMassWarningDialog.value = false
                                     }

@@ -3,14 +3,12 @@ package eu.tkacas.smartalert.ui.component
 import androidx.compose.foundation.background
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
@@ -37,7 +35,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -64,6 +61,7 @@ fun CityTextFieldComponent(
     labelValue: String,
     placesAPI: PlacesAPI,
     apiKey: String,
+    locationName: MutableState<String>,
     onTextChanged: (String) -> Unit
 ){
     var city = remember {
@@ -76,6 +74,10 @@ fun CityTextFieldComponent(
     var isDropdownExpanded by remember {
         mutableStateOf(false)
     }
+
+    val locName by remember { mutableStateOf(locationName)}
+    locName.value = locationName.value
+
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -94,7 +96,7 @@ fun CityTextFieldComponent(
             ),
             singleLine = true,
             maxLines = 1,
-            value = city.value,
+            value = (if(locName.value != "") locName.value else city.value )?: "",
             onValueChange = {
                 city.value = it
                 onTextChanged(it)
@@ -110,7 +112,8 @@ fun CityTextFieldComponent(
                         println("Network request failed: ${e.message}")
                     }
                 }
-            }
+            },
+            enabled = locName.value == ""
         )
 
         DropdownMenu(

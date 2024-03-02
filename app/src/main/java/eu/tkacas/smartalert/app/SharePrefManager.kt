@@ -24,7 +24,7 @@ class SharedPrefManager(context: Context) {
     }
 
     fun getCriticalWeatherPhenomenon(): CriticalWeatherPhenomenon {
-        val name = sharedPreferences.getString("critical_weather_phenomenon", "WILDFIRE")
+        val name = sharedPreferences.getString("critical_weather_phenomenon", "EARTHQUAKE")
         return CriticalWeatherPhenomenon.valueOf(name!!)
     }
 
@@ -37,9 +37,13 @@ class SharedPrefManager(context: Context) {
         return address!!
     }
 
-    // NOT USED YET
-    fun removeLocationID() {
-        sharedPreferences.edit().remove("location_id").apply()
+    fun setLocationName(name: String?) {
+        sharedPreferences.edit().putString("location_name", name).apply()
+    }
+
+    fun getLocationName(): String {
+        val name = sharedPreferences.getString("location_name", "Kifissia")
+        return name!!
     }
 
     fun setPreviousScreen(screen: String) {

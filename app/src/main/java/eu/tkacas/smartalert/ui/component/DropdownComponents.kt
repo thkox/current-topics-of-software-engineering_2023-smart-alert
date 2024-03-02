@@ -28,7 +28,11 @@ import java.time.Month
 
 
 @Composable
-fun EnumDropdownComponent(enumClass: Class<CriticalWeatherPhenomenon>, initialSelection: CriticalWeatherPhenomenon, onSelected: (CriticalWeatherPhenomenon) -> Unit) {
+fun EnumDropdownComponent(
+    enumClass: Class<CriticalWeatherPhenomenon>,
+    initialSelection: CriticalWeatherPhenomenon,
+    onSelected: (CriticalWeatherPhenomenon) -> Unit,
+    enabled: Boolean = true) {
 
     var expanded by remember { mutableStateOf(false) }
     var selectedValue by remember { mutableStateOf(initialSelection) }
@@ -36,12 +40,16 @@ fun EnumDropdownComponent(enumClass: Class<CriticalWeatherPhenomenon>, initialSe
 
     Box {
         Button(
-            onClick = { expanded = true },
+            onClick = { if (enabled) expanded = true },
             colors = ButtonDefaults.buttonColors(backgroundColor = BlueGreen),
         ) {
             Text(stringResource(id = selectedValue.getStringId()))
-            Icon(painter = if (expanded) painterResource(id = R.drawable.arrow_up) else painterResource(id = R.drawable.arrow_down),
-                contentDescription = if (expanded) "Arrow Up" else "Arrow Down")
+            if (enabled) {
+                Icon(
+                    painter = if (expanded) painterResource(id = R.drawable.arrow_up) else painterResource(id = R.drawable.arrow_down),
+                    contentDescription = if (expanded) "Arrow Up" else "Arrow Down"
+                )
+            }
         }
 
         DropdownMenu(

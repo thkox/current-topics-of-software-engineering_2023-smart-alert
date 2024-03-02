@@ -63,7 +63,11 @@ fun Navigation(navController: NavController = rememberNavController()) {
             when {
                 !viewModel.permissionsAreGranted() -> navController.navigate("permissions")
                 !userExists() -> navController.navigate("welcome")
-                sharedPrefManager.isEmployee() -> HomeEmployeeScreen(navController)
+                sharedPrefManager.isEmployee() -> {
+                    sharedPrefManager.setLocationName("")
+                    sharedPrefManager.setLocationID("")
+                    HomeEmployeeScreen(navController = navController)
+                }
                 else -> HomeCitizenScreen(navController)
             }
         }
@@ -87,12 +91,8 @@ fun Navigation(navController: NavController = rememberNavController()) {
                 if (userExists() && sharedPrefManager.isEmployee()) {
                     when (screen) {
                         is Screen.HomeEmployee.AlertCitizenForm -> AlertCitizensFormScreen(navController)
-                        is Screen.HomeEmployee.GroupEventsByLocation -> {
-                            GroupEventsByLocationScreen(navController)
-                        }
-                        is Screen.HomeEmployee.EventsByLocation -> {
-                            EventsByLocationScreen(navController)
-                        }
+                        is Screen.HomeEmployee.GroupEventsByLocation -> GroupEventsByLocationScreen(navController)
+                        is Screen.HomeEmployee.EventsByLocation -> EventsByLocationScreen(navController)
                         is Screen.HomeEmployee.MapWithPinnedReports -> MapWithPinnedReportsScreen(navController)
                     }
                 } else {
