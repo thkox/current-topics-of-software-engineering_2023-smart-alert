@@ -15,9 +15,14 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.google.gson.Gson
 import eu.tkacas.smartalert.MainActivity
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.cloud.saveToken
+import eu.tkacas.smartalert.models.Bounds
+import eu.tkacas.smartalert.models.LocationData
+import eu.tkacas.smartalert.viewmodel.LocationViewModel
+import kotlinx.coroutines.runBlocking
 
 class NotificationService : FirebaseMessagingService() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -34,38 +39,29 @@ class NotificationService : FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(message: RemoteMessage) {
-        // TODO edit the message to get the info that we want
+        super.onMessageReceived(message)
 
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        val check = checkCurrentLocation()
-        if(check){
-            // TODO replace message, with the custom message
+        // Get the additional data
+        val data = message.data
+        val locationBoundsJson = data["locationBounds"]
 
+        // Parse the locationBounds data into a Bounds object
+        val locationBounds = Gson().fromJson(locationBoundsJson, Bounds::class.java)
 
+        // Get the user's current location
+        val locationViewModel = LocationViewModel(this)
+        val userLocation = runBlocking { locationViewModel.getLastLocation() }
+
+        // Check if the user's location is within the locationBounds
+        if (userLocation != null && isUserInBounds(userLocation, locationBounds)) {
+            // If the user is in the geolocation block, show the notification
+            message.notification?.body?.let { sendNotification(it) }
         }
-        message.notification?.body?.let { sendNotification(it) }
     }
 
-    private fun checkCurrentLocation(): Boolean {
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            return false
-        }
-        fusedLocationClient.lastLocation
-            .addOnSuccessListener { location : Location? ->
-                if (location != null) {
-                    Log.d("NotificationService", "Location: ${location.latitude}, ${location.longitude}")
-                    // TODO check the location if it is in the circle
-
-                }
-            }
-        return false
+    private fun isUserInBounds(userLocation: LocationData, bounds: Bounds): Boolean {
+        return userLocation.latitude in bounds.southwest?.lat!!..bounds.northeast?.lat!! &&
+                userLocation.longitude in bounds.southwest?.lng!!..bounds.northeast?.lng!!
     }
 
     private fun sendNotification(messageBody: String) {
