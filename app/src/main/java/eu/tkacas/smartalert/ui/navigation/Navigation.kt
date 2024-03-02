@@ -16,6 +16,7 @@ import eu.tkacas.smartalert.cloud.userExists
 import eu.tkacas.smartalert.ui.screen.auth.ForgotPasswordScreen
 import eu.tkacas.smartalert.cloud.signOutUser
 import eu.tkacas.smartalert.ui.screen.auth.LoginScreen
+import eu.tkacas.smartalert.ui.screen.auth.PrivacyPolicyScreen
 import eu.tkacas.smartalert.ui.screen.auth.SignUpScreen
 import eu.tkacas.smartalert.ui.screen.auth.TermsAndConditionsScreen
 import eu.tkacas.smartalert.ui.screen.citizen.AlertFormScreen
@@ -50,6 +51,7 @@ fun Navigation(navController: NavController = rememberNavController()) {
             if(viewModel.permissionsAreGranted()) navController.navigate("home")
             else PermissionsScreen(navController)
         }
+        composable("privacyPolicy") { PrivacyPolicyScreen() }
         composable("login") { LoginScreen(navController) }
         composable("signUp") { SignUpScreen(navController) }
         composable("termsAndConditions") { TermsAndConditionsScreen() }
