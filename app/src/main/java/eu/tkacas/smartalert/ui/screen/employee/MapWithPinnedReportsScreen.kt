@@ -1,6 +1,10 @@
 package eu.tkacas.smartalert.ui.screen.employee
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Scaffold
@@ -14,8 +18,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.content.ContextCompat
 import com.google.maps.android.compose.GoogleMap
 import androidx.navigation.NavController
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
@@ -25,6 +32,7 @@ import eu.tkacas.smartalert.app.SharedPrefManager
 import eu.tkacas.smartalert.cloud.getAlertByPhenomenonAndLocationForMaps
 import eu.tkacas.smartalert.cloud.getSpecificAlertByPhenomenonAndLocationForMaps
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
+import eu.tkacas.smartalert.models.EmergencyLevel
 import eu.tkacas.smartalert.models.LocationData
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
 import java.util.Locale
@@ -94,11 +102,35 @@ fun MapWithPinnedReportsScreen(navController: NavController? = null){
                 data.value?.forEach { locationData ->
                     val position = LatLng(locationData.latitude, locationData.longitude)
                     Marker(state = MarkerState(position = position))
+                    //Marker(state = MarkerState(position = position), icon = bitmapDescriptorFromVector(LocalContext.current, R.drawable.location_pin, criticalLevel))
+
                 }
             }
         }
     }
 }
+
+//fun bitmapDescriptorFromVector(context: Context, vectorResId: Int, criticalLevel: String): BitmapDescriptor {
+//    val vectorDrawable = ContextCompat.getDrawable(context, vectorResId)
+//    val color = getCriticalLevelColor(context, criticalLevel)
+//    vectorDrawable?.setTint(color)
+//    val bitmap = Bitmap.createBitmap(vectorDrawable!!.intrinsicWidth, vectorDrawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+//    val canvas = Canvas(bitmap)
+//    vectorDrawable.setBounds(0, 0, canvas.width, canvas.height)
+//    vectorDrawable.draw(canvas)
+//    return BitmapDescriptorFactory.fromBitmap(bitmap)
+//}
+//
+//fun getCriticalLevelColor(context: Context, criticalLevel: String): Int {
+//    return when (criticalLevel) {
+//        "LOW" -> ContextCompat.getColor(context, R.color.colorYellow)
+//        "MEDIUM" -> ContextCompat.getColor(context, R.color.colorOrange)
+//        "HIGH" -> ContextCompat.getColor(context, R.color.red)
+//        else -> ContextCompat.getColor(context, R.color.black) // default color if critical level is not recognized
+//    }
+//}
+
+
 
 @Preview
 @Composable

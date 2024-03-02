@@ -17,6 +17,8 @@
     <string name="privacy_policy">Privacy Policy\u00A0</string>
     <string name="and">and\u00A0</string>
     <string name="terms_of_use">Terms of Use.</string>
+    <string name="terms_and_conditions_header">Term of Use</string>
+    <string name="privacy_policy_header">Privacy Policy</string>
     <string name="return_back_to">Return back to\u00A0</string>
     <string name="forgot_password">Forgot your password</string>
     <string name="account">Account</string>

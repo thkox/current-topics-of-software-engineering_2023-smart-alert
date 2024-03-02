@@ -17,6 +17,8 @@
     <string name="privacy_policy">Πολιτική Απορήτου\u00A0</string>
     <string name="and">και τους\u00A0</string>
     <string name="terms_of_use">Όρους Χρήσης.</string>
+    <string name="terms_and_conditions_header">Όροι Χρήσης</string>
+    <string name="privacy_policy_header">Πολιτική Απορήτου</string>
     <string name="return_back_to">Επιστροφή στην\u00A0</string>
     <string name="forgot_password">Ξεχάσατε τον Κωδικό;</string>
     <string name="account">Λογαριασμός</string>
