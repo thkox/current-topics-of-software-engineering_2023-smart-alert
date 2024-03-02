@@ -1,6 +1,7 @@
 package eu.tkacas.smartalert.viewmodel.employee
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import eu.tkacas.smartalert.app.SharedPrefManager
@@ -11,7 +12,9 @@ import eu.tkacas.smartalert.models.Bounds
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.models.EmergencyLevel
 import eu.tkacas.smartalert.models.LatLng
+import kotlinx.coroutines.*
 import retrofit2.Retrofit
+import retrofit2.await
 import retrofit2.converter.gson.GsonConverterFactory
 
 class AlertCitizensFormViewModel(context: Context): ViewModel() {
@@ -79,7 +82,12 @@ class AlertCitizensFormViewModel(context: Context): ViewModel() {
         val key = myRef.push().key
 
         // Get the bounds from shared preferences
-        val bounds = getBounds()
+        var bounds = getBounds()
+
+        if (bounds.northeast == (LatLng(0.0, 0.0)) && bounds.southwest == (LatLng(0.0, 0.0))) {
+            val placeId = getPlaceIdFromLocationName(selectedLocation)
+            bounds = placeId?.let { getPlaceDetails(it) }!!
+        }
 
         // Create am instance of alert
         val alert = Alert(
@@ -93,6 +101,40 @@ class AlertCitizensFormViewModel(context: Context): ViewModel() {
         if (key != null) {
             myRef.child(key).setValue(alert)
         }
+    }
+
+    private suspend fun getPlaceIdFromLocationName(locationName: String): String? {
+        val placesAPI = createPlacesAPI()
+        try {
+            val placesResponse = placesAPI.getPlacesAutocomplete(locationName, "AIzaSyBM31FS8qWSsNewQM5NGzpYm7pdr8q5azY").await()
+
+            // Check if any places were found
+            if (placesResponse.predictions.isNotEmpty()) {
+                // Return the place_id of the first place in the list
+                return placesResponse.predictions[0].place_id
+            }
+        } catch (e: Exception) {
+            Log.e("PlaceIdLookup", "Failed to get place id", e)
+        }
+        return null
+    }
+
+    private suspend fun getPlaceDetails(placeId: String): Bounds? {
+        val placesAPI = createPlacesAPI()
+        val deferredResponse = placesAPI.getPlaceDetails(placeId, "AIzaSyBM31FS8qWSsNewQM5NGzpYm7pdr8q5azY")
+
+        try {
+            val response = deferredResponse.await()
+            val placeDetails = response.result
+            val viewport = placeDetails.geometry.viewport
+            return Bounds(
+                LatLng(viewport.northeast.lat, viewport.northeast.lng),
+                LatLng(viewport.southwest.lat, viewport.southwest.lng)
+            )
+        } catch (e: Exception) {
+            Log.e("PlaceDetails", "Failed to get place details", e)
+        }
+        return null
     }
 
 
