@@ -141,7 +141,7 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = stringResource(id = R.string.The_reports_about_this_location_from_the_last_24_hours_),
+                        text = stringResource(id = R.string.The_reports_about_this_location_from_the_last_6_hours_),
                         //Text(text = "The reports about this location from the last 24 hours.",
                         color = PrussianBlue,
                         style = TextStyle(

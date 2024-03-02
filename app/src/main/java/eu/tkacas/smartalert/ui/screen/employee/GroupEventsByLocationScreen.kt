@@ -108,7 +108,7 @@ fun GroupEventsByLocationScreen(navController: NavHostController? = null){
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = stringResource(id = R.string.The_reports_history_from_the_last_24_hours_),
+                        text = stringResource(id = R.string.The_reports_history_from_the_last_6_hours_),
                         //Text(text = "The reports history from the last 24 hours.",
                         color = PrussianBlue,
                         style = TextStyle(
