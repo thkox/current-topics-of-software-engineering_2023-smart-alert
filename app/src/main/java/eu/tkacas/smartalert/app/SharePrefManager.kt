@@ -28,12 +28,12 @@ class SharedPrefManager(context: Context) {
         return CriticalWeatherPhenomenon.valueOf(name!!)
     }
 
-    fun setAddress(address: String) {
-        sharedPreferences.edit().putString("address", address).apply()
+    fun setLocationID(address: String) {
+        sharedPreferences.edit().putString("location_id", address).apply()
     }
 
-    fun getAddress(): String {
-        val address = sharedPreferences.getString("address", "Kifissia")
+    fun getLocationID(): String {
+        val address = sharedPreferences.getString("location_id", "Kifissia")
         return address!!
     }
 
@@ -44,6 +44,42 @@ class SharedPrefManager(context: Context) {
     fun getPreviousScreen(): String {
         val screen = sharedPreferences.getString("previous_screen", "Home")
         return screen!!
+    }
+
+    fun setBoundsNorthEastLat(lat: Double) {
+        sharedPreferences.edit().putString("bounds_north_east_lat", lat.toString()).apply()
+    }
+
+    fun setBoundsNorthEastLng(lng: Double) {
+        sharedPreferences.edit().putString("bounds_north_east_lng", lng.toString()).apply()
+    }
+
+    fun setBoundsSouthWestLat(lat: Double) {
+        sharedPreferences.edit().putString("bounds_south_west_lat", lat.toString()).apply()
+    }
+
+    fun setBoundsSouthWestLng(lng: Double) {
+        sharedPreferences.edit().putString("bounds_south_west_lng", lng.toString()).apply()
+    }
+
+    fun getBoundsNorthEastLat(): Double {
+        val lat = sharedPreferences.getString("bounds_north_east_lat", "38.0000")
+        return lat!!.toDouble()
+    }
+
+    fun getBoundsNorthEastLng(): Double {
+        val lng = sharedPreferences.getString("bounds_north_east_lng", "23.0000")
+        return lng!!.toDouble()
+    }
+
+    fun getBoundsSouthWestLat(): Double {
+        val lat = sharedPreferences.getString("bounds_south_west_lat", "37.0000")
+        return lat!!.toDouble()
+    }
+
+    fun getBoundsSouthWestLng(): Double {
+        val lng = sharedPreferences.getString("bounds_south_west_lng", "22.0000")
+        return lng!!.toDouble()
     }
 
 }
