@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.pm.PackageManager
 import android.os.Build
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -29,6 +30,8 @@ import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import eu.tkacas.smartalert.permissions.areAllPermissionsGranted
 import eu.tkacas.smartalert.permissions.openAppSettings
 import eu.tkacas.smartalert.ui.component.GeneralButtonComponent
@@ -179,6 +182,14 @@ fun PermissionsScreen(navController: NavController? = null) {
                     navController?.navigate("home") {
                         popUpTo("welcome") { inclusive = true }
                     }
+                    FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                        if (!task.isSuccessful) {
+                            Log.w("SmartAlertApp", "Fetching FCM registration token failed", task.exception)
+                            return@OnCompleteListener
+                        }
+                        val token = task.result
+                        Log.d("SmartAlertApp", "Token: $token")
+                    })
                 } else {
                     val currentLanguage = Locale.getDefault().language
                     val toastPermissionMessage = when (currentLanguage) {
