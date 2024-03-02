@@ -21,6 +21,7 @@
     <string name="forgot_password">Forgot your password</string>
     <string name="account">Account</string>
     <string name="reports_history">Reports History</string>
+    <string name="no_reports_found">No reports found</string>
     <string name="language">Language</string>
     <string name="analytics">Analytics</string>
     <string name="about">About</string>
