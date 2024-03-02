@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.IBinder
 import android.os.Looper
+import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -24,7 +25,7 @@ class LocationUpdateService: Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-
+        getCurrentLocation()
         return START_STICKY
     }
 
@@ -50,6 +51,7 @@ class LocationUpdateService: Service() {
                         val location = locationResult.lastLocation
                         if (location != null) {
                             LocationData(location.latitude, location.longitude)
+                            Log.d("LocationUpdateService", "Location: ${location.latitude}, ${location.longitude}")
                             //TODO send location to server
                         }
                     }
