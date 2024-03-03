@@ -98,8 +98,6 @@ fun MapWithPinnedReportsScreen(navController: NavController? = null){
                 data.value?.forEach { locationData ->
                     val position = LatLng(locationData.latitude, locationData.longitude)
                     Marker(state = MarkerState(position = position))
-                    //Marker(state = MarkerState(position = position), icon = bitmapDescriptorFromVector(LocalContext.current, R.drawable.location_pin, criticalLevel))
-
                 }
             }
         }

@@ -1,6 +1,5 @@
 package eu.tkacas.smartalert.ui.screen.auth
 
-import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,8 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.CircularProgressIndicator
@@ -42,17 +39,13 @@ import eu.tkacas.smartalert.R.string.firstname
 import eu.tkacas.smartalert.R.string.lastname
 import eu.tkacas.smartalert.R.string.email
 import eu.tkacas.smartalert.R.string.password
-import eu.tkacas.smartalert.R.string.terms_and_conditions
 import eu.tkacas.smartalert.R.string.register
 import eu.tkacas.smartalert.ui.component.ButtonComponent
 import eu.tkacas.smartalert.ui.component.CheckboxComponent
 import eu.tkacas.smartalert.ui.component.ClickableLoginTextComponent
 import eu.tkacas.smartalert.ui.component.DividerTextComponent
-import eu.tkacas.smartalert.ui.component.HeadingTextLandscapeComponent
 import eu.tkacas.smartalert.ui.component.TextFieldComponent
 import eu.tkacas.smartalert.ui.component.PasswordTextFieldComponent
-import eu.tkacas.smartalert.ui.component.PasswordTextFieldLandscapeComponent
-import eu.tkacas.smartalert.ui.component.TextFieldLandscapeComponent
 import eu.tkacas.smartalert.ui.event.SignupUIEvent
 import eu.tkacas.smartalert.ui.theme.SkyBlue
 import eu.tkacas.smartalert.viewmodel.auth.SignupViewModel

@@ -44,11 +44,6 @@ import eu.tkacas.smartalert.ui.component.UnderLinedTextComponent
 import eu.tkacas.smartalert.ui.event.LoginUIEvent
 import eu.tkacas.smartalert.viewmodel.auth.LoginViewModel
 import eu.tkacas.smartalert.R.string.welcome_to_smart_alert_app
-import eu.tkacas.smartalert.R.string.welcome_to_smart_alert_app_landscape
-import eu.tkacas.smartalert.ui.component.ButtonComponent
-import eu.tkacas.smartalert.ui.component.HeadingTextLandscapeComponent
-import eu.tkacas.smartalert.ui.component.PasswordTextFieldLandscapeComponent
-import eu.tkacas.smartalert.ui.component.TextFieldLandscapeComponent
 import eu.tkacas.smartalert.ui.theme.SkyBlue
 
 @Composable
