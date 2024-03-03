@@ -44,25 +44,21 @@ import eu.tkacas.smartalert.ui.theme.PrussianBlue
 fun AboutScreen(navController: NavController? = null) {
     val scaffoldState = rememberScaffoldState()
 
-    val config = LocalConfiguration.current
 
-    val portraitMode = remember { mutableStateOf(config.orientation) }
 
-    if (portraitMode.value == Configuration.ORIENTATION_PORTRAIT) {
-        //PortraitLayout()
-        Scaffold(
-            scaffoldState = scaffoldState,
-            topBar = {
-                AppBarBackView(
-                    title = stringResource(id = R.string.about),
-                    navController = navController,
-                    enableSettingsButton = false
-                )
-            }
-        ) {
-            Surface(
-                modifier = Modifier.fillMaxSize(),
-            ) {
+
+    Scaffold(
+        scaffoldState = scaffoldState,
+        topBar = {
+            AppBarBackView(
+                title = stringResource(id = R.string.about),
+                navController = navController,
+                enableSettingsButton = false
+            )
+        }
+    ) {
+        LazyColumn {
+            item {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -157,95 +153,6 @@ fun AboutScreen(navController: NavController? = null) {
                 }
             }
         }
-    } else {
-        //LandscapeLayout()
-        Scaffold(
-            scaffoldState = scaffoldState,
-            topBar = {
-                AppBarBackView(
-                    title = stringResource(id = R.string.about),
-                    navController = navController,
-                    enableSettingsButton = false
-                )
-            }
-        ) {
-            Surface(
-                modifier = Modifier.fillMaxSize(),
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(15.dp),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    LazyColumn(
-                        modifier = Modifier
-                            .fillMaxWidth(0.5f)
-                            .padding(top = 2.dp),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        item {
-                            Image(
-                                painterResource(id = R.drawable.smart_alert_logo_full_transparent),
-                                contentDescription = "Logo of the Smart Alert App"
-                            )
-                            Spacer(modifier = Modifier.height(20.dp))
-                            CenteredAboutText()
-                            Spacer(modifier = Modifier.height(10.dp))
-                        }
-                    }
-                    VerticalDividerComponentWithoutText()
-                    Column(
-                        modifier = Modifier.fillMaxWidth(0.8f),
-                        verticalArrangement = Arrangement.Top,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.connect_with_us),
-                            modifier = Modifier.fillMaxWidth(),
-                            textAlign = TextAlign.Center,
-                            color = PrussianBlue
-                        )
-
-                        val context = LocalContext.current
-
-                        val url1 = remember { Uri.parse("https://github.com/thkox") }
-                        ButtonWithImageComponent(onClick = {
-                            context.startActivity(
-                                Intent(
-                                    Intent.ACTION_VIEW,
-                                    url1
-                                )
-                            )
-                        }, imageId = R.drawable.github_logo, buttonText = "thkox")
-
-                        val url2 = remember { Uri.parse("https://github.com/Apostolis2002") }
-                        ButtonWithImageComponent(onClick = {
-                            context.startActivity(
-                                Intent(
-                                    Intent.ACTION_VIEW,
-                                    url2
-                                )
-                            )
-                        }, imageId = R.drawable.github_logo, buttonText = "ApostolisSiampanis")
-
-                        val url3 = remember { Uri.parse("https://github.com/AlexanderCholis") }
-                        ButtonWithImageComponent(onClick = {
-                            context.startActivity(
-                                Intent(
-                                    Intent.ACTION_VIEW,
-                                    url3
-                                )
-                            )
-                        }, imageId = R.drawable.github_logo, buttonText = "AlexanderCholis")
-
-                    }
-                }
-            }
-        }
-
     }
 }
 
