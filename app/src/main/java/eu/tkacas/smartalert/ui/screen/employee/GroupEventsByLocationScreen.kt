@@ -52,7 +52,7 @@ fun GroupEventsByLocationScreen(navController: NavHostController? = null){
 
     val isRefreshing = remember { mutableStateOf(false) }
 
-    LaunchedEffect(key1 = criticalWeatherPhenomenon) {
+    LaunchedEffect(key1 = data.value) {
         isRefreshing.value = true
         getAlertByPhenomenonAndLocation(criticalWeatherPhenomenon.name) { success, result, err ->
             if (success) {
