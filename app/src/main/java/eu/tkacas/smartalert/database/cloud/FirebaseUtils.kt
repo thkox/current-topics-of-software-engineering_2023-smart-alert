@@ -29,6 +29,27 @@ fun getUserID() : String {
     return FirebaseAuth.getInstance().currentUser?.uid ?: ""
 }
 
+fun getFirstName(onComplete: (Boolean, String?, String?) -> Unit) {
+
+    val db = storageRef()
+    val ref = db.getReference("users").child(getUserID()).child("firstName")
+
+    ref.addListenerForSingleValueEvent(object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            if (dataSnapshot.exists()) {
+                val firstName = dataSnapshot.getValue(String::class.java) ?: ""
+                onComplete(true, firstName, null)
+            } else {
+                onComplete(false, null, "No first name found for user")
+            }
+        }
+
+        override fun onCancelled(databaseError: DatabaseError) {
+            onComplete(false, null, "Error fetching data: ${databaseError.message}")
+        }
+    })
+}
+
 fun signOutUser() {
     FirebaseAuth.getInstance().signOut()
 }
