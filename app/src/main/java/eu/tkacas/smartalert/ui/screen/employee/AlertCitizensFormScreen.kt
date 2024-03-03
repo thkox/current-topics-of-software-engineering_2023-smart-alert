@@ -57,6 +57,9 @@ fun AlertCitizensFormScreen(navController: NavHostController? = null){
 
     val criticalWeatherPhenomenon = remember { mutableStateOf(sharedPrefManager.getCriticalWeatherPhenomenon()) }
 
+    if (locationName.value != "")
+        viewModel.setSelectedWeatherPhenomenon(criticalWeatherPhenomenon.value)
+
     if (portraitMode.value == Configuration.ORIENTATION_PORTRAIT) {
         //PortraitLayout()
         Scaffold(
@@ -216,66 +219,6 @@ fun AlertCitizensFormScreen(navController: NavHostController? = null){
             }
         }
     }
-
-//    Scaffold(
-//        scaffoldState = scaffoldState,
-//        topBar = {
-//            AppBarBackView(title = stringResource(id = R.string.alert_form), navController = navController)
-//        }
-//    ) {
-//        Column(
-//            modifier = Modifier
-//                .fillMaxSize()
-//                .padding(it)
-//        ){
-//            Column(
-//                modifier = Modifier
-//                    .fillMaxSize()
-//                    .padding(16.dp),
-//                verticalArrangement = Arrangement.Top,
-//                horizontalAlignment = Alignment.CenterHorizontally
-//            ){
-//                Spacer(modifier = Modifier.size(80.dp))
-//                NormalTextComponent(value = stringResource(id = R.string.city_of_emergency))
-//                CityTextFieldComponent(
-//                    labelValue = stringResource(id = R.string.city),
-//                    placesAPI = placesAPI,
-//                    apiKey = "AIzaSyBM31FS8qWSsNewQM5NGzpYm7pdr8q5azY",
-//                    onTextChanged = {
-//                        viewModel.setSelectedArea(it)
-//                    }
-//                )
-//                Spacer(modifier = Modifier.size(16.dp))
-//                NormalTextComponent(value = stringResource(id = R.string.weather_phenomenon_selection))
-//                EnumDropdownComponent(
-//                    CriticalWeatherPhenomenon::class.java,
-//                    initialSelection = viewModel.selectedWeatherPhenomenon.value,
-//                    onSelected = {
-//                        viewModel.setSelectedWeatherPhenomenon(it)
-//                    }
-//                )
-//                Spacer(modifier = Modifier.size(16.dp))
-//                NormalTextComponent(value = stringResource(id = R.string.emergency_level))
-//                AlertLevelButtonsRowComponent(
-//                    initialValue = viewModel.selectedDangerLevelButton.value,
-//                    onButtonClicked = {
-//                        viewModel.setSelectedDangerLevelButton(it)
-//                    }
-//                )
-//                Spacer(modifier = Modifier.size(80.dp))
-//                UploadButtonComponent(
-//                    value = stringResource(id = R.string.submit),
-//                    onButtonClicked = {
-//                        scope.launch {
-//                            viewModel.sendAlertToCitizens()
-//                            navController?.navigate("home")
-//                            Toast.makeText(context, "Alert to citizens sent successfully", Toast.LENGTH_SHORT).show()
-//                        }
-//                    }
-//                )
-//            }
-//        }
-//    }
 }
 
 
