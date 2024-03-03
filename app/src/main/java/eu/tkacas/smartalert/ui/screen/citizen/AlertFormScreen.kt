@@ -28,9 +28,9 @@ import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.models.CitizenMessage
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.permissions.openAppSettings
-import eu.tkacas.smartalert.ui.component.CriticalLevelButtonsRowComponent
 import eu.tkacas.smartalert.ui.component.CameraButton
 import eu.tkacas.smartalert.ui.component.CameraPermissionTextProvider
+import eu.tkacas.smartalert.ui.component.CriticalLevelButtonsRowComponent
 import eu.tkacas.smartalert.ui.component.EnumDropdownComponent
 import eu.tkacas.smartalert.ui.component.MultilineTextFieldComponent
 import eu.tkacas.smartalert.ui.component.NormalTextComponent
@@ -56,7 +56,7 @@ fun AlertFormScreen(navController: NavHostController? = null) {
     val dialogQueue = viewModel.visiblePermissionDialogQueue
     val locationPermissionResultLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission(),
-        onResult = {isGranted ->
+        onResult = { isGranted ->
             viewModel.onPermissionResult(
                 permission = Manifest.permission.CAMERA,
                 isGranted = isGranted
@@ -75,7 +75,7 @@ fun AlertFormScreen(navController: NavHostController? = null) {
         }
     )
     val citizenMessagePref = viewModel.getCitizenMessageFromPrefs(context)
-    if(citizenMessagePref != null){
+    if (citizenMessagePref != null) {
         viewModel.setAlertDescription(citizenMessagePref.message)
         viewModel.setSelectedWeatherPhenomenon(citizenMessagePref.criticalWeatherPhenomenon)
         viewModel.setPhotoURL(citizenMessagePref.imageURL)
@@ -85,7 +85,10 @@ fun AlertFormScreen(navController: NavHostController? = null) {
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            AppBarBackView(title = stringResource(id = R.string.create_a_new_alert), navController = navController)
+            AppBarBackView(
+                title = stringResource(id = R.string.create_a_new_alert),
+                navController = navController
+            )
         }
     ) { it ->
         LazyColumn(
@@ -93,21 +96,21 @@ fun AlertFormScreen(navController: NavHostController? = null) {
                 .fillMaxSize()
                 .padding(it),
             verticalArrangement = Arrangement.SpaceEvenly,
-        ){
+        ) {
             item {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(it),
                     verticalArrangement = Arrangement.SpaceEvenly,
-                ){
+                ) {
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(16.dp),
                         verticalArrangement = Arrangement.Top,
                         horizontalAlignment = Alignment.CenterHorizontally
-                    ){
+                    ) {
                         Spacer(modifier = Modifier.size(80.dp))
                         NormalTextComponent(value = stringResource(id = R.string.emergency_level))
                         CriticalLevelButtonsRowComponent(
@@ -166,7 +169,8 @@ fun AlertFormScreen(navController: NavHostController? = null) {
                                         "el" -> "Το συμβάν στάλθηκε επιτυχώς"
                                         else -> "Alert sent successfully"
                                     }
-                                    Toast.makeText(context, toastSentMessage, Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, toastSentMessage, Toast.LENGTH_SHORT)
+                                        .show()
                                 }
 
                             }
@@ -181,6 +185,7 @@ fun AlertFormScreen(navController: NavHostController? = null) {
                                     Manifest.permission.CAMERA -> {
                                         CameraPermissionTextProvider()
                                     }
+
                                     else -> return@forEach
                                 },
                                 isPermanentlyDeclined = !ActivityCompat.shouldShowRequestPermissionRationale(
@@ -206,9 +211,8 @@ fun AlertFormScreen(navController: NavHostController? = null) {
 }
 
 
-
 @Preview
 @Composable
-fun AlertFormScreenPreview(){
+fun AlertFormScreenPreview() {
     AlertFormScreen()
 }

@@ -32,28 +32,29 @@ fun LanguageScreen(navController: NavController? = null) {
             )
         }
     ) {
-        Column{
+        Column {
             LanguageCard(
                 onClick = {
                     openAppSettings(context)
                 },
                 imageResId = R.drawable.usa_flag,
-                textResId = R.string.english_language)
+                textResId = R.string.english_language
+            )
 
             LanguageCard(
                 onClick = {
                     openAppSettings(context)
                 },
                 imageResId = R.drawable.greece_flag,
-                textResId = R.string.greek_language)
+                textResId = R.string.greek_language
+            )
         }
     }
 }
 
 
-
 @Preview
 @Composable
-fun LanguageScreenPreview(){
+fun LanguageScreenPreview() {
     LanguageScreen()
 }

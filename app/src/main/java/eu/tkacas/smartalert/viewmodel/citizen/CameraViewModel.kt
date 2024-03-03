@@ -20,7 +20,7 @@ import java.io.ByteArrayOutputStream
 import java.util.Locale
 import java.util.UUID
 
-class CameraViewModel: ViewModel() {
+class CameraViewModel : ViewModel() {
 
     private val _bitmaps = MutableStateFlow<List<Bitmap>>(emptyList())
     val bitmaps = _bitmaps.asStateFlow()
@@ -64,7 +64,7 @@ class CameraViewModel: ViewModel() {
                 override fun onCaptureSuccess(image: ImageProxy) {
                     super.onCaptureSuccess(image)
 
-                    val matrix = Matrix().apply{
+                    val matrix = Matrix().apply {
                         postRotate(image.imageInfo.rotationDegrees.toFloat())
                     }
 
@@ -88,6 +88,7 @@ class CameraViewModel: ViewModel() {
             }
         )
     }
+
     private suspend fun uploadPhotoToCloudStorage(bitmap: Bitmap): String {
         // Convert the Bitmap to a byte array
         val boas = ByteArrayOutputStream()
@@ -125,7 +126,10 @@ class CameraViewModel: ViewModel() {
         return Gson().fromJson(jsonString, CitizenMessage::class.java)
     }
 
-    private fun saveCitizenMessageToPrefs(context: Context, citizenMessage: CitizenMessage? = null) {
+    private fun saveCitizenMessageToPrefs(
+        context: Context,
+        citizenMessage: CitizenMessage? = null
+    ) {
         val jsonString = citizenMessage?.let { citizenMessageToJson(it) }
         val prefs = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         prefs.edit().putString("citizenMessage", jsonString).apply()

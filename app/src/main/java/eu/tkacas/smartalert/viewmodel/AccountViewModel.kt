@@ -12,6 +12,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+
 class AccountViewModel : ViewModel() {
 
     private val _email = MutableStateFlow("")
@@ -58,8 +59,9 @@ class AccountViewModel : ViewModel() {
                         _lastName.value = lastName ?: ""
                         _isLoading.value = false
                     }
+
                     override fun onCancelled(error: DatabaseError) {
-                         // Handle onCancelled
+                        // Handle onCancelled
                         _isLoading.value = false
                     }
                 })

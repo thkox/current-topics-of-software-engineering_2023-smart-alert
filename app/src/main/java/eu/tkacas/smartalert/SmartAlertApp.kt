@@ -1,10 +1,7 @@
 package eu.tkacas.smartalert
 
-import com.google.firebase.FirebaseApp
 import android.app.Application
-import android.util.Log
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.FirebaseApp
 
 class SmartAlertApp : Application() {
     override fun onCreate() {

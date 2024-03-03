@@ -33,11 +33,11 @@ import eu.tkacas.smartalert.ui.theme.BlueGreen
 import eu.tkacas.smartalert.ui.theme.PrussianBlue
 
 @Composable
-fun WelcomeScreen( navController: NavController? = null) {
+fun WelcomeScreen(navController: NavController? = null) {
 
     val config = LocalConfiguration.current
 
-    val portraitMode = remember { mutableStateOf(config.orientation ) }
+    val portraitMode = remember { mutableStateOf(config.orientation) }
 
     if (portraitMode.value == Configuration.ORIENTATION_PORTRAIT) {
         //PortraitLayout()
@@ -58,9 +58,13 @@ fun WelcomeScreen( navController: NavController? = null) {
                     horizontalArrangement = Arrangement.Absolute.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Image(painterResource(id = R.drawable.smart_alert_logo_full_transparent), contentDescription = "Logo of the Smart Alert App", modifier = Modifier.size(200.dp))
+                    Image(
+                        painterResource(id = R.drawable.smart_alert_logo_full_transparent),
+                        contentDescription = "Logo of the Smart Alert App",
+                        modifier = Modifier.size(200.dp)
+                    )
                 }
-                Row (
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 30.dp, top = 25.dp),
@@ -74,7 +78,7 @@ fun WelcomeScreen( navController: NavController? = null) {
                         color = PrussianBlue
                     )
                 }
-                Row (
+                Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
@@ -125,7 +129,11 @@ fun WelcomeScreen( navController: NavController? = null) {
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Image(painterResource(id = R.drawable.smart_alert_logo_full_transparent), contentDescription = "Logo of the Smart Alert App", modifier = Modifier.size(200.dp))
+                Image(
+                    painterResource(id = R.drawable.smart_alert_logo_full_transparent),
+                    contentDescription = "Logo of the Smart Alert App",
+                    modifier = Modifier.size(200.dp)
+                )
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -163,6 +171,6 @@ fun WelcomeScreen( navController: NavController? = null) {
 
 @Preview(backgroundColor = 0xFFFFFF, showBackground = true)
 @Composable
-fun WelcomeScreenPreview(){
+fun WelcomeScreenPreview() {
     WelcomeScreen()
 }

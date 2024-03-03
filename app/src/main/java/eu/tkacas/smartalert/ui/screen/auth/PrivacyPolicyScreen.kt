@@ -19,7 +19,7 @@ import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
 
 @Composable
-fun PrivacyPolicyScreen( navController: NavController? = null) {
+fun PrivacyPolicyScreen(navController: NavController? = null) {
     val scaffoldState = rememberScaffoldState()
 
     val privacyPolicyIntro = stringResource(id = R.string.privacy_policy_intro)
@@ -42,14 +42,18 @@ fun PrivacyPolicyScreen( navController: NavController? = null) {
             )
         },
     ) {
-        Surface(modifier = Modifier
-            .fillMaxSize()
-            .background(color = Color.White)
-            .padding(it)) {
+        Surface(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(color = Color.White)
+                .padding(it)
+        ) {
 
             LazyColumn(
-                modifier = Modifier.background(Color.White).padding(16.dp),
-            ){
+                modifier = Modifier
+                    .background(Color.White)
+                    .padding(16.dp),
+            ) {
                 item {
                     Text(text = privacyPolicyIntro)
                     Text(text = privacyPolicyInfoCollect)
@@ -68,6 +72,6 @@ fun PrivacyPolicyScreen( navController: NavController? = null) {
 
 @Preview
 @Composable
-fun PrivacyPolicyScreenPreview(){
+fun PrivacyPolicyScreenPreview() {
     PrivacyPolicyScreen()
 }

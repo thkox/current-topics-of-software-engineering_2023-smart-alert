@@ -8,12 +8,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -28,11 +25,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.models.Months
-import eu.tkacas.smartalert.ui.component.DetailsPieChart
 import eu.tkacas.smartalert.ui.component.EnumDropdownComponentMonths
 import eu.tkacas.smartalert.ui.component.PieChart
 import eu.tkacas.smartalert.ui.component.PieChartLandscape
-import eu.tkacas.smartalert.ui.component.VerticalDividerComponentWithoutText
 import eu.tkacas.smartalert.ui.component.YearDropdownComponent
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
 import eu.tkacas.smartalert.viewmodel.settings.AnalyticsViewModel
@@ -56,7 +51,7 @@ fun AnalyticsScreen(navController: NavController? = null) {
 
     val config = LocalConfiguration.current
 
-    val portraitMode = remember { mutableStateOf(config.orientation ) }
+    val portraitMode = remember { mutableStateOf(config.orientation) }
 
     if (portraitMode.value == Configuration.ORIENTATION_PORTRAIT) {
         //PortraitLayout()
@@ -184,6 +179,6 @@ fun AnalyticsScreen(navController: NavController? = null) {
 
 @Preview
 @Composable
-fun AnalyticsScreenPreview(){
+fun AnalyticsScreenPreview() {
     AnalyticsScreen()
 }

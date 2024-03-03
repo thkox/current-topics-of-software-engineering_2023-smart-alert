@@ -1,11 +1,9 @@
 package eu.tkacas.smartalert.ui.screen.auth
 
-import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -14,12 +12,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -73,10 +68,15 @@ fun ForgotPasswordScreen(navController: NavController? = null) {
                         Spacer(modifier = Modifier.size(20.dp))
                         NormalTextComponent(value = stringResource(id = R.string.forgot_password_instructions))
 
-                        TextFieldComponent(labelValue = stringResource(id = R.string.email),
+                        TextFieldComponent(
+                            labelValue = stringResource(id = R.string.email),
                             painterResource(id = R.drawable.email),
                             onTextChanged = {
-                                forgotPasswordViewModel.onEvent(ForgotPasswordUIEvent.EmailChanged(it))
+                                forgotPasswordViewModel.onEvent(
+                                    ForgotPasswordUIEvent.EmailChanged(
+                                        it
+                                    )
+                                )
                             },
                             errorStatus = forgotPasswordViewModel.forgotPasswordUIState.value.emailError
                         )

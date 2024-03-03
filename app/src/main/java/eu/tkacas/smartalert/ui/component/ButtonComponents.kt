@@ -93,7 +93,7 @@ fun CriticalLevelButtonsRowComponent(
     Row(
         modifier = Modifier
             .background(Color.LightGray, shape = RoundedCornerShape(100.dp))
-    ){
+    ) {
         Button(
             onClick = {
                 value = CriticalLevel.LOW
@@ -113,7 +113,7 @@ fun CriticalLevelButtonsRowComponent(
                         RoundedCornerShape(10.dp)
                     ) else it
                 }
-        ){
+        ) {
             Text(
                 text = stringResource(id = R.string.low),
                 color = if (value == CriticalLevel.LOW) PrussianBlue else Color.White
@@ -138,14 +138,15 @@ fun CriticalLevelButtonsRowComponent(
                         RoundedCornerShape(10.dp)
                     ) else it
                 }
-        ){
+        ) {
             Text(
                 text = stringResource(id = R.string.normal),
                 color = if (value == CriticalLevel.NORMAL) PrussianBlue else Color.White
             )
         }
         Button(
-            onClick = { value = CriticalLevel.HIGH
+            onClick = {
+                value = CriticalLevel.HIGH
                 onButtonClicked(value)
             },
             enabled = true,
@@ -162,7 +163,7 @@ fun CriticalLevelButtonsRowComponent(
                         RoundedCornerShape(10.dp)
                     ) else it
                 }
-        ){
+        ) {
             Text(
                 text = stringResource(id = R.string.high),
                 color = if (value == CriticalLevel.HIGH) PrussianBlue else Color.White
@@ -254,7 +255,10 @@ fun CameraButton(onButtonClicked: () -> Unit) {
         shape = RoundedCornerShape(30.dp)
     ) {
         IconButton(onClick = onButtonClicked) {
-            Image(painter = painterResource(id = R.drawable.photo_camera), contentDescription = "Open Camera")
+            Image(
+                painter = painterResource(id = R.drawable.photo_camera),
+                contentDescription = "Open Camera"
+            )
         }
     }
 }
@@ -264,7 +268,7 @@ fun UploadPhotoButton(
     onButtonClicked: () -> Unit
 ) {
 
-    
+
     Button(
         modifier = Modifier
             .width(110.dp)
@@ -279,8 +283,7 @@ fun UploadPhotoButton(
         contentPadding = PaddingValues(),
         colors = ButtonDefaults.buttonColors(Color.Transparent),
         shape = RoundedCornerShape(10.dp)
-    ){
-        //SimpleTextComponent(value = "Upload")
+    ) {
         SimpleTextComponent(value = stringResource(id = R.string.upload))
         Spacer(modifier = Modifier.size(4.dp))
         Icon(painter = painterResource(id = R.drawable.upload), contentDescription = "Upload Photo")
