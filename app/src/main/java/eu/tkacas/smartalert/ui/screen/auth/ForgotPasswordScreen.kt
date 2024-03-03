@@ -28,12 +28,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.ui.component.BackToLoginComponent
-import eu.tkacas.smartalert.ui.component.GeneralButtonComponent
 import eu.tkacas.smartalert.ui.component.HeadingTextComponent
-import eu.tkacas.smartalert.ui.component.HeadingTextLandscapeComponent
 import eu.tkacas.smartalert.ui.component.NormalTextComponent
 import eu.tkacas.smartalert.ui.component.TextFieldComponent
-import eu.tkacas.smartalert.ui.component.TextFieldLandscapeComponent
 import eu.tkacas.smartalert.ui.component.UploadButtonComponent
 import eu.tkacas.smartalert.ui.event.ForgotPasswordUIEvent
 import eu.tkacas.smartalert.viewmodel.auth.ForgotPasswordViewModel
