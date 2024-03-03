@@ -89,7 +89,6 @@ fun getTranslatedPhenomenon(phenomenon: String): String {
         "EARTHQUAKE" -> if (currentLanguage == "el") "ΣΕΙΣΜΟΣ" else "EARTHQUAKE"
         "FLOOD" -> if (currentLanguage == "el") "ΠΛΗΜΜΥΡΑ" else "FLOOD"
         "WILDFIRE" -> if (currentLanguage == "el") "ΠΥΡΚΑΓΙΑ" else "WILDFIRE"
-        "RIVER_FLOOD" -> if (currentLanguage == "el") "ΥΠΕΡΧ. ΠΟΤΑΜΟΥ" else "RIVER FLOOD"
         "HEATWAVE" -> if (currentLanguage == "el") "ΚΑΥΣΩΝΑΣ" else "HEATWAVE"
         "SNOWSTORM" -> if (currentLanguage == "el") "ΧΙΟΝΟΘΥΕΛΛΑ" else "SNOWSTORM"
         "STORM" -> if (currentLanguage == "el") "ΚΑΤΑΙΓΙΔΑ" else "STORM"

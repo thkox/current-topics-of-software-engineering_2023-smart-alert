@@ -23,7 +23,6 @@ class AnalyticsViewModel(context : Context): ViewModel() {
     private var _earthquakeCount = MutableLiveData<Int>(0)
     private var _floodCount = MutableLiveData<Int>(0)
     private var _wildfireCount = MutableLiveData<Int>(0)
-    private var _riverFloodCount = MutableLiveData<Int>(0)
     private var _heatwaveCount = MutableLiveData<Int>(0)
     private var _snowstormCount = MutableLiveData<Int>(0)
     private var _stormCount = MutableLiveData<Int>(0)
@@ -62,12 +61,6 @@ class AnalyticsViewModel(context : Context): ViewModel() {
         get() = _wildfireCount
         set(value) {
             _wildfireCount = value
-        }
-
-    var riverFloodCount: MutableLiveData<Int>
-        get() = _riverFloodCount
-        set(value) {
-            _riverFloodCount = value
         }
 
     var heatwaveCount: MutableLiveData<Int>
@@ -134,7 +127,6 @@ fun fetchStatisticsPerMonth() {
             _earthquakeCount.postValue((sumOfReports?.get(CriticalWeatherPhenomenon.EARTHQUAKE.toString()) as? Long)?.toInt() ?: 0)
             _floodCount.postValue((sumOfReports?.get(CriticalWeatherPhenomenon.FLOOD.toString()) as? Long)?.toInt() ?: 0)
             _wildfireCount.postValue((sumOfReports?.get(CriticalWeatherPhenomenon.WILDFIRE.toString()) as? Long)?.toInt() ?: 0)
-            _riverFloodCount.postValue((sumOfReports?.get(CriticalWeatherPhenomenon.RIVER_FLOOD.toString()) as? Long)?.toInt() ?: 0)
             _heatwaveCount.postValue((sumOfReports?.get(CriticalWeatherPhenomenon.HEATWAVE.toString()) as? Long)?.toInt() ?: 0)
             _snowstormCount.postValue((sumOfReports?.get(CriticalWeatherPhenomenon.SNOWSTORM.toString()) as? Long)?.toInt() ?: 0)
             _stormCount.postValue((sumOfReports?.get(CriticalWeatherPhenomenon.STORM.toString()) as? Long)?.toInt() ?: 0)
@@ -144,7 +136,6 @@ fun fetchStatisticsPerMonth() {
             _earthquakeCount.postValue((monthData?.get(CriticalWeatherPhenomenon.EARTHQUAKE.toString()) as? Long)?.toInt() ?: 0)
             _floodCount.postValue((monthData?.get(CriticalWeatherPhenomenon.FLOOD.toString()) as? Long)?.toInt() ?: 0)
             _wildfireCount.postValue((monthData?.get(CriticalWeatherPhenomenon.WILDFIRE.toString()) as? Long)?.toInt() ?: 0)
-            _riverFloodCount.postValue((monthData?.get(CriticalWeatherPhenomenon.RIVER_FLOOD.toString()) as? Long)?.toInt() ?: 0)
             _heatwaveCount.postValue((monthData?.get(CriticalWeatherPhenomenon.HEATWAVE.toString()) as? Long)?.toInt() ?: 0)
             _snowstormCount.postValue((monthData?.get(CriticalWeatherPhenomenon.SNOWSTORM.toString()) as? Long)?.toInt() ?: 0)
             _stormCount.postValue((monthData?.get(CriticalWeatherPhenomenon.STORM.toString()) as? Long)?.toInt() ?: 0)
