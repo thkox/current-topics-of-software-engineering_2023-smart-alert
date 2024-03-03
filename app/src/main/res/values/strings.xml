@@ -131,4 +131,5 @@
     <string name="privacy_policy_changes">\n 6. Changes to this Privacy Policy:\nWe may update this Privacy Policy from time to time to reflect changes in our practices or legal requirements. We will notify you of any material changes by posting the updated Privacy Policy on the App or through other means.</string>
     <string name="privacy_policy_contact_us">\n 7. Contact Us:\nIf you have any questions or concerns about this Privacy Policy or our privacy practices, please contact us at info@smartalert.gr.</string>
     <string name="privacy_policy_acknowledgement">\n By using the App, you consent to the collection, use, and disclosure of your information in accordance with this Privacy Policy.</string>
+    <string name="all_alerts">All Alerts</string>
 </resources>

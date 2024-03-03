@@ -21,3 +21,16 @@ enum class CriticalLevel {
         }
     }
 }
+
+enum class CriticalLevelDropdown {
+    AllALERTS, LOW, NORMAL, HIGH;
+
+    fun getStringId(): Int {
+        return when (this) {
+            AllALERTS -> R.string.all_alerts
+            LOW -> R.string.low
+            NORMAL -> R.string.normal
+            HIGH -> R.string.high
+        }
+    }
+}
