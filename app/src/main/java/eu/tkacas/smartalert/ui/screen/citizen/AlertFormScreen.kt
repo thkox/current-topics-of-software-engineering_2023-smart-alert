@@ -101,111 +101,122 @@ fun AlertFormScreen(navController: NavHostController? = null) {
             AppBarBackView(title = stringResource(id = R.string.create_a_new_alert), navController = navController)
         }
     ) { it ->
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(it),
             verticalArrangement = Arrangement.SpaceEvenly,
         ){
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ){
-                Spacer(modifier = Modifier.size(80.dp))
-                NormalTextComponent(value = stringResource(id = R.string.emergency_level))
-                CriticalLevelButtonsRowComponent(
-                    initialValue = viewModel.selectedDangerLevelButton.value,
-                    onButtonClicked = {
-                        viewModel.setSelectedDangerLevelButton(it)
-                    }
-                )
-                Spacer(modifier = Modifier.size(16.dp))
-                NormalTextComponent(value = stringResource(id = R.string.weather_phenomenon_selection))
-                EnumDropdownComponent(
-                    enumClass = CriticalWeatherPhenomenon::class.java,
-                    initialSelection = viewModel.selectedWeatherPhenomenon.value,
-                    onSelected = {
-                        viewModel.setSelectedWeatherPhenomenon(it)
-                    }
-                )
-                Spacer(modifier = Modifier.size(16.dp))
-                NormalTextComponent(value = stringResource(id = R.string.writeADescription))
-                MultilineTextFieldComponent(
-                    value = viewModel.alertDescription.value,
-                    onTextChanged = {
-                        viewModel.setAlertDescription(it)
-                    }
-                )
-                Spacer(modifier = Modifier.size(16.dp))
-                NormalTextComponent(value = stringResource(id = R.string.takeAPicture))
-                Spacer(modifier = Modifier.size(8.dp))
-                CameraButton(
-                    onButtonClicked = {
-                        locationPermissionResultLauncher.launch(
-                            Manifest.permission.CAMERA
-                        )
-                        val citizenMessage = CitizenMessage(
-                            message = viewModel.alertDescription.value,
-                            criticalWeatherPhenomenon = viewModel.selectedWeatherPhenomenon.value,
-                            location = viewModel.locationData,
-                            criticalLevel = viewModel.selectedDangerLevelButton.value,
-                            imageURL = viewModel.photoURL.value
-                        )
-                        viewModel.saveCitizenMessageToPrefs(context, citizenMessage)
-                        navController?.navigate("camera")
-                    }
-                )
-                Spacer(modifier = Modifier.size(25.dp))
-                UploadButtonComponent(
-                    value = stringResource(id = R.string.submit),
-                    onButtonClicked = {
-                        scope.launch {
-                            viewModel.sentAlert()
-                            viewModel.clearCitizenMessageFromPrefs(context)
-                            navController?.navigate("home")
-                            val currentLanguage = Locale.getDefault().language
-                            val toastSentMessage = when (currentLanguage) {
-                                "en" -> "Alert sent successfully"
-                                "el" -> "Το συμβάν στάλθηκε επιτυχώς"
-                                else -> "Alert sent successfully"
+            item {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(it),
+                    verticalArrangement = Arrangement.SpaceEvenly,
+                ){
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp),
+                        verticalArrangement = Arrangement.Top,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ){
+                        Spacer(modifier = Modifier.size(80.dp))
+                        NormalTextComponent(value = stringResource(id = R.string.emergency_level))
+                        CriticalLevelButtonsRowComponent(
+                            initialValue = viewModel.selectedDangerLevelButton.value,
+                            onButtonClicked = {
+                                viewModel.setSelectedDangerLevelButton(it)
                             }
-                            Toast.makeText(context, toastSentMessage, Toast.LENGTH_SHORT).show()
-                        }
-
-                    }
-                )
-            }
-
-            dialogQueue
-                .reversed()
-                .forEach { permission ->
-                    PermissionDialog(
-                        permissionTextProvider = when (permission) {
-                            Manifest.permission.CAMERA -> {
-                                CameraPermissionTextProvider()
+                        )
+                        Spacer(modifier = Modifier.size(16.dp))
+                        NormalTextComponent(value = stringResource(id = R.string.weather_phenomenon_selection))
+                        EnumDropdownComponent(
+                            enumClass = CriticalWeatherPhenomenon::class.java,
+                            initialSelection = viewModel.selectedWeatherPhenomenon.value,
+                            onSelected = {
+                                viewModel.setSelectedWeatherPhenomenon(it)
                             }
-                            else -> return@forEach
-                        },
-                        isPermanentlyDeclined = !ActivityCompat.shouldShowRequestPermissionRationale(
-                            context as Activity,
-                            permission
-                        ),
-                        onDismiss = {
-                            viewModel.dismissDialog()
-                        },
-                        onOkClick = {
-                            viewModel.dismissDialog()
-                            multiplePermissionResultLauncher.launch(
-                                arrayOf(permission)
+                        )
+                        Spacer(modifier = Modifier.size(16.dp))
+                        NormalTextComponent(value = stringResource(id = R.string.writeADescription))
+                        MultilineTextFieldComponent(
+                            value = viewModel.alertDescription.value,
+                            onTextChanged = {
+                                viewModel.setAlertDescription(it)
+                            }
+                        )
+                        Spacer(modifier = Modifier.size(16.dp))
+                        NormalTextComponent(value = stringResource(id = R.string.takeAPicture))
+                        Spacer(modifier = Modifier.size(8.dp))
+                        CameraButton(
+                            onButtonClicked = {
+                                locationPermissionResultLauncher.launch(
+                                    Manifest.permission.CAMERA
+                                )
+                                val citizenMessage = CitizenMessage(
+                                    message = viewModel.alertDescription.value,
+                                    criticalWeatherPhenomenon = viewModel.selectedWeatherPhenomenon.value,
+                                    location = viewModel.locationData,
+                                    criticalLevel = viewModel.selectedDangerLevelButton.value,
+                                    imageURL = viewModel.photoURL.value
+                                )
+                                viewModel.saveCitizenMessageToPrefs(context, citizenMessage)
+                                navController?.navigate("camera")
+                            }
+                        )
+                        Spacer(modifier = Modifier.size(25.dp))
+                        UploadButtonComponent(
+                            value = stringResource(id = R.string.submit),
+                            onButtonClicked = {
+                                scope.launch {
+                                    viewModel.sentAlert()
+                                    viewModel.clearCitizenMessageFromPrefs(context)
+                                    navController?.navigate("home")
+                                    val currentLanguage = Locale.getDefault().language
+                                    val toastSentMessage = when (currentLanguage) {
+                                        "en" -> "Alert sent successfully"
+                                        "el" -> "Το συμβάν στάλθηκε επιτυχώς"
+                                        else -> "Alert sent successfully"
+                                    }
+                                    Toast.makeText(context, toastSentMessage, Toast.LENGTH_SHORT).show()
+                                }
+
+                            }
+                        )
+                    }
+
+                    dialogQueue
+                        .reversed()
+                        .forEach { permission ->
+                            PermissionDialog(
+                                permissionTextProvider = when (permission) {
+                                    Manifest.permission.CAMERA -> {
+                                        CameraPermissionTextProvider()
+                                    }
+                                    else -> return@forEach
+                                },
+                                isPermanentlyDeclined = !ActivityCompat.shouldShowRequestPermissionRationale(
+                                    context as Activity,
+                                    permission
+                                ),
+                                onDismiss = {
+                                    viewModel.dismissDialog()
+                                },
+                                onOkClick = {
+                                    viewModel.dismissDialog()
+                                    multiplePermissionResultLauncher.launch(
+                                        arrayOf(permission)
+                                    )
+                                },
+                                onGoToAppSettingsClick = { openAppSettings(context) }
                             )
-                        },
-                        onGoToAppSettingsClick = { openAppSettings(context) }
-                    )
+                        }
                 }
+            }
         }
+
+
     }
 }
 
