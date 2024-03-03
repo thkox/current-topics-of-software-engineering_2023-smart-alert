@@ -3,7 +3,9 @@ package eu.tkacas.smartalert.ui.component
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
@@ -173,12 +175,14 @@ fun NotificationsHistoryDialog(
             text = {
                 Column(
                     modifier = Modifier
-                        .size(400.dp)
+                        .size(250.dp)
                         .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    horizontalAlignment = Alignment.Start
                 ) {
                     Text(text = locationText)
+                    Spacer(modifier = Modifier.height(8.dp))
                     Text(text = dateTimeText)
+                    Spacer(modifier = Modifier.height(8.dp))
                     Text(text = messageText)
                 }
             },
