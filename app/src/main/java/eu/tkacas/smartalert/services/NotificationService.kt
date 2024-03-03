@@ -59,8 +59,8 @@ class NotificationService : FirebaseMessagingService() {
 
         // Create a custom message body
         val messageBody = "Location: $locationName\n" +
-                "Weather Phenomenon: ${stringResource(id = weatherPhenomenon.getStringId())}\n" +
-                "Critical Level: ${stringResource(id = criticalLevel.getStringId())}\n" +
+                "Weather Phenomenon: ${weatherPhenomenon.getStringId()}\n" +
+                "Critical Level: ${criticalLevel.getStringId()}\n" +
                 "Location Bounds: $locationBounds"
 
         // Get the user's current location
