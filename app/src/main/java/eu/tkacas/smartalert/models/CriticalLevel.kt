@@ -16,8 +16,8 @@ enum class CriticalLevel {
     fun getColor(): Int {
         return when (this) {
             LOW -> R.color.colorWhite
-            NORMAL -> R.color.colorAccent
-            HIGH -> R.color.colorOrange
+            NORMAL -> R.color.selective_yellow
+            HIGH -> R.color.ut_orange
         }
     }
 }

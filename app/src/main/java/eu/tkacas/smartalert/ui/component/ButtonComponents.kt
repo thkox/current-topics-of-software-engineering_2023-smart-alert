@@ -121,12 +121,15 @@ fun ButtonLandscapeComponent(value: String, onButtonClicked: () -> Unit, isEnabl
 @Composable
 fun AlertLevelButtonsRowComponent(
     initialValue: CriticalLevel = CriticalLevel.LOW,
-    onButtonClicked: (CriticalLevel) -> Unit) {
+    onButtonClicked: (CriticalLevel) -> Unit
+) {
     var value by remember { mutableStateOf(initialValue) }
 
+
     Row(
-        horizontalArrangement = Arrangement.SpaceEvenly
-        ){
+        modifier = Modifier
+            .background(Color.LightGray, shape = RoundedCornerShape(100.dp))
+    ){
         Button(
             onClick = {
                 value = CriticalLevel.LOW
@@ -175,7 +178,7 @@ fun AlertLevelButtonsRowComponent(
             Text(
                 text = stringResource(id = R.string.normal),
                 color = if (value == CriticalLevel.NORMAL) PrussianBlue else Color.White
-                )
+            )
         }
         Button(
             onClick = { value = CriticalLevel.HIGH
