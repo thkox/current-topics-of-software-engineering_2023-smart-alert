@@ -8,10 +8,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -43,7 +43,7 @@ import eu.tkacas.smartalert.ui.theme.SkyBlue
 import eu.tkacas.smartalert.ui.theme.UTOrange
 
 @Composable
-fun GroupEventsByLocationScreen(navController: NavHostController? = null){
+fun GroupEventsByLocationScreen(navController: NavHostController? = null) {
     val sharedPrefManager = SharedPrefManager(LocalContext.current)
     sharedPrefManager.setPreviousScreen("GroupEventsByLocationScreen")
     val scaffoldState = rememberScaffoldState()
@@ -58,7 +58,7 @@ fun GroupEventsByLocationScreen(navController: NavHostController? = null){
 
     val sortingCriteria = remember { mutableStateOf(SortingCriteriaDropDown.NUMBER_OF_REPORTS) }
 
-    val events = when(sortingCriteria.value){
+    val events = when (sortingCriteria.value) {
         SortingCriteriaDropDown.ALPHABETICAL -> data.value?.list?.sortedBy { it.locationName }
         SortingCriteriaDropDown.NUMBER_OF_REPORTS -> data.value?.list?.sortedByDescending { it.numOfReports }
     }
@@ -91,7 +91,7 @@ fun GroupEventsByLocationScreen(navController: NavHostController? = null){
                 onClick = {
                     navController?.navigate("Map")
                 }
-            ){
+            ) {
                 Image(painterResource(id = R.drawable.map), contentDescription = "Map")
             }
         }
@@ -133,7 +133,7 @@ fun GroupEventsByLocationScreen(navController: NavHostController? = null){
                         modifier = Modifier.padding(16.dp),
                         textAlign = TextAlign.Center
                     )
-                    Row (
+                    Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.End,
                         verticalAlignment = Alignment.CenterVertically
@@ -185,6 +185,6 @@ fun GroupEventsByLocationScreen(navController: NavHostController? = null){
 
 @Preview
 @Composable
-fun GroupEventsByLocationScreenPreview(){
+fun GroupEventsByLocationScreenPreview() {
     GroupEventsByLocationScreen()
 }

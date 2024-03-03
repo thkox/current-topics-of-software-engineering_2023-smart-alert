@@ -14,14 +14,18 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class NavigationViewModel(context:Context): ViewModel() {
+class NavigationViewModel(context: Context) : ViewModel() {
 
     private var _cloudFunctionsUtils: CloudFunctionsUtils = CloudFunctionsUtils()
     private var sharedPrefManager: SharedPrefManager = SharedPrefManager(context)
 
-    fun findStartDestination(): String = if (userExists()) { "home" } else {"welcome" }
+    fun findStartDestination(): String = if (userExists()) {
+        "home"
+    } else {
+        "welcome"
+    }
 
-    fun setUserIdentity(){
+    fun setUserIdentity() {
         CoroutineScope(Dispatchers.IO).launch {
             val isEmployee = _cloudFunctionsUtils.userIsEmployee()
             sharedPrefManager.setIsEmployee(isEmployee)

@@ -11,10 +11,10 @@ import eu.tkacas.smartalert.ui.navigation.Navigation
 @Composable
 fun SmartAlertApp() {
 
-    Surface (
+    Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
-    ){
+    ) {
         Navigation()
     }
 }

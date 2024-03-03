@@ -10,7 +10,7 @@ import com.google.android.gms.location.LocationServices
 import eu.tkacas.smartalert.models.LocationData
 import kotlinx.coroutines.tasks.await
 
-class LocationViewModel(val context: Context): ViewModel() {
+class LocationViewModel(val context: Context) : ViewModel() {
     private val fusedLocationClient: FusedLocationProviderClient by lazy {
         LocationServices.getFusedLocationProviderClient(context)
     }
@@ -31,10 +31,11 @@ class LocationViewModel(val context: Context): ViewModel() {
         }
     }
 
-    fun hasLocationPermission(context: Context):Boolean{
+    fun hasLocationPermission(context: Context): Boolean {
         return ContextCompat.checkSelfPermission(
             context,
-            Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
 }

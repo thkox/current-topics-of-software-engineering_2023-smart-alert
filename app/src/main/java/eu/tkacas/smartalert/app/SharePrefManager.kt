@@ -5,7 +5,8 @@ import android.content.SharedPreferences
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 
 class SharedPrefManager(context: Context) {
-    private val sharedPreferences: SharedPreferences = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+    private val sharedPreferences: SharedPreferences =
+        context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
 
     fun setIsEmployee(isEmployee: Boolean) {
         sharedPreferences.edit().putBoolean("is_employee", isEmployee).apply()

@@ -48,14 +48,14 @@ import eu.tkacas.smartalert.ui.theme.SkyBlue
 import eu.tkacas.smartalert.ui.theme.YellowColor
 
 @Composable
-fun ButtonComponent(value: String, onButtonClicked: () -> Unit, isEnabled: Boolean = false) {
+fun ButtonComponent(
+    value: String,
+    onButtonClicked: () -> Unit,
+    isEnabled: Boolean = false,
+) {
     Button(
-        modifier = Modifier
-            .fillMaxWidth()
-            .heightIn(48.dp),
-        onClick = {
-            onButtonClicked.invoke()
-        },
+        modifier = Modifier.width(185.dp),
+        onClick = onButtonClicked,
         contentPadding = PaddingValues(),
         colors = ButtonDefaults.buttonColors(Color.Transparent),
         shape = RoundedCornerShape(50.dp),
@@ -77,42 +77,6 @@ fun ButtonComponent(value: String, onButtonClicked: () -> Unit, isEnabled: Boole
                 color = Color.White,
                 fontWeight = FontWeight.Bold
             )
-
-        }
-    }
-}
-
-@Composable
-fun ButtonLandscapeComponent(value: String, onButtonClicked: () -> Unit, isEnabled: Boolean = false) {
-    Button(
-        modifier = Modifier
-            .width(185.dp)
-            .heightIn(48.dp),
-        onClick = {
-            onButtonClicked.invoke()
-        },
-        contentPadding = PaddingValues(),
-        colors = ButtonDefaults.buttonColors(Color.Transparent),
-        shape = RoundedCornerShape(50.dp),
-        enabled = isEnabled
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .heightIn(48.dp)
-                .background(
-                    color = PrussianBlue,
-                    shape = RoundedCornerShape(50.dp)
-                ),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = value,
-                fontSize = 18.sp,
-                color = Color.White,
-                fontWeight = FontWeight.Bold
-            )
-
         }
     }
 }
@@ -129,7 +93,7 @@ fun CriticalLevelButtonsRowComponent(
     Row(
         modifier = Modifier
             .background(Color.LightGray, shape = RoundedCornerShape(100.dp))
-    ){
+    ) {
         Button(
             onClick = {
                 value = CriticalLevel.LOW
@@ -149,7 +113,7 @@ fun CriticalLevelButtonsRowComponent(
                         RoundedCornerShape(10.dp)
                     ) else it
                 }
-        ){
+        ) {
             Text(
                 text = stringResource(id = R.string.low),
                 color = if (value == CriticalLevel.LOW) PrussianBlue else Color.White
@@ -174,14 +138,15 @@ fun CriticalLevelButtonsRowComponent(
                         RoundedCornerShape(10.dp)
                     ) else it
                 }
-        ){
+        ) {
             Text(
                 text = stringResource(id = R.string.normal),
                 color = if (value == CriticalLevel.NORMAL) PrussianBlue else Color.White
             )
         }
         Button(
-            onClick = { value = CriticalLevel.HIGH
+            onClick = {
+                value = CriticalLevel.HIGH
                 onButtonClicked(value)
             },
             enabled = true,
@@ -198,7 +163,7 @@ fun CriticalLevelButtonsRowComponent(
                         RoundedCornerShape(10.dp)
                     ) else it
                 }
-        ){
+        ) {
             Text(
                 text = stringResource(id = R.string.high),
                 color = if (value == CriticalLevel.HIGH) PrussianBlue else Color.White
@@ -290,7 +255,10 @@ fun CameraButton(onButtonClicked: () -> Unit) {
         shape = RoundedCornerShape(30.dp)
     ) {
         IconButton(onClick = onButtonClicked) {
-            Image(painter = painterResource(id = R.drawable.photo_camera), contentDescription = "Open Camera")
+            Image(
+                painter = painterResource(id = R.drawable.photo_camera),
+                contentDescription = "Open Camera"
+            )
         }
     }
 }
@@ -300,7 +268,7 @@ fun UploadPhotoButton(
     onButtonClicked: () -> Unit
 ) {
 
-    
+
     Button(
         modifier = Modifier
             .width(110.dp)
@@ -315,8 +283,7 @@ fun UploadPhotoButton(
         contentPadding = PaddingValues(),
         colors = ButtonDefaults.buttonColors(Color.Transparent),
         shape = RoundedCornerShape(10.dp)
-    ){
-        //SimpleTextComponent(value = "Upload")
+    ) {
         SimpleTextComponent(value = stringResource(id = R.string.upload))
         Spacer(modifier = Modifier.size(4.dp))
         Icon(painter = painterResource(id = R.drawable.upload), contentDescription = "Upload Photo")

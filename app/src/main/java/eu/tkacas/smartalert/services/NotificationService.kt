@@ -1,19 +1,12 @@
 package eu.tkacas.smartalert.services
 
-import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Build
 import android.util.Log
-import androidx.compose.ui.res.stringResource
-import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.google.gson.Gson
@@ -55,7 +48,8 @@ class NotificationService : FirebaseMessagingService() {
 
         // Parse the locationBounds data into a Bounds object
         val locationBounds = Gson().fromJson(locationBoundsJson, Bounds::class.java)
-        val weatherPhenomenon = Gson().fromJson(weatherPhenomenonJson, CriticalWeatherPhenomenon::class.java)
+        val weatherPhenomenon =
+            Gson().fromJson(weatherPhenomenonJson, CriticalWeatherPhenomenon::class.java)
         val criticalLevel = Gson().fromJson(criticalLevelJson, CriticalLevel::class.java)
         val locationName = Gson().fromJson(locationNameJson, String::class.java)
 
@@ -63,21 +57,32 @@ class NotificationService : FirebaseMessagingService() {
         val currentLanguage = Locale.getDefault().language
         val messageBody = if (currentLanguage == "en") {
             "URGENT: Residents in the affected area of $locationName," + " please take immediate precautions.\n" +
-                    "This ${this.getString(weatherPhenomenon.getStringId())} phenomenon is with ${this.getString(criticalLevel.getStringId())} severity.\n" +
+                    "This ${this.getString(weatherPhenomenon.getStringId())} phenomenon is with ${
+                        this.getString(
+                            criticalLevel.getStringId()
+                        )
+                    } severity.\n" +
                     "Stay indoors, avoid travel and follow local authorities' instructions.\n" +
                     "Your safety is our top priority.\n" + "Stay tuned for updates."
         } else if (currentLanguage == "el") {
             "ΕΠΕΙΓΟΝ: Οι κάτοικοι στην πληγείσα περιοχή: $locationName," + " παρακαλούνται να λάβουν άμεσα προφυλάξεις.\n" +
-                    "Αυτό το φαινόμενο: ${this.getString(weatherPhenomenon.getStringId())} έχει σοβαρότητα: ${this.getString(criticalLevel.getStringId())}.\n" +
+                    "Αυτό το φαινόμενο: ${this.getString(weatherPhenomenon.getStringId())} έχει σοβαρότητα: ${
+                        this.getString(
+                            criticalLevel.getStringId()
+                        )
+                    }.\n" +
                     "Μείνετε σε εσωτερικούς χώρους, αποφύγετε τα ταξίδια και ακολουθήστε τις οδηγίες των τοπικών αρχών.\n" +
                     "Η ασφάλειά σας είναι η πρώτη μας προτεραιότητα.\n" + "Μείνετε συντονισμένοι για ενημερώσεις."
         } else {
             "URGENT: Residents in the affected area of $locationName," + " please take immediate precautions.\n" +
-                    "This ${this.getString(weatherPhenomenon.getStringId())} phenomenon is with ${this.getString(criticalLevel.getStringId())} severity.\n" +
+                    "This ${this.getString(weatherPhenomenon.getStringId())} phenomenon is with ${
+                        this.getString(
+                            criticalLevel.getStringId()
+                        )
+                    } severity.\n" +
                     "Stay indoors, avoid travel and follow local authorities' instructions.\n" +
                     "Your safety is our top priority.\n" + "Stay tuned for updates."
         }
-
 
 
         // Get the user's current location
@@ -87,7 +92,12 @@ class NotificationService : FirebaseMessagingService() {
         // Check if the user's location is within the locationBounds
         if (userLocation != null && isUserInBounds(userLocation, locationBounds)) {
             database = DatabaseHelper(this)
-            database.addMessage(messageBody, weatherPhenomenon.toString(), criticalLevel.toString(), locationName)
+            database.addMessage(
+                messageBody,
+                weatherPhenomenon.toString(),
+                criticalLevel.toString(),
+                locationName
+            )
             // If the user is in the geolocation block, show the notification
             sendNotification(messageBody, weatherPhenomenon)
         }
@@ -98,7 +108,10 @@ class NotificationService : FirebaseMessagingService() {
                 userLocation.longitude in bounds.southwest?.lng!!..bounds.northeast?.lng!!
     }
 
-    private fun sendNotification(messageBody: String, weatherPhenomenon: CriticalWeatherPhenomenon) {
+    private fun sendNotification(
+        messageBody: String,
+        weatherPhenomenon: CriticalWeatherPhenomenon
+    ) {
         val notificationIntent = Intent(this, MainActivity::class.java)
 
         val pendingIntent: PendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -126,12 +139,13 @@ class NotificationService : FirebaseMessagingService() {
             .setContentIntent(pendingIntent)
             .setOngoing(true)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             builder.setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE)
         }
 
         val notification = builder.build()
-        val notificationManager = getSystemService(NotificationManager::class.java) as NotificationManager
+        val notificationManager =
+            getSystemService(NotificationManager::class.java) as NotificationManager
         notificationManager.notify(0, notification)
     }
 

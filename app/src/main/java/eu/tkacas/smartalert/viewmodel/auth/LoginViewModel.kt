@@ -5,12 +5,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import eu.tkacas.smartalert.ui.event.LoginUIEvent
-import eu.tkacas.smartalert.ui.state.LoginUIState
 import eu.tkacas.smartalert.data.rules.Validator
 import eu.tkacas.smartalert.database.cloud.signInUser
+import eu.tkacas.smartalert.ui.event.LoginUIEvent
+import eu.tkacas.smartalert.ui.state.LoginUIState
 import java.util.Locale
 
 class LoginViewModel : ViewModel() {
@@ -97,10 +95,6 @@ class LoginViewModel : ViewModel() {
             }
         }
     }
-
-
-
-
 
 
 //    private fun login() {

@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -43,13 +42,13 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.interfacesAPI.PlacesAPI
 import eu.tkacas.smartalert.ui.theme.BgColor
 import eu.tkacas.smartalert.ui.theme.BlueGreen
-import eu.tkacas.smartalert.ui.theme.Primary
 import eu.tkacas.smartalert.ui.theme.PrussianBlue
 import eu.tkacas.smartalert.ui.theme.componentShapes
 import kotlinx.coroutines.Dispatchers
@@ -58,12 +57,12 @@ import kotlinx.coroutines.withContext
 
 @Composable
 fun CityTextFieldComponent(
-    labelValue: String,
+    labelValue: String = "City",
     placesAPI: PlacesAPI,
-    apiKey: String,
-    locationName: MutableState<String>,
-    onTextChanged: (String) -> Unit
-){
+    apiKey: String = "",
+    locationName: MutableState<String> = mutableStateOf(""),
+    onTextChanged: (String) -> Unit = {}
+) {
     var city = remember {
         mutableStateOf("")
     }
@@ -75,7 +74,7 @@ fun CityTextFieldComponent(
         mutableStateOf(false)
     }
 
-    val locName by remember { mutableStateOf(locationName)}
+    val locName by remember { mutableStateOf(locationName) }
     locName.value = locationName.value
 
 
@@ -85,8 +84,7 @@ fun CityTextFieldComponent(
         val textFieldWidth = this.maxWidth
 
         OutlinedTextField(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.width(300.dp),
             label = { Text(text = labelValue) },
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 focusedBorderColor = PrussianBlue,
@@ -96,14 +94,15 @@ fun CityTextFieldComponent(
             ),
             singleLine = true,
             maxLines = 1,
-            value = (if(locName.value != "") locName.value else city.value )?: "",
+            value = (if (locName.value != "") locName.value else city.value) ?: "",
             onValueChange = {
                 city.value = it
                 onTextChanged(it)
                 coroutineScope.launch(Dispatchers.IO) {
                     try {
                         val response = placesAPI.getPlacesAutocomplete(it, apiKey).execute()
-                        val newPredictions = response.body()?.predictions?.map { it.description } ?: listOf()
+                        val newPredictions =
+                            response.body()?.predictions?.map { it.description } ?: listOf()
                         withContext(Dispatchers.Main) {
                             predictions = newPredictions
                             isDropdownExpanded = newPredictions.isNotEmpty()
@@ -177,52 +176,12 @@ fun TextFieldComponent(
 }
 
 @Composable
-fun TextFieldLandscapeComponent(
-    labelValue: String,
-    painterResource: Painter,
-    onTextChanged: (String) -> Unit,
-    errorStatus: Boolean = false
-) {
-
-    val textValue = remember {
-        mutableStateOf("")
-    }
-
-    OutlinedTextField(
-        modifier = Modifier
-            .width(400.dp)
-            .height(65.dp)
-            .clip(componentShapes.small),
-        label = { Text(text = labelValue) },
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = PrussianBlue,
-            focusedLabelColor = PrussianBlue,
-            cursorColor = PrussianBlue,
-            backgroundColor = BgColor
-        ),
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-        singleLine = true,
-        maxLines = 1,
-        value = textValue.value,
-        onValueChange = {
-            textValue.value = it
-            onTextChanged(it)
-        },
-        leadingIcon = {
-            Icon(painter = painterResource, contentDescription = "")
-        },
-        isError = !errorStatus
-    )
-}
-
-
-@Composable
 fun PasswordTextFieldComponent(
     labelValue: String,
     painterResource: Painter,
     onTextSelected: (String) -> Unit,
     errorStatus: Boolean = false
-){
+) {
 
     val localFocusManager = LocalFocusManager.current
     val password = remember {
@@ -262,12 +221,12 @@ fun PasswordTextFieldComponent(
             Icon(painter = painterResource, contentDescription = "")
         },
         trailingIcon = {
-            val iconImage = if(passwordVisible.value) {
+            val iconImage = if (passwordVisible.value) {
                 painterResource(id = R.drawable.visibility)
-            } else{
+            } else {
                 painterResource(id = R.drawable.visibility_off)
             }
-            val description = if(passwordVisible.value){
+            val description = if (passwordVisible.value) {
                 stringResource(id = R.string.hide_password)
             } else {
                 stringResource(id = R.string.show_password)
@@ -277,94 +236,28 @@ fun PasswordTextFieldComponent(
                 Icon(painter = iconImage, contentDescription = description)
             }
         },
-        visualTransformation = if(passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
+        visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
         isError = !errorStatus
     )
 }
 
-@Composable
-fun PasswordTextFieldLandscapeComponent(
-    labelValue: String,
-    painterResource: Painter,
-    onTextSelected: (String) -> Unit,
-    errorStatus: Boolean = false
-){
-
-    val localFocusManager = LocalFocusManager.current
-    val password = remember {
-        mutableStateOf("")
-    }
-
-    val passwordVisible = remember {
-        mutableStateOf(false)
-    }
-
-    OutlinedTextField(
-        modifier = Modifier
-            .width(400.dp)
-            .height(65.dp)
-            .clip(componentShapes.small),
-        label = { Text(text = labelValue) },
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = PrussianBlue,
-            focusedLabelColor = PrussianBlue,
-            cursorColor = PrussianBlue,
-            backgroundColor = BgColor
-        ),
-        keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Password,
-            imeAction = ImeAction.Done
-        ),
-        singleLine = true,
-        keyboardActions = KeyboardActions {
-            localFocusManager.clearFocus()
-        },
-        maxLines = 1,
-        value = password.value,
-        onValueChange = {
-            password.value = it
-            onTextSelected(it)
-        },
-        leadingIcon = {
-            Icon(painter = painterResource, contentDescription = "")
-        },
-        trailingIcon = {
-            val iconImage = if(passwordVisible.value) {
-                painterResource(id = R.drawable.visibility)
-            } else{
-                painterResource(id = R.drawable.visibility_off)
-            }
-            val description = if(passwordVisible.value){
-                stringResource(id = R.string.hide_password)
-            } else {
-                stringResource(id = R.string.show_password)
-            }
-
-            IconButton(onClick = { passwordVisible.value = !passwordVisible.value }) {
-                Icon(painter = iconImage, contentDescription = description)
-            }
-        },
-        visualTransformation = if(passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
-        isError = !errorStatus
-    )
-}
-
+@Preview
 @Composable
 fun MultilineTextFieldComponent(
-    value: String,
-    onTextChanged: (String) -> Unit
-){
+    value: String = "",
+    onTextChanged: (String) -> Unit = {}
+) {
     var text by remember { mutableStateOf(value) }
 
     OutlinedTextField(
         modifier = Modifier
             .fillMaxWidth()
             .height(120.dp)
-            .padding(start = 15.dp, top = 10.dp, end = 15.dp)
+            .padding(start = 40.dp, top = 10.dp, end = 40.dp)
             .background(Color.White, RoundedCornerShape(10.dp)),
         shape = RoundedCornerShape(10.dp),
         value = text,
-        onValueChange = {input ->
+        onValueChange = { input ->
             if (input.length <= 250) {
                 text = input
                 onTextChanged(input)
@@ -412,12 +305,11 @@ fun EmailDisplayComponent(email: String, painterResource: Painter) {
 }
 
 
-
 @Composable
 fun NameFieldComponent(
     firstName: String,
     lastName: String
-){
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -442,7 +334,7 @@ fun NameFieldComponent(
 
 
 @Composable
-fun PasswordDisplayComponent(password: String, painterResource: Painter, label: String){
+fun PasswordDisplayComponent(password: String, painterResource: Painter, label: String) {
     OutlinedTextField(
         modifier = Modifier
             .fillMaxWidth()
@@ -463,94 +355,4 @@ fun PasswordDisplayComponent(password: String, painterResource: Painter, label: 
         },
         enabled = false
     )
-}
-
-
-
-@Composable
-fun CityTextFieldLandscapeComponent(
-    labelValue: String,
-    placesAPI: PlacesAPI,
-    apiKey: String,
-    locationName: MutableState<String>,
-    onTextChanged: (String) -> Unit
-){
-    var city = remember {
-        mutableStateOf("")
-    }
-    var predictions by remember {
-        mutableStateOf(listOf<String>())
-    }
-
-    var isDropdownExpanded by remember {
-        mutableStateOf(false)
-    }
-
-    val locName by remember { mutableStateOf(locationName)}
-    locName.value = locationName.value
-
-    val coroutineScope = rememberCoroutineScope()
-
-
-    Column {
-        NormalTextComponent(value = stringResource(id = R.string.city_of_emergency))
-        BoxWithConstraints {
-            val textFieldWidth = this.maxWidth
-
-            OutlinedTextField(
-                modifier = Modifier
-                    .fillMaxWidth(),
-//                    .width(200.dp)
-//                    .height(50.dp),
-                label = { Text(text = labelValue) },
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = PrussianBlue,
-                    focusedLabelColor = PrussianBlue,
-                    cursorColor = PrussianBlue,
-                    backgroundColor = BgColor
-                ),
-                singleLine = true,
-                maxLines = 1,
-                value = (if(locName.value != "") locName.value else city.value )?: "",
-                onValueChange = {
-                    city.value = it
-                    onTextChanged(it)
-                    coroutineScope.launch(Dispatchers.IO) {
-                        try {
-                            val response = placesAPI.getPlacesAutocomplete(it, apiKey).execute()
-                            val newPredictions =
-                                response.body()?.predictions?.map { it.description } ?: listOf()
-                            withContext(Dispatchers.Main) {
-                                predictions = newPredictions
-                                isDropdownExpanded = newPredictions.isNotEmpty()
-                            }
-                        } catch (e: Exception) {
-                            println("Network request failed: ${e.message}")
-                        }
-                    }
-                },
-                enabled = locName.value == ""
-            )
-
-            DropdownMenu(
-                expanded = isDropdownExpanded,
-                onDismissRequest = { isDropdownExpanded = false },
-                modifier = Modifier
-                    .width(textFieldWidth)
-                    .align(Alignment.BottomStart)
-                    .height(112.dp)
-                    .focusable(false)
-            ) {
-                predictions.forEach { prediction ->
-                    DropdownMenuItem(onClick = {
-                        city.value = prediction
-                        isDropdownExpanded = false
-                        onTextChanged(prediction)
-                    }) {
-                        Text(text = prediction)
-                    }
-                }
-            }
-        }
-    }
 }

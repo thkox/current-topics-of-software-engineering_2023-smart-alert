@@ -5,11 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ExposedDropdownMenuBox
-import androidx.compose.material.ExposedDropdownMenuDefaults
 import androidx.compose.material.Icon
-import androidx.compose.material.TextField
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,7 +22,6 @@ import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.models.Months
 import eu.tkacas.smartalert.models.SortingCriteriaDropDown
 import eu.tkacas.smartalert.ui.theme.BlueGreen
-import java.time.Month
 
 
 @Composable
@@ -34,7 +29,8 @@ fun EnumDropdownComponent(
     enumClass: Class<CriticalWeatherPhenomenon>,
     initialSelection: CriticalWeatherPhenomenon,
     onSelected: (CriticalWeatherPhenomenon) -> Unit,
-    enabled: Boolean = true) {
+    enabled: Boolean = true
+) {
 
     var expanded by remember { mutableStateOf(false) }
     var selectedValue by remember { mutableStateOf(initialSelection) }
@@ -48,7 +44,9 @@ fun EnumDropdownComponent(
             Text(stringResource(id = selectedValue.getStringId()))
             if (enabled) {
                 Icon(
-                    painter = if (expanded) painterResource(id = R.drawable.arrow_up) else painterResource(id = R.drawable.arrow_down),
+                    painter = if (expanded) painterResource(id = R.drawable.arrow_up) else painterResource(
+                        id = R.drawable.arrow_down
+                    ),
                     contentDescription = if (expanded) "Arrow Up" else "Arrow Down"
                 )
             }
@@ -76,7 +74,11 @@ fun EnumDropdownComponent(
 }
 
 @Composable
-fun YearDropdownComponent(years: List<String>?, initialSelection: String?, onSelected: (String?) -> Unit) {
+fun YearDropdownComponent(
+    years: List<String>?,
+    initialSelection: String?,
+    onSelected: (String?) -> Unit
+) {
     var expanded by remember { mutableStateOf(false) }
     var selectedValue by remember { mutableStateOf(initialSelection) }
 
@@ -86,8 +88,12 @@ fun YearDropdownComponent(years: List<String>?, initialSelection: String?, onSel
             colors = ButtonDefaults.buttonColors(backgroundColor = BlueGreen),
         ) {
             Text(selectedValue ?: "Default Value")
-            Icon(painter = if (expanded) painterResource(id = R.drawable.arrow_up) else painterResource(id = R.drawable.arrow_down),
-                contentDescription = if (expanded) "Arrow Up" else "Arrow Down")
+            Icon(
+                painter = if (expanded) painterResource(id = R.drawable.arrow_up) else painterResource(
+                    id = R.drawable.arrow_down
+                ),
+                contentDescription = if (expanded) "Arrow Up" else "Arrow Down"
+            )
         }
 
         DropdownMenu(
@@ -112,7 +118,11 @@ fun YearDropdownComponent(years: List<String>?, initialSelection: String?, onSel
 }
 
 @Composable
-fun EnumDropdownComponentMonths(enumClass: Class<Months>, initialSelection: Months, onSelected: (Months) -> Unit) {
+fun EnumDropdownComponentMonths(
+    enumClass: Class<Months>,
+    initialSelection: Months,
+    onSelected: (Months) -> Unit
+) {
 
     var expanded by remember { mutableStateOf(false) }
     var selectedValue by remember { mutableStateOf(initialSelection) }
@@ -124,8 +134,12 @@ fun EnumDropdownComponentMonths(enumClass: Class<Months>, initialSelection: Mont
             colors = ButtonDefaults.buttonColors(backgroundColor = BlueGreen),
         ) {
             Text(stringResource(id = selectedValue.getStringId()))
-            Icon(painter = if (expanded) painterResource(id = R.drawable.arrow_up) else painterResource(id = R.drawable.arrow_down),
-                contentDescription = if (expanded) "Arrow Up" else "Arrow Down")
+            Icon(
+                painter = if (expanded) painterResource(id = R.drawable.arrow_up) else painterResource(
+                    id = R.drawable.arrow_down
+                ),
+                contentDescription = if (expanded) "Arrow Up" else "Arrow Down"
+            )
         }
 
         DropdownMenu(
@@ -153,7 +167,8 @@ fun EnumDropdownComponentMonths(enumClass: Class<Months>, initialSelection: Mont
 fun EnumDropdownComponentCriticalLevelAlert(
     enumClass: Class<CriticalLevelDropdown>,
     initialSelection: CriticalLevelDropdown,
-    onSelected: (CriticalLevelDropdown) -> Unit) {
+    onSelected: (CriticalLevelDropdown) -> Unit
+) {
 
     var expanded by remember { mutableStateOf(false) }
     var selectedValue by remember { mutableStateOf(initialSelection) }
@@ -165,8 +180,12 @@ fun EnumDropdownComponentCriticalLevelAlert(
             colors = ButtonDefaults.buttonColors(backgroundColor = BlueGreen),
         ) {
             Text(stringResource(id = selectedValue.getStringId()))
-            Icon(painter = if (expanded) painterResource(id = R.drawable.arrow_up) else painterResource(id = R.drawable.arrow_down),
-                contentDescription = if (expanded) "Arrow Up" else "Arrow Down")
+            Icon(
+                painter = if (expanded) painterResource(id = R.drawable.arrow_up) else painterResource(
+                    id = R.drawable.arrow_down
+                ),
+                contentDescription = if (expanded) "Arrow Up" else "Arrow Down"
+            )
         }
 
         DropdownMenu(
@@ -191,10 +210,11 @@ fun EnumDropdownComponentCriticalLevelAlert(
 }
 
 @Composable
-fun EnumDropdownComponentSortingCriteria (
+fun EnumDropdownComponentSortingCriteria(
     enumClass: Class<SortingCriteriaDropDown>,
     initialSelection: SortingCriteriaDropDown,
-    onSelected: (SortingCriteriaDropDown) -> Unit) {
+    onSelected: (SortingCriteriaDropDown) -> Unit
+) {
 
     var expanded by remember { mutableStateOf(false) }
     var selectedValue by remember { mutableStateOf(initialSelection) }
@@ -206,8 +226,12 @@ fun EnumDropdownComponentSortingCriteria (
             colors = ButtonDefaults.buttonColors(backgroundColor = BlueGreen),
         ) {
             Text(stringResource(id = selectedValue.getStringId()))
-            Icon(painter = if (expanded) painterResource(id = R.drawable.arrow_up) else painterResource(id = R.drawable.arrow_down),
-                contentDescription = if (expanded) "Arrow Up" else "Arrow Down")
+            Icon(
+                painter = if (expanded) painterResource(id = R.drawable.arrow_up) else painterResource(
+                    id = R.drawable.arrow_down
+                ),
+                contentDescription = if (expanded) "Arrow Up" else "Arrow Down"
+            )
         }
 
         DropdownMenu(

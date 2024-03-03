@@ -25,7 +25,10 @@ class CloudFunctionsUtils {
         }
     }
 
-    suspend fun deleteAlertsByPhenomenonAndLocation(phenomenon: String, locationID: String): Boolean {
+    suspend fun deleteAlertsByPhenomenonAndLocation(
+        phenomenon: String,
+        locationID: String
+    ): Boolean {
         val data = hashMapOf(
             "phenomenon" to phenomenon,  // Example phenomenon
             "location_id" to locationID // Example place
@@ -46,8 +49,11 @@ class CloudFunctionsUtils {
         }
     }
 
-    suspend fun deleteAlertByPhenomenonAndLocation(phenomenon: String, locationID: String, alertID: String): Boolean
-    {
+    suspend fun deleteAlertByPhenomenonAndLocation(
+        phenomenon: String,
+        locationID: String,
+        alertID: String
+    ): Boolean {
         val data = hashMapOf(
             "phenomenon" to phenomenon,
             "location_id" to locationID,

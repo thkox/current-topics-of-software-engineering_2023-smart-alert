@@ -3,6 +3,8 @@ package eu.tkacas.smartalert.database.local
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -16,7 +18,8 @@ import eu.tkacas.smartalert.models.HistoryMessage
 import eu.tkacas.smartalert.models.ListOfHistoryMessages
 import eu.tkacas.smartalert.models.ListOfLocationCriticalWeatherPhenomenonData
 
-class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, databaseName, null, databaseVersion) {
+class DatabaseHelper(context: Context) :
+    SQLiteOpenHelper(context, databaseName, null, databaseVersion) {
 
     companion object {
         private const val databaseVersion = 1
@@ -46,7 +49,12 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, databaseName,
         onCreate(db)
     }
 
-    fun addMessage(message: String, weatherPhenomenon: String, criticalLevel: String, locationName: String) {
+    fun addMessage(
+        message: String,
+        weatherPhenomenon: String,
+        criticalLevel: String,
+        locationName: String
+    ) {
         val db = this.writableDatabase
         val values = ContentValues()
         values.put(keyMessage, message)
