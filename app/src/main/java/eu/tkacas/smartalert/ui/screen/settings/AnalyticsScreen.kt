@@ -63,7 +63,11 @@ fun AnalyticsScreen(navController: NavController? = null) {
         Scaffold(
             scaffoldState = scaffoldState,
             topBar = {
-                AppBarBackView(title = stringResource(id = R.string.analytics), navController = navController)
+                AppBarBackView(
+                    title = stringResource(id = R.string.analytics),
+                    navController = navController,
+                    enableSettingsButton = false
+                )
             }
         ) {
             if (years.isNotEmpty()) {
@@ -116,7 +120,11 @@ fun AnalyticsScreen(navController: NavController? = null) {
         Scaffold(
             scaffoldState = scaffoldState,
             topBar = {
-                AppBarBackView(title = stringResource(id = R.string.analytics), navController = navController)
+                AppBarBackView(
+                    title = stringResource(id = R.string.analytics),
+                    navController = navController,
+                    enableSettingsButton = false
+                )
             }
         ) {
             if (years.isNotEmpty()) {

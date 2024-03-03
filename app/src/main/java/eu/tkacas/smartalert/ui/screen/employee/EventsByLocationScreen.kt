@@ -113,7 +113,11 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            AppBarBackView(title = stringResource(id = criticalWeatherPhenomenon.getStringId()), navController = navController)
+            AppBarBackView(
+                title = stringResource(id = criticalWeatherPhenomenon.getStringId()),
+                navController = navController,
+                enableSettingsButton = false
+            )
         },
         floatingActionButton = {
             Column(

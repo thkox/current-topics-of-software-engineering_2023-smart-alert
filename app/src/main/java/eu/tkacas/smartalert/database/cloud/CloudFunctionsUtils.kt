@@ -20,7 +20,7 @@ class CloudFunctionsUtils {
                 }.await()
             result
         } catch (e: Exception) {
-            // TODO: Handle exception here, you might want to return false or rethrow the exception
+            println("Error calling Firebase Function: ${e.message}")
             false
         }
     }

@@ -25,7 +25,11 @@ fun LanguageScreen(navController: NavController? = null) {
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            AppBarBackView(title = stringResource(id = R.string.language), navController = navController)
+            AppBarBackView(
+                title = stringResource(id = R.string.language),
+                navController = navController,
+                enableSettingsButton = false
+            )
         }
     ) {
         Column{

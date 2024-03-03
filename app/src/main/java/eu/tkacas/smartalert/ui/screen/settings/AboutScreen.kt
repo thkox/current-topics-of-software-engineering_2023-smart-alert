@@ -53,7 +53,11 @@ fun AboutScreen(navController: NavController? = null) {
         Scaffold(
             scaffoldState = scaffoldState,
             topBar = {
-                AppBarBackView(title = stringResource(id = R.string.about), navController = navController)
+                AppBarBackView(
+                    title = stringResource(id = R.string.about),
+                    navController = navController,
+                    enableSettingsButton = false
+                )
             }
         ) {
             Surface(
@@ -128,7 +132,11 @@ fun AboutScreen(navController: NavController? = null) {
         Scaffold(
             scaffoldState = scaffoldState,
             topBar = {
-                AppBarBackView(title = stringResource(id = R.string.about), navController = navController)
+                AppBarBackView(
+                    title = stringResource(id = R.string.about),
+                    navController = navController,
+                    enableSettingsButton = false
+                )
             }
         ) {
             Surface(
