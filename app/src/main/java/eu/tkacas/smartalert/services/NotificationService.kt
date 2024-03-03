@@ -57,10 +57,16 @@ class NotificationService : FirebaseMessagingService() {
         val locationName = Gson().fromJson(locationNameJson, String::class.java)
 
         // Create a custom message body
-        val messageBody = "Location: $locationName\n" +
-                "Weather Phenomenon: ${this.getString(weatherPhenomenon.getStringId())}\n" +
-                "Critical Level: ${this.getString(criticalLevel.getStringId())}\n" +
-                "Location Bounds: $locationBounds"
+//        val messageBody = "Location: $locationName\n" +
+//                "Weather Phenomenon: ${this.getString(weatherPhenomenon.getStringId())}\n" +
+//                "Critical Level: ${this.getString(criticalLevel.getStringId())}\n" +
+//                "Location Bounds: $locationBounds"
+
+        val messageBody = "URGENT: Residents in the affected area of $locationName," + " please take immediate precautions.\n" +
+            "This ${this.getString(weatherPhenomenon.getStringId())} phenomenon is with ${this.getString(criticalLevel.getStringId())} severity.\n" +
+            "Stay indoors, avoid travel and follow local authorities' instructions.\n" +
+            "Your safety is our top priority.\n" + "Stay tuned for updates."
+
 
         // Get the user's current location
         val locationViewModel = LocationViewModel(this)
