@@ -119,7 +119,7 @@ fun ButtonLandscapeComponent(value: String, onButtonClicked: () -> Unit, isEnabl
 
 
 @Composable
-fun AlertLevelButtonsRowComponent(
+fun CriticalLevelButtonsRowComponent(
     initialValue: CriticalLevel = CriticalLevel.LOW,
     onButtonClicked: (CriticalLevel) -> Unit
 ) {

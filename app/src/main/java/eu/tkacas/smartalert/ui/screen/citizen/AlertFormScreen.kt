@@ -35,11 +35,10 @@ import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.models.CitizenMessage
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.permissions.openAppSettings
-import eu.tkacas.smartalert.ui.component.AlertLevelButtonsRowComponent
+import eu.tkacas.smartalert.ui.component.CriticalLevelButtonsRowComponent
 import eu.tkacas.smartalert.ui.component.CameraButton
 import eu.tkacas.smartalert.ui.component.CameraPermissionTextProvider
 import eu.tkacas.smartalert.ui.component.EnumDropdownComponent
-import eu.tkacas.smartalert.ui.component.GeneralButtonComponent
 import eu.tkacas.smartalert.ui.component.MultilineTextFieldComponent
 import eu.tkacas.smartalert.ui.component.NormalTextComponent
 import eu.tkacas.smartalert.ui.component.NormalTextLandscapeComponent
@@ -117,7 +116,7 @@ fun AlertFormScreen(navController: NavHostController? = null) {
                 ){
                     Spacer(modifier = Modifier.size(80.dp))
                     NormalTextComponent(value = stringResource(id = R.string.emergency_level))
-                    AlertLevelButtonsRowComponent(
+                    CriticalLevelButtonsRowComponent(
                         initialValue = viewModel.selectedDangerLevelButton.value,
                         onButtonClicked = {
                             viewModel.setSelectedDangerLevelButton(it)
@@ -238,7 +237,7 @@ fun AlertFormScreen(navController: NavHostController? = null) {
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 NormalTextLandscapeComponent(value = stringResource(id = R.string.emergency_level))
-                                AlertLevelButtonsRowComponent(
+                                CriticalLevelButtonsRowComponent(
                                     initialValue = viewModel.selectedDangerLevelButton.value,
                                     onButtonClicked = {
                                         viewModel.setSelectedDangerLevelButton(it)
