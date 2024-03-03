@@ -48,14 +48,15 @@ import eu.tkacas.smartalert.ui.theme.SkyBlue
 import eu.tkacas.smartalert.ui.theme.YellowColor
 
 @Composable
-fun ButtonComponent(value: String, onButtonClicked: () -> Unit, isEnabled: Boolean = false) {
+fun ButtonComponent(
+    value: String,
+    onButtonClicked: () -> Unit,
+    isEnabled: Boolean = false,
+    isLandscape: Boolean = false
+) {
     Button(
-        modifier = Modifier
-            .fillMaxWidth()
-            .heightIn(48.dp),
-        onClick = {
-            onButtonClicked.invoke()
-        },
+        modifier = if (isLandscape) Modifier.width(185.dp) else Modifier.fillMaxWidth(),
+        onClick = onButtonClicked,
         contentPadding = PaddingValues(),
         colors = ButtonDefaults.buttonColors(Color.Transparent),
         shape = RoundedCornerShape(50.dp),
@@ -77,42 +78,6 @@ fun ButtonComponent(value: String, onButtonClicked: () -> Unit, isEnabled: Boole
                 color = Color.White,
                 fontWeight = FontWeight.Bold
             )
-
-        }
-    }
-}
-
-@Composable
-fun ButtonLandscapeComponent(value: String, onButtonClicked: () -> Unit, isEnabled: Boolean = false) {
-    Button(
-        modifier = Modifier
-            .width(185.dp)
-            .heightIn(48.dp),
-        onClick = {
-            onButtonClicked.invoke()
-        },
-        contentPadding = PaddingValues(),
-        colors = ButtonDefaults.buttonColors(Color.Transparent),
-        shape = RoundedCornerShape(50.dp),
-        enabled = isEnabled
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .heightIn(48.dp)
-                .background(
-                    color = PrussianBlue,
-                    shape = RoundedCornerShape(50.dp)
-                ),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = value,
-                fontSize = 18.sp,
-                color = Color.White,
-                fontWeight = FontWeight.Bold
-            )
-
         }
     }
 }
