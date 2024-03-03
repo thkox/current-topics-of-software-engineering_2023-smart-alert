@@ -83,6 +83,7 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
     val filteredData = data.value?.list?.filter {
         when (selectedFilter.value) {
             CriticalLevelDropdown.AllALERTS -> true
+            CriticalLevelDropdown.LASTHOUR -> it.timeStamp.let { it1 -> viewModel.isWithinLastHour(it1) }
             CriticalLevelDropdown.LOW -> it.emLevel == CriticalLevel.LOW
             CriticalLevelDropdown.NORMAL -> it.emLevel == CriticalLevel.NORMAL
             CriticalLevelDropdown.HIGH -> it.emLevel == CriticalLevel.HIGH
