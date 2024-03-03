@@ -68,29 +68,13 @@ fun CameraScreen(navController: NavHostController? = null){
                     .fillMaxWidth(),
                 onPhotoSelected = { bitmap ->
                     scope.launch {
-                        val citizenMessage = viewModel.getCitizenMessageFromPrefs(context)
-                        citizenMessage?.imageURL = viewModel.uploadPhotoToCloudStorage(bitmap = bitmap)
-                        if (citizenMessage?.imageURL != "") {
-                            viewModel.saveCitizenMessageToPrefs(context, citizenMessage)
-                            val currentLanguage = Locale.getDefault().language
-                            val toastCameraTrueMessage = when (currentLanguage) {
-                                "en" -> "Image uploaded successfully"
-                                "el" -> "Η εικόνα μεταφορτώθηκε με επιτυχία"
-                                else -> "Image uploaded successfully"
+                        viewModel.handlePhotoUpload(bitmap, context).let { (success, message) ->
+                            if (success) {
+                                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                                navController?.navigate("alertForm")
+                            } else {
+                                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
                             }
-                            Toast.makeText(context, toastCameraTrueMessage, Toast.LENGTH_SHORT).show()
-                            //Toast.makeText(context, "Image uploaded successfully", Toast.LENGTH_SHORT).show()
-                            navController?.navigate("alertForm")
-                        } else {
-                            Log.d("CameraScreen", "Image URL is empty")
-                            val currentLanguage = Locale.getDefault().language
-                            val toastCameraFalseMessage = when (currentLanguage) {
-                                "en" -> "The image did not upload correctly, please try again later"
-                                "el" -> "Η εικόνα δεν μεταφορτώθηκε σωστά, δοκιμάστε ξανά αργότερα"
-                                else -> "The image did not upload correctly, please try again later"
-                            }
-                            Toast.makeText(context, toastCameraFalseMessage, Toast.LENGTH_SHORT).show()
-                            //Toast.makeText(context, "The image did not upload correctly, please try again later", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
