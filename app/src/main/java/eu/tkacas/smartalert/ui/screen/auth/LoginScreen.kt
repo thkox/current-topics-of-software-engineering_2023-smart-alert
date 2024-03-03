@@ -1,6 +1,7 @@
 package eu.tkacas.smartalert.ui.screen.auth
 
 import android.content.res.Configuration
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,6 +17,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -23,10 +25,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Observer
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import eu.tkacas.smartalert.R
@@ -58,6 +62,17 @@ fun LoginScreen(navController: NavController? = null) {
     val config = LocalConfiguration.current
 
     val portraitMode = remember { mutableStateOf(config.orientation ) }
+
+
+
+    LaunchedEffect(key1 = loginViewModel.refreshScreen.value) {
+        loginViewModel.toastMessage.value?.let {
+            if (it.isNotEmpty()) {
+                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
 
     if (portraitMode.value == Configuration.ORIENTATION_PORTRAIT) {
         //PortraitLayout()
@@ -110,6 +125,7 @@ fun LoginScreen(navController: NavController? = null) {
                         value = stringResource(id = R.string.login),
                         onButtonClicked = {
                             loginViewModel.onEvent(LoginUIEvent.LoginButtonClicked)
+                            //focusManager.clearFocus()
                         },
                         isEnabled = loginViewModel.allValidationsPassed.value
                     )
