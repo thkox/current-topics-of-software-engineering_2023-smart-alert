@@ -1,6 +1,5 @@
 package eu.tkacas.smartalert.models
 
-import java.util.HashMap
 
 data class LocationCriticalWeatherPhenomenonData(
     val locationID: String,

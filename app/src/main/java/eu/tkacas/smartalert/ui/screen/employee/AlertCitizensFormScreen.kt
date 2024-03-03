@@ -66,7 +66,11 @@ fun AlertCitizensFormScreen(navController: NavHostController? = null){
         Scaffold(
             scaffoldState = scaffoldState,
             topBar = {
-                AppBarBackView(title = stringResource(id = R.string.alert_form), navController = navController)
+                AppBarBackView(
+                    title = stringResource(id = R.string.alert_form),
+                    navController = navController,
+                    enableSettingsButton = false
+                )
             }
         ) {
             Column(
@@ -135,7 +139,11 @@ fun AlertCitizensFormScreen(navController: NavHostController? = null){
         Scaffold(
             scaffoldState = scaffoldState,
             topBar = {
-                AppBarBackView(title = stringResource(id = R.string.alert_form), navController = navController)
+                AppBarBackView(
+                    title = stringResource(id = R.string.alert_form),
+                    navController = navController,
+                    enableSettingsButton = false
+                )
             }
         ) {
             Column(

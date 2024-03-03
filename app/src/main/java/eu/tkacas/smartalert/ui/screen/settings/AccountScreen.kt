@@ -73,7 +73,8 @@ fun AccountScreen (navController: NavController? = null) {
             topBar = {
                 AppBarBackView(
                     title = stringResource(id = R.string.account),
-                    navController = navController
+                    navController = navController,
+                    enableSettingsButton = false
                 )
             }
         ) {
@@ -168,7 +169,8 @@ fun AccountScreen (navController: NavController? = null) {
             topBar = {
                 AppBarBackView(
                     title = stringResource(id = R.string.account),
-                    navController = navController
+                    navController = navController,
+                    enableSettingsButton = false
                 )
             }
         ) {

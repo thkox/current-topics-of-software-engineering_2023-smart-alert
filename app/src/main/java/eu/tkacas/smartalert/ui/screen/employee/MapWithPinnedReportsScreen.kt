@@ -81,7 +81,11 @@ fun MapWithPinnedReportsScreen(navController: NavController? = null){
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            AppBarBackView(title = title, navController = navController)
+            AppBarBackView(
+                title = title,
+                navController = navController,
+                enableSettingsButton = false
+            )
         }
     ) {
         Column(
