@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -27,7 +28,7 @@ import androidx.navigation.NavHostController
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.app.SharedPrefManager
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
-import eu.tkacas.smartalert.ui.component.AlertLevelButtonsRowComponent
+import eu.tkacas.smartalert.ui.component.CriticalLevelButtonsRowComponent
 import eu.tkacas.smartalert.ui.component.CityTextFieldComponent
 import eu.tkacas.smartalert.ui.component.CityTextFieldLandscapeComponent
 import eu.tkacas.smartalert.ui.component.EnumDropdownComponent
@@ -51,7 +52,7 @@ fun AlertCitizensFormScreen(navController: NavHostController? = null){
 
     val config = LocalConfiguration.current
 
-    val portraitMode = remember { mutableStateOf(config.orientation ) }
+    val portraitMode = remember { mutableIntStateOf(config.orientation ) }
 
     val locationName = remember { mutableStateOf(sharedPrefManager.getLocationName()) }
 
@@ -102,7 +103,7 @@ fun AlertCitizensFormScreen(navController: NavHostController? = null){
                     )
                     Spacer(modifier = Modifier.size(16.dp))
                     NormalTextComponent(value = stringResource(id = R.string.emergency_level))
-                    AlertLevelButtonsRowComponent(
+                    CriticalLevelButtonsRowComponent(
                         initialValue = viewModel.selectedDangerLevelButton.value,
                         onButtonClicked = {
                             viewModel.setSelectedDangerLevelButton(it)
@@ -191,7 +192,7 @@ fun AlertCitizensFormScreen(navController: NavHostController? = null){
                     ) {
                         Spacer(modifier = Modifier.size(40.dp))
                         NormalTextComponent(value = stringResource(id = R.string.emergency_level))
-                        AlertLevelButtonsRowComponent(
+                        CriticalLevelButtonsRowComponent(
                             initialValue = viewModel.selectedDangerLevelButton.value,
                             onButtonClicked = {
                                 viewModel.setSelectedDangerLevelButton(it)
