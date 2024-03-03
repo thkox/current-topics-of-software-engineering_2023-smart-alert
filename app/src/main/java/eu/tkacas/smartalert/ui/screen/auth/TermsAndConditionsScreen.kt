@@ -1,8 +1,11 @@
 package eu.tkacas.smartalert.ui.screen.auth
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
@@ -16,12 +19,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import eu.tkacas.smartalert.R
+import eu.tkacas.smartalert.ui.component.ButtonComponent
 import eu.tkacas.smartalert.ui.component.HeadingTextComponent
 
 
 @Composable
-fun TermsAndConditionsScreen() {
+fun TermsAndConditionsScreen(navController: NavController? = null) {
 
     val termsOfUseIntro = stringResource(id = R.string.terms_of_use_intro)
     val termsOfUseLicense = stringResource(id = R.string.terms_of_use_license)
@@ -51,6 +56,17 @@ fun TermsAndConditionsScreen() {
                 Text(text = termsOfUseGoverningLaw)
                 Text(text = termsOfUseContactUs)
                 Text(text = termsOfUseAcknowledgement)
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center,
+                ) {
+                    ButtonComponent(
+                        value = stringResource(id = R.string.go_back),
+                        onButtonClicked = {
+                            navController?.navigateUp()
+                        }
+                    )
+                }
             }
         }
     }

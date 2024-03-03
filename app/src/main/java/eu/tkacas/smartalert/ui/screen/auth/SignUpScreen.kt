@@ -45,7 +45,6 @@ import eu.tkacas.smartalert.R.string.password
 import eu.tkacas.smartalert.R.string.terms_and_conditions
 import eu.tkacas.smartalert.R.string.register
 import eu.tkacas.smartalert.ui.component.ButtonComponent
-import eu.tkacas.smartalert.ui.component.ButtonLandscapeComponent
 import eu.tkacas.smartalert.ui.component.CheckboxComponent
 import eu.tkacas.smartalert.ui.component.ClickableLoginTextComponent
 import eu.tkacas.smartalert.ui.component.DividerTextComponent
@@ -279,12 +278,13 @@ fun SignUpScreen(navController: NavController? = null) {
                                     errorStatus = signupViewModel.registrationUIState.value.passwordError
                                 )
                                 Spacer(modifier = Modifier.height(40.dp))
-                                ButtonLandscapeComponent(
+                                ButtonComponent(
                                     value = stringResource(id = register),
                                     onButtonClicked = {
                                         signupViewModel.onEvent(SignupUIEvent.RegisterButtonClicked)
                                     },
-                                    isEnabled = signupViewModel.allValidationsPassed.value
+                                    isEnabled = signupViewModel.allValidationsPassed.value,
+                                    isLandscape = true
                                 )
                                 Spacer(modifier = Modifier.height(20.dp))
                             }

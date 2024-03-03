@@ -51,10 +51,10 @@ fun Navigation(navController: NavController = rememberNavController()) {
             if(viewModel.permissionsAreGranted()) navController.navigate("home")
             else PermissionsScreen(navController)
         }
-        composable("privacyPolicy") { PrivacyPolicyScreen() }
+        composable("privacyPolicy") { PrivacyPolicyScreen(navController) }
         composable("login") { LoginScreen(navController) }
         composable("signUp") { SignUpScreen(navController) }
-        composable("termsAndConditions") { TermsAndConditionsScreen() }
+        composable("termsAndConditions") { TermsAndConditionsScreen(navController) }
         composable("forgotPassword") { ForgotPasswordScreen(navController) }
         composable("alertCitizensForm") { AlertCitizensFormScreen(navController) }
         composable("alertForm") { AlertFormScreen(navController) }

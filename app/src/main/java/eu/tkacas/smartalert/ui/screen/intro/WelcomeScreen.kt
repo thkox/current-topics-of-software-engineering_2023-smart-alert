@@ -131,7 +131,7 @@ fun WelcomeScreen( navController: NavController? = null) {
                         .fillMaxWidth()
                         .padding(start = 16.dp),
                     verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.Start
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
                         text = stringResource(id = R.string.welcome_to_smart_alert_app),
@@ -153,7 +153,8 @@ fun WelcomeScreen( navController: NavController? = null) {
                         onButtonClicked = {
                             navController?.navigate("login")
                         },
-                        isEnabled = true
+                        isEnabled = true,
+                        isLandscape = true
                     )
                 }
             }
