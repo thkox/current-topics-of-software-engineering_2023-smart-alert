@@ -70,6 +70,13 @@ fun PhotoBottomSheetContent(
             Text(stringResource(id = R.string.there_are_no_photos_yet))
         }
     } else {
+        Box(
+            modifier = modifier
+                .padding(16.dp),
+            contentAlignment = Alignment.Center
+        ){
+            Text(stringResource(id = R.string.please_choose_a_photo_to_upload))
+        }
         LazyVerticalStaggeredGrid(
             columns = StaggeredGridCells.Fixed(2),
             horizontalArrangement = Arrangement.spacedBy(16.dp),

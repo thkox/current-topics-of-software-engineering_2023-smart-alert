@@ -1,4 +1,4 @@
-package eu.tkacas.smartalert.ui.screen.citizen.camera
+package eu.tkacas.smartalert.ui.screen.citizen
 
 import android.util.Log
 import android.widget.Toast
@@ -34,7 +34,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import eu.tkacas.smartalert.ui.component.CameraPreview
 import eu.tkacas.smartalert.ui.component.PhotoBottomSheetContent
-import eu.tkacas.smartalert.ui.theme.BlueColor
 import eu.tkacas.smartalert.ui.theme.BlueGreen
 import eu.tkacas.smartalert.viewmodel.citizen.CameraViewModel
 import kotlinx.coroutines.launch
@@ -144,6 +143,9 @@ fun CameraScreen(navController: NavHostController? = null){
                             onPhotoTaken = viewModel::onTakePhoto,
                             context = context
                         )
+                        scope.launch {
+                            scaffoldState.bottomSheetState.expand()
+                        }
                     }
                 ) {
                     Icon(

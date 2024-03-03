@@ -131,4 +131,5 @@
     <string name="all_alerts">All Alerts</string>
     <string name="last_hour">Last Hour</string>
     <string name="alphabetical">Alphabetical</string>
+    <string name="please_choose_a_photo_to_upload">Please choose a photo to upload</string>
 </resources>

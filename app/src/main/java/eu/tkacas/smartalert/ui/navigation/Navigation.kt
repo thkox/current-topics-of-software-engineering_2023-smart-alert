@@ -21,7 +21,7 @@ import eu.tkacas.smartalert.ui.screen.auth.SignUpScreen
 import eu.tkacas.smartalert.ui.screen.auth.TermsAndConditionsScreen
 import eu.tkacas.smartalert.ui.screen.citizen.AlertFormScreen
 import eu.tkacas.smartalert.ui.screen.citizen.AlertScreen
-import eu.tkacas.smartalert.ui.screen.citizen.camera.CameraScreen
+import eu.tkacas.smartalert.ui.screen.citizen.CameraScreen
 import eu.tkacas.smartalert.ui.screen.employee.AlertCitizensFormScreen
 import eu.tkacas.smartalert.ui.screen.employee.EventsByLocationScreen
 import eu.tkacas.smartalert.ui.screen.employee.GroupEventsByLocationScreen
