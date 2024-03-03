@@ -71,7 +71,7 @@ fun CameraScreen(navController: NavHostController? = null){
                         viewModel.handlePhotoUpload(bitmap, context).let { (success, message) ->
                             if (success) {
                                 Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-                                navController?.navigate("alertForm")
+                                navController?.navigateUp()
                             } else {
                                 Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
                             }

@@ -20,7 +20,6 @@ import eu.tkacas.smartalert.ui.screen.auth.PrivacyPolicyScreen
 import eu.tkacas.smartalert.ui.screen.auth.SignUpScreen
 import eu.tkacas.smartalert.ui.screen.auth.TermsAndConditionsScreen
 import eu.tkacas.smartalert.ui.screen.citizen.AlertFormScreen
-import eu.tkacas.smartalert.ui.screen.citizen.AlertScreen
 import eu.tkacas.smartalert.ui.screen.citizen.CameraScreen
 import eu.tkacas.smartalert.ui.screen.employee.AlertCitizensFormScreen
 import eu.tkacas.smartalert.ui.screen.employee.EventsByLocationScreen
@@ -82,7 +81,6 @@ fun Navigation(navController: NavController = rememberNavController()) {
                 if (userExists()) {
                     when (screen) {
                         is Screen.HomeCitizen.AlertForm -> AlertFormScreen(navController)
-                        is Screen.HomeCitizen.Alert -> AlertScreen(navController)
                     }
                 } else {
                     navController.navigate("welcome")

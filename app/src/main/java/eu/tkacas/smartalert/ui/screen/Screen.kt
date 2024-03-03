@@ -50,12 +50,6 @@ sealed class Screen<ImageVector>(val titleResId: Int, val route: String) {
             "AlertForm",
             R.drawable.alert
         )
-
-        object Alert : HomeCitizen(
-            R.string.my_reports,
-            "MyReports",
-            R.drawable.important
-        )
     }
 
     sealed class HomeEmployee(titleResId: Int, route: String, @DrawableRes val icon: Int) : Screen<Any?>(titleResId, route) {
@@ -96,7 +90,6 @@ val screensInSettings = listOf(
 
 val screensInHomeCitizen = listOf(
     Screen.HomeCitizen.AlertForm,
-    Screen.HomeCitizen.Alert
 )
 
 val screensInHomeEmployee = listOf(
