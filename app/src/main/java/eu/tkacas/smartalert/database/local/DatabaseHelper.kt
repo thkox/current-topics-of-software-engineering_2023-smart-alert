@@ -8,15 +8,12 @@ import android.database.sqlite.SQLiteOpenHelper
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
-import android.database.sqlite.SQLiteDatabase
-import android.database.sqlite.SQLiteOpenHelper
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import eu.tkacas.smartalert.models.CriticalLevel
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.models.HistoryMessage
 import eu.tkacas.smartalert.models.ListOfHistoryMessages
-import eu.tkacas.smartalert.models.ListOfLocationCriticalWeatherPhenomenonData
 
 class DatabaseHelper(context: Context) :
     SQLiteOpenHelper(context, databaseName, null, databaseVersion) {
