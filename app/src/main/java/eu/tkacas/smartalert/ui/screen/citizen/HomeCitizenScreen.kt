@@ -155,16 +155,16 @@ fun HomeCitizenScreen(navController: NavController? = null) {
                                     },
                                     color = data.value?.list?.get(index)?.criticalLevel?.getColor()?.let { colorResource(id = it) } ?: colorResource(id = R.color.colorWhite)
                                 )
-                                NotificationsHistoryDialog(
-                                    showDialog = showDialog.value,
-                                    weatherPhenomenonText = selectedWeatherPhenomenon.value ?: "",
-                                    locationText = selectedLocation.value ?: "",
-                                    dateTimeText = selectedDateTime.value ?: "",
-                                    messageText = selectedMessage.value ?: "",
-                                    onDismiss = { showDialog.value = false }
-                                )
                             }
                         }
+                        NotificationsHistoryDialog(
+                            showDialog = showDialog.value,
+                            weatherPhenomenonText = selectedWeatherPhenomenon.value ?: "",
+                            locationText = selectedLocation.value ?: "",
+                            dateTimeText = selectedDateTime.value ?: "",
+                            messageText = selectedMessage.value ?: "",
+                            onDismiss = { showDialog.value = false }
+                        )
                     } else if (error != null) {
                         Text(
                             text = stringResource(id = R.string.error) + ": ${error.value}",
