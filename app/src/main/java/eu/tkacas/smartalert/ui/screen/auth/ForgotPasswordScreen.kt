@@ -18,6 +18,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -54,9 +55,9 @@ fun ForgotPasswordScreen(navController: NavController? = null) {
             contentAlignment = Alignment.Center
         ) {
             Surface(
+                color = Color.White,
                 modifier = Modifier.padding(16.dp),
                 shape = MaterialTheme.shapes.medium,
-                color = MaterialTheme.colors.surface
             ) {
                 Column(
                     modifier = Modifier
@@ -104,9 +105,9 @@ fun ForgotPasswordScreen(navController: NavController? = null) {
             contentAlignment = Alignment.Center
         ) {
             Surface(
+                color = Color.White,
                 modifier = Modifier.padding(16.dp),
                 shape = MaterialTheme.shapes.medium,
-                color = MaterialTheme.colors.surface
             ) {
                 Column(
                     modifier = Modifier
