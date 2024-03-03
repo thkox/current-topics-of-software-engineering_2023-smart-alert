@@ -9,9 +9,9 @@ import kotlinx.coroutines.launch
 class EventsByLocationViewModel: ViewModel() {
 
     private var _cloudFunctionsUtils: CloudFunctionsUtils = CloudFunctionsUtils()
-    fun deleteAllEventsByPhenomenonAndLocation(phenomenon: String, location: String) {
+    fun deleteAllEventsByPhenomenonAndLocation(phenomenon: String, locationID: String) {
         CoroutineScope(Dispatchers.IO).launch {
-            _cloudFunctionsUtils.deleteAlertsByPhenomenonAndLocation(phenomenon, location)
+            _cloudFunctionsUtils.deleteAlertsByPhenomenonAndLocation(phenomenon, locationID)
         }
     }
 
