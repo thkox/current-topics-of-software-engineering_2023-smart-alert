@@ -50,7 +50,6 @@ fun AnalyticsScreen(navController: NavController? = null) {
     val earthquakeCount by viewModel.earthquakeCount.observeAsState(0)
     val floodCount by viewModel.floodCount.observeAsState(0)
     val wildfireCount by viewModel.wildfireCount.observeAsState(0)
-    val riverFloodCount by viewModel.riverFloodCount.observeAsState(0)
     val heatwaveCount by viewModel.heatwaveCount.observeAsState(0)
     val snowstormCount by viewModel.snowstormCount.observeAsState(0)
     val stormCount by viewModel.stormCount.observeAsState(0)
@@ -103,7 +102,6 @@ fun AnalyticsScreen(navController: NavController? = null) {
                             Pair(stringResource(R.string.earthquake), earthquakeCount),
                             Pair(stringResource(R.string.flood), floodCount),
                             Pair(stringResource(R.string.wildfire), wildfireCount),
-                            Pair(stringResource(R.string.river_flood), riverFloodCount),
                             Pair(stringResource(R.string.heatwave), heatwaveCount),
                             Pair(stringResource(R.string.snowstorm), snowstormCount),
                             Pair(stringResource(R.string.storm), stormCount),
@@ -165,7 +163,6 @@ fun AnalyticsScreen(navController: NavController? = null) {
                             Pair(stringResource(R.string.earthquake), earthquakeCount),
                             Pair(stringResource(R.string.flood), floodCount),
                             Pair(stringResource(R.string.wildfire), wildfireCount),
-                            Pair(stringResource(R.string.river_flood), riverFloodCount),
                             Pair(stringResource(R.string.heatwave), heatwaveCount),
                             Pair(stringResource(R.string.snowstorm), snowstormCount),
                             Pair(stringResource(R.string.storm), stormCount),

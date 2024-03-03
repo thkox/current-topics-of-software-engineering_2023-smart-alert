@@ -58,7 +58,6 @@
     <string name="earthquake">Earthquake</string>
     <string name="flood">Flood</string>
     <string name="wildfire">Wildfire</string>
-    <string name="river_flood">River Flood</string>
     <string name="heatwave">Heatwave</string>
     <string name="snowstorm">Snowstorm</string>
     <string name="storm">Storm</string>
