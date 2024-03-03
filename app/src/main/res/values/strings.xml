@@ -72,6 +72,7 @@
     <string name="Image_uploaded_successfully">Image uploaded successfully</string>
     <string name="number_of_reports">Number of Reports</string>
     <string name="The_reports_history_from_the_last_6_hours.">The reports history from the last 6 hours</string>
+    <string name="Notifications_history">Notifications history</string>
     <string name="critical_level">Critical Level</string>
     <string name="time">Time</string>
     <string name="delete_all">Delete All</string>

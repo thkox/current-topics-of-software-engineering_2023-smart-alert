@@ -155,7 +155,43 @@ fun AlertWithImageDialog(
                 .clip(RoundedCornerShape(10.dp))
         )
     }
+}
 
+@Composable
+fun NotificationsHistoryDialog(
+    showDialog: Boolean,
+    weatherPhenomenonText: String = "Earthquake",
+    locationText: String = "Kifissia, Athens",
+    dateTimeText: String = "2024-02-20 10:00",
+    messageText: String = "This is a test message",
+    onDismiss: () -> Unit
+){
+    if(showDialog){
+        AlertDialog(
+            onDismissRequest = onDismiss,
+            title = { Text(text = weatherPhenomenonText, color = PrussianBlue) },
+            text = {
+                Column(
+                    modifier = Modifier
+                        .size(400.dp)
+                        .padding(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(text = locationText)
+                    Text(text = dateTimeText)
+                    Text(text = messageText)
+                }
+            },
+            confirmButton = {
+                GeneralButtonComponent(
+                    value = stringResource(id = R.string.close),
+                    onButtonClicked = { onDismiss() }
+                )
+            },
+            modifier = Modifier
+                .clip(RoundedCornerShape(10.dp))
+        )
+    }
 }
 
 @Composable

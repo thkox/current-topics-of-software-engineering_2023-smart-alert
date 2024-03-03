@@ -63,9 +63,6 @@ fun GroupEventsByLocationScreen(navController: NavHostController? = null){
         SortingCriteriaDropDown.NUMBER_OF_REPORTS -> data.value?.list?.sortedByDescending { it.numOfReports }
     }
 
-
-
-
     LaunchedEffect(key1 = data.value) {
         isRefreshing.value = true
         getAlertByPhenomenonAndLocation(criticalWeatherPhenomenon.name) { success, result, err ->

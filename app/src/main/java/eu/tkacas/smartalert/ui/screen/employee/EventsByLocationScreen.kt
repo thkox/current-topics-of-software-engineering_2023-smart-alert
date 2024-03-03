@@ -263,7 +263,8 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                                             filteredData?.get(index)?.imageURL
                                         showDialog.value = true
                                     },
-                                    color = filteredData?.get(index)?.emLevel?.let { colorResource(id = it.getColor()) } ?: colorResource(id = R.color.colorWhite)                                )
+                                    color = filteredData?.get(index)?.emLevel?.let { colorResource(id = it.getColor()) } ?: colorResource(id = R.color.colorWhite)
+                                )
                                 AlertWithImageDialog(
                                     showDialog = showDialog.value,
                                     message = selectedMessage.value,
