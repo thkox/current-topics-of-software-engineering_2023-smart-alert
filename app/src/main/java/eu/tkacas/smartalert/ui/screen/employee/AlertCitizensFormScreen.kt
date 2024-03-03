@@ -173,10 +173,11 @@ fun AlertCitizensFormScreen(navController: NavHostController? = null){
                         NormalTextComponent(value = stringResource(id = R.string.weather_phenomenon_selection))
                         EnumDropdownComponent(
                             CriticalWeatherPhenomenon::class.java,
-                            initialSelection = viewModel.selectedWeatherPhenomenon.value,
+                            initialSelection = criticalWeatherPhenomenon.value,
                             onSelected = {
                                 viewModel.setSelectedWeatherPhenomenon(it)
-                            }
+                            },
+                            enabled = locationName.value == ""
                         )
                     }
                     Column(
