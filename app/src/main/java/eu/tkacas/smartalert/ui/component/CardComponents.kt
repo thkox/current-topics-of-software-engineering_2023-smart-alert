@@ -7,8 +7,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.material.Icon
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -347,3 +352,50 @@ fun LanguageCard(
     }
 }
 
+@Preview
+@Composable
+fun HistoryMessageCard(
+    weatherPhenomenonText: String = "Earthquake",
+    locationText: String = "Kifissia, Athens",
+    dateTimeText: String = "2024-02-20 10:00",
+    onClick: () -> Unit = {},
+    color : Color = Color.White
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp)
+            .clickable {
+                onClick()
+            },
+        shape = RoundedCornerShape(10.dp),
+        elevation = 4.dp,
+        backgroundColor = color
+    ){
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.padding(8.dp),
+        ){
+            Column(
+                modifier = Modifier
+                    .padding(start = 8.dp)
+                    .weight(1f),
+                verticalArrangement = Arrangement.Center
+            ){
+                Text(
+                    text = weatherPhenomenonText,
+                    fontSize = 16.sp
+                    )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(text = locationText)
+            }
+            Column(
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = dateTimeText)
+            }
+        }
+    }
+}
