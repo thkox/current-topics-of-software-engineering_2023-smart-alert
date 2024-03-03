@@ -1,7 +1,7 @@
 package eu.tkacas.smartalert.viewmodel.employee
 
 import androidx.lifecycle.ViewModel
-import eu.tkacas.smartalert.cloud.CloudFunctionsUtils
+import eu.tkacas.smartalert.database.cloud.CloudFunctionsUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

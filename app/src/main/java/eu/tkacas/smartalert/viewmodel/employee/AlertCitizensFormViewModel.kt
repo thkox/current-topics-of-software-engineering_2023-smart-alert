@@ -5,8 +5,8 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import eu.tkacas.smartalert.app.SharedPrefManager
-import eu.tkacas.smartalert.cloud.CloudFunctionsUtils
-import eu.tkacas.smartalert.cloud.storageRef
+import eu.tkacas.smartalert.database.cloud.CloudFunctionsUtils
+import eu.tkacas.smartalert.database.cloud.storageRef
 import eu.tkacas.smartalert.interfacesAPI.PlacesAPI
 import eu.tkacas.smartalert.models.Alert
 import eu.tkacas.smartalert.models.Bounds

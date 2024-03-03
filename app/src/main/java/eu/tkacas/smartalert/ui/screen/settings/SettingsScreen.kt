@@ -26,7 +26,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import eu.tkacas.smartalert.R
-import eu.tkacas.smartalert.cloud.CloudFunctionsUtils
+import eu.tkacas.smartalert.database.cloud.CloudFunctionsUtils
 import eu.tkacas.smartalert.ui.component.SettingCard
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
 import eu.tkacas.smartalert.ui.screen.screensInSettings

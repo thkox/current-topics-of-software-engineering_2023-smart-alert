@@ -5,7 +5,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import eu.tkacas.smartalert.R
-import eu.tkacas.smartalert.cloud.getStatisticsPerYear
+import eu.tkacas.smartalert.database.cloud.getStatisticsPerYear
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

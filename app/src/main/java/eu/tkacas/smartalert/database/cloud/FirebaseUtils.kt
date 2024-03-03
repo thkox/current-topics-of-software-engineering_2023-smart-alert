@@ -1,4 +1,4 @@
-package eu.tkacas.smartalert.cloud
+package eu.tkacas.smartalert.database.cloud
 
 import android.annotation.SuppressLint
 import android.widget.Toast

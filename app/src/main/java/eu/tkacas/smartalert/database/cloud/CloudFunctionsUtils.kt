@@ -1,4 +1,4 @@
-package eu.tkacas.smartalert.cloud
+package eu.tkacas.smartalert.database.cloud
 
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.ktx.functions
