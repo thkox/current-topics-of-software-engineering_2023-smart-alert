@@ -32,6 +32,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.app.SharedPrefManager
@@ -74,7 +75,9 @@ fun CardComponentWithImage(
             modifier = Modifier.padding(8.dp),
         ){
             Column(
-                modifier = Modifier.padding(start = 8.dp),
+                modifier = Modifier
+                    .padding(start = 8.dp)
+                    .weight(1f),
                 verticalArrangement = Arrangement.Center
             ){
                 Row(
