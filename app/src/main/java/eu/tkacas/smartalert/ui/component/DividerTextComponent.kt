@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.sp
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.ui.theme.GrayColor
 import eu.tkacas.smartalert.ui.theme.PrussianBlue
-import eu.tkacas.smartalert.ui.theme.TextColor
 
 
 @Composable

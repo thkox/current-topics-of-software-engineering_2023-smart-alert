@@ -33,19 +33,19 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import eu.tkacas.smartalert.R
-import eu.tkacas.smartalert.ui.component.HeadingTextComponent
 import eu.tkacas.smartalert.R.string.create_account
+import eu.tkacas.smartalert.R.string.email
 import eu.tkacas.smartalert.R.string.firstname
 import eu.tkacas.smartalert.R.string.lastname
-import eu.tkacas.smartalert.R.string.email
 import eu.tkacas.smartalert.R.string.password
 import eu.tkacas.smartalert.R.string.register
 import eu.tkacas.smartalert.ui.component.ButtonComponent
 import eu.tkacas.smartalert.ui.component.CheckboxComponent
 import eu.tkacas.smartalert.ui.component.ClickableLoginTextComponent
 import eu.tkacas.smartalert.ui.component.DividerTextComponent
-import eu.tkacas.smartalert.ui.component.TextFieldComponent
+import eu.tkacas.smartalert.ui.component.HeadingTextComponent
 import eu.tkacas.smartalert.ui.component.PasswordTextFieldComponent
+import eu.tkacas.smartalert.ui.component.TextFieldComponent
 import eu.tkacas.smartalert.ui.event.SignupUIEvent
 import eu.tkacas.smartalert.ui.theme.SkyBlue
 import eu.tkacas.smartalert.viewmodel.auth.SignupViewModel
@@ -61,7 +61,7 @@ fun SignUpScreen(navController: NavController? = null) {
 
     val config = LocalConfiguration.current
 
-    val portraitMode = remember { mutableStateOf(config.orientation ) }
+    val portraitMode = remember { mutableStateOf(config.orientation) }
 
     val acceptTermsPrefix = stringResource(id = R.string.terms_and_conditions)
     val and = stringResource(id = R.string.and)
@@ -87,7 +87,7 @@ fun SignUpScreen(navController: NavController? = null) {
         pop()
     }
 
-    LazyColumn (
+    LazyColumn(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -150,18 +150,30 @@ fun SignUpScreen(navController: NavController? = null) {
                         ) {
                             CheckboxComponent(
                                 onCheckedChange = {
-                                    signupViewModel.onEvent(SignupUIEvent.PrivacyPolicyCheckBoxClicked(it))
+                                    signupViewModel.onEvent(
+                                        SignupUIEvent.PrivacyPolicyCheckBoxClicked(
+                                            it
+                                        )
+                                    )
                                 }
                             )
                             Spacer(modifier = Modifier.height(10.dp))
                             ClickableText(
                                 text = annotatedString,
                                 onClick = { offset ->
-                                    annotatedString.getStringAnnotations(tag = "PrivacyPolicy", start = offset, end = offset).firstOrNull()?.let {
+                                    annotatedString.getStringAnnotations(
+                                        tag = "PrivacyPolicy",
+                                        start = offset,
+                                        end = offset
+                                    ).firstOrNull()?.let {
                                         println("Privacy Policy clicked")
                                         navController?.navigate("privacyPolicy")
                                     }
-                                    annotatedString.getStringAnnotations(tag = "TermsOfUse", start = offset, end = offset).firstOrNull()?.let {
+                                    annotatedString.getStringAnnotations(
+                                        tag = "TermsOfUse",
+                                        start = offset,
+                                        end = offset
+                                    ).firstOrNull()?.let {
                                         println("Terms of Use clicked")
                                         navController?.navigate("termsAndConditions")
                                     }
@@ -187,7 +199,8 @@ fun SignUpScreen(navController: NavController? = null) {
                         DividerTextComponent()
 
                         ClickableLoginTextComponent(tryingToLogin = true, onTextSelected = {
-                            navController?.navigate("login") }, context = context)
+                            navController?.navigate("login")
+                        }, context = context)
                     }
 
 

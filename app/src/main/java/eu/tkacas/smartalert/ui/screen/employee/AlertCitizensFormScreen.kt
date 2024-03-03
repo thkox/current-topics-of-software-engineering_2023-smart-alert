@@ -8,8 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material.Scaffold
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,8 +24,8 @@ import androidx.navigation.NavHostController
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.app.SharedPrefManager
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
-import eu.tkacas.smartalert.ui.component.CriticalLevelButtonsRowComponent
 import eu.tkacas.smartalert.ui.component.CityTextFieldComponent
+import eu.tkacas.smartalert.ui.component.CriticalLevelButtonsRowComponent
 import eu.tkacas.smartalert.ui.component.EnumDropdownComponent
 import eu.tkacas.smartalert.ui.component.NormalTextComponent
 import eu.tkacas.smartalert.ui.component.UploadButtonComponent
@@ -35,7 +35,7 @@ import kotlinx.coroutines.launch
 import java.util.Locale
 
 @Composable
-fun AlertCitizensFormScreen(navController: NavHostController? = null){
+fun AlertCitizensFormScreen(navController: NavHostController? = null) {
     val scaffoldState = rememberScaffoldState()
     val context = LocalContext.current
     val viewModel = AlertCitizensFormViewModel(context)
@@ -47,7 +47,8 @@ fun AlertCitizensFormScreen(navController: NavHostController? = null){
 
     val locationName = remember { mutableStateOf(sharedPrefManager.getLocationName()) }
 
-    val criticalWeatherPhenomenon = remember { mutableStateOf(sharedPrefManager.getCriticalWeatherPhenomenon()) }
+    val criticalWeatherPhenomenon =
+        remember { mutableStateOf(sharedPrefManager.getCriticalWeatherPhenomenon()) }
 
     if (locationName.value != "")
         viewModel.setSelectedWeatherPhenomenon(criticalWeatherPhenomenon.value)
@@ -61,9 +62,11 @@ fun AlertCitizensFormScreen(navController: NavHostController? = null){
                 enableSettingsButton = false
             )
         }
-    ) {it ->
-        LazyColumn (
-            modifier = Modifier.fillMaxSize().padding(it),
+    ) { it ->
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it),
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
             item {
@@ -71,14 +74,14 @@ fun AlertCitizensFormScreen(navController: NavHostController? = null){
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(it)
-                ){
+                ) {
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(16.dp),
                         verticalArrangement = Arrangement.Top,
                         horizontalAlignment = Alignment.CenterHorizontally
-                    ){
+                    ) {
                         Spacer(modifier = Modifier.size(80.dp))
                         NormalTextComponent(value = stringResource(id = R.string.city_of_emergency))
                         CityTextFieldComponent(
@@ -120,7 +123,11 @@ fun AlertCitizensFormScreen(navController: NavHostController? = null){
                                         "el" -> "Η ειδοποίηση προς τους πολίτες στάλθηκε επιτυχώς"
                                         else -> "Alert to citizens sent successfully"
                                     }
-                                    Toast.makeText(context, toastAlertCitizensMessage, Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(
+                                        context,
+                                        toastAlertCitizensMessage,
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                 }
                             }
                         )
@@ -135,7 +142,7 @@ fun AlertCitizensFormScreen(navController: NavHostController? = null){
 
 @Preview
 @Composable
-fun AlertCitizensFormScreenPreview(){
+fun AlertCitizensFormScreenPreview() {
     AlertCitizensFormScreen()
 }
 

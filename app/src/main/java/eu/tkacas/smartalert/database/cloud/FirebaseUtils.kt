@@ -11,8 +11,8 @@ import com.google.firebase.database.ValueEventListener
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.models.Bounds
 import eu.tkacas.smartalert.models.CitizenMessage2
-import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.models.CriticalLevel
+import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.models.LatLng
 import eu.tkacas.smartalert.models.ListOfLocationCriticalWeatherPhenomenonData
 import eu.tkacas.smartalert.models.ListOfSingleLocationCriticalWeatherPhenomenonData
@@ -21,11 +21,11 @@ import eu.tkacas.smartalert.models.LocationData
 import eu.tkacas.smartalert.models.SingleLocationCriticalWeatherPhenomenonData
 import java.util.Locale
 
-fun userExists() : Boolean {
+fun userExists(): Boolean {
     return FirebaseAuth.getInstance().currentUser != null
 }
 
-fun getUserID() : String {
+fun getUserID(): String {
     return FirebaseAuth.getInstance().currentUser?.uid ?: ""
 }
 
@@ -83,7 +83,13 @@ fun signInUser(email: String, password: String, onComplete: (Boolean, String?) -
         }
 }
 
-fun createUser(email: String, password: String, firstName: String, lastName: String, onComplete: (Boolean, String?) -> Unit) {
+fun createUser(
+    email: String,
+    password: String,
+    firstName: String,
+    lastName: String,
+    onComplete: (Boolean, String?) -> Unit
+) {
     FirebaseAuth
         .getInstance()
         .createUserWithEmailAndPassword(email, password)
@@ -118,7 +124,10 @@ fun getTranslatedPhenomenon(phenomenon: String): String {
 }
 
 
-fun getAlertByPhenomenonAndLocation(phenomenon: String, onComplete: (Boolean, ListOfLocationCriticalWeatherPhenomenonData?, String?) -> Unit) {
+fun getAlertByPhenomenonAndLocation(
+    phenomenon: String,
+    onComplete: (Boolean, ListOfLocationCriticalWeatherPhenomenonData?, String?) -> Unit
+) {
     val db = storageRef()
     val ref = db.getReference("alertsByPhenomenonAndLocationCountLast6h").child(phenomenon)
 
@@ -130,7 +139,13 @@ fun getAlertByPhenomenonAndLocation(phenomenon: String, onComplete: (Boolean, Li
                     val locationID = snapshot.key ?: ""
                     val locationName = snapshot.child("name").getValue(String::class.java) ?: ""
                     val numOfReports = snapshot.child("counter").getValue(Int::class.java) ?: 0
-                    data.list.add(LocationCriticalWeatherPhenomenonData(locationID, locationName, numOfReports))
+                    data.list.add(
+                        LocationCriticalWeatherPhenomenonData(
+                            locationID,
+                            locationName,
+                            numOfReports
+                        )
+                    )
                 }
                 onComplete(true, data, null)
             } else {
@@ -142,9 +157,11 @@ fun getAlertByPhenomenonAndLocation(phenomenon: String, onComplete: (Boolean, Li
                     "en" -> {
                         onComplete(false, null, "No alert found for $translatedPhenomenon")
                     }
+
                     "el" -> {
                         onComplete(false, null, "Δεν βρέθηκε ειδοποίηση για $translatedPhenomenon")
                     }
+
                     else -> {
                         onComplete(false, null, "No alert found for $translatedPhenomenon")
                     }
@@ -160,9 +177,11 @@ fun getAlertByPhenomenonAndLocation(phenomenon: String, onComplete: (Boolean, Li
                 "en" -> {
                     onComplete(false, null, "Error fetching data: ${databaseError.message}")
                 }
+
                 "el" -> {
                     onComplete(false, null, "Σφάλμα ανάκτησης δεδομένων: ${databaseError.message}")
                 }
+
                 else -> {
                     onComplete(false, null, "Error fetching data: ${databaseError.message}")
                 }
@@ -171,7 +190,10 @@ fun getAlertByPhenomenonAndLocation(phenomenon: String, onComplete: (Boolean, Li
     })
 }
 
-fun getAlertByPhenomenonAndLocationForMaps(phenomenon: String, onComplete: (Boolean, List<LocationData>?, String?) -> Unit) {
+fun getAlertByPhenomenonAndLocationForMaps(
+    phenomenon: String,
+    onComplete: (Boolean, List<LocationData>?, String?) -> Unit
+) {
     val db = storageRef()
     val ref = db.getReference("alertsByPhenomenonAndLocationLast6h").child(phenomenon)
 
@@ -180,9 +202,11 @@ fun getAlertByPhenomenonAndLocationForMaps(phenomenon: String, onComplete: (Bool
             if (dataSnapshot.exists()) {
                 val data = mutableListOf<LocationData>()
                 for (locationSnapshot in dataSnapshot.children) {
-                    for  (alertSnapshot in locationSnapshot.child("alertForms").children) {
-                        val latitude = alertSnapshot.child("location").child("latitude").getValue(Double::class.java)?:0.0
-                        val longitude = alertSnapshot.child("location").child("longitude").getValue(Double::class.java)?:0.0
+                    for (alertSnapshot in locationSnapshot.child("alertForms").children) {
+                        val latitude = alertSnapshot.child("location").child("latitude")
+                            .getValue(Double::class.java) ?: 0.0
+                        val longitude = alertSnapshot.child("location").child("longitude")
+                            .getValue(Double::class.java) ?: 0.0
                         val location = LocationData(latitude, longitude)
                         data.add(location)
                     }
@@ -197,9 +221,11 @@ fun getAlertByPhenomenonAndLocationForMaps(phenomenon: String, onComplete: (Bool
                     "en" -> {
                         onComplete(false, null, "No alert found for $translatedPhenomenon")
                     }
+
                     "el" -> {
                         onComplete(false, null, "Δεν βρέθηκε ειδοποίηση για $translatedPhenomenon")
                     }
+
                     else -> {
                         onComplete(false, null, "No alert found for $translatedPhenomenon")
                     }
@@ -215,9 +241,11 @@ fun getAlertByPhenomenonAndLocationForMaps(phenomenon: String, onComplete: (Bool
                 "en" -> {
                     onComplete(false, null, "Error fetching data: ${databaseError.message}")
                 }
+
                 "el" -> {
                     onComplete(false, null, "Σφάλμα ανάκτησης δεδομένων: ${databaseError.message}")
                 }
+
                 else -> {
                     onComplete(false, null, "Error fetching data: ${databaseError.message}")
                 }
@@ -226,34 +254,62 @@ fun getAlertByPhenomenonAndLocationForMaps(phenomenon: String, onComplete: (Bool
     })
 }
 
-fun getSpecificAlertByPhenomenonAndLocation(phenomenon: String, locationID: String, onComplete: (Boolean, ListOfSingleLocationCriticalWeatherPhenomenonData?, Bounds?, String?, String) -> Unit) {
+fun getSpecificAlertByPhenomenonAndLocation(
+    phenomenon: String,
+    locationID: String,
+    onComplete: (Boolean, ListOfSingleLocationCriticalWeatherPhenomenonData?, Bounds?, String?, String) -> Unit
+) {
     val db = storageRef()
-    val ref = db.getReference("alertsByPhenomenonAndLocationLast6h").child(phenomenon).child(locationID)
+    val ref =
+        db.getReference("alertsByPhenomenonAndLocationLast6h").child(phenomenon).child(locationID)
 
     ref.addListenerForSingleValueEvent(object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             if (dataSnapshot.exists()) {
                 val data = ListOfSingleLocationCriticalWeatherPhenomenonData(ArrayList())
                 val boundsSnapshot = dataSnapshot.child("bounds")
-                val northeastLat = boundsSnapshot.child("northeast").child("lat").getValue(Double::class.java) ?: 0.0
-                val northeastLng = boundsSnapshot.child("northeast").child("lng").getValue(Double::class.java) ?: 0.0
-                val southwestLat = boundsSnapshot.child("southwest").child("lat").getValue(Double::class.java) ?: 0.0
-                val southwestLng = boundsSnapshot.child("southwest").child("lng").getValue(Double::class.java) ?: 0.0
-                val bounds = Bounds(LatLng(northeastLat, northeastLng), LatLng(southwestLat, southwestLng))
+                val northeastLat =
+                    boundsSnapshot.child("northeast").child("lat").getValue(Double::class.java)
+                        ?: 0.0
+                val northeastLng =
+                    boundsSnapshot.child("northeast").child("lng").getValue(Double::class.java)
+                        ?: 0.0
+                val southwestLat =
+                    boundsSnapshot.child("southwest").child("lat").getValue(Double::class.java)
+                        ?: 0.0
+                val southwestLng =
+                    boundsSnapshot.child("southwest").child("lng").getValue(Double::class.java)
+                        ?: 0.0
+                val bounds =
+                    Bounds(LatLng(northeastLat, northeastLng), LatLng(southwestLat, southwestLng))
 
                 val name = dataSnapshot.child("name").getValue(String::class.java) ?: ""
 
                 for (snapshot in dataSnapshot.child("alertForms").children) {
-                    val alertID = snapshot.key?:""
-                    val imageURL = snapshot.child("imageURL").getValue(String::class.java)?:""
-                    val latitude = snapshot.child("location").child("latitude").getValue(Double::class.java)?:""
-                    val longitude = snapshot.child("location").child("longitude").getValue(Double::class.java)?:""
-                    val message = snapshot.child("message").getValue(String::class.java)?:""
-                    val criticalLevelString = snapshot.child("criticalLevel").getValue(String::class.java) ?: ""
+                    val alertID = snapshot.key ?: ""
+                    val imageURL = snapshot.child("imageURL").getValue(String::class.java) ?: ""
+                    val latitude =
+                        snapshot.child("location").child("latitude").getValue(Double::class.java)
+                            ?: ""
+                    val longitude =
+                        snapshot.child("location").child("longitude").getValue(Double::class.java)
+                            ?: ""
+                    val message = snapshot.child("message").getValue(String::class.java) ?: ""
+                    val criticalLevelString =
+                        snapshot.child("criticalLevel").getValue(String::class.java) ?: ""
                     val criticalLevel = CriticalLevel.valueOf(criticalLevelString)
-                    val time = snapshot.child("time").getValue(String::class.java)?:""
+                    val time = snapshot.child("time").getValue(String::class.java) ?: ""
                     val location = "$latitude, $longitude"
-                    data.list.add(SingleLocationCriticalWeatherPhenomenonData(alertID, location, criticalLevel, message, imageURL, time))
+                    data.list.add(
+                        SingleLocationCriticalWeatherPhenomenonData(
+                            alertID,
+                            location,
+                            criticalLevel,
+                            message,
+                            imageURL,
+                            time
+                        )
+                    )
                 }
                 onComplete(true, data, bounds, name, "Success")
             } else {
@@ -261,13 +317,33 @@ fun getSpecificAlertByPhenomenonAndLocation(phenomenon: String, locationID: Stri
                 val currentLanguage = Locale.getDefault().language
                 when (currentLanguage) {
                     "en" -> {
-                        onComplete(false, null, null, null, "No alert found for $translatedPhenomenon at $locationID")
+                        onComplete(
+                            false,
+                            null,
+                            null,
+                            null,
+                            "No alert found for $translatedPhenomenon at $locationID"
+                        )
                     }
+
                     "el" -> {
-                        onComplete(false, null, null, null, "Δεν βρέθηκε ειδοποίηση για $translatedPhenomenon στην τοποθεσία $locationID")
+                        onComplete(
+                            false,
+                            null,
+                            null,
+                            null,
+                            "Δεν βρέθηκε ειδοποίηση για $translatedPhenomenon στην τοποθεσία $locationID"
+                        )
                     }
+
                     else -> {
-                        onComplete(false, null, null, null, "No alert found for $translatedPhenomenon at $locationID")
+                        onComplete(
+                            false,
+                            null,
+                            null,
+                            null,
+                            "No alert found for $translatedPhenomenon at $locationID"
+                        )
                     }
                 }
             }
@@ -277,30 +353,60 @@ fun getSpecificAlertByPhenomenonAndLocation(phenomenon: String, locationID: Stri
             val currentLanguage = Locale.getDefault().language
             when (currentLanguage) {
                 "en" -> {
-                    onComplete(false, null, null, null, "Error fetching data: ${databaseError.message}")
+                    onComplete(
+                        false,
+                        null,
+                        null,
+                        null,
+                        "Error fetching data: ${databaseError.message}"
+                    )
                 }
+
                 "el" -> {
-                    onComplete(false, null, null, null, "Σφάλμα ανάκτησης δεδομένων: ${databaseError.message}")
+                    onComplete(
+                        false,
+                        null,
+                        null,
+                        null,
+                        "Σφάλμα ανάκτησης δεδομένων: ${databaseError.message}"
+                    )
                 }
+
                 else -> {
-                    onComplete(false, null, null, null, "Error fetching data: ${databaseError.message}")
+                    onComplete(
+                        false,
+                        null,
+                        null,
+                        null,
+                        "Error fetching data: ${databaseError.message}"
+                    )
                 }
             }
         }
     })
 }
 
-fun getSpecificAlertByPhenomenonAndLocationForMaps(phenomenon: String, locationID: String, onComplete: (Boolean, List<LocationData>?, String?) -> Unit) {
+fun getSpecificAlertByPhenomenonAndLocationForMaps(
+    phenomenon: String,
+    locationID: String,
+    onComplete: (Boolean, List<LocationData>?, String?) -> Unit
+) {
     val db = storageRef()
-    val ref = db.getReference("alertsByPhenomenonAndLocationLast6h").child(phenomenon).child(locationID).child("alertForms")
+    val ref =
+        db.getReference("alertsByPhenomenonAndLocationLast6h").child(phenomenon).child(locationID)
+            .child("alertForms")
 
     ref.addListenerForSingleValueEvent(object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             if (dataSnapshot.exists()) {
                 val data = mutableListOf<LocationData>()
                 for (snapshot in dataSnapshot.children) {
-                    val latitude = snapshot.child("location").child("latitude").getValue(Double::class.java)?:0.0
-                    val longitude = snapshot.child("location").child("longitude").getValue(Double::class.java)?:0.0
+                    val latitude =
+                        snapshot.child("location").child("latitude").getValue(Double::class.java)
+                            ?: 0.0
+                    val longitude =
+                        snapshot.child("location").child("longitude").getValue(Double::class.java)
+                            ?: 0.0
                     val location = LocationData(latitude, longitude)
                     data.add(location)
                 }
@@ -314,9 +420,11 @@ fun getSpecificAlertByPhenomenonAndLocationForMaps(phenomenon: String, locationI
                     "en" -> {
                         onComplete(false, null, "No alert found for $translatedPhenomenon")
                     }
+
                     "el" -> {
                         onComplete(false, null, "Δεν βρέθηκε ειδοποίηση για $translatedPhenomenon")
                     }
+
                     else -> {
                         onComplete(false, null, "No alert found for $translatedPhenomenon")
                     }
@@ -332,9 +440,11 @@ fun getSpecificAlertByPhenomenonAndLocationForMaps(phenomenon: String, locationI
                 "en" -> {
                     onComplete(false, null, "Error fetching data: ${databaseError.message}")
                 }
+
                 "el" -> {
                     onComplete(false, null, "Σφάλμα ανάκτησης δεδομένων: ${databaseError.message}")
                 }
+
                 else -> {
                     onComplete(false, null, "Error fetching data: ${databaseError.message}")
                 }
@@ -356,16 +466,24 @@ fun getAlertFormsByUser(onComplete: (Boolean, List<CitizenMessage2>?, String?) -
                 for (snapshot in dataSnapshot.children) {
                     // Create a citizen message object from the snapshot
                     val message = snapshot.child("message").getValue(String::class.java) ?: ""
-                    val phenomenonString = snapshot.child("criticalWeatherPhenomenon").getValue(String::class.java) ?: ""
+                    val phenomenonString =
+                        snapshot.child("criticalWeatherPhenomenon").getValue(String::class.java)
+                            ?: ""
                     val phenomenon = CriticalWeatherPhenomenon.valueOf(phenomenonString)
-                    val criticalLevelString = snapshot.child("criticalLevel").getValue(String::class.java) ?: ""
+                    val criticalLevelString =
+                        snapshot.child("criticalLevel").getValue(String::class.java) ?: ""
                     val criticalLevel = CriticalLevel.valueOf(criticalLevelString)
-                    val latitude = snapshot.child("location").child("latitude").getValue(Double::class.java) ?: 0.0
-                    val longitude = snapshot.child("location").child("longitude").getValue(Double::class.java) ?: 0.0
+                    val latitude =
+                        snapshot.child("location").child("latitude").getValue(Double::class.java)
+                            ?: 0.0
+                    val longitude =
+                        snapshot.child("location").child("longitude").getValue(Double::class.java)
+                            ?: 0.0
                     val location = LocationData(latitude, longitude)
                     // Convert timestamp to string "year-month-day hour:minute"
                     val tempTimestamp = snapshot.child("timestamp").getValue(Long::class.java) ?: 0
-                    val convertedTimestamp = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm").format(java.util.Date(tempTimestamp))
+                    val convertedTimestamp = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm")
+                        .format(java.util.Date(tempTimestamp))
                     val imageURL = snapshot.child("imageURL").getValue(String::class.java) ?: ""
 
                     val citizenMessage2 = CitizenMessage2(

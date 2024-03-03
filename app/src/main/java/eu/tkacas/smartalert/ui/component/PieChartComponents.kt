@@ -27,14 +27,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.Black
-import androidx.compose.ui.graphics.Color.Companion.Blue
-import androidx.compose.ui.graphics.Color.Companion.Cyan
 import androidx.compose.ui.graphics.Color.Companion.Gray
-import androidx.compose.ui.graphics.Color.Companion.Green
-import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.graphics.Color.Companion.Transparent
-import androidx.compose.ui.graphics.Color.Companion.Yellow
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
@@ -45,7 +39,6 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.ui.theme.PrussianBlue
-import eu.tkacas.smartalert.ui.theme.UTOrange
 
 
 @Composable
@@ -62,17 +55,6 @@ fun PieChart(
     data.values.forEachIndexed { index, values ->
         floatValue.add(index, 360 * values.toFloat() / totalSum.toFloat())
     }
-
-    // add the colors as per the number of data(no. of pie chart entries)
-    // so that each data will get a color
-//    val colors = listOf(
-//        Red,
-//        Green,
-//        Yellow,
-//        Cyan,
-//        Blue,
-//        Transparent,
-//    )
 
     val context = LocalContext.current
     val colors = listOf(
@@ -116,7 +98,8 @@ fun PieChart(
     }
 
     Column(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
             .padding(40.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -155,7 +138,6 @@ fun PieChart(
     }
 
 }
-
 
 
 @Composable
@@ -279,7 +261,8 @@ fun PieChartLandscape(
     }
 
     Row(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
             .padding(40.dp),
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically

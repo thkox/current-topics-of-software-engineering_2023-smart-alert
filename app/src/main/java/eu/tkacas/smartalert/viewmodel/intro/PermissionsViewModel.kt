@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 
-class PermissionsViewModel: ViewModel() {
+class PermissionsViewModel : ViewModel() {
 
     val visiblePermissionDialogQueue = mutableStateListOf<String>()
     private val _switchStateCoarseLocation: MutableState<Boolean> = mutableStateOf(false)
@@ -20,7 +20,7 @@ class PermissionsViewModel: ViewModel() {
         permission: String,
         isGranted: Boolean
     ) {
-        if(!isGranted) {
+        if (!isGranted) {
             when (permission) {
                 Manifest.permission.ACCESS_FINE_LOCATION -> _switchStateCoarseLocation.value = false
                 Manifest.permission.POST_NOTIFICATIONS -> _switchStateNotifications.value = false

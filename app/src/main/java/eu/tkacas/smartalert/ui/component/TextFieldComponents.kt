@@ -61,7 +61,7 @@ fun CityTextFieldComponent(
     apiKey: String,
     locationName: MutableState<String>,
     onTextChanged: (String) -> Unit
-){
+) {
     var city = remember {
         mutableStateOf("")
     }
@@ -73,7 +73,7 @@ fun CityTextFieldComponent(
         mutableStateOf(false)
     }
 
-    val locName by remember { mutableStateOf(locationName)}
+    val locName by remember { mutableStateOf(locationName) }
     locName.value = locationName.value
 
 
@@ -93,14 +93,15 @@ fun CityTextFieldComponent(
             ),
             singleLine = true,
             maxLines = 1,
-            value = (if(locName.value != "") locName.value else city.value )?: "",
+            value = (if (locName.value != "") locName.value else city.value) ?: "",
             onValueChange = {
                 city.value = it
                 onTextChanged(it)
                 coroutineScope.launch(Dispatchers.IO) {
                     try {
                         val response = placesAPI.getPlacesAutocomplete(it, apiKey).execute()
-                        val newPredictions = response.body()?.predictions?.map { it.description } ?: listOf()
+                        val newPredictions =
+                            response.body()?.predictions?.map { it.description } ?: listOf()
                         withContext(Dispatchers.Main) {
                             predictions = newPredictions
                             isDropdownExpanded = newPredictions.isNotEmpty()
@@ -179,7 +180,7 @@ fun PasswordTextFieldComponent(
     painterResource: Painter,
     onTextSelected: (String) -> Unit,
     errorStatus: Boolean = false
-){
+) {
 
     val localFocusManager = LocalFocusManager.current
     val password = remember {
@@ -219,12 +220,12 @@ fun PasswordTextFieldComponent(
             Icon(painter = painterResource, contentDescription = "")
         },
         trailingIcon = {
-            val iconImage = if(passwordVisible.value) {
+            val iconImage = if (passwordVisible.value) {
                 painterResource(id = R.drawable.visibility)
-            } else{
+            } else {
                 painterResource(id = R.drawable.visibility_off)
             }
-            val description = if(passwordVisible.value){
+            val description = if (passwordVisible.value) {
                 stringResource(id = R.string.hide_password)
             } else {
                 stringResource(id = R.string.show_password)
@@ -234,7 +235,7 @@ fun PasswordTextFieldComponent(
                 Icon(painter = iconImage, contentDescription = description)
             }
         },
-        visualTransformation = if(passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
+        visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
         isError = !errorStatus
     )
 }
@@ -244,7 +245,7 @@ fun PasswordTextFieldComponent(
 fun MultilineTextFieldComponent(
     value: String,
     onTextChanged: (String) -> Unit
-){
+) {
     var text by remember { mutableStateOf(value) }
 
     OutlinedTextField(
@@ -255,7 +256,7 @@ fun MultilineTextFieldComponent(
             .background(Color.White, RoundedCornerShape(10.dp)),
         shape = RoundedCornerShape(10.dp),
         value = text,
-        onValueChange = {input ->
+        onValueChange = { input ->
             if (input.length <= 250) {
                 text = input
                 onTextChanged(input)
@@ -303,12 +304,11 @@ fun EmailDisplayComponent(email: String, painterResource: Painter) {
 }
 
 
-
 @Composable
 fun NameFieldComponent(
     firstName: String,
     lastName: String
-){
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -333,7 +333,7 @@ fun NameFieldComponent(
 
 
 @Composable
-fun PasswordDisplayComponent(password: String, painterResource: Painter, label: String){
+fun PasswordDisplayComponent(password: String, painterResource: Painter, label: String) {
     OutlinedTextField(
         modifier = Modifier
             .fillMaxWidth()

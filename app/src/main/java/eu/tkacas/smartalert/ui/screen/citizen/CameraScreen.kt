@@ -1,10 +1,8 @@
 package eu.tkacas.smartalert.ui.screen.citizen
 
-import android.util.Log
 import android.widget.Toast
 import androidx.camera.view.CameraController
 import androidx.camera.view.LifecycleCameraController
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -12,14 +10,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Photo
 import androidx.compose.material.icons.filled.PhotoCamera
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -35,14 +30,12 @@ import androidx.navigation.NavHostController
 import eu.tkacas.smartalert.ui.component.CameraIconButton
 import eu.tkacas.smartalert.ui.component.CameraPreview
 import eu.tkacas.smartalert.ui.component.PhotoBottomSheetContent
-import eu.tkacas.smartalert.ui.theme.BlueGreen
 import eu.tkacas.smartalert.viewmodel.citizen.CameraViewModel
 import kotlinx.coroutines.launch
-import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CameraScreen(navController: NavHostController? = null){
+fun CameraScreen(navController: NavHostController? = null) {
 
     val scope = rememberCoroutineScope()
     val scaffoldState = rememberBottomSheetScaffoldState()
@@ -85,7 +78,7 @@ fun CameraScreen(navController: NavHostController? = null){
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-        ){
+        ) {
             CameraPreview(
                 controller = controller,
                 modifier = Modifier

@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import eu.tkacas.smartalert.R
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -35,6 +34,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
+import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.permissions.areAllPermissionsGranted
 import eu.tkacas.smartalert.permissions.openAppSettings
 import eu.tkacas.smartalert.ui.component.GeneralButtonComponent
@@ -96,7 +96,9 @@ fun PermissionsScreen(navController: NavController? = null) {
         onResult = { perms ->
             permissionsToRequest.forEach { permission ->
                 when (permission) {
-                    Manifest.permission.ACCESS_FINE_LOCATION -> switchStateCoarseLocation.value = perms[permission] == true
+                    Manifest.permission.ACCESS_FINE_LOCATION -> switchStateCoarseLocation.value =
+                        perms[permission] == true
+
                     Manifest.permission.POST_NOTIFICATIONS -> {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                             switchStateNotifications.value = perms[permission] == true
@@ -129,7 +131,7 @@ fun PermissionsScreen(navController: NavController? = null) {
 
     val config = LocalConfiguration.current
 
-    val portraitMode = remember { mutableStateOf(config.orientation ) }
+    val portraitMode = remember { mutableStateOf(config.orientation) }
 
     if (portraitMode.value == Configuration.ORIENTATION_PORTRAIT) {
         //PortraitLayout()
@@ -138,7 +140,11 @@ fun PermissionsScreen(navController: NavController? = null) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.size(20.dp))
-            Text(text = stringResource(id = R.string.Permissions), style = TextStyle(fontSize = 24.sp), color = PrussianBlue)
+            Text(
+                text = stringResource(id = R.string.Permissions),
+                style = TextStyle(fontSize = 24.sp),
+                color = PrussianBlue
+            )
             Spacer(modifier = Modifier.size(20.dp))
 
             PermissionCard(
@@ -177,7 +183,7 @@ fun PermissionsScreen(navController: NavController? = null) {
 
             REDUnderLinedTextComponent(
                 value = stringResource(id = R.string.Always_allow_location_permission),
-                onClick = {openAppSettings(context)}
+                onClick = { openAppSettings(context) }
             )
 
 
@@ -301,7 +307,8 @@ fun PermissionsScreen(navController: NavController? = null) {
                                 "el" -> "Παρακαλώ επιτρέψτε όλα τα δικαιώματα"
                                 else -> "Please grant all permissions"
                             }
-                            Toast.makeText(context, toastPermissionMessage, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, toastPermissionMessage, Toast.LENGTH_SHORT)
+                                .show()
                         }
                     }
                 )
@@ -319,12 +326,15 @@ fun PermissionsScreen(navController: NavController? = null) {
                     Manifest.permission.ACCESS_FINE_LOCATION -> {
                         LocationPermissionTextProvider()
                     }
+
                     Manifest.permission.ACCESS_BACKGROUND_LOCATION -> {
                         LocationPermissionTextProvider()
                     }
+
                     Manifest.permission.POST_NOTIFICATIONS -> {
                         NotificationPermissionTextProvider()
                     }
+
                     else -> return@forEach
                 },
                 isPermanentlyDeclined = !shouldShowRequestPermissionRationale(

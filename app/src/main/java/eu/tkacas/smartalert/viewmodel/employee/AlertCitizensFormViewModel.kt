@@ -10,14 +10,14 @@ import eu.tkacas.smartalert.database.cloud.storageRef
 import eu.tkacas.smartalert.interfacesAPI.PlacesAPI
 import eu.tkacas.smartalert.models.Alert
 import eu.tkacas.smartalert.models.Bounds
-import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.models.CriticalLevel
+import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.models.LatLng
 import retrofit2.Retrofit
 import retrofit2.await
 import retrofit2.converter.gson.GsonConverterFactory
 
-class AlertCitizensFormViewModel(context: Context): ViewModel() {
+class AlertCitizensFormViewModel(context: Context) : ViewModel() {
 
     val sharedPrefManager = SharedPrefManager(context)
 
@@ -28,17 +28,18 @@ class AlertCitizensFormViewModel(context: Context): ViewModel() {
 
     private val _cloudFunctionsUtils = CloudFunctionsUtils()
 
-    fun setSelectedArea(area: String){
+    fun setSelectedArea(area: String) {
         _selectedArea.value = area
     }
 
-    fun setSelectedWeatherPhenomenon(phenomenon: CriticalWeatherPhenomenon){
+    fun setSelectedWeatherPhenomenon(phenomenon: CriticalWeatherPhenomenon) {
         selectedWeatherPhenomenon.value = phenomenon
     }
 
-    fun setSelectedDangerLevelButton(level: CriticalLevel){
+    fun setSelectedDangerLevelButton(level: CriticalLevel) {
         selectedDangerLevelButton.value = level
     }
+
     private val retrofit: Retrofit
         get() = setupRetrofit()
 
@@ -67,7 +68,7 @@ class AlertCitizensFormViewModel(context: Context): ViewModel() {
     }
 
     suspend fun sendAlertToCitizens() {
-        val selectedLocation = if (_selectedArea.value.isEmpty()){
+        val selectedLocation = if (_selectedArea.value.isEmpty()) {
             sharedPrefManager.getLocationName()
         } else {
             _selectedArea.value
@@ -108,13 +109,19 @@ class AlertCitizensFormViewModel(context: Context): ViewModel() {
         }
 
         // Delete the alerts from the database (last 6 hours)
-        _cloudFunctionsUtils.deleteAlertsByPhenomenonAndLocation(selectedWeatherPhenomenon.toString(), selectedLocationID)
+        _cloudFunctionsUtils.deleteAlertsByPhenomenonAndLocation(
+            selectedWeatherPhenomenon.toString(),
+            selectedLocationID
+        )
     }
 
     private suspend fun getPlaceIdFromLocationName(locationName: String): String? {
         val placesAPI = createPlacesAPI()
         try {
-            val placesResponse = placesAPI.getPlacesAutocomplete(locationName, "AIzaSyBM31FS8qWSsNewQM5NGzpYm7pdr8q5azY").await()
+            val placesResponse = placesAPI.getPlacesAutocomplete(
+                locationName,
+                "AIzaSyBM31FS8qWSsNewQM5NGzpYm7pdr8q5azY"
+            ).await()
 
             // Check if any places were found
             if (placesResponse.predictions.isNotEmpty()) {
@@ -129,7 +136,8 @@ class AlertCitizensFormViewModel(context: Context): ViewModel() {
 
     private suspend fun getPlaceDetails(placeId: String): Bounds? {
         val placesAPI = createPlacesAPI()
-        val deferredResponse = placesAPI.getPlaceDetails(placeId, "AIzaSyBM31FS8qWSsNewQM5NGzpYm7pdr8q5azY")
+        val deferredResponse =
+            placesAPI.getPlaceDetails(placeId, "AIzaSyBM31FS8qWSsNewQM5NGzpYm7pdr8q5azY")
 
         try {
             val response = deferredResponse.await()

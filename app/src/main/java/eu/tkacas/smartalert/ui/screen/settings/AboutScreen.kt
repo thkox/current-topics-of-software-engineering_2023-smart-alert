@@ -46,7 +46,7 @@ fun AboutScreen(navController: NavController? = null) {
 
     val config = LocalConfiguration.current
 
-    val portraitMode = remember { mutableStateOf(config.orientation ) }
+    val portraitMode = remember { mutableStateOf(config.orientation) }
 
     if (portraitMode.value == Configuration.ORIENTATION_PORTRAIT) {
         //PortraitLayout()
@@ -77,9 +77,12 @@ fun AboutScreen(navController: NavController? = null) {
                         horizontalArrangement = Arrangement.Absolute.Center,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Image(painterResource(id = R.drawable.smart_alert_logo_full_transparent), contentDescription = "Logo of the Smart Alert App")
+                        Image(
+                            painterResource(id = R.drawable.smart_alert_logo_full_transparent),
+                            contentDescription = "Logo of the Smart Alert App"
+                        )
                     }
-                    Row (
+                    Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically
@@ -90,7 +93,7 @@ fun AboutScreen(navController: NavController? = null) {
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(top = 20.dp),
-                            ){
+                            ) {
                                 CenteredAboutText()
                             }
                             Spacer(modifier = Modifier.height(10.dp))
@@ -101,7 +104,7 @@ fun AboutScreen(navController: NavController? = null) {
                                 DividerComponentWithoutText()
                             }
                             Spacer(modifier = Modifier.height(15.dp))
-                            Row(modifier = Modifier.fillMaxWidth()){
+                            Row(modifier = Modifier.fillMaxWidth()) {
                                 Text(
                                     text = stringResource(id = R.string.connect_with_us),
                                     modifier = Modifier.fillMaxWidth(),
@@ -113,17 +116,44 @@ fun AboutScreen(navController: NavController? = null) {
                     }
                 }
                 //add GitHub Links
-                Column(modifier = Modifier.fillMaxWidth().padding(top = 20.dp), verticalArrangement = Arrangement.Bottom, horizontalAlignment = Alignment.CenterHorizontally) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 20.dp),
+                    verticalArrangement = Arrangement.Bottom,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
                     val context = LocalContext.current
 
                     val url1 = remember { Uri.parse("https://github.com/thkox") }
-                    ButtonWithImageComponent(onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, url1)) }, imageId = R.drawable.github_logo, buttonText = "thkox")
+                    ButtonWithImageComponent(onClick = {
+                        context.startActivity(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                url1
+                            )
+                        )
+                    }, imageId = R.drawable.github_logo, buttonText = "thkox")
 
                     val url2 = remember { Uri.parse("https://github.com/Apostolis2002") }
-                    ButtonWithImageComponent(onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, url2)) }, imageId = R.drawable.github_logo, buttonText = "ApostolisSiampanis")
+                    ButtonWithImageComponent(onClick = {
+                        context.startActivity(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                url2
+                            )
+                        )
+                    }, imageId = R.drawable.github_logo, buttonText = "ApostolisSiampanis")
 
                     val url3 = remember { Uri.parse("https://github.com/AlexanderCholis") }
-                    ButtonWithImageComponent(onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, url3)) }, imageId = R.drawable.github_logo, buttonText = "AlexanderCholis")
+                    ButtonWithImageComponent(onClick = {
+                        context.startActivity(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                url3
+                            )
+                        )
+                    }, imageId = R.drawable.github_logo, buttonText = "AlexanderCholis")
                 }
             }
         }
@@ -157,7 +187,10 @@ fun AboutScreen(navController: NavController? = null) {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         item {
-                            Image(painterResource(id = R.drawable.smart_alert_logo_full_transparent), contentDescription = "Logo of the Smart Alert App")
+                            Image(
+                                painterResource(id = R.drawable.smart_alert_logo_full_transparent),
+                                contentDescription = "Logo of the Smart Alert App"
+                            )
                             Spacer(modifier = Modifier.height(20.dp))
                             CenteredAboutText()
                             Spacer(modifier = Modifier.height(10.dp))
@@ -169,23 +202,44 @@ fun AboutScreen(navController: NavController? = null) {
                         verticalArrangement = Arrangement.Top,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                            Text(
-                                text = stringResource(id = R.string.connect_with_us),
-                                modifier = Modifier.fillMaxWidth(),
-                                textAlign = TextAlign.Center,
-                                color = PrussianBlue
+                        Text(
+                            text = stringResource(id = R.string.connect_with_us),
+                            modifier = Modifier.fillMaxWidth(),
+                            textAlign = TextAlign.Center,
+                            color = PrussianBlue
+                        )
+
+                        val context = LocalContext.current
+
+                        val url1 = remember { Uri.parse("https://github.com/thkox") }
+                        ButtonWithImageComponent(onClick = {
+                            context.startActivity(
+                                Intent(
+                                    Intent.ACTION_VIEW,
+                                    url1
+                                )
                             )
+                        }, imageId = R.drawable.github_logo, buttonText = "thkox")
 
-                            val context = LocalContext.current
+                        val url2 = remember { Uri.parse("https://github.com/Apostolis2002") }
+                        ButtonWithImageComponent(onClick = {
+                            context.startActivity(
+                                Intent(
+                                    Intent.ACTION_VIEW,
+                                    url2
+                                )
+                            )
+                        }, imageId = R.drawable.github_logo, buttonText = "ApostolisSiampanis")
 
-                            val url1 = remember { Uri.parse("https://github.com/thkox") }
-                            ButtonWithImageComponent(onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, url1)) }, imageId = R.drawable.github_logo, buttonText = "thkox")
-
-                            val url2 = remember { Uri.parse("https://github.com/Apostolis2002") }
-                            ButtonWithImageComponent(onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, url2)) }, imageId = R.drawable.github_logo, buttonText = "ApostolisSiampanis")
-
-                            val url3 = remember { Uri.parse("https://github.com/AlexanderCholis") }
-                            ButtonWithImageComponent(onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, url3)) }, imageId = R.drawable.github_logo, buttonText = "AlexanderCholis")
+                        val url3 = remember { Uri.parse("https://github.com/AlexanderCholis") }
+                        ButtonWithImageComponent(onClick = {
+                            context.startActivity(
+                                Intent(
+                                    Intent.ACTION_VIEW,
+                                    url3
+                                )
+                            )
+                        }, imageId = R.drawable.github_logo, buttonText = "AlexanderCholis")
 
                     }
                 }
@@ -196,10 +250,8 @@ fun AboutScreen(navController: NavController? = null) {
 }
 
 
-
-
 @Preview
 @Composable
-fun AboutScreenPreview(){
+fun AboutScreenPreview() {
     AboutScreen()
 }
