@@ -52,10 +52,9 @@ fun ButtonComponent(
     value: String,
     onButtonClicked: () -> Unit,
     isEnabled: Boolean = false,
-    isLandscape: Boolean = false
 ) {
     Button(
-        modifier = if (isLandscape) Modifier.width(185.dp) else Modifier.fillMaxWidth(),
+        modifier = Modifier.width(185.dp),
         onClick = onButtonClicked,
         contentPadding = PaddingValues(),
         colors = ButtonDefaults.buttonColors(Color.Transparent),

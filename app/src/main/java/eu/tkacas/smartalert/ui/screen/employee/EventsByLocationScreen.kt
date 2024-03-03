@@ -1,7 +1,6 @@
 package eu.tkacas.smartalert.ui.screen.employee
 
 import android.content.res.Configuration
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -308,12 +307,6 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
             }
         }
     }
-}
-
-fun getCriticalLevelFromRow(row2: String): String {
-    // Split the row2 string by ": " and get the second part which is the critical level
-    val parts = row2.split(": ")
-    return if (parts.size > 1) parts[1] else "Unknown"
 }
 
 @Preview
