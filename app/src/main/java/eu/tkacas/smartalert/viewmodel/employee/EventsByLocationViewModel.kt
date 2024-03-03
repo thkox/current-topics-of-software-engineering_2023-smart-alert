@@ -15,9 +15,9 @@ class EventsByLocationViewModel: ViewModel() {
         }
     }
 
-    fun deleteEventByPhenomenonAndLocation(phenomenon: String, location: String, alertID:String) {
+    fun deleteEventByPhenomenonAndLocation(phenomenon: String, locationID: String, alertID:String) {
         CoroutineScope(Dispatchers.IO).launch {
-            _cloudFunctionsUtils.deleteAlertByPhenomenonAndLocation(phenomenon, location, alertID)
+            _cloudFunctionsUtils.deleteAlertByPhenomenonAndLocation(phenomenon, locationID, alertID)
         }
     }
 }
