@@ -2,11 +2,15 @@ package eu.tkacas.smartalert.ui.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Divider
@@ -161,7 +165,50 @@ fun AlertWithImageDialog(
                 .clip(RoundedCornerShape(10.dp))
         )
     }
+}
 
+@Composable
+fun NotificationsHistoryDialog(
+    showDialog: Boolean,
+    weatherPhenomenonText: String = "Earthquake",
+    locationText: String = "Kifissia, Athens",
+    dateTimeText: String = "2024-02-20 10:00",
+    messageText: String = "This is a test message",
+    onDismiss: () -> Unit
+){
+    if(showDialog){
+        AlertDialog(
+            onDismissRequest = onDismiss,
+            title = { Text(text = weatherPhenomenonText, color = PrussianBlue) },
+            text = {
+                Box(
+                    modifier = Modifier
+                        .height(300.dp)
+                ) {
+                    LazyColumn(
+                        modifier = Modifier
+                            .padding(16.dp)
+                    ) {
+                        item {
+                            Text(text = locationText)
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(text = dateTimeText)
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(text = messageText)
+                        }
+                    }
+                }
+            },
+            confirmButton = {
+                GeneralButtonComponent(
+                    value = stringResource(id = R.string.close),
+                    onButtonClicked = { onDismiss() }
+                )
+            },
+            modifier = Modifier
+                .clip(RoundedCornerShape(10.dp))
+        )
+    }
 }
 
 @Composable
