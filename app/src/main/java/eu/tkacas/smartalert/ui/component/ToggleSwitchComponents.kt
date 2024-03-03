@@ -20,19 +20,6 @@ import eu.tkacas.smartalert.ui.theme.WhiteColor
 
 @Preview
 @Composable
-fun SwitchSample() {
-    var checked by remember { mutableStateOf(true) }
-    Switch(
-        modifier = Modifier.semantics { contentDescription = "Demo" },
-        checked = checked,
-        colors = SwitchDefaults.colors(
-            checkedThumbColor = WhiteColor,
-            checkedTrackColor = BlueColor),
-        onCheckedChange = { checked = it })
-}
-
-@Preview
-@Composable
 fun SwitchWithThumbIconSample() {
     var checked by remember { mutableStateOf(true) }
     val icon: (@Composable () -> Unit)? = if (checked) {
@@ -55,7 +42,7 @@ fun SwitchWithThumbIconSample() {
         colors = SwitchDefaults.colors(
             checkedThumbColor = WhiteColor,
             checkedTrackColor = BlueColor
-    )
+        )
     )
 }
 

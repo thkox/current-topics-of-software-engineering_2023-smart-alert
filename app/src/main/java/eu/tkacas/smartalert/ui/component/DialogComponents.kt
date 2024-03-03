@@ -46,7 +46,7 @@ fun PermissionDialog(
             ) {
                 Divider()
                 Text(
-                    text = if(isPermanentlyDeclined) {
+                    text = if (isPermanentlyDeclined) {
                         "Grant permission"
                     } else {
                         "OK"
@@ -84,7 +84,7 @@ interface PermissionTextProvider {
     fun getDescription(isPermanentlyDeclined: Boolean): String
 }
 
-class NotificationPermissionTextProvider: PermissionTextProvider {
+class NotificationPermissionTextProvider : PermissionTextProvider {
     override fun getDescription(isPermanentlyDeclined: Boolean): String {
         return if (isPermanentlyDeclined) {
             "Notification permission is required to send you alerts. Please go to app settings and enable the notification permission."
@@ -94,7 +94,7 @@ class NotificationPermissionTextProvider: PermissionTextProvider {
     }
 }
 
-class LocationPermissionTextProvider: PermissionTextProvider {
+class LocationPermissionTextProvider : PermissionTextProvider {
     override fun getDescription(isPermanentlyDeclined: Boolean): String {
         return if (isPermanentlyDeclined) {
             "Location permission is required to get your current location. Please go to app settings and enable the location permission."
@@ -104,7 +104,7 @@ class LocationPermissionTextProvider: PermissionTextProvider {
     }
 }
 
-class CameraPermissionTextProvider: PermissionTextProvider {
+class CameraPermissionTextProvider : PermissionTextProvider {
     override fun getDescription(isPermanentlyDeclined: Boolean): String {
         return if (isPermanentlyDeclined) {
             "Camera permission is required to take a picture. Please go to app settings and enable the camera permission."
@@ -120,11 +120,16 @@ fun AlertWithImageDialog(
     message: String?,
     imageURL: String?,
     onDismiss: () -> Unit
-){
-    if(showDialog){
+) {
+    if (showDialog) {
         AlertDialog(
             onDismissRequest = onDismiss,
-            title = { Text(text = stringResource(id = R.string.Citizen_message), color = PrussianBlue) },
+            title = {
+                Text(
+                    text = stringResource(id = R.string.Citizen_message),
+                    color = PrussianBlue
+                )
+            },
             text = {
                 Column(
                     modifier = Modifier
@@ -144,7 +149,8 @@ fun AlertWithImageDialog(
                         )
                     } else {
                         Text(
-                            text = stringResource(id = R.string.No_image_available), color = Color.Red,
+                            text = stringResource(id = R.string.No_image_available),
+                            color = Color.Red,
                         )
                     }
                 }
@@ -222,7 +228,6 @@ fun ConfirmDeleteDialog(
                 TextButton(
                     onClick = { onConfirm() }
                 ) {
-                    //Text("Confirm")
                     Text(text = stringResource(id = R.string.confirm), color = PrussianBlue)
                 }
             },
@@ -230,7 +235,6 @@ fun ConfirmDeleteDialog(
                 TextButton(
                     onClick = { onDismiss() }
                 ) {
-                    //Text("Cancel")
                     Text(text = stringResource(id = R.string.cancel), color = Color.Red)
                 }
             }

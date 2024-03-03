@@ -5,11 +5,10 @@ import eu.tkacas.smartalert.database.cloud.CloudFunctionsUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
-class EventsByLocationViewModel: ViewModel() {
+class EventsByLocationViewModel : ViewModel() {
 
     private var _cloudFunctionsUtils: CloudFunctionsUtils = CloudFunctionsUtils()
     fun deleteAllEventsByPhenomenonAndLocation(phenomenon: String, locationID: String) {
@@ -18,7 +17,11 @@ class EventsByLocationViewModel: ViewModel() {
         }
     }
 
-    fun deleteEventByPhenomenonAndLocation(phenomenon: String, locationID: String, alertID:String) {
+    fun deleteEventByPhenomenonAndLocation(
+        phenomenon: String,
+        locationID: String,
+        alertID: String
+    ) {
         CoroutineScope(Dispatchers.IO).launch {
             _cloudFunctionsUtils.deleteAlertByPhenomenonAndLocation(phenomenon, locationID, alertID)
         }

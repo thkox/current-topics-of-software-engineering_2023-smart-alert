@@ -1,7 +1,6 @@
 package eu.tkacas.smartalert.ui.screen.employee
 
 import android.content.res.Configuration
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -36,9 +35,9 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.app.SharedPrefManager
+import eu.tkacas.smartalert.database.cloud.getSpecificAlertByPhenomenonAndLocation
 import eu.tkacas.smartalert.models.CriticalLevel
 import eu.tkacas.smartalert.models.CriticalLevelDropdown
-import eu.tkacas.smartalert.database.cloud.getSpecificAlertByPhenomenonAndLocation
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.models.ListOfSingleLocationCriticalWeatherPhenomenonData
 import eu.tkacas.smartalert.ui.component.AlertWithImageDialog
@@ -83,7 +82,12 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
     val filteredData = data.value?.list?.filter {
         when (selectedFilter.value) {
             CriticalLevelDropdown.AllALERTS -> true
-            CriticalLevelDropdown.LASTHOUR -> it.timeStamp.let { it1 -> viewModel.isWithinLastHour(it1) }
+            CriticalLevelDropdown.LASTHOUR -> it.timeStamp.let { it1 ->
+                viewModel.isWithinLastHour(
+                    it1
+                )
+            }
+
             CriticalLevelDropdown.LOW -> it.emLevel == CriticalLevel.LOW
             CriticalLevelDropdown.NORMAL -> it.emLevel == CriticalLevel.NORMAL
             CriticalLevelDropdown.HIGH -> it.emLevel == CriticalLevel.HIGH
@@ -92,7 +96,10 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
 
     LaunchedEffect(key1 = data.value) {
         isRefreshing.value = true
-        getSpecificAlertByPhenomenonAndLocation(criticalWeatherPhenomenon.name, locationID) { success, alertForms, areaBounds, areaName, err ->
+        getSpecificAlertByPhenomenonAndLocation(
+            criticalWeatherPhenomenon.name,
+            locationID
+        ) { success, alertForms, areaBounds, areaName, err ->
             if (success) {
                 data.value = alertForms
 
@@ -169,17 +176,20 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                 }
             }
         }
-    ){ it ->
+    ) { it ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(it)
-        ){
+        ) {
             SwipeRefresh(
                 state = rememberSwipeRefreshState(isRefreshing = isRefreshing.value),
                 onRefresh = {
                     isRefreshing.value = true
-                    getSpecificAlertByPhenomenonAndLocation(criticalWeatherPhenomenon.name, locationID) { success, alertForms, locationBounds, locationName, err ->
+                    getSpecificAlertByPhenomenonAndLocation(
+                        criticalWeatherPhenomenon.name,
+                        locationID
+                    ) { success, alertForms, locationBounds, locationName, err ->
                         if (success) {
                             data.value = alertForms
 
@@ -263,8 +273,11 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                                             filteredData?.get(index)?.imageURL
                                         showDialog.value = true
                                     },
-                                    color = filteredData?.get(index)?.emLevel?.let { colorResource(id = it.getColor()) } ?: colorResource(id = R.color.colorWhite)
-                                )
+                                    color = filteredData?.get(index)?.emLevel?.let {
+                                        colorResource(
+                                            id = it.getColor()
+                                        )
+                                    } ?: colorResource(id = R.color.colorWhite))
                                 AlertWithImageDialog(
                                     showDialog = showDialog.value,
                                     message = selectedMessage.value,
@@ -311,14 +324,8 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
     }
 }
 
-fun getCriticalLevelFromRow(row2: String): String {
-    // Split the row2 string by ": " and get the second part which is the critical level
-    val parts = row2.split(": ")
-    return if (parts.size > 1) parts[1] else "Unknown"
-}
-
 @Preview
 @Composable
-fun EventsByLocationScreenPreview(){
+fun EventsByLocationScreenPreview() {
     EventsByLocationScreen()
 }

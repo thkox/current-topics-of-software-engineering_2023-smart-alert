@@ -21,6 +21,6 @@ class MainActivity : ComponentActivity() {
 
 @Preview
 @Composable
-fun DefaultPreview(){
+fun DefaultPreview() {
     SmartAlertApp()
 }

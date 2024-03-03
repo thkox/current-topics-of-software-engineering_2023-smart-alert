@@ -2,10 +2,10 @@ package eu.tkacas.smartalert.interfacesAPI
 
 import eu.tkacas.smartalert.models.PlaceDetailsResponse
 import eu.tkacas.smartalert.models.PlacesResponse
-import kotlinx.coroutines.Deferred
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
+
 interface PlacesAPI {
     @GET("place/autocomplete/json")
     fun getPlacesAutocomplete(

@@ -6,9 +6,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material.Scaffold
+import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.Card
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.material.Text
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.runtime.Composable
@@ -86,7 +92,10 @@ fun HomeCitizenScreen(navController: NavController? = null) {
         scaffoldState = scaffoldState,
         topBar = {
             AppBarBackView(
-                title = "${stringResource(id = R.string.hello)}, $firstNameVal", navController = navController, enableBackButton = false)
+                title = "${stringResource(id = R.string.hello)}, $firstNameVal",
+                navController = navController,
+                enableBackButton = false
+            )
         },
         floatingActionButton = {
             FloatingActionButton(
@@ -95,7 +104,7 @@ fun HomeCitizenScreen(navController: NavController? = null) {
                 onClick = {
                     navController?.navigate("alertForm")
                 }
-            ){
+            ) {
                 Image(painterResource(id = R.drawable.add), contentDescription = null)
             }
         }

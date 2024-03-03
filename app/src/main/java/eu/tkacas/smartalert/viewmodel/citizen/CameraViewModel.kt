@@ -17,15 +17,40 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.tasks.await
 import java.io.ByteArrayOutputStream
+import java.util.Locale
 import java.util.UUID
 
-class CameraViewModel: ViewModel() {
+class CameraViewModel : ViewModel() {
 
     private val _bitmaps = MutableStateFlow<List<Bitmap>>(emptyList())
     val bitmaps = _bitmaps.asStateFlow()
 
     fun onTakePhoto(bitmap: Bitmap) {
         _bitmaps.value += bitmap
+    }
+
+    suspend fun handlePhotoUpload(bitmap: Bitmap, context: Context): Pair<Boolean, String> {
+        val citizenMessage = getCitizenMessageFromPrefs(context)
+        citizenMessage?.imageURL = uploadPhotoToCloudStorage(bitmap = bitmap)
+        return if (citizenMessage?.imageURL != "") {
+            saveCitizenMessageToPrefs(context, citizenMessage)
+            val currentLanguage = Locale.getDefault().language
+            val toastCameraTrueMessage = when (currentLanguage) {
+                "en" -> "Image uploaded successfully"
+                "el" -> "Η εικόνα μεταφορτώθηκε με επιτυχία"
+                else -> "Image uploaded successfully"
+            }
+            Pair(true, toastCameraTrueMessage)
+        } else {
+            Log.d("CameraScreen", "Image URL is empty")
+            val currentLanguage = Locale.getDefault().language
+            val toastCameraFalseMessage = when (currentLanguage) {
+                "en" -> "The image did not upload correctly, please try again later"
+                "el" -> "Η εικόνα δεν μεταφορτώθηκε σωστά, δοκιμάστε ξανά αργότερα"
+                else -> "The image did not upload correctly, please try again later"
+            }
+            Pair(false, toastCameraFalseMessage)
+        }
     }
 
     fun takePhoto(
@@ -39,7 +64,7 @@ class CameraViewModel: ViewModel() {
                 override fun onCaptureSuccess(image: ImageProxy) {
                     super.onCaptureSuccess(image)
 
-                    val matrix = Matrix().apply{
+                    val matrix = Matrix().apply {
                         postRotate(image.imageInfo.rotationDegrees.toFloat())
                     }
 
@@ -63,7 +88,8 @@ class CameraViewModel: ViewModel() {
             }
         )
     }
-    suspend fun uploadPhotoToCloudStorage(bitmap: Bitmap): String {
+
+    private suspend fun uploadPhotoToCloudStorage(bitmap: Bitmap): String {
         // Convert the Bitmap to a byte array
         val boas = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, boas)
@@ -100,13 +126,16 @@ class CameraViewModel: ViewModel() {
         return Gson().fromJson(jsonString, CitizenMessage::class.java)
     }
 
-    fun saveCitizenMessageToPrefs(context: Context, citizenMessage: CitizenMessage? = null) {
+    private fun saveCitizenMessageToPrefs(
+        context: Context,
+        citizenMessage: CitizenMessage? = null
+    ) {
         val jsonString = citizenMessage?.let { citizenMessageToJson(it) }
         val prefs = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         prefs.edit().putString("citizenMessage", jsonString).apply()
     }
 
-    fun getCitizenMessageFromPrefs(context: Context): CitizenMessage? {
+    private fun getCitizenMessageFromPrefs(context: Context): CitizenMessage? {
         val prefs = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         val jsonString = prefs.getString("citizenMessage", null)
         return if (jsonString != null) {
