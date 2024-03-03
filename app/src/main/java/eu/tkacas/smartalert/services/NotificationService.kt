@@ -21,8 +21,8 @@ import eu.tkacas.smartalert.MainActivity
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.cloud.saveToken
 import eu.tkacas.smartalert.models.Bounds
+import eu.tkacas.smartalert.models.CriticalLevel
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
-import eu.tkacas.smartalert.models.EmergencyLevel
 import eu.tkacas.smartalert.models.LocationData
 import eu.tkacas.smartalert.viewmodel.LocationViewModel
 import kotlinx.coroutines.runBlocking
@@ -54,13 +54,13 @@ class NotificationService : FirebaseMessagingService() {
         // Parse the locationBounds data into a Bounds object
         val locationBounds = Gson().fromJson(locationBoundsJson, Bounds::class.java)
         val weatherPhenomenon = Gson().fromJson(weatherPhenomenonJson, CriticalWeatherPhenomenon::class.java)
-        val criticalLevel = Gson().fromJson(criticalLevelJson, EmergencyLevel::class.java)
+        val criticalLevel = Gson().fromJson(criticalLevelJson, CriticalLevel::class.java)
         val locationName = Gson().fromJson(locationNameJson, String::class.java)
 
         // Create a custom message body
         val messageBody = "Location: $locationName\n" +
-                "Weather Phenomenon: ${weatherPhenomenon.getStringId()}\n" +
-                "Critical Level: ${criticalLevel.getStringId()}\n" +
+                "Weather Phenomenon: ${this.getString(weatherPhenomenon.getStringId())}\n" +
+                "Critical Level: ${this.getString(criticalLevel.getStringId())}\n" +
                 "Location Bounds: $locationBounds"
 
         // Get the user's current location
