@@ -11,7 +11,7 @@ import eu.tkacas.smartalert.interfacesAPI.PlacesAPI
 import eu.tkacas.smartalert.models.Alert
 import eu.tkacas.smartalert.models.Bounds
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
-import eu.tkacas.smartalert.models.EmergencyLevel
+import eu.tkacas.smartalert.models.CriticalLevel
 import eu.tkacas.smartalert.models.LatLng
 import retrofit2.Retrofit
 import retrofit2.await
@@ -24,7 +24,7 @@ class AlertCitizensFormViewModel(context: Context): ViewModel() {
     private val _selectedArea = mutableStateOf("")
 
     val selectedWeatherPhenomenon = mutableStateOf(CriticalWeatherPhenomenon.EARTHQUAKE)
-    val selectedDangerLevelButton = mutableStateOf(EmergencyLevel.LOW)
+    val selectedDangerLevelButton = mutableStateOf(CriticalLevel.LOW)
 
     private val _cloudFunctionsUtils = CloudFunctionsUtils()
 
@@ -36,7 +36,7 @@ class AlertCitizensFormViewModel(context: Context): ViewModel() {
         selectedWeatherPhenomenon.value = phenomenon
     }
 
-    fun setSelectedDangerLevelButton(level: EmergencyLevel){
+    fun setSelectedDangerLevelButton(level: CriticalLevel){
         selectedDangerLevelButton.value = level
     }
     private val retrofit: Retrofit

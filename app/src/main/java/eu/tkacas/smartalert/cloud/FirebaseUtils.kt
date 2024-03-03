@@ -12,7 +12,7 @@ import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.models.Bounds
 import eu.tkacas.smartalert.models.CitizenMessage2
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
-import eu.tkacas.smartalert.models.EmergencyLevel
+import eu.tkacas.smartalert.models.CriticalLevel
 import eu.tkacas.smartalert.models.LatLng
 import eu.tkacas.smartalert.models.ListOfLocationCriticalWeatherPhenomenonData
 import eu.tkacas.smartalert.models.ListOfSingleLocationCriticalWeatherPhenomenonData
@@ -230,7 +230,7 @@ fun getSpecificAlertByPhenomenonAndLocation(phenomenon: String, locationID: Stri
                     val longitude = snapshot.child("location").child("longitude").getValue(Double::class.java)?:""
                     val message = snapshot.child("message").getValue(String::class.java)?:""
                     val criticalLevelString = snapshot.child("criticalLevel").getValue(String::class.java) ?: ""
-                    val criticalLevel = EmergencyLevel.valueOf(criticalLevelString)
+                    val criticalLevel = CriticalLevel.valueOf(criticalLevelString)
                     val time = snapshot.child("time").getValue(String::class.java)?:""
                     val location = "$latitude, $longitude"
                     data.list.add(SingleLocationCriticalWeatherPhenomenonData(alertID, location, criticalLevel, message, imageURL, time))
@@ -339,7 +339,7 @@ fun getAlertFormsByUser(onComplete: (Boolean, List<CitizenMessage2>?, String?) -
                     val phenomenonString = snapshot.child("criticalWeatherPhenomenon").getValue(String::class.java) ?: ""
                     val phenomenon = CriticalWeatherPhenomenon.valueOf(phenomenonString)
                     val criticalLevelString = snapshot.child("criticalLevel").getValue(String::class.java) ?: ""
-                    val criticalLevel = EmergencyLevel.valueOf(criticalLevelString)
+                    val criticalLevel = CriticalLevel.valueOf(criticalLevelString)
                     val latitude = snapshot.child("location").child("latitude").getValue(Double::class.java) ?: 0.0
                     val longitude = snapshot.child("location").child("longitude").getValue(Double::class.java) ?: 0.0
                     val location = LocationData(latitude, longitude)
