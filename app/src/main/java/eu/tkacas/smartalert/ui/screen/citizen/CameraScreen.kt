@@ -32,6 +32,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import eu.tkacas.smartalert.ui.component.CameraIconButton
 import eu.tkacas.smartalert.ui.component.CameraPreview
 import eu.tkacas.smartalert.ui.component.PhotoBottomSheetContent
 import eu.tkacas.smartalert.ui.theme.BlueGreen
@@ -42,6 +43,7 @@ import java.util.Locale
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CameraScreen(navController: NavHostController? = null){
+
     val scope = rememberCoroutineScope()
     val scaffoldState = rememberBottomSheetScaffoldState()
     val context = LocalContext.current
@@ -53,6 +55,7 @@ fun CameraScreen(navController: NavHostController? = null){
         }
     }
     val viewModel = viewModel<CameraViewModel>()
+
     val bitmaps by viewModel.bitmaps.collectAsState()
 
     BottomSheetScaffold(
@@ -112,31 +115,18 @@ fun CameraScreen(navController: NavHostController? = null){
                     .padding(16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                IconButton(
-                    modifier = Modifier
-                        .size(50.dp)
-                        .background(
-                            color = BlueGreen,
-                            shape = RoundedCornerShape(30.dp)
-                        ),
+
+                CameraIconButton(
                     onClick = {
                         scope.launch {
                             scaffoldState.bottomSheetState.expand()
                         }
-                    }
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Photo,
-                        contentDescription = "Open gallery"
-                    )
-                }
-                IconButton(
-                    modifier = Modifier
-                        .size(50.dp)
-                        .background(
-                            color = BlueGreen,
-                            shape = RoundedCornerShape(30.dp)
-                        ),
+                    },
+                    icon = Icons.Default.Photo,
+                    contentDescription = "Open gallery"
+                )
+
+                CameraIconButton(
                     onClick = {
                         viewModel.takePhoto(
                             controller = controller,
@@ -146,13 +136,11 @@ fun CameraScreen(navController: NavHostController? = null){
                         scope.launch {
                             scaffoldState.bottomSheetState.expand()
                         }
-                    }
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.PhotoCamera,
-                        contentDescription = "Take photo"
-                    )
-                }
+                    },
+                    icon = Icons.Default.PhotoCamera,
+                    contentDescription = "Take photo"
+                )
+
                 Box(
                     Modifier
                         .size(48.dp)
