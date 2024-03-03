@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import eu.tkacas.smartalert.app.SharedPrefManager
+import eu.tkacas.smartalert.cloud.CloudFunctionsUtils
 import eu.tkacas.smartalert.cloud.storageRef
 import eu.tkacas.smartalert.interfacesAPI.PlacesAPI
 import eu.tkacas.smartalert.models.Alert
@@ -12,7 +13,6 @@ import eu.tkacas.smartalert.models.Bounds
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.models.EmergencyLevel
 import eu.tkacas.smartalert.models.LatLng
-import kotlinx.coroutines.*
 import retrofit2.Retrofit
 import retrofit2.await
 import retrofit2.converter.gson.GsonConverterFactory
@@ -21,12 +21,15 @@ class AlertCitizensFormViewModel(context: Context): ViewModel() {
 
     val sharedPrefManager = SharedPrefManager(context)
 
-    val selectedArea = mutableStateOf("")
+    private val _selectedArea = mutableStateOf("")
+
     val selectedWeatherPhenomenon = mutableStateOf(CriticalWeatherPhenomenon.EARTHQUAKE)
     val selectedDangerLevelButton = mutableStateOf(EmergencyLevel.LOW)
 
+    private val _cloudFunctionsUtils = CloudFunctionsUtils()
+
     fun setSelectedArea(area: String){
-        selectedArea.value = area
+        _selectedArea.value = area
     }
 
     fun setSelectedWeatherPhenomenon(phenomenon: CriticalWeatherPhenomenon){
@@ -64,11 +67,13 @@ class AlertCitizensFormViewModel(context: Context): ViewModel() {
     }
 
     suspend fun sendAlertToCitizens() {
-        val selectedLocation = if (selectedArea.value.isEmpty()){
+        val selectedLocation = if (_selectedArea.value.isEmpty()){
             sharedPrefManager.getLocationName()
         } else {
-            selectedArea.value
+            _selectedArea.value
         }
+
+        val selectedLocationID = sharedPrefManager.getLocationID()
 
         val selectedWeatherPhenomenon = selectedWeatherPhenomenon.value
         val selectedDangerLevelButton = selectedDangerLevelButton.value
@@ -101,6 +106,9 @@ class AlertCitizensFormViewModel(context: Context): ViewModel() {
         if (key != null) {
             myRef.child(key).setValue(alert)
         }
+
+        // Delete the alerts from the database (last 6 hours)
+        _cloudFunctionsUtils.deleteAlertsByPhenomenonAndLocation(selectedWeatherPhenomenon.toString(), selectedLocationID)
     }
 
     private suspend fun getPlaceIdFromLocationName(locationName: String): String? {
