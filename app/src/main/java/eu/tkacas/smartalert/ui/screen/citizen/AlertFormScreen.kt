@@ -2,29 +2,22 @@ package eu.tkacas.smartalert.ui.screen.citizen
 
 import android.Manifest
 import android.app.Activity
-import android.content.res.Configuration
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,7 +34,6 @@ import eu.tkacas.smartalert.ui.component.CameraPermissionTextProvider
 import eu.tkacas.smartalert.ui.component.EnumDropdownComponent
 import eu.tkacas.smartalert.ui.component.MultilineTextFieldComponent
 import eu.tkacas.smartalert.ui.component.NormalTextComponent
-import eu.tkacas.smartalert.ui.component.NormalTextLandscapeComponent
 import eu.tkacas.smartalert.ui.component.PermissionDialog
 import eu.tkacas.smartalert.ui.component.UploadButtonComponent
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
@@ -89,11 +81,6 @@ fun AlertFormScreen(navController: NavHostController? = null) {
         viewModel.setPhotoURL(citizenMessagePref.imageURL)
         viewModel.setSelectedDangerLevelButton(citizenMessagePref.criticalLevel)
     }
-
-    val config = LocalConfiguration.current
-
-    val portraitMode = remember { mutableStateOf(config.orientation ) }
-
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -215,8 +202,6 @@ fun AlertFormScreen(navController: NavHostController? = null) {
                 }
             }
         }
-
-
     }
 }
 
