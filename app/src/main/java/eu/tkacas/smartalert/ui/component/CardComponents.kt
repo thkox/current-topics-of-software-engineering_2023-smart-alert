@@ -51,7 +51,8 @@ fun CardComponentWithImage(
     beDeletedEnabled: Boolean = false,
     image: CriticalWeatherPhenomenon? = null,
     onClick: () -> Unit = {},
-    onDelete: () -> Unit = {}
+    onDelete: () -> Unit = {},
+    color : Color = Color.White
 ) {
     val sharedPrefManager = SharedPrefManager(LocalContext.current)
     val weatherPhenomenon = sharedPrefManager.getCriticalWeatherPhenomenon()
@@ -65,6 +66,7 @@ fun CardComponentWithImage(
             },
         shape = RoundedCornerShape(10.dp),
         elevation = 4.dp,
+        backgroundColor = color
         ){
         Row(
             verticalAlignment = Alignment.CenterVertically,

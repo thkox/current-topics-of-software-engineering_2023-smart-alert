@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -29,27 +28,22 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.smartalert.R
-import eu.tkacas.smartalert.models.EmergencyLevel
+import eu.tkacas.smartalert.models.CriticalLevel
 import eu.tkacas.smartalert.ui.theme.BlueColor
 import eu.tkacas.smartalert.ui.theme.BlueGreen
 import eu.tkacas.smartalert.ui.theme.DarkOrange
 import eu.tkacas.smartalert.ui.theme.DarkRed
 import eu.tkacas.smartalert.ui.theme.DarkYellow
 import eu.tkacas.smartalert.ui.theme.OrangeColor
-import eu.tkacas.smartalert.ui.theme.Primary
 import eu.tkacas.smartalert.ui.theme.PrussianBlue
 import eu.tkacas.smartalert.ui.theme.RedColor
-import eu.tkacas.smartalert.ui.theme.Secondary
-import eu.tkacas.smartalert.ui.theme.SelectiveYellow
 import eu.tkacas.smartalert.ui.theme.SkyBlue
 import eu.tkacas.smartalert.ui.theme.YellowColor
 
@@ -126,8 +120,8 @@ fun ButtonLandscapeComponent(value: String, onButtonClicked: () -> Unit, isEnabl
 
 @Composable
 fun AlertLevelButtonsRowComponent(
-    initialValue: EmergencyLevel = EmergencyLevel.LOW,
-    onButtonClicked: (EmergencyLevel) -> Unit) {
+    initialValue: CriticalLevel = CriticalLevel.LOW,
+    onButtonClicked: (CriticalLevel) -> Unit) {
     var value by remember { mutableStateOf(initialValue) }
 
     Row(
@@ -135,18 +129,18 @@ fun AlertLevelButtonsRowComponent(
         ){
         Button(
             onClick = {
-                value = EmergencyLevel.LOW
+                value = CriticalLevel.LOW
                 onButtonClicked(value)
             },
             enabled = true,
             colors = ButtonDefaults.buttonColors(
-                containerColor = if (value == EmergencyLevel.LOW) YellowColor else Color.LightGray,
+                containerColor = if (value == CriticalLevel.LOW) YellowColor else Color.LightGray,
             ),
             shape = RoundedCornerShape(10.dp),
             modifier = Modifier
                 .height(50.dp)
                 .let {
-                    if (value == EmergencyLevel.LOW) it.border(
+                    if (value == CriticalLevel.LOW) it.border(
                         2.dp,
                         DarkYellow,
                         RoundedCornerShape(10.dp)
@@ -155,23 +149,23 @@ fun AlertLevelButtonsRowComponent(
         ){
             Text(
                 text = stringResource(id = R.string.low),
-                color = if (value == EmergencyLevel.LOW) PrussianBlue else Color.White
+                color = if (value == CriticalLevel.LOW) PrussianBlue else Color.White
             )
         }
         Button(
             onClick = {
-                value = EmergencyLevel.NORMAL
+                value = CriticalLevel.NORMAL
                 onButtonClicked(value)
             },
             enabled = true,
             colors = ButtonDefaults.buttonColors(
-                containerColor = if (value == EmergencyLevel.NORMAL) OrangeColor else Color.LightGray,
+                containerColor = if (value == CriticalLevel.NORMAL) OrangeColor else Color.LightGray,
             ),
             shape = RoundedCornerShape(10.dp),
             modifier = Modifier
                 .height(50.dp)
                 .let {
-                    if (value == EmergencyLevel.NORMAL) it.border(
+                    if (value == CriticalLevel.NORMAL) it.border(
                         2.dp,
                         DarkOrange,
                         RoundedCornerShape(10.dp)
@@ -180,22 +174,22 @@ fun AlertLevelButtonsRowComponent(
         ){
             Text(
                 text = stringResource(id = R.string.normal),
-                color = if (value == EmergencyLevel.NORMAL) PrussianBlue else Color.White
+                color = if (value == CriticalLevel.NORMAL) PrussianBlue else Color.White
                 )
         }
         Button(
-            onClick = { value = EmergencyLevel.HIGH
+            onClick = { value = CriticalLevel.HIGH
                 onButtonClicked(value)
             },
             enabled = true,
             colors = ButtonDefaults.buttonColors(
-                containerColor = if (value == EmergencyLevel.HIGH) RedColor else Color.LightGray,
+                containerColor = if (value == CriticalLevel.HIGH) RedColor else Color.LightGray,
             ),
             shape = RoundedCornerShape(10.dp),
             modifier = Modifier
                 .height(50.dp)
                 .let {
-                    if (value == EmergencyLevel.HIGH) it.border(
+                    if (value == CriticalLevel.HIGH) it.border(
                         2.dp,
                         DarkRed,
                         RoundedCornerShape(10.dp)
@@ -204,7 +198,7 @@ fun AlertLevelButtonsRowComponent(
         ){
             Text(
                 text = stringResource(id = R.string.high),
-                color = if (value == EmergencyLevel.HIGH) PrussianBlue else Color.White
+                color = if (value == CriticalLevel.HIGH) PrussianBlue else Color.White
             )
         }
     }
