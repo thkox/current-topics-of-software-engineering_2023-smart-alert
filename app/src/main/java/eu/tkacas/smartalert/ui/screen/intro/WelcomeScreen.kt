@@ -154,7 +154,6 @@ fun WelcomeScreen( navController: NavController? = null) {
                             navController?.navigate("login")
                         },
                         isEnabled = true,
-                        isLandscape = true
                     )
                 }
             }

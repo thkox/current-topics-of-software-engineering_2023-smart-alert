@@ -59,12 +59,6 @@ fun LoginScreen(navController: NavController? = null) {
 
     val context = LocalContext.current
 
-    val config = LocalConfiguration.current
-
-    val portraitMode = remember { mutableStateOf(config.orientation ) }
-
-
-
     LaunchedEffect(key1 = loginViewModel.refreshScreen.value) {
         loginViewModel.toastMessage.value?.let {
             if (it.isNotEmpty()) {
@@ -73,100 +67,34 @@ fun LoginScreen(navController: NavController? = null) {
         }
     }
 
-
-    if (portraitMode.value == Configuration.ORIENTATION_PORTRAIT) {
-        //PortraitLayout()
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-
-            Surface(
-                color = Color.White,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.White)
-                    .padding(28.dp)
+    LazyColumn (
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        item {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
             ) {
 
-                Column(
+                Surface(
+                    color = Color.White,
                     modifier = Modifier
                         .fillMaxSize()
+                        .background(Color.White)
+                        .padding(28.dp)
                 ) {
 
-                    HeadingTextComponent(value = stringResource(id = welcome_to_smart_alert_app))
-                    Spacer(modifier = Modifier.height(20.dp))
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ) {
 
-                    TextFieldComponent(labelValue = stringResource(id = R.string.email),
-                        painterResource(id = R.drawable.email),
-                        onTextChanged = {
-                            loginViewModel.onEvent(LoginUIEvent.EmailChanged(it))
-                        },
-                        errorStatus = loginViewModel.loginUIState.value.emailError
-                    )
+                        HeadingTextComponent(value = stringResource(id = welcome_to_smart_alert_app))
+                        Spacer(modifier = Modifier.height(20.dp))
 
-                    PasswordTextFieldComponent(
-                        labelValue = stringResource(id = R.string.password),
-                        painterResource(id = R.drawable.password),
-                        onTextSelected = {
-                            loginViewModel.onEvent(LoginUIEvent.PasswordChanged(it))
-                        },
-                        errorStatus = loginViewModel.loginUIState.value.passwordError
-                    )
-
-                    Spacer(modifier = Modifier.height(40.dp))
-                    UnderLinedTextComponent(value = stringResource(id = R.string.forgot_password), onClick = {
-                        navController?.navigate("forgotPassword")
-                    })
-
-                    Spacer(modifier = Modifier.height(40.dp))
-
-                    ButtonComponent(
-                        value = stringResource(id = R.string.login),
-                        onButtonClicked = {
-                            loginViewModel.onEvent(LoginUIEvent.LoginButtonClicked)
-                            //focusManager.clearFocus()
-                        },
-                        isEnabled = loginViewModel.allValidationsPassed.value
-                    )
-
-                    Spacer(modifier = Modifier.height(20.dp))
-
-                    DividerTextComponent()
-
-                    ClickableLoginTextComponent(tryingToLogin = false, onTextSelected = {
-                        navController?.navigate("signup")}, context = context)
-                }
-            }
-
-            if(loginViewModel.loginInProgress.value) {
-                CircularProgressIndicator(color = SkyBlue)
-            }
-        }
-    } else {
-        //LandscapeLayout()
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 10.dp),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    item {
-                        HeadingTextLandscapeComponent(value = stringResource(id = welcome_to_smart_alert_app_landscape))
-                        Spacer(modifier = Modifier.height(15.dp))
-
-                        TextFieldLandscapeComponent(
+                        TextFieldComponent(
                             labelValue = stringResource(id = R.string.email),
                             painterResource(id = R.drawable.email),
                             onTextChanged = {
@@ -175,7 +103,7 @@ fun LoginScreen(navController: NavController? = null) {
                             errorStatus = loginViewModel.loginUIState.value.emailError
                         )
 
-                        PasswordTextFieldLandscapeComponent(
+                        PasswordTextFieldComponent(
                             labelValue = stringResource(id = R.string.password),
                             painterResource(id = R.drawable.password),
                             onTextSelected = {
@@ -184,7 +112,7 @@ fun LoginScreen(navController: NavController? = null) {
                             errorStatus = loginViewModel.loginUIState.value.passwordError
                         )
 
-                        Spacer(modifier = Modifier.height(20.dp))
+                        Spacer(modifier = Modifier.height(40.dp))
                         UnderLinedTextComponent(
                             value = stringResource(id = R.string.forgot_password),
                             onClick = {
@@ -192,31 +120,32 @@ fun LoginScreen(navController: NavController? = null) {
                             })
 
                         Spacer(modifier = Modifier.height(10.dp))
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            ButtonComponent(
+                                value = stringResource(id = R.string.login),
+                                onButtonClicked = {
+                                    loginViewModel.onEvent(LoginUIEvent.LoginButtonClicked)
+                                },
+                                isEnabled = loginViewModel.allValidationsPassed.value,
+                            )
+                        }
 
-                        ButtonComponent(
-                            value = stringResource(id = R.string.login),
-                            onButtonClicked = {
-                                loginViewModel.onEvent(LoginUIEvent.LoginButtonClicked)
-                            },
-                            isEnabled = loginViewModel.allValidationsPassed.value,
-                            isLandscape = true
-                        )
 
                         Spacer(modifier = Modifier.height(20.dp))
 
                         DividerTextComponent()
 
-                        Spacer(modifier = Modifier.height(10.dp))
-
                         ClickableLoginTextComponent(tryingToLogin = false, onTextSelected = {
                             navController?.navigate("signup")
-                        }, context = LocalContext.current)
+                        }, context = context)
                     }
                 }
-            }
-            if (loginViewModel.loginInProgress.value) {
-                Box(contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator(color = SkyBlue, modifier = Modifier.size(40.dp))
+
+                if (loginViewModel.loginInProgress.value) {
+                    CircularProgressIndicator(color = SkyBlue)
                 }
             }
         }

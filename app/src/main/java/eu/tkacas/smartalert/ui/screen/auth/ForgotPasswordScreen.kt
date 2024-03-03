@@ -44,81 +44,29 @@ fun ForgotPasswordScreen(navController: NavController? = null) {
     val forgotPasswordViewModel: ForgotPasswordViewModel = viewModel()
     forgotPasswordViewModel.navController = navController
 
-    val config = LocalConfiguration.current
-
-    val portraitMode = remember { mutableStateOf(config.orientation ) }
-
-    if (portraitMode.value == Configuration.ORIENTATION_PORTRAIT) {
-        //PortraitLayout()
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Surface(
-                color = Color.White,
-                modifier = Modifier.padding(16.dp),
-                shape = MaterialTheme.shapes.medium,
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        item {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
             ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                Surface(
+                    color = Color.White,
+                    modifier = Modifier.padding(16.dp),
+                    shape = MaterialTheme.shapes.medium,
                 ) {
-                    HeadingTextComponent(value = stringResource(id = R.string.forgot_password))
-                    Spacer(modifier = Modifier.size(30.dp))
-                    Image(
-                        painter = painterResource(id = R.drawable.forgot_password_illustration),
-                        contentDescription = "Forgot Password",
+                    Column(
                         modifier = Modifier
-                            .size(250.dp)
-                    )
-                    Spacer(modifier = Modifier.size(20.dp))
-                    NormalTextComponent(value = stringResource(id = R.string.forgot_password_instructions))
-
-                    TextFieldComponent(labelValue = stringResource(id = R.string.email),
-                        painterResource(id = R.drawable.email),
-                        onTextChanged = {
-                            forgotPasswordViewModel.onEvent(ForgotPasswordUIEvent.EmailChanged(it))
-                        },
-                        errorStatus = forgotPasswordViewModel.forgotPasswordUIState.value.emailError
-                    )
-                    Spacer(modifier = Modifier.size(15.dp))
-
-                    UploadButtonComponent(
-                        value = stringResource(id = R.string.submit),
-                        onButtonClicked = {
-                            forgotPasswordViewModel.onEvent(ForgotPasswordUIEvent.ResetPasswordButtonClicked)
-                        }
-                    )
-                    Spacer(modifier = Modifier.size(50.dp))
-                    BackToLoginComponent(onTextSelected = {
-                        navController?.navigate("login")
-                    })
-                }
-            }
-        }
-    } else {
-        //LandscapeLayout()
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Surface(
-                color = Color.White,
-                modifier = Modifier.padding(16.dp),
-                shape = MaterialTheme.shapes.medium,
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp)
-                ) {
-
-                    Row(
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
+                            .fillMaxSize()
+                            .padding(16.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
+                        HeadingTextComponent(value = stringResource(id = R.string.forgot_password))
+                        Spacer(modifier = Modifier.size(30.dp))
                         Image(
                             painter = painterResource(id = R.drawable.forgot_password_illustration),
                             contentDescription = "Forgot Password",
@@ -126,33 +74,27 @@ fun ForgotPasswordScreen(navController: NavController? = null) {
                                 .size(250.dp)
                         )
                         Spacer(modifier = Modifier.size(20.dp))
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            HeadingTextLandscapeComponent(value = stringResource(id = R.string.forgot_password))
-                            Spacer(modifier = Modifier.size(30.dp))
-                            NormalTextComponent(value = stringResource(id = R.string.forgot_password_instructions))
+                        NormalTextComponent(value = stringResource(id = R.string.forgot_password_instructions))
 
-                            TextFieldLandscapeComponent(labelValue = stringResource(id = R.string.email),
-                                painterResource(id = R.drawable.email),
-                                onTextChanged = {
-                                    forgotPasswordViewModel.onEvent(ForgotPasswordUIEvent.EmailChanged(it))
-                                },
-                                errorStatus = forgotPasswordViewModel.forgotPasswordUIState.value.emailError
-                            )
-                            Spacer(modifier = Modifier.size(15.dp))
+                        TextFieldComponent(labelValue = stringResource(id = R.string.email),
+                            painterResource(id = R.drawable.email),
+                            onTextChanged = {
+                                forgotPasswordViewModel.onEvent(ForgotPasswordUIEvent.EmailChanged(it))
+                            },
+                            errorStatus = forgotPasswordViewModel.forgotPasswordUIState.value.emailError
+                        )
+                        Spacer(modifier = Modifier.size(15.dp))
 
-                            UploadButtonComponent(
-                                value = stringResource(id = R.string.submit),
-                                onButtonClicked = {
-                                    forgotPasswordViewModel.onEvent(ForgotPasswordUIEvent.ResetPasswordButtonClicked)
-                                }
-                            )
-                            Spacer(modifier = Modifier.size(15.dp))
-                            BackToLoginComponent(onTextSelected = {
-                                navController?.navigate("login")
-                            })
-                        }
+                        UploadButtonComponent(
+                            value = stringResource(id = R.string.submit),
+                            onButtonClicked = {
+                                forgotPasswordViewModel.onEvent(ForgotPasswordUIEvent.ResetPasswordButtonClicked)
+                            }
+                        )
+                        Spacer(modifier = Modifier.size(50.dp))
+                        BackToLoginComponent(onTextSelected = {
+                            navController?.navigate("login")
+                        })
                     }
                 }
             }

@@ -106,27 +106,6 @@ fun MapWithPinnedReportsScreen(navController: NavController? = null){
     }
 }
 
-//fun bitmapDescriptorFromVector(context: Context, vectorResId: Int, criticalLevel: String): BitmapDescriptor {
-//    val vectorDrawable = ContextCompat.getDrawable(context, vectorResId)
-//    val color = getCriticalLevelColor(context, criticalLevel)
-//    vectorDrawable?.setTint(color)
-//    val bitmap = Bitmap.createBitmap(vectorDrawable!!.intrinsicWidth, vectorDrawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
-//    val canvas = Canvas(bitmap)
-//    vectorDrawable.setBounds(0, 0, canvas.width, canvas.height)
-//    vectorDrawable.draw(canvas)
-//    return BitmapDescriptorFactory.fromBitmap(bitmap)
-//}
-//
-//fun getCriticalLevelColor(context: Context, criticalLevel: String): Int {
-//    return when (criticalLevel) {
-//        "LOW" -> ContextCompat.getColor(context, R.color.colorYellow)
-//        "MEDIUM" -> ContextCompat.getColor(context, R.color.colorOrange)
-//        "HIGH" -> ContextCompat.getColor(context, R.color.red)
-//        else -> ContextCompat.getColor(context, R.color.black) // default color if critical level is not recognized
-//    }
-//}
-
-
 
 @Preview
 @Composable
