@@ -57,11 +57,11 @@ import kotlinx.coroutines.withContext
 
 @Composable
 fun CityTextFieldComponent(
-    labelValue: String,
+    labelValue: String = "City",
     placesAPI: PlacesAPI,
-    apiKey: String,
-    locationName: MutableState<String>,
-    onTextChanged: (String) -> Unit
+    apiKey: String = "",
+    locationName: MutableState<String> = mutableStateOf(""),
+    onTextChanged: (String) -> Unit = {}
 ) {
     var city = remember {
         mutableStateOf("")
@@ -84,7 +84,7 @@ fun CityTextFieldComponent(
         val textFieldWidth = this.maxWidth
 
         OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.width(300.dp),
             label = { Text(text = labelValue) },
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 focusedBorderColor = PrussianBlue,
