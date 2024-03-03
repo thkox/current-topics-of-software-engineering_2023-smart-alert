@@ -1,5 +1,6 @@
 package eu.tkacas.smartalert.database.local
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import java.time.ZoneId
@@ -7,6 +8,13 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import eu.tkacas.smartalert.models.CriticalLevel
+import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
+import eu.tkacas.smartalert.models.HistoryMessage
+import eu.tkacas.smartalert.models.ListOfHistoryMessages
+import eu.tkacas.smartalert.models.ListOfLocationCriticalWeatherPhenomenonData
 
 class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, databaseName, null, databaseVersion) {
 
@@ -59,5 +67,28 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, databaseName,
 
         db.insert(table, null, values)
         db.close()
+    }
+
+    @SuppressLint("Range")
+    fun getMessages(onComplete: (Boolean, ListOfHistoryMessages?, String?) -> Unit) {
+        val messagesList = mutableStateOf<ListOfHistoryMessages?>(ListOfHistoryMessages(mutableStateListOf()))
+        val db = this.readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM $table", null)
+
+        if (cursor.moveToFirst()) {
+            do {
+                val message = cursor.getString(cursor.getColumnIndex(keyMessage))
+                val weatherPhenomenonString = cursor.getString(cursor.getColumnIndex(keyWeatherPhenomenon))
+                val weatherPhenomenon = CriticalWeatherPhenomenon.valueOf(weatherPhenomenonString)
+                val criticalLevelString = cursor.getString(cursor.getColumnIndex(keyCriticalLevel))
+                val criticalLevel = CriticalLevel.valueOf(criticalLevelString)
+                val locationName = cursor.getString(cursor.getColumnIndex(keyLocationName))
+                val messageTime = cursor.getString(cursor.getColumnIndex(keyCurrentTime))
+                messagesList.value?.list?.add(HistoryMessage(message, weatherPhenomenon, criticalLevel, locationName, messageTime))
+            } while (cursor.moveToNext())
+            onComplete(true, messagesList.value, null)
+        } else {
+            onComplete(false, null, "No messages found")
+        }
     }
 }

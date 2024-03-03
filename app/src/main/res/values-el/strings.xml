@@ -70,6 +70,7 @@
     <string name="Image_uploaded_successfully">Η εικόνα μεταφορτώθηκε με επιτυχία</string>
     <string name="number_of_reports">Αριθμός αναφορών</string>
     <string name="The_reports_history_from_the_last_6_hours.">Το ιστορικό αναφορών των τελευταίων 6 ωρών</string>
+    <string name="Notifications_history">Ιστορικό Ειδοποιήσεων</string>
     <string name="critical_level">Κρίσιμο επίπεδο</string>
     <string name="time">Ώρα</string>
     <string name="delete_all">Διαγραφή όλων</string>
