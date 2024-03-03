@@ -2,6 +2,7 @@ package eu.tkacas.smartalert.ui.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -174,17 +175,21 @@ fun NotificationsHistoryDialog(
             onDismissRequest = onDismiss,
             title = { Text(text = weatherPhenomenonText, color = PrussianBlue) },
             text = {
-                LazyColumn(
+                Box(
                     modifier = Modifier
-                        .size(300.dp)
-                        .padding(16.dp)
+                        .height(300.dp)
                 ) {
-                    item {
-                        Text(text = locationText)
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text(text = dateTimeText)
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text(text = messageText)
+                    LazyColumn(
+                        modifier = Modifier
+                            .padding(16.dp)
+                    ) {
+                        item {
+                            Text(text = locationText)
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(text = dateTimeText)
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(text = messageText)
+                        }
                     }
                 }
             },
