@@ -1,7 +1,9 @@
 package eu.tkacas.smartalert.ui.screen.citizen
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material.Scaffold
@@ -21,6 +23,7 @@ import androidx.navigation.NavController
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
 import eu.tkacas.smartalert.ui.theme.SkyBlue
+import eu.tkacas.smartalert.ui.theme.UTOrange
 
 @Composable
 fun HomeCitizenScreen(navController: NavController? = null) {
@@ -46,7 +49,18 @@ fun HomeCitizenScreen(navController: NavController? = null) {
         Card (
             modifier = Modifier.padding(it)
         ) {
-            Text("Home Citizen Screen")
+            LazyColumn(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                /*if() {
+                    items() { index ->
+
+                    }
+                } else if () {
+                    Text(text = stringResource(),
+                        color = UTOrange)
+                }*/
+            }
         }
     }
 }

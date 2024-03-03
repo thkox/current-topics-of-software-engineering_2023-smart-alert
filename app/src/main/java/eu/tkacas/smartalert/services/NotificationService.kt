@@ -87,7 +87,7 @@ class NotificationService : FirebaseMessagingService() {
         // Check if the user's location is within the locationBounds
         if (userLocation != null && isUserInBounds(userLocation, locationBounds)) {
             database = DatabaseHelper(this)
-            database.addMessage(messageBody)
+            database.addMessage(messageBody, weatherPhenomenon.toString(), criticalLevel.toString(), locationName)
             // If the user is in the geolocation block, show the notification
             sendNotification(messageBody, weatherPhenomenon)
         }
