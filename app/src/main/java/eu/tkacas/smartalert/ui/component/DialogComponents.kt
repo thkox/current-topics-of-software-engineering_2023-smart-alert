@@ -174,17 +174,18 @@ fun NotificationsHistoryDialog(
             onDismissRequest = onDismiss,
             title = { Text(text = weatherPhenomenonText, color = PrussianBlue) },
             text = {
-                Column(
+                LazyColumn(
                     modifier = Modifier
                         .size(300.dp)
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.Start
+                        .padding(16.dp)
                 ) {
-                    Text(text = locationText)
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = dateTimeText)
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = messageText)
+                    item {
+                        Text(text = locationText)
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(text = dateTimeText)
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(text = messageText)
+                    }
                 }
             },
             confirmButton = {
