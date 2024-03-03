@@ -28,7 +28,6 @@ import eu.tkacas.smartalert.viewmodel.LocationViewModel
 import kotlinx.coroutines.runBlocking
 
 class NotificationService : FirebaseMessagingService() {
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
@@ -70,7 +69,7 @@ class NotificationService : FirebaseMessagingService() {
         // Check if the user's location is within the locationBounds
         if (userLocation != null && isUserInBounds(userLocation, locationBounds)) {
             // If the user is in the geolocation block, show the notification
-            sendNotification(messageBody)
+            sendNotification(messageBody, weatherPhenomenon)
         }
     }
 
@@ -79,7 +78,7 @@ class NotificationService : FirebaseMessagingService() {
                 userLocation.longitude in bounds.southwest?.lng!!..bounds.northeast?.lng!!
     }
 
-    private fun sendNotification(messageBody: String) {
+    private fun sendNotification(messageBody: String, weatherPhenomenon: CriticalWeatherPhenomenon) {
         val notificationIntent = Intent(this, MainActivity::class.java)
 
         val pendingIntent: PendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -101,8 +100,9 @@ class NotificationService : FirebaseMessagingService() {
 
         val builder = NotificationCompat.Builder(this, "locationServiceChannel")
             .setContentTitle("Smart Alert")
-            .setContentText(messageBody)
+            .setContentText(this.getString(weatherPhenomenon.getStringId()))
             .setSmallIcon(R.drawable.smart_alert_logo_full_transparent)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(messageBody))
             .setContentIntent(pendingIntent)
             .setOngoing(true)
 
