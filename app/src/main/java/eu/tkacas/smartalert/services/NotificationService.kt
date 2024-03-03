@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Build
 import android.util.Log
+import androidx.compose.ui.res.stringResource
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -58,8 +59,8 @@ class NotificationService : FirebaseMessagingService() {
 
         // Create a custom message body
         val messageBody = "Location: $locationName\n" +
-                "Weather Phenomenon: ${weatherPhenomenon.getStringId()}\n" +
-                "Critical Level: ${criticalLevel.getStringId()}\n" +
+                "Weather Phenomenon: ${stringResource(id = weatherPhenomenon.getStringId())}\n" +
+                "Critical Level: ${stringResource(id = criticalLevel.getStringId())}\n" +
                 "Location Bounds: $locationBounds"
 
         // Get the user's current location
