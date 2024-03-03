@@ -42,6 +42,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.smartalert.R
@@ -240,11 +241,11 @@ fun PasswordTextFieldComponent(
     )
 }
 
-
+@Preview
 @Composable
 fun MultilineTextFieldComponent(
-    value: String,
-    onTextChanged: (String) -> Unit
+    value: String = "",
+    onTextChanged: (String) -> Unit = {}
 ) {
     var text by remember { mutableStateOf(value) }
 
@@ -252,7 +253,7 @@ fun MultilineTextFieldComponent(
         modifier = Modifier
             .fillMaxWidth()
             .height(120.dp)
-            .padding(start = 15.dp, top = 10.dp, end = 15.dp)
+            .padding(start = 40.dp, top = 10.dp, end = 40.dp)
             .background(Color.White, RoundedCornerShape(10.dp)),
         shape = RoundedCornerShape(10.dp),
         value = text,
