@@ -160,7 +160,7 @@ fun getAlertByPhenomenonAndLocationForMaps(phenomenon: String, onComplete: (Bool
             if (dataSnapshot.exists()) {
                 val data = mutableListOf<LocationData>()
                 for (locationSnapshot in dataSnapshot.children) {
-                    for  (alertSnapshot in locationSnapshot.children) {
+                    for  (alertSnapshot in locationSnapshot.child("alertForms").children) {
                         val latitude = alertSnapshot.child("location").child("latitude").getValue(Double::class.java)?:0.0
                         val longitude = alertSnapshot.child("location").child("longitude").getValue(Double::class.java)?:0.0
                         val location = LocationData(latitude, longitude)
