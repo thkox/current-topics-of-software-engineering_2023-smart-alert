@@ -61,7 +61,6 @@ class AccountViewModel : ViewModel() {
                     }
 
                     override fun onCancelled(error: DatabaseError) {
-                        // Handle onCancelled
                         _isLoading.value = false
                     }
                 })
@@ -83,7 +82,6 @@ class AccountViewModel : ViewModel() {
             if (task.isSuccessful) {
                 Log.d("AccountViewModel", "User password updated.")
             } else {
-                // An error occurred, handle it
                 Log.d("AccountViewModel", "Failed to update user password.")
             }
         }

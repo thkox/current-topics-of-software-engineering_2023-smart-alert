@@ -1,7 +1,6 @@
 package eu.tkacas.smartalert.ui.screen.settings
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
@@ -20,7 +19,6 @@ import eu.tkacas.smartalert.ui.navigation.AppBarBackView
 fun LanguageScreen(navController: NavController? = null) {
     val scaffoldState = rememberScaffoldState()
     val context = LocalContext.current
-    val activity = context as Activity
 
     Scaffold(
         scaffoldState = scaffoldState,

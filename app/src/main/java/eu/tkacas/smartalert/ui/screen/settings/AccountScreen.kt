@@ -1,15 +1,13 @@
 package eu.tkacas.smartalert.ui.screen.settings
 
 import android.annotation.SuppressLint
-import android.content.res.Configuration
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.CircularProgressIndicator
@@ -21,7 +19,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -55,180 +52,104 @@ fun AccountScreen(navController: NavController? = null) {
 
     val isLoading = accountViewModel.isLoading.collectAsState().value
 
-    val config = LocalConfiguration.current
-
-    val portraitMode = remember { mutableStateOf(config.orientation) }
-
     var isPasswordDisplayVisible by remember { mutableStateOf(false) }
 
     val loginViewModel: LoginViewModel = viewModel()
 
-    if (portraitMode.value == Configuration.ORIENTATION_PORTRAIT) {
-        //PortraitLayout()
-        Scaffold(
-            scaffoldState = scaffoldState,
-            topBar = {
-                AppBarBackView(
-                    title = stringResource(id = R.string.account),
-                    navController = navController,
-                    enableSettingsButton = false
-                )
-            }
-        ) {
-            if (isLoading) {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator(color = SkyBlue)
-                }
-            } else {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(top = 15.dp),
-                    contentAlignment = Alignment.TopCenter
-                ) {
-                    CircleImage(imageResId = R.drawable.account)
-                }
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(top = 50.dp),
-                ) {
-                    Spacer(modifier = Modifier.height(90.dp))
 
-                    NameFieldComponent(
-                        firstName = firstName,
-                        lastName = lastName
-                    )
-
-                    Spacer(modifier = Modifier.height(40.dp))
-
-                    EmailDisplayComponent(email = email, painterResource(id = R.drawable.email))
-
-                    Spacer(modifier = Modifier.height(10.dp))
-
-                    PasswordDisplayComponent(
-                        password = password,
-                        painterResource(id = R.drawable.password),
-                        label = stringResource(id = R.string.current_password)
-                    )
-
-                    if (isPasswordDisplayVisible) {
-                        Spacer(modifier = Modifier.height(10.dp))
-                        PasswordDisplayComponent(
-                            password = password,
-                            painterResource(id = R.drawable.password),
-                            label = stringResource(id = R.string.new_password)
-                        )
-                        Spacer(modifier = Modifier.height(10.dp))
-                        PasswordDisplayComponent(
-                            password = password,
-                            painterResource(id = R.drawable.password),
-                            label = stringResource(id = R.string.confirm_password)
-                        )
-                        //Spacer(modifier = Modifier.height(20.dp))
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            //.padding(bottom = 3.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            UploadButtonComponent(
-                                value = stringResource(id = R.string.submit),
-                                onButtonClicked = { //TODO: Implement the logic for updating the user's account
-                                    accountViewModel.changePassword(newPassword)
-                                }
-                            )
-                        }
-                    }
-                }
-
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(bottom = 40.dp, end = 30.dp)
-                        .padding(top = 10.dp),
-                ) {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.BottomEnd
-                    ) {
-                        FloatingActionButton(
-                            onClick = {
-                                // TODO: Implement the logic for updating the user's account
-                                //isPasswordDisplayVisible = true
-                                isPasswordDisplayVisible = !isPasswordDisplayVisible
-                            }
-                        )
-                    }
-
-                }
-            }
+    Scaffold(
+        scaffoldState = scaffoldState,
+        topBar = {
+            AppBarBackView(
+                title = stringResource(id = R.string.account),
+                navController = navController,
+                enableSettingsButton = false
+            )
         }
-    } else {
-        //LandscapeLayout()
-        Scaffold(
-            scaffoldState = scaffoldState,
-            topBar = {
-                AppBarBackView(
-                    title = stringResource(id = R.string.account),
-                    navController = navController,
-                    enableSettingsButton = false
-                )
-            }
-        ) {
-            if (isLoading) {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator(color = SkyBlue)
-                }
-            } else {
-                Row(
-                    modifier = Modifier.fillMaxSize(),
-                    horizontalArrangement = Arrangement.Center
-                ) {
+    ) {
+        LazyColumn {
+            item {
+                if (isLoading) {
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        CircularProgressIndicator(color = SkyBlue)
+                    }
+                } else {
                     Box(
                         modifier = Modifier
-                            .fillMaxSize(0.5f)
+                            .fillMaxSize()
                             .padding(top = 15.dp),
                         contentAlignment = Alignment.TopCenter
                     ) {
                         CircleImage(imageResId = R.drawable.account)
-
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(top = 105.dp), contentAlignment = Alignment.TopCenter
-                        ) {
-                            NameFieldComponent(
-                                firstName = firstName,
-                                lastName = lastName
-                            )
-                        }
                     }
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(top = 50.dp),
                     ) {
-                        EmailDisplayComponent(email = email, painterResource(id = R.drawable.email))
+                        Spacer(modifier = Modifier.height(90.dp))
 
-                        Spacer(modifier = Modifier.height(30.dp))
+                        NameFieldComponent(
+                            firstName = firstName,
+                            lastName = lastName
+                        )
+
+                        Spacer(modifier = Modifier.height(40.dp))
+
+                        EmailDisplayComponent(
+                            email = email,
+                            painterResource(id = R.drawable.email)
+                        )
+
+                        Spacer(modifier = Modifier.height(10.dp))
 
                         PasswordDisplayComponent(
                             password = password,
                             painterResource(id = R.drawable.password),
-                            label = "Password"
+                            label = stringResource(id = R.string.current_password)
                         )
 
-                        Spacer(modifier = Modifier.height(20.dp))
+                        if (isPasswordDisplayVisible) {
+                            Spacer(modifier = Modifier.height(10.dp))
+                            PasswordDisplayComponent(
+                                password = password,
+                                painterResource(id = R.drawable.password),
+                                label = stringResource(id = R.string.new_password)
+                            )
+                            Spacer(modifier = Modifier.height(10.dp))
+                            PasswordDisplayComponent(
+                                password = password,
+                                painterResource(id = R.drawable.password),
+                                label = stringResource(id = R.string.confirm_password)
+                            )
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                UploadButtonComponent(
+                                    value = stringResource(id = R.string.submit),
+                                    onButtonClicked = { //TODO: Implement the logic for updating the user's account
+                                        accountViewModel.changePassword(newPassword)
+                                    }
+                                )
+                            }
+                        }
+                    }
 
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(bottom = 40.dp, end = 30.dp)
+                            .padding(top = 10.dp),
+                    ) {
                         Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(start = 320.dp),
-                            //contentAlignment = Alignment.BottomEnd
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.BottomEnd
                         ) {
                             FloatingActionButton(
                                 onClick = {
                                     // TODO: Implement the logic for updating the user's account
+                                    isPasswordDisplayVisible = !isPasswordDisplayVisible
                                 }
                             )
                         }
@@ -236,7 +157,6 @@ fun AccountScreen(navController: NavController? = null) {
                 }
             }
         }
-
     }
 }
 
