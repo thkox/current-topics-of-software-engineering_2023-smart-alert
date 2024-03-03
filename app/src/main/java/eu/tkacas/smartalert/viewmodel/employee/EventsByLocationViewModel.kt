@@ -5,6 +5,9 @@ import eu.tkacas.smartalert.database.cloud.CloudFunctionsUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
 class EventsByLocationViewModel: ViewModel() {
 
@@ -19,5 +22,11 @@ class EventsByLocationViewModel: ViewModel() {
         CoroutineScope(Dispatchers.IO).launch {
             _cloudFunctionsUtils.deleteAlertByPhenomenonAndLocation(phenomenon, locationID, alertID)
         }
+    }
+
+    fun isWithinLastHour(timeStamp: String): Boolean {
+        val formatter = DateTimeFormatter.ofPattern("HH:mm")
+        val time = LocalTime.parse(timeStamp, formatter)
+        return time.isAfter(LocalTime.now().minusHours(1))
     }
 }

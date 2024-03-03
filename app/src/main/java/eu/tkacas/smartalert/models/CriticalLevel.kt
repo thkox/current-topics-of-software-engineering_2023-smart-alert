@@ -23,11 +23,12 @@ enum class CriticalLevel {
 }
 
 enum class CriticalLevelDropdown {
-    AllALERTS, LOW, NORMAL, HIGH;
+    AllALERTS, LASTHOUR, LOW, NORMAL, HIGH;
 
     fun getStringId(): Int {
         return when (this) {
             AllALERTS -> R.string.all_alerts
+            LASTHOUR -> R.string.last_hour
             LOW -> R.string.low
             NORMAL -> R.string.normal
             HIGH -> R.string.high
