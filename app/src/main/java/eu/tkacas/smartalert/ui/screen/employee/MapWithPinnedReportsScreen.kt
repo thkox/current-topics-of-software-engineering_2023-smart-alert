@@ -22,8 +22,8 @@ import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.app.SharedPrefManager
-import eu.tkacas.smartalert.cloud.getAlertByPhenomenonAndLocationForMaps
-import eu.tkacas.smartalert.cloud.getSpecificAlertByPhenomenonAndLocationForMaps
+import eu.tkacas.smartalert.database.cloud.getAlertByPhenomenonAndLocationForMaps
+import eu.tkacas.smartalert.database.cloud.getSpecificAlertByPhenomenonAndLocationForMaps
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.models.LocationData
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView

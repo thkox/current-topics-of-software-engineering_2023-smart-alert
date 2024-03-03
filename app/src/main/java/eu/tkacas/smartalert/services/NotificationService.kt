@@ -19,7 +19,8 @@ import com.google.firebase.messaging.RemoteMessage
 import com.google.gson.Gson
 import eu.tkacas.smartalert.MainActivity
 import eu.tkacas.smartalert.R
-import eu.tkacas.smartalert.cloud.saveToken
+import eu.tkacas.smartalert.database.cloud.saveToken
+import eu.tkacas.smartalert.database.local.DatabaseHelper
 import eu.tkacas.smartalert.models.Bounds
 import eu.tkacas.smartalert.models.CriticalLevel
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
@@ -29,6 +30,7 @@ import kotlinx.coroutines.runBlocking
 import java.util.Locale
 
 class NotificationService : FirebaseMessagingService() {
+    private lateinit var database: DatabaseHelper
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
@@ -84,6 +86,8 @@ class NotificationService : FirebaseMessagingService() {
 
         // Check if the user's location is within the locationBounds
         if (userLocation != null && isUserInBounds(userLocation, locationBounds)) {
+            database = DatabaseHelper(this)
+            database.addMessage(messageBody)
             // If the user is in the geolocation block, show the notification
             sendNotification(messageBody, weatherPhenomenon)
         }

@@ -12,9 +12,9 @@ import eu.tkacas.smartalert.ui.screen.citizen.HomeCitizenScreen
 import eu.tkacas.smartalert.ui.screen.settings.*
 import androidx.navigation.NavHostController
 import eu.tkacas.smartalert.app.SharedPrefManager
-import eu.tkacas.smartalert.cloud.userExists
+import eu.tkacas.smartalert.database.cloud.userExists
 import eu.tkacas.smartalert.ui.screen.auth.ForgotPasswordScreen
-import eu.tkacas.smartalert.cloud.signOutUser
+import eu.tkacas.smartalert.database.cloud.signOutUser
 import eu.tkacas.smartalert.ui.screen.auth.LoginScreen
 import eu.tkacas.smartalert.ui.screen.auth.PrivacyPolicyScreen
 import eu.tkacas.smartalert.ui.screen.auth.SignUpScreen

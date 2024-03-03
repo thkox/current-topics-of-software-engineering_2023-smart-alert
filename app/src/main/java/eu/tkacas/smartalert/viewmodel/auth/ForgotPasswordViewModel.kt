@@ -6,7 +6,7 @@ import androidx.navigation.NavController
 import eu.tkacas.smartalert.data.rules.Validator
 import eu.tkacas.smartalert.ui.event.ForgotPasswordUIEvent
 import eu.tkacas.smartalert.ui.state.ForgotPasswordUIState
-import eu.tkacas.smartalert.cloud.sendPasswordResetEmail
+import eu.tkacas.smartalert.database.cloud.sendPasswordResetEmail
 
 class ForgotPasswordViewModel : ViewModel() {
 

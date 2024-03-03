@@ -8,8 +8,8 @@ import eu.tkacas.smartalert.models.CitizenMessage
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.models.LocationData
 import com.google.gson.Gson
-import eu.tkacas.smartalert.cloud.getUserID
-import eu.tkacas.smartalert.cloud.storageRef
+import eu.tkacas.smartalert.database.cloud.getUserID
+import eu.tkacas.smartalert.database.cloud.storageRef
 import eu.tkacas.smartalert.models.CriticalLevel
 import eu.tkacas.smartalert.viewmodel.LocationViewModel
 
