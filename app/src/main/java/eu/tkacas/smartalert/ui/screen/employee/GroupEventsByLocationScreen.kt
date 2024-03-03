@@ -3,7 +3,9 @@ package eu.tkacas.smartalert.ui.screen.employee
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.FloatingActionButton
@@ -32,7 +34,9 @@ import eu.tkacas.smartalert.app.SharedPrefManager
 import eu.tkacas.smartalert.database.cloud.getAlertByPhenomenonAndLocation
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.models.ListOfLocationCriticalWeatherPhenomenonData
+import eu.tkacas.smartalert.models.SortingCriteriaDropDown
 import eu.tkacas.smartalert.ui.component.CardComponentWithImage
+import eu.tkacas.smartalert.ui.component.EnumDropdownComponentSortingCriteria
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
 import eu.tkacas.smartalert.ui.theme.PrussianBlue
 import eu.tkacas.smartalert.ui.theme.SkyBlue
@@ -51,6 +55,16 @@ fun GroupEventsByLocationScreen(navController: NavHostController? = null){
     val error = remember { mutableStateOf<String?>(null) }
 
     val isRefreshing = remember { mutableStateOf(false) }
+
+    val sortingCriteria = remember { mutableStateOf(SortingCriteriaDropDown.NUMBER_OF_REPORTS) }
+
+    val events = when(sortingCriteria.value){
+        SortingCriteriaDropDown.ALPHABETICAL -> data.value?.list?.sortedBy { it.locationName }
+        SortingCriteriaDropDown.NUMBER_OF_REPORTS -> data.value?.list?.sortedByDescending { it.numOfReports }
+    }
+
+
+
 
     LaunchedEffect(key1 = data.value) {
         isRefreshing.value = true
@@ -118,22 +132,36 @@ fun GroupEventsByLocationScreen(navController: NavHostController? = null){
                         modifier = Modifier.padding(16.dp),
                         textAlign = TextAlign.Center
                     )
+                    Row (
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.End,
+                        verticalAlignment = Alignment.CenterVertically
+
+                    ) {
+                        EnumDropdownComponentSortingCriteria(
+                            enumClass = SortingCriteriaDropDown::class.java,
+                            initialSelection = SortingCriteriaDropDown.NUMBER_OF_REPORTS,
+                            onSelected = { selectedSortingCriteria ->
+                                sortingCriteria.value = selectedSortingCriteria
+                            }
+                        )
+                    }
                     if (data.value != null) {
                         LazyColumn(
                             modifier = Modifier.fillMaxSize()
                         ) {
-                            items(data.value?.list?.size ?: 0) { index ->
+                            items(events?.size ?: 0) { index ->
                                 CardComponentWithImage(
-                                    row1 = data.value?.list?.get(index)?.locationName ?: "",
+                                    row1 = events?.get(index)?.locationName ?: "",
                                     row2 = stringResource(id = R.string.number_of_reports) + ": ${
-                                        data.value?.list?.get(
+                                        events?.get(
                                             index
                                         )?.numOfReports ?: 0
                                     }",
                                     beDeletedEnabled = false,
                                     onClick = {
                                         sharedPrefManager.setLocationID(
-                                            data.value?.list?.get(index)?.locationID ?: ""
+                                            events?.get(index)?.locationID ?: ""
                                         )
                                         navController?.navigate("EventsByLocation")
                                     }

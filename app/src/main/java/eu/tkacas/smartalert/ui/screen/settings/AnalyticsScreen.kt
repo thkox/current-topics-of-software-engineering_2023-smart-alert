@@ -73,35 +73,42 @@ fun AnalyticsScreen(navController: NavController? = null) {
                     verticalArrangement = Arrangement.Center
                 ) {
 
-                    YearDropdownComponent(
-                        years = years,
-                        initialSelection = years.first(),
-                        onSelected = { selectedYear ->
-                            viewModel.selectedYear = selectedYear
-                            viewModel.fetchStatisticsPerMonth()
-                        }
-                    )
-
-                    EnumDropdownComponentMonths(
-                        enumClass = Months::class.java,
-                        initialSelection = Months.Select_Month,
-                        onSelected = { selectedMonth ->
-                            viewModel.selectedMonth = selectedMonth.toString()
-                            viewModel.fetchStatisticsPerMonth()
-                        }
-                    )
-
-                        PieChart(
-                            data = mapOf(
-                                Pair(stringResource(R.string.earthquake), earthquakeCount),
-                                Pair(stringResource(R.string.flood), floodCount),
-                                Pair(stringResource(R.string.wildfire), wildfireCount),
-                                Pair(stringResource(R.string.river_flood), riverFloodCount),
-                                Pair(stringResource(R.string.heatwave), heatwaveCount),
-                                Pair(stringResource(R.string.snowstorm), snowstormCount),
-                                Pair(stringResource(R.string.storm), stormCount),
-                            )
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        YearDropdownComponent(
+                            years = years,
+                            initialSelection = years.first(),
+                            onSelected = { selectedYear ->
+                                viewModel.selectedYear = selectedYear
+                                viewModel.fetchStatisticsPerMonth()
+                            }
                         )
+
+                        EnumDropdownComponentMonths(
+                            enumClass = Months::class.java,
+                            initialSelection = Months.Select_Month,
+                            onSelected = { selectedMonth ->
+                                viewModel.selectedMonth = selectedMonth.toString()
+                                viewModel.fetchStatisticsPerMonth()
+                            }
+                        )
+                    }
+
+
+                    PieChart(
+                        data = mapOf(
+                            Pair(stringResource(R.string.earthquake), earthquakeCount),
+                            Pair(stringResource(R.string.flood), floodCount),
+                            Pair(stringResource(R.string.wildfire), wildfireCount),
+                            Pair(stringResource(R.string.river_flood), riverFloodCount),
+                            Pair(stringResource(R.string.heatwave), heatwaveCount),
+                            Pair(stringResource(R.string.snowstorm), snowstormCount),
+                            Pair(stringResource(R.string.storm), stormCount),
+                        )
+                    )
 
                 }
             }
@@ -123,23 +130,29 @@ fun AnalyticsScreen(navController: NavController? = null) {
                     horizontalAlignment = Alignment.End
                 ) {
 
-                    YearDropdownComponent(
-                        years = years,
-                        initialSelection = years.first(),
-                        onSelected = { selectedYear ->
-                            viewModel.selectedYear = selectedYear
-                            viewModel.fetchStatisticsPerMonth()
-                        }
-                    )
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        YearDropdownComponent(
+                            years = years,
+                            initialSelection = years.first(),
+                            onSelected = { selectedYear ->
+                                viewModel.selectedYear = selectedYear
+                                viewModel.fetchStatisticsPerMonth()
+                            }
+                        )
 
-                    EnumDropdownComponentMonths(
-                        enumClass = Months::class.java,
-                        initialSelection = Months.Select_Month,
-                        onSelected = { selectedMonth ->
-                            viewModel.selectedMonth = selectedMonth.toString()
-                            viewModel.fetchStatisticsPerMonth()
-                        }
-                    )
+                        EnumDropdownComponentMonths(
+                            enumClass = Months::class.java,
+                            initialSelection = Months.Select_Month,
+                            onSelected = { selectedMonth ->
+                                viewModel.selectedMonth = selectedMonth.toString()
+                                viewModel.fetchStatisticsPerMonth()
+                            }
+                        )
+                    }
                 }
 
                 Column(

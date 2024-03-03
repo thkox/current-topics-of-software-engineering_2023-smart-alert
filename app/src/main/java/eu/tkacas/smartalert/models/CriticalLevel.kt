@@ -35,3 +35,14 @@ enum class CriticalLevelDropdown {
         }
     }
 }
+
+enum class SortingCriteriaDropDown {
+    ALPHABETICAL, NUMBER_OF_REPORTS;
+
+    fun getStringId(): Int {
+        return when (this) {
+            ALPHABETICAL -> R.string.alphabetical
+            NUMBER_OF_REPORTS -> R.string.number_of_reports
+        }
+    }
+}
