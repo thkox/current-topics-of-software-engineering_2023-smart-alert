@@ -72,7 +72,7 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
     val isRefreshing = remember { mutableStateOf(false) }
 
 
-    LaunchedEffect(key1 = criticalWeatherPhenomenon, key2 = locationID) {
+    LaunchedEffect(key1 = data.value) {
         isRefreshing.value = true
         getSpecificAlertByPhenomenonAndLocation(criticalWeatherPhenomenon.name, locationID) { success, alertForms, areaBounds, areaName, err ->
             if (success) {
