@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Build
 import android.util.Log
+import androidx.compose.ui.res.stringResource
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -20,6 +21,8 @@ import eu.tkacas.smartalert.MainActivity
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.cloud.saveToken
 import eu.tkacas.smartalert.models.Bounds
+import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
+import eu.tkacas.smartalert.models.EmergencyLevel
 import eu.tkacas.smartalert.models.LocationData
 import eu.tkacas.smartalert.viewmodel.LocationViewModel
 import kotlinx.coroutines.runBlocking
@@ -44,9 +47,21 @@ class NotificationService : FirebaseMessagingService() {
         // Get the additional data
         val data = message.data
         val locationBoundsJson = data["locationBounds"]
+        val weatherPhenomenonJson = data["weatherPhenomenon"]
+        val criticalLevelJson = data["criticalLevel"]
+        val locationNameJson = data["locationName"]
 
         // Parse the locationBounds data into a Bounds object
         val locationBounds = Gson().fromJson(locationBoundsJson, Bounds::class.java)
+        val weatherPhenomenon = Gson().fromJson(weatherPhenomenonJson, CriticalWeatherPhenomenon::class.java)
+        val criticalLevel = Gson().fromJson(criticalLevelJson, EmergencyLevel::class.java)
+        val locationName = Gson().fromJson(locationNameJson, String::class.java)
+
+        // Create a custom message body
+        val messageBody = "Location: $locationName\n" +
+                "Weather Phenomenon: ${weatherPhenomenon.getStringId()}\n" +
+                "Critical Level: ${criticalLevel.getStringId()}\n" +
+                "Location Bounds: $locationBounds"
 
         // Get the user's current location
         val locationViewModel = LocationViewModel(this)
@@ -55,7 +70,7 @@ class NotificationService : FirebaseMessagingService() {
         // Check if the user's location is within the locationBounds
         if (userLocation != null && isUserInBounds(userLocation, locationBounds)) {
             // If the user is in the geolocation block, show the notification
-            message.notification?.body?.let { sendNotification(it) }
+            sendNotification(messageBody)
         }
     }
 
