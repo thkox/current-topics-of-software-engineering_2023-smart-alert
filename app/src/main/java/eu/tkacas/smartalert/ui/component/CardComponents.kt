@@ -11,13 +11,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material.Icon
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Switch
@@ -26,9 +24,11 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -356,7 +356,7 @@ fun HistoryMessageCard(
     locationText: String = "Kifissia, Athens",
     dateTimeText: String = "2024-02-20 10:00",
     onClick: () -> Unit = {},
-    color : Color = Color.White
+    color: Color = Color.White
 ) {
     Card(
         modifier = Modifier
@@ -368,22 +368,22 @@ fun HistoryMessageCard(
         shape = RoundedCornerShape(10.dp),
         elevation = 4.dp,
         backgroundColor = color
-    ){
+    ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.padding(8.dp),
-        ){
+        ) {
             Column(
                 modifier = Modifier
                     .padding(start = 8.dp)
                     .weight(1f),
                 verticalArrangement = Arrangement.Center
-            ){
+            ) {
                 Text(
                     text = weatherPhenomenonText,
                     fontSize = 16.sp
-                    )
+                )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(text = locationText)
             }

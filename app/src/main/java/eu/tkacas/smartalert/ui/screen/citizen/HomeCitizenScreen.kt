@@ -7,22 +7,22 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.material.Text
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -31,14 +31,14 @@ import androidx.navigation.NavController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import eu.tkacas.smartalert.R
+import eu.tkacas.smartalert.database.cloud.getFirstName
 import eu.tkacas.smartalert.database.local.DatabaseHelper
 import eu.tkacas.smartalert.models.ListOfHistoryMessages
 import eu.tkacas.smartalert.ui.component.HistoryMessageCard
-import eu.tkacas.smartalert.database.cloud.getFirstName
+import eu.tkacas.smartalert.ui.component.NotificationsHistoryDialog
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
 import eu.tkacas.smartalert.ui.theme.PrussianBlue
 import eu.tkacas.smartalert.ui.theme.SkyBlue
-import eu.tkacas.smartalert.ui.component.NotificationsHistoryDialog
 import eu.tkacas.smartalert.ui.theme.UTOrange
 
 @Composable
@@ -63,7 +63,7 @@ fun HomeCitizenScreen(navController: NavController? = null) {
     LaunchedEffect(key1 = data.value) {
         isRefreshing.value = true
         databaseHelper.getMessages() { success, result, err ->
-            if(success) {
+            if (success) {
                 data.value = result
             } else {
                 error.value = err
@@ -102,13 +102,13 @@ fun HomeCitizenScreen(navController: NavController? = null) {
                 Image(painterResource(id = R.drawable.add), contentDescription = null)
             }
         }
-    ) {it ->
+    ) { it ->
         SwipeRefresh(
             state = rememberSwipeRefreshState(isRefreshing = isRefreshing.value),
             onRefresh = {
                 isRefreshing.value = true
                 databaseHelper.getMessages() { success, result, err ->
-                    if(success) {
+                    if (success) {
                         data.value = result
                     } else {
                         error.value = err
@@ -144,19 +144,27 @@ fun HomeCitizenScreen(navController: NavController? = null) {
                             modifier = Modifier.fillMaxSize()
                         ) {
                             items(data.value?.list?.size ?: 0) { index ->
-                                val weatherPhenomenonString = data.value?.list?.get(index)?.weatherPhenomenon?.let { stringResource(it.getStringId()) } ?: ""
+                                val weatherPhenomenonString =
+                                    data.value?.list?.get(index)?.weatherPhenomenon?.let {
+                                        stringResource(it.getStringId())
+                                    } ?: ""
                                 HistoryMessageCard(
                                     weatherPhenomenonText = weatherPhenomenonString,
                                     locationText = data.value?.list?.get(index)?.locationName ?: "",
                                     dateTimeText = data.value?.list?.get(index)?.messageTime ?: "",
                                     onClick = {
                                         selectedWeatherPhenomenon.value = weatherPhenomenonString
-                                        selectedDateTime.value = data.value?.list?.get(index)?.messageTime
-                                        selectedLocation.value = data.value?.list?.get(index)?.locationName
-                                        selectedMessage.value = data.value?.list?.get(index)?.message
+                                        selectedDateTime.value =
+                                            data.value?.list?.get(index)?.messageTime
+                                        selectedLocation.value =
+                                            data.value?.list?.get(index)?.locationName
+                                        selectedMessage.value =
+                                            data.value?.list?.get(index)?.message
                                         showDialog.value = true
                                     },
-                                    color = data.value?.list?.get(index)?.criticalLevel?.getColor()?.let { colorResource(id = it) } ?: colorResource(id = R.color.colorWhite)
+                                    color = data.value?.list?.get(index)?.criticalLevel?.getColor()
+                                        ?.let { colorResource(id = it) }
+                                        ?: colorResource(id = R.color.colorWhite)
                                 )
                             }
                         }

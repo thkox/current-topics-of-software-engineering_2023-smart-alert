@@ -1,8 +1,6 @@
 package eu.tkacas.smartalert.viewmodel.settings
 
-import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.ktx.auth
@@ -78,7 +76,7 @@ class AccountViewModel : ViewModel() {
         }
     }
 
-    suspend fun changePassword(newPassword: String) : Boolean{
+    suspend fun changePassword(newPassword: String): Boolean {
         return changeUserPassword(newPassword)
     }
 }

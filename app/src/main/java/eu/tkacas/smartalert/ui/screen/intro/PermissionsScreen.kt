@@ -138,7 +138,9 @@ fun PermissionsScreen(navController: NavController? = null) {
     if (portraitMode.value == Configuration.ORIENTATION_PORTRAIT) {
         //PortraitLayout()
         Column(
-            modifier = Modifier.fillMaxSize().background(Color.White),
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.White),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.size(20.dp))
@@ -228,7 +230,9 @@ fun PermissionsScreen(navController: NavController? = null) {
         //LandscapeLayout()
 
         LazyColumn(
-            modifier = Modifier.fillMaxSize().background(Color.White) ,
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.White),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item {

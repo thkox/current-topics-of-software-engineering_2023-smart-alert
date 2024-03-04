@@ -175,8 +175,8 @@ fun NotificationsHistoryDialog(
     dateTimeText: String = "2024-02-20 10:00",
     messageText: String = "This is a test message",
     onDismiss: () -> Unit
-){
-    if(showDialog){
+) {
+    if (showDialog) {
         AlertDialog(
             onDismissRequest = onDismiss,
             title = { Text(text = weatherPhenomenonText, color = PrussianBlue) },
