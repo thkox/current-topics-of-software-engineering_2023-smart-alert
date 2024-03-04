@@ -4,12 +4,12 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
-import eu.tkacas.smartalert.cloud.createUser
 import eu.tkacas.smartalert.data.rules.Validator
-import eu.tkacas.smartalert.ui.state.RegistrationUIState
+import eu.tkacas.smartalert.database.cloud.createUser
 import eu.tkacas.smartalert.ui.event.SignupUIEvent
+import eu.tkacas.smartalert.ui.state.RegistrationUIState
 
-class SignupViewModel : ViewModel(){
+class SignupViewModel : ViewModel() {
     private val TAG = SignupViewModel::class.simpleName
 
     var navController: NavController? = null
@@ -53,7 +53,7 @@ class SignupViewModel : ViewModel(){
 
             }
 
-            is SignupUIEvent.RegisterButtonClicked -> {
+            is SignupUIEvent.SignupButtonClicked -> {
                 signUp()
             }
 

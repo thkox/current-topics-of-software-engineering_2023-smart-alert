@@ -3,13 +3,15 @@ package eu.tkacas.smartalert.ui.screen.employee
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -29,18 +31,19 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.app.SharedPrefManager
-import eu.tkacas.smartalert.cloud.getAlertByPhenomenonAndLocation
+import eu.tkacas.smartalert.database.cloud.getAlertByPhenomenonAndLocation
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.models.ListOfLocationCriticalWeatherPhenomenonData
+import eu.tkacas.smartalert.models.SortingCriteriaDropDown
 import eu.tkacas.smartalert.ui.component.CardComponentWithImage
+import eu.tkacas.smartalert.ui.component.EnumDropdownComponentSortingCriteria
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
-import eu.tkacas.smartalert.ui.theme.BlueGreen
 import eu.tkacas.smartalert.ui.theme.PrussianBlue
 import eu.tkacas.smartalert.ui.theme.SkyBlue
 import eu.tkacas.smartalert.ui.theme.UTOrange
 
 @Composable
-fun GroupEventsByLocationScreen(navController: NavHostController? = null){
+fun GroupEventsByLocationScreen(navController: NavHostController? = null) {
     val sharedPrefManager = SharedPrefManager(LocalContext.current)
     sharedPrefManager.setPreviousScreen("GroupEventsByLocationScreen")
     val scaffoldState = rememberScaffoldState()
@@ -53,7 +56,14 @@ fun GroupEventsByLocationScreen(navController: NavHostController? = null){
 
     val isRefreshing = remember { mutableStateOf(false) }
 
-    LaunchedEffect(key1 = criticalWeatherPhenomenon) {
+    val sortingCriteria = remember { mutableStateOf(SortingCriteriaDropDown.NUMBER_OF_REPORTS) }
+
+    val events = when (sortingCriteria.value) {
+        SortingCriteriaDropDown.ALPHABETICAL -> data.value?.list?.sortedBy { it.locationName }
+        SortingCriteriaDropDown.NUMBER_OF_REPORTS -> data.value?.list?.sortedByDescending { it.numOfReports }
+    }
+
+    LaunchedEffect(key1 = data.value) {
         isRefreshing.value = true
         getAlertByPhenomenonAndLocation(criticalWeatherPhenomenon.name) { success, result, err ->
             if (success) {
@@ -68,7 +78,11 @@ fun GroupEventsByLocationScreen(navController: NavHostController? = null){
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            AppBarBackView(title = stringResource(id = criticalWeatherPhenomenon.getStringId()), navController = navController)
+            AppBarBackView(
+                title = stringResource(id = criticalWeatherPhenomenon.getStringId()),
+                navController = navController,
+                enableSettingsButton = false
+            )
         },
         floatingActionButton = {
             FloatingActionButton(
@@ -77,7 +91,7 @@ fun GroupEventsByLocationScreen(navController: NavHostController? = null){
                 onClick = {
                     navController?.navigate("Map")
                 }
-            ){
+            ) {
                 Image(painterResource(id = R.drawable.map), contentDescription = "Map")
             }
         }
@@ -109,7 +123,7 @@ fun GroupEventsByLocationScreen(navController: NavHostController? = null){
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = stringResource(id = R.string.The_reports_history_from_the_last_24_hours_),
+                        text = stringResource(id = R.string.The_reports_history_from_the_last_6_hours_),
                         //Text(text = "The reports history from the last 24 hours.",
                         color = PrussianBlue,
                         style = TextStyle(
@@ -119,22 +133,36 @@ fun GroupEventsByLocationScreen(navController: NavHostController? = null){
                         modifier = Modifier.padding(16.dp),
                         textAlign = TextAlign.Center
                     )
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.End,
+                        verticalAlignment = Alignment.CenterVertically
+
+                    ) {
+                        EnumDropdownComponentSortingCriteria(
+                            enumClass = SortingCriteriaDropDown::class.java,
+                            initialSelection = SortingCriteriaDropDown.NUMBER_OF_REPORTS,
+                            onSelected = { selectedSortingCriteria ->
+                                sortingCriteria.value = selectedSortingCriteria
+                            }
+                        )
+                    }
                     if (data.value != null) {
                         LazyColumn(
                             modifier = Modifier.fillMaxSize()
                         ) {
-                            items(data.value?.list?.size ?: 0) { index ->
+                            items(events?.size ?: 0) { index ->
                                 CardComponentWithImage(
-                                    row1 = data.value?.list?.get(index)?.location ?: "",
+                                    row1 = events?.get(index)?.locationName ?: "",
                                     row2 = stringResource(id = R.string.number_of_reports) + ": ${
-                                        data.value?.list?.get(
+                                        events?.get(
                                             index
                                         )?.numOfReports ?: 0
                                     }",
                                     beDeletedEnabled = false,
                                     onClick = {
-                                        sharedPrefManager.setAddress(
-                                            data.value?.list?.get(index)?.location ?: ""
+                                        sharedPrefManager.setLocationID(
+                                            events?.get(index)?.locationID ?: ""
                                         )
                                         navController?.navigate("EventsByLocation")
                                     }
@@ -157,6 +185,6 @@ fun GroupEventsByLocationScreen(navController: NavHostController? = null){
 
 @Preview
 @Composable
-fun GroupEventsByLocationScreenPreview(){
+fun GroupEventsByLocationScreenPreview() {
     GroupEventsByLocationScreen()
 }

@@ -1,4 +1,4 @@
-package eu.tkacas.smartalert.cloud
+package eu.tkacas.smartalert.database.cloud
 
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.ktx.functions
@@ -20,15 +20,18 @@ class CloudFunctionsUtils {
                 }.await()
             result
         } catch (e: Exception) {
-            // TODO: Handle exception here, you might want to return false or rethrow the exception
+            println("Error calling Firebase Function: ${e.message}")
             false
         }
     }
 
-    suspend fun deleteAlertsByPhenomenonAndLocation(phenomenon: String, location: String): Boolean {
+    suspend fun deleteAlertsByPhenomenonAndLocation(
+        phenomenon: String,
+        locationID: String
+    ): Boolean {
         val data = hashMapOf(
             "phenomenon" to phenomenon,  // Example phenomenon
-            "place" to location // Example place
+            "location_id" to locationID // Example place
         )
 
         return try {
@@ -46,25 +49,29 @@ class CloudFunctionsUtils {
         }
     }
 
-    suspend fun deleteAlertByPhenomenonAndLocation(phenomenon: String, location: String, alertID: String): Boolean {
-    val data = hashMapOf(
-        "phenomenon" to phenomenon,
-        "place" to location,
-        "alertID" to alertID
-    )
+    suspend fun deleteAlertByPhenomenonAndLocation(
+        phenomenon: String,
+        locationID: String,
+        alertID: String
+    ): Boolean {
+        val data = hashMapOf(
+            "phenomenon" to phenomenon,
+            "location_id" to locationID,
+            "alert_id" to alertID
+        )
 
-    return try {
-        val result = functions
-            .getHttpsCallable("delete_alert_by_phenomenon_and_location")
-            .call(data)
-            .continueWith { task ->
-                val result = task.result?.data as Map<*, *>
-                result["success"] as Boolean
-            }.await()
-        result
-    } catch (e: Exception) {
-        println("Error calling Firebase Function: ${e.message}")
-        false
+        return try {
+            val result = functions
+                .getHttpsCallable("delete_alert_by_phenomenon_and_location")
+                .call(data)
+                .continueWith { task ->
+                    val result = task.result?.data as Map<*, *>
+                    result["success"] as Boolean
+                }.await()
+            result
+        } catch (e: Exception) {
+            println("Error calling Firebase Function: ${e.message}")
+            false
+        }
     }
-}
 }

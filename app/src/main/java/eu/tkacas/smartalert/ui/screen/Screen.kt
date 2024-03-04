@@ -1,11 +1,11 @@
 package eu.tkacas.smartalert.ui.screen
 
 import androidx.annotation.DrawableRes
-import androidx.compose.ui.res.stringResource
 import eu.tkacas.smartalert.R
 
 sealed class Screen<ImageVector>(val titleResId: Int, val route: String) {
-    sealed class SettingsScreen(titleResId: Int, route: String, @DrawableRes  val icon: Int) : Screen<Any?>(titleResId, route) {
+    sealed class SettingsScreen(titleResId: Int, route: String, @DrawableRes val icon: Int) :
+        Screen<Any?>(titleResId, route) {
 
         object Account : SettingsScreen(
             R.string.account,
@@ -44,21 +44,17 @@ sealed class Screen<ImageVector>(val titleResId: Int, val route: String) {
         )
     }
 
-    sealed class HomeCitizen(titleResId: Int, route: String, @DrawableRes val icon: Int) : Screen<Any?>(titleResId, route) {
+    sealed class HomeCitizen(titleResId: Int, route: String, @DrawableRes val icon: Int) :
+        Screen<Any?>(titleResId, route) {
         object AlertForm : HomeCitizen(
             R.string.alert_form,
             "AlertForm",
             R.drawable.alert
         )
-
-        object Alert : HomeCitizen(
-            R.string.my_reports,
-            "MyReports",
-            R.drawable.important
-        )
     }
 
-    sealed class HomeEmployee(titleResId: Int, route: String, @DrawableRes val icon: Int) : Screen<Any?>(titleResId, route) {
+    sealed class HomeEmployee(titleResId: Int, route: String, @DrawableRes val icon: Int) :
+        Screen<Any?>(titleResId, route) {
         object AlertCitizenForm : HomeEmployee(
             R.string.alert_form,
             "AlertForm",
@@ -96,7 +92,6 @@ val screensInSettings = listOf(
 
 val screensInHomeCitizen = listOf(
     Screen.HomeCitizen.AlertForm,
-    Screen.HomeCitizen.Alert
 )
 
 val screensInHomeEmployee = listOf(
