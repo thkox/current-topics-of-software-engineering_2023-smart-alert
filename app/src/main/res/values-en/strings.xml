@@ -14,8 +14,8 @@
     <string name="login"> Login</string>
     <string name="or">or</string>
     <string name="terms_and_conditions">By continuing you accept our\u00A0</string>
-    <string name="privacy_policy">Privacy Policy\u00A0</string>
-    <string name="and">and\u00A0</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="and">\u00A0and\u00A0</string>
     <string name="terms_of_use">Terms of Use</string>
     <string name="terms_and_conditions_header">Terms of Use</string>
     <string name="privacy_policy_header">Privacy Policy</string>
