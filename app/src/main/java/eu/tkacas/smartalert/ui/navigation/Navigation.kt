@@ -1,6 +1,8 @@
 package eu.tkacas.smartalert.ui.navigation
 
 import android.annotation.SuppressLint
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
@@ -37,6 +39,7 @@ import eu.tkacas.smartalert.ui.screen.settings.MyReportsHistoryScreen
 import eu.tkacas.smartalert.ui.screen.settings.SettingsScreen
 import eu.tkacas.smartalert.viewmodel.navigation.NavigationViewModel
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun Navigation(navController: NavController = rememberNavController()) {

@@ -322,7 +322,7 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                             }
                         }
                     } else if (error.value != null) {
-                        Text(stringResource(id = R.string.error) + ": ${error.value}")
+                        Text(error.value!!)
                     }
                 }
             }
