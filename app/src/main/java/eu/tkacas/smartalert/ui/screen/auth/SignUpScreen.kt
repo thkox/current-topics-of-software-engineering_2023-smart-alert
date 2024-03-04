@@ -105,7 +105,11 @@ fun SignUpScreen(navController: NavController? = null) {
                         .background(Color.White)
                         .padding(28.dp)
                 ) {
-                    Column(modifier = Modifier.fillMaxSize()) {
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
                         HeadingTextComponent(value = stringResource(id = create_account))
                         Spacer(modifier = Modifier.height(20.dp))
                         TextFieldComponent(
@@ -144,7 +148,6 @@ fun SignUpScreen(navController: NavController? = null) {
                         Spacer(modifier = Modifier.height(40.dp))
 
                         Row(
-                            modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {

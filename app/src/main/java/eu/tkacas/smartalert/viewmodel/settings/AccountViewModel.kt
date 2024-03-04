@@ -1,4 +1,4 @@
-package eu.tkacas.smartalert.viewmodel
+package eu.tkacas.smartalert.viewmodel.settings
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
