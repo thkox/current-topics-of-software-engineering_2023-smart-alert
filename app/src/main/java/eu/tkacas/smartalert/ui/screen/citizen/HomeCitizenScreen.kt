@@ -12,6 +12,7 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,15 +41,12 @@ import eu.tkacas.smartalert.ui.navigation.AppBarBackView
 import eu.tkacas.smartalert.ui.theme.PrussianBlue
 import eu.tkacas.smartalert.ui.theme.SkyBlue
 import eu.tkacas.smartalert.ui.theme.UTOrange
+import eu.tkacas.smartalert.viewmodel.citizen.HomeCitizenViewModel
 
 @Composable
 fun HomeCitizenScreen(navController: NavController? = null) {
     val scaffoldState = rememberScaffoldState()
-
-    val context = LocalContext.current
-    val databaseHelper = DatabaseHelper(context)
-
-    val firebase = FirebaseUtils()
+    val viewModel = HomeCitizenViewModel(LocalContext.current)
 
     val showDialog = remember { mutableStateOf(false) }
 
@@ -57,32 +55,11 @@ fun HomeCitizenScreen(navController: NavController? = null) {
     val selectedLocation = remember { mutableStateOf<String?>(null) }
     val selectedMessage = remember { mutableStateOf<String?>(null) }
 
-    val data = remember { mutableStateOf<ListOfHistoryMessages?>(null) }
-    val errorM = remember { mutableStateOf<String?>(null) }
+    val data by viewModel.data.collectAsState()
+    val errorM by viewModel.errorM.collectAsState()
+    val isRefreshing by viewModel.isRefreshing.collectAsState()
+    val firstNameVal by viewModel.firstNameVal.collectAsState()
 
-    val isRefreshing = remember { mutableStateOf(false) }
-
-    LaunchedEffect(key1 = data.value) {
-        isRefreshing.value = true
-        databaseHelper.getMessages { success, result, err ->
-            if (success) {
-                data.value = result
-            } else {
-                errorM.value = err
-            }
-            isRefreshing.value = false
-        }
-    }
-
-    var firstNameVal: String by remember { mutableStateOf("") }
-
-    firebase.getFirstName { success, firstName, error ->
-        if (success) {
-            firstNameVal = firstName ?: ""
-        } else {
-            println("Error occurred: $error")
-        }
-    }
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -106,17 +83,9 @@ fun HomeCitizenScreen(navController: NavController? = null) {
         }
     ) { it ->
         SwipeRefresh(
-            state = rememberSwipeRefreshState(isRefreshing = isRefreshing.value),
+            state = rememberSwipeRefreshState(isRefreshing = isRefreshing),
             onRefresh = {
-                isRefreshing.value = true
-                databaseHelper.getMessages { success, result, err ->
-                    if (success) {
-                        data.value = result
-                    } else {
-                        errorM.value = err
-                    }
-                    isRefreshing.value = false
-                }
+                viewModel.fetchData()
             }
         ) {
             Column(
@@ -141,30 +110,30 @@ fun HomeCitizenScreen(navController: NavController? = null) {
                         modifier = Modifier.padding(16.dp),
                         textAlign = TextAlign.Center
                     )
-                    if (data.value != null) {
+                    if (data != null) {
                         LazyColumn(
                             modifier = Modifier.fillMaxSize()
                         ) {
-                            items(data.value?.list?.size ?: 0) { index ->
+                            items(data?.list?.size ?: 0) { index ->
                                 val weatherPhenomenonString =
-                                    data.value?.list?.get(index)?.weatherPhenomenon?.let {
+                                    data?.list?.get(index)?.weatherPhenomenon?.let {
                                         stringResource(it.getStringId())
                                     } ?: ""
                                 HistoryMessageCard(
                                     weatherPhenomenonText = weatherPhenomenonString,
-                                    locationText = data.value?.list?.get(index)?.locationName ?: "",
-                                    dateTimeText = data.value?.list?.get(index)?.messageTime ?: "",
+                                    locationText = data?.list?.get(index)?.locationName ?: "",
+                                    dateTimeText = data?.list?.get(index)?.messageTime ?: "",
                                     onClick = {
                                         selectedWeatherPhenomenon.value = weatherPhenomenonString
                                         selectedDateTime.value =
-                                            data.value?.list?.get(index)?.messageTime
+                                            data?.list?.get(index)?.messageTime
                                         selectedLocation.value =
-                                            data.value?.list?.get(index)?.locationName
+                                            data?.list?.get(index)?.locationName
                                         selectedMessage.value =
-                                            data.value?.list?.get(index)?.message
+                                            data?.list?.get(index)?.message
                                         showDialog.value = true
                                     },
-                                    color = data.value?.list?.get(index)?.criticalLevel?.getColor()
+                                    color = data?.list?.get(index)?.criticalLevel?.getColor()
                                         ?.let { colorResource(id = it) }
                                         ?: colorResource(id = R.color.colorWhite)
                                 )
@@ -180,7 +149,7 @@ fun HomeCitizenScreen(navController: NavController? = null) {
                         )
                     } else {
                         Text(
-                            text = stringResource(id = R.string.error) + ": ${errorM.value}",
+                            text = errorM ?: "",
                             color = UTOrange
                         )
                     }
