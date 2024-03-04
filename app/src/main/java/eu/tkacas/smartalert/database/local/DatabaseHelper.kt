@@ -79,7 +79,7 @@ class DatabaseHelper(context: Context) :
         val messagesList =
             mutableStateOf<ListOfHistoryMessages?>(ListOfHistoryMessages(mutableStateListOf()))
         val db = this.readableDatabase
-        val cursor = db.rawQuery("SELECT * FROM $TABLE", null)
+        val cursor = db.rawQuery("SELECT * FROM $TABLE ORDER BY $KEY_CURRENT_TIME DESC", null)
 
         if (cursor.moveToFirst()) {
             do {

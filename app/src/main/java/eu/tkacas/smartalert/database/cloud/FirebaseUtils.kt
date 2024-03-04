@@ -304,7 +304,8 @@ class FirebaseUtils {
                             snapshot.child("criticalLevel").getValue(String::class.java) ?: ""
                         val criticalLevel = CriticalLevel.valueOf(criticalLevelString)
                         val time = snapshot.child("time").getValue(String::class.java) ?: ""
-                        val location = "$latitude, $longitude"
+                        val location = "${"%.4f".format(latitude)}, ${"%.4f".format(longitude)}"
+
                         data.list.add(
                             SingleLocationCriticalWeatherPhenomenonData(
                                 alertID,
