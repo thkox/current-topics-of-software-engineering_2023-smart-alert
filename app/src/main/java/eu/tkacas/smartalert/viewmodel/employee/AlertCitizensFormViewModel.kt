@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import eu.tkacas.smartalert.app.SharedPrefManager
 import eu.tkacas.smartalert.database.cloud.CloudFunctionsUtils
-import eu.tkacas.smartalert.database.cloud.storageRef
+import eu.tkacas.smartalert.database.cloud.FirebaseUtils
 import eu.tkacas.smartalert.interfacesAPI.PlacesAPI
 import eu.tkacas.smartalert.models.Alert
 import eu.tkacas.smartalert.models.Bounds
@@ -18,6 +18,8 @@ import retrofit2.await
 import retrofit2.converter.gson.GsonConverterFactory
 
 class AlertCitizensFormViewModel(context: Context) : ViewModel() {
+    val firebase = FirebaseUtils()
+
 
     val sharedPrefManager = SharedPrefManager(context)
 
@@ -79,7 +81,7 @@ class AlertCitizensFormViewModel(context: Context) : ViewModel() {
         val selectedWeatherPhenomenon = selectedWeatherPhenomenon.value
         val selectedDangerLevelButton = selectedDangerLevelButton.value
 
-        val database = storageRef()
+        val database = firebase.storageRef()
 
         // Create a reference to the "notificationsToCitizens" node
         val myRef = database.getReference("notificationsToCitizens")

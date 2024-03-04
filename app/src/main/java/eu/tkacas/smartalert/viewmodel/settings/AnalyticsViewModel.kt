@@ -3,7 +3,7 @@ package eu.tkacas.smartalert.viewmodel.settings
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import eu.tkacas.smartalert.database.cloud.getStatisticsPerYear
+import eu.tkacas.smartalert.database.cloud.FirebaseUtils
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -11,6 +11,9 @@ import kotlinx.coroutines.launch
 import java.util.Locale
 
 class AnalyticsViewModel(context: Context) : ViewModel() {
+    val firebase = FirebaseUtils()
+
+
     private var _data = mutableMapOf<String, Any>()
     private var _years = MutableLiveData<List<String>>(listOf())
 
@@ -87,7 +90,7 @@ class AnalyticsViewModel(context: Context) : ViewModel() {
 
     private fun fetchData() {
         CoroutineScope(Dispatchers.IO).launch {
-            getStatisticsPerYear { success, dataRetrieved, error ->
+            firebase.getStatisticsPerYear { success, dataRetrieved, error ->
                 if (success) {
                     _data = dataRetrieved?.toMutableMap() ?: mutableMapOf()
                     _years.postValue(fetchYears())

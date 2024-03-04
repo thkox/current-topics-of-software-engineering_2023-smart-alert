@@ -12,7 +12,7 @@ import com.google.firebase.messaging.RemoteMessage
 import com.google.gson.Gson
 import eu.tkacas.smartalert.MainActivity
 import eu.tkacas.smartalert.R
-import eu.tkacas.smartalert.database.cloud.saveToken
+import eu.tkacas.smartalert.database.cloud.FirebaseUtils
 import eu.tkacas.smartalert.database.local.DatabaseHelper
 import eu.tkacas.smartalert.models.Bounds
 import eu.tkacas.smartalert.models.CriticalLevel
@@ -24,11 +24,13 @@ import java.util.Locale
 
 class NotificationService : FirebaseMessagingService() {
     private lateinit var database: DatabaseHelper
+    val firebase = FirebaseUtils()
+
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
         Log.d("FirebaseMessagingService", "Refreshed token: $token")
-        saveToken(token)
+        firebase.saveToken(token)
     }
 
     override fun onCreate() {

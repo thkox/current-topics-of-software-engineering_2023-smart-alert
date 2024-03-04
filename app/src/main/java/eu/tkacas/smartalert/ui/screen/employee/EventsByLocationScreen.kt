@@ -35,7 +35,7 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.app.SharedPrefManager
-import eu.tkacas.smartalert.database.cloud.getSpecificAlertByPhenomenonAndLocation
+import eu.tkacas.smartalert.database.cloud.FirebaseUtils
 import eu.tkacas.smartalert.models.CriticalLevel
 import eu.tkacas.smartalert.models.CriticalLevelDropdown
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
@@ -55,6 +55,7 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
     val sharedPrefManager = SharedPrefManager(LocalContext.current)
     sharedPrefManager.setPreviousScreen("EventsByLocationScreen")
     val scaffoldState = rememberScaffoldState()
+    val firebase = FirebaseUtils()
 
     val viewModel = EventsByLocationViewModel()
 
@@ -96,7 +97,7 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
 
     LaunchedEffect(key1 = data.value) {
         isRefreshing.value = true
-        getSpecificAlertByPhenomenonAndLocation(
+        firebase.getSpecificAlertByPhenomenonAndLocation(
             criticalWeatherPhenomenon.name,
             locationID
         ) { success, alertForms, areaBounds, areaName, err ->
@@ -186,7 +187,7 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                 state = rememberSwipeRefreshState(isRefreshing = isRefreshing.value),
                 onRefresh = {
                     isRefreshing.value = true
-                    getSpecificAlertByPhenomenonAndLocation(
+                    firebase.getSpecificAlertByPhenomenonAndLocation(
                         criticalWeatherPhenomenon.name,
                         locationID
                     ) { success, alertForms, locationBounds, locationName, err ->

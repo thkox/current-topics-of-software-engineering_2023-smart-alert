@@ -21,7 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import eu.tkacas.smartalert.R
-import eu.tkacas.smartalert.database.cloud.getFirstName
+import eu.tkacas.smartalert.database.cloud.FirebaseUtils
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.ui.component.CriticalWeatherPhenomenonCardComponent
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
@@ -31,10 +31,12 @@ import eu.tkacas.smartalert.ui.theme.SkyBlue
 @Composable
 fun HomeEmployeeScreen(navController: NavController? = null) {
     val scaffoldState = rememberScaffoldState()
+    val firebase = FirebaseUtils()
+
 
     var firstNameVal: String by remember { mutableStateOf("") }
 
-    getFirstName { success, firstName, error ->
+    firebase.getFirstName { success, firstName, error ->
         if (success) {
             firstNameVal = firstName ?: ""
         } else {

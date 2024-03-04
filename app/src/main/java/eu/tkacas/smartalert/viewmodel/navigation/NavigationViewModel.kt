@@ -9,17 +9,18 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import eu.tkacas.smartalert.app.SharedPrefManager
 import eu.tkacas.smartalert.database.cloud.CloudFunctionsUtils
-import eu.tkacas.smartalert.database.cloud.userExists
+import eu.tkacas.smartalert.database.cloud.FirebaseUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class NavigationViewModel(context: Context) : ViewModel() {
 
+    val firebase = FirebaseUtils()
     private var _cloudFunctionsUtils: CloudFunctionsUtils = CloudFunctionsUtils()
     private var sharedPrefManager: SharedPrefManager = SharedPrefManager(context)
 
-    fun findStartDestination(): String = if (userExists()) {
+    fun findStartDestination(): String = if (firebase.userExists()) {
         "home"
     } else {
         "welcome"
