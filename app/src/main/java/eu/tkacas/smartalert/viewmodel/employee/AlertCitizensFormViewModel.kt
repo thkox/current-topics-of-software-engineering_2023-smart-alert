@@ -25,7 +25,7 @@ class AlertCitizensFormViewModel(context: Context) : ViewModel() {
 
     private val _selectedArea = mutableStateOf("")
 
-    val selectedWeatherPhenomenon = mutableStateOf(CriticalWeatherPhenomenon.EARTHQUAKE)
+    private val _selectedWeatherPhenomenon = mutableStateOf(CriticalWeatherPhenomenon.EARTHQUAKE)
     val selectedDangerLevelButton = mutableStateOf(CriticalLevel.LOW)
 
     private val _cloudFunctionsUtils = CloudFunctionsUtils()
@@ -35,14 +35,14 @@ class AlertCitizensFormViewModel(context: Context) : ViewModel() {
     }
 
     fun setSelectedWeatherPhenomenon(phenomenon: CriticalWeatherPhenomenon) {
-        selectedWeatherPhenomenon.value = phenomenon
+        _selectedWeatherPhenomenon.value = phenomenon
     }
 
     fun setSelectedDangerLevelButton(level: CriticalLevel) {
         selectedDangerLevelButton.value = level
     }
 
-    private val retrofit: Retrofit
+    private val _retrofit: Retrofit
         get() = setupRetrofit()
 
     private fun setupRetrofit(): Retrofit {
@@ -53,7 +53,7 @@ class AlertCitizensFormViewModel(context: Context) : ViewModel() {
     }
 
     fun createPlacesAPI(): PlacesAPI {
-        return retrofit.create(PlacesAPI::class.java)
+        return _retrofit.create(PlacesAPI::class.java)
     }
 
     private fun getBounds(): Bounds {
@@ -78,7 +78,7 @@ class AlertCitizensFormViewModel(context: Context) : ViewModel() {
 
         val selectedLocationID = sharedPrefManager.getLocationID()
 
-        val selectedWeatherPhenomenon = selectedWeatherPhenomenon.value
+        val selectedWeatherPhenomenon = _selectedWeatherPhenomenon.value
         val selectedDangerLevelButton = selectedDangerLevelButton.value
 
         val database = firebase.storageRef()
@@ -128,7 +128,7 @@ class AlertCitizensFormViewModel(context: Context) : ViewModel() {
             // Check if any places were found
             if (placesResponse.predictions.isNotEmpty()) {
                 // Return the place_id of the first place in the list
-                return placesResponse.predictions[0].place_id
+                return placesResponse.predictions[0].placeID
             }
         } catch (e: Exception) {
             Log.e("PlaceIdLookup", "Failed to get place id", e)

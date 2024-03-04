@@ -43,7 +43,7 @@ fun MapWithPinnedReportsScreen(navController: NavController? = null) {
     val data = remember { mutableStateOf<List<LocationData>?>(null) }
     val error = remember { mutableStateOf<String?>(null) }
 
-    var cameraPositionState = rememberCameraPositionState {
+    val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(LatLng(38.0742, 23.8243), 5.8f)
     }
 

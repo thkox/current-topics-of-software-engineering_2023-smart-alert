@@ -16,7 +16,7 @@ class ForgotPasswordViewModel : ViewModel() {
 
     var forgotPasswordUIState = mutableStateOf(ForgotPasswordUIState())
 
-    var validationPassed = mutableStateOf(false)
+    private var _validationPassed = mutableStateOf(false)
 
     private fun validateForgotPasswordUIDataWithRules() {
         val emailResult = Validator.validateEmail(
@@ -27,7 +27,7 @@ class ForgotPasswordViewModel : ViewModel() {
             emailError = emailResult.status
         )
 
-        validationPassed.value = emailResult.status
+        _validationPassed.value = emailResult.status
     }
 
     fun onEvent(event: ForgotPasswordUIEvent) {

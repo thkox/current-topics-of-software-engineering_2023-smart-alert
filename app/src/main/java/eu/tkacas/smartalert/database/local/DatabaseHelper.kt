@@ -16,33 +16,33 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 class DatabaseHelper(context: Context) :
-    SQLiteOpenHelper(context, databaseName, null, databaseVersion) {
+    SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     companion object {
-        private const val databaseVersion = 1
-        private const val databaseName = "NotificationHistory"
-        private const val table = "Notifications"
-        private const val keyId = "id"
-        private const val keyMessage = "message"
-        private const val keyWeatherPhenomenon = "weatherPhenomenon"
-        private const val keyCriticalLevel = "criticalLevel"
-        private const val keyLocationName = "locationName"
-        private const val keyCurrentTime = "currentTime"
+        private const val DATABASE_VERSION = 1
+        private const val DATABASE_NAME = "NotificationHistory"
+        private const val TABLE = "Notifications"
+        private const val KEY_ID = "id"
+        private const val KEY_MESSAGE = "message"
+        private const val KEY_WEATHER_PHENOMENON = "weatherPhenomenon"
+        private const val KEY_CRITICAL_LEVEL = "criticalLevel"
+        private const val KEY_LOCATION_NAME = "locationName"
+        private const val KEY_CURRENT_TIME = "currentTime"
     }
 
     override fun onCreate(db: SQLiteDatabase) {
-        val CREATE_MESSAGES_TABLE = ("CREATE TABLE " + table + "("
-                + keyId + " INTEGER PRIMARY KEY,"
-                + keyMessage + " TEXT,"
-                + keyWeatherPhenomenon + " TEXT,"
-                + keyCriticalLevel + " TEXT,"
-                + keyLocationName + " TEXT,"
-                + keyCurrentTime + " TEXT" + ")")
-        db.execSQL(CREATE_MESSAGES_TABLE)
+        val createMessagesTable = ("CREATE TABLE " + TABLE + "("
+                + KEY_ID + " INTEGER PRIMARY KEY,"
+                + KEY_MESSAGE + " TEXT,"
+                + KEY_WEATHER_PHENOMENON + " TEXT,"
+                + KEY_CRITICAL_LEVEL + " TEXT,"
+                + KEY_LOCATION_NAME + " TEXT,"
+                + KEY_CURRENT_TIME + " TEXT" + ")")
+        db.execSQL(createMessagesTable)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        db.execSQL("DROP TABLE IF EXISTS $table")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE")
         onCreate(db)
     }
 
@@ -54,10 +54,10 @@ class DatabaseHelper(context: Context) :
     ) {
         val db = this.writableDatabase
         val values = ContentValues()
-        values.put(keyMessage, message)
-        values.put(keyWeatherPhenomenon, weatherPhenomenon)
-        values.put(keyCriticalLevel, criticalLevel)
-        values.put(keyLocationName, locationName)
+        values.put(KEY_MESSAGE, message)
+        values.put(KEY_WEATHER_PHENOMENON, weatherPhenomenon)
+        values.put(KEY_CRITICAL_LEVEL, criticalLevel)
+        values.put(KEY_LOCATION_NAME, locationName)
 
         // Get the current time in UTC+2
         val zoneId = ZoneId.of("UTC+2")
@@ -68,29 +68,29 @@ class DatabaseHelper(context: Context) :
         val formattedCurrentTime = currentTime.format(formatter)
 
         // Insert the formatted string into the keyCurrentTime column
-        values.put(keyCurrentTime, formattedCurrentTime)
+        values.put(KEY_CURRENT_TIME, formattedCurrentTime)
 
-        db.insert(table, null, values)
+        db.insert(TABLE, null, values)
         db.close()
     }
 
-    @SuppressLint("Range")
+    @SuppressLint("Range", "Recycle")
     fun getMessages(onComplete: (Boolean, ListOfHistoryMessages?, String?) -> Unit) {
         val messagesList =
             mutableStateOf<ListOfHistoryMessages?>(ListOfHistoryMessages(mutableStateListOf()))
         val db = this.readableDatabase
-        val cursor = db.rawQuery("SELECT * FROM $table", null)
+        val cursor = db.rawQuery("SELECT * FROM $TABLE", null)
 
         if (cursor.moveToFirst()) {
             do {
-                val message = cursor.getString(cursor.getColumnIndex(keyMessage))
+                val message = cursor.getString(cursor.getColumnIndex(KEY_MESSAGE))
                 val weatherPhenomenonString =
-                    cursor.getString(cursor.getColumnIndex(keyWeatherPhenomenon))
+                    cursor.getString(cursor.getColumnIndex(KEY_WEATHER_PHENOMENON))
                 val weatherPhenomenon = CriticalWeatherPhenomenon.valueOf(weatherPhenomenonString)
-                val criticalLevelString = cursor.getString(cursor.getColumnIndex(keyCriticalLevel))
+                val criticalLevelString = cursor.getString(cursor.getColumnIndex(KEY_CRITICAL_LEVEL))
                 val criticalLevel = CriticalLevel.valueOf(criticalLevelString)
-                val locationName = cursor.getString(cursor.getColumnIndex(keyLocationName))
-                val messageTime = cursor.getString(cursor.getColumnIndex(keyCurrentTime))
+                val locationName = cursor.getString(cursor.getColumnIndex(KEY_LOCATION_NAME))
+                val messageTime = cursor.getString(cursor.getColumnIndex(KEY_CURRENT_TIME))
                 messagesList.value?.list?.add(
                     HistoryMessage(
                         message,

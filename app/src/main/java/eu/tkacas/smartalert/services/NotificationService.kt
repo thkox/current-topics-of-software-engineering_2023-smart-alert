@@ -57,33 +57,37 @@ class NotificationService : FirebaseMessagingService() {
 
         // Create a custom message body
         val currentLanguage = Locale.getDefault().language
-        val messageBody = if (currentLanguage == "en") {
-            "URGENT: Residents in the affected area of $locationName," + " please take immediate precautions.\n" +
-                    "This ${this.getString(weatherPhenomenon.getStringId())} phenomenon is with ${
-                        this.getString(
-                            criticalLevel.getStringId()
-                        )
-                    } severity.\n" +
-                    "Stay indoors, avoid travel and follow local authorities' instructions.\n" +
-                    "Your safety is our top priority.\n" + "Stay tuned for updates."
-        } else if (currentLanguage == "el") {
-            "ΕΠΕΙΓΟΝ: Οι κάτοικοι στην πληγείσα περιοχή: $locationName," + " παρακαλούνται να λάβουν άμεσα προφυλάξεις.\n" +
-                    "Αυτό το φαινόμενο: ${this.getString(weatherPhenomenon.getStringId())} έχει σοβαρότητα: ${
-                        this.getString(
-                            criticalLevel.getStringId()
-                        )
-                    }.\n" +
-                    "Μείνετε σε εσωτερικούς χώρους, αποφύγετε τα ταξίδια και ακολουθήστε τις οδηγίες των τοπικών αρχών.\n" +
-                    "Η ασφάλειά σας είναι η πρώτη μας προτεραιότητα.\n" + "Μείνετε συντονισμένοι για ενημερώσεις."
-        } else {
-            "URGENT: Residents in the affected area of $locationName," + " please take immediate precautions.\n" +
-                    "This ${this.getString(weatherPhenomenon.getStringId())} phenomenon is with ${
-                        this.getString(
-                            criticalLevel.getStringId()
-                        )
-                    } severity.\n" +
-                    "Stay indoors, avoid travel and follow local authorities' instructions.\n" +
-                    "Your safety is our top priority.\n" + "Stay tuned for updates."
+        val messageBody = when (currentLanguage) {
+            "en" -> {
+                "URGENT: Residents in the affected area of $locationName, please take immediate precautions.\n" +
+                        "This ${this.getString(weatherPhenomenon.getStringId())} phenomenon is with ${
+                            this.getString(
+                                criticalLevel.getStringId()
+                            )
+                        } severity.\n" +
+                        "Stay indoors, avoid travel and follow local authorities' instructions.\n" +
+                        "Your safety is our top priority.\n" + "Stay tuned for updates."
+            }
+            "el" -> {
+                "ΕΠΕΙΓΟΝ: Οι κάτοικοι στην πληγείσα περιοχή: $locationName, παρακαλούνται να λάβουν άμεσα προφυλάξεις.\n" +
+                        "Αυτό το φαινόμενο: ${this.getString(weatherPhenomenon.getStringId())} έχει σοβαρότητα: ${
+                            this.getString(
+                                criticalLevel.getStringId()
+                            )
+                        }.\n" +
+                        "Μείνετε σε εσωτερικούς χώρους, αποφύγετε τα ταξίδια και ακολουθήστε τις οδηγίες των τοπικών αρχών.\n" +
+                        "Η ασφάλειά σας είναι η πρώτη μας προτεραιότητα.\n" + "Μείνετε συντονισμένοι για ενημερώσεις."
+            }
+            else -> {
+                "URGENT: Residents in the affected area of $locationName, please take immediate precautions.\n" +
+                        "This ${this.getString(weatherPhenomenon.getStringId())} phenomenon is with ${
+                            this.getString(
+                                criticalLevel.getStringId()
+                            )
+                        } severity.\n" +
+                        "Stay indoors, avoid travel and follow local authorities' instructions.\n" +
+                        "Your safety is our top priority.\n" + "Stay tuned for updates."
+            }
         }
 
 
@@ -107,7 +111,7 @@ class NotificationService : FirebaseMessagingService() {
 
     private fun isUserInBounds(userLocation: LocationData, bounds: Bounds): Boolean {
         return userLocation.latitude in bounds.southwest?.lat!!..bounds.northeast?.lat!! &&
-                userLocation.longitude in bounds.southwest?.lng!!..bounds.northeast?.lng!!
+                userLocation.longitude in bounds.southwest.lng!!..bounds.northeast.lng!!
     }
 
     private fun sendNotification(
