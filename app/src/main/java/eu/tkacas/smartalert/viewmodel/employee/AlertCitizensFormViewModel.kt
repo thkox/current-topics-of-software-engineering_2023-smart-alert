@@ -128,7 +128,7 @@ class AlertCitizensFormViewModel(context: Context) : ViewModel() {
             // Check if any places were found
             if (placesResponse.predictions.isNotEmpty()) {
                 // Return the place_id of the first place in the list
-                return placesResponse.predictions[0].placeID
+                return placesResponse.predictions[0].place_id
             }
         } catch (e: Exception) {
             Log.e("PlaceIdLookup", "Failed to get place id", e)
