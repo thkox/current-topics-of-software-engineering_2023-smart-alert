@@ -135,7 +135,9 @@
     <string name="last_hour">Last Hour</string>
     <string name="alphabetical">Alphabetical</string>
     <string name="login_failed">Login failed, Please check your credentials.</string>
-    <string name="please_choose_a_photo_to_upload">Please choose a photo to upload</string>
+    <string name="please_choose_a_photo_to_upload">Please, choose a photo:</string>
     <string name="i_read_and_agree">I agree</string>
     <string name="go_back">Go Back</string>
+    <string name="password_changed_successfully">Password changed successfully!</string>
+    <string name="password_change_failed">Password change failed. Try again later</string>
 </resources>

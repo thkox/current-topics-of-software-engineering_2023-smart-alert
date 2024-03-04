@@ -139,6 +139,8 @@ fun AccountScreen(navController: NavController? = null) {
                             )
                             Spacer(modifier = Modifier.height(10.dp))
 
+                            val successMessage = stringResource(id = R.string.password_changed_successfully)
+                            val failedMesssage = stringResource(id = R.string.password_change_failed)
                             Box(
                                 modifier = Modifier.fillMaxSize(),
                                 contentAlignment = Alignment.Center
@@ -150,14 +152,14 @@ fun AccountScreen(navController: NavController? = null) {
                                             if (accountViewModel.changePassword(newPassword)) {
                                                 Toast.makeText(
                                                     context,
-                                                    "Password changed successfully",
+                                                    successMessage,
                                                     Toast.LENGTH_SHORT
                                                 ).show()
                                                 enableEdit = false
                                             } else {
                                                 Toast.makeText(
                                                     context,
-                                                    "Password change failed",
+                                                    failedMesssage,
                                                     Toast.LENGTH_SHORT
                                                 ).show()
                                             }
