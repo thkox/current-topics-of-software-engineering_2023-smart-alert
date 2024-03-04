@@ -84,14 +84,18 @@ class LoginViewModel : ViewModel() {
                 // Handle the error message
                 toastMessage.value = null
                 val currentLanguage = Locale.getDefault().language
-                val loginfailedMessage = if (currentLanguage == "en") {
-                    "Login failed, Please check your credentials."
-                } else if (currentLanguage == "el") {
-                    "Η σύνδεση απέτυχε, Ελέγξτε τα διαπιστευτήριά σας."
-                } else {
-                    "Login failed, Please check your credentials."
+                val loginFailedMessage = when (currentLanguage) {
+                    "en" -> {
+                        "Login failed, Please check your credentials."
+                    }
+                    "el" -> {
+                        "Η σύνδεση απέτυχε, Ελέγξτε τα διαπιστευτήριά σας."
+                    }
+                    else -> {
+                        "Login failed, Please check your credentials."
+                    }
                 }
-                toastMessage.value = loginfailedMessage
+                toastMessage.value = loginFailedMessage
                 refreshScreen.value = !refreshScreen.value
                 Log.d(TAG, "Login failed: $errorMessage")
             }

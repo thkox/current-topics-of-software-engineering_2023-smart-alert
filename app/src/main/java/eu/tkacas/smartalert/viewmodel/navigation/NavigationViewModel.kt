@@ -3,6 +3,8 @@ package eu.tkacas.smartalert.viewmodel.navigation
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
@@ -33,6 +35,7 @@ class NavigationViewModel(context: Context) : ViewModel() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     @Composable
     fun permissionsAreGranted(): Boolean {
         val locationPermission = ContextCompat.checkSelfPermission(

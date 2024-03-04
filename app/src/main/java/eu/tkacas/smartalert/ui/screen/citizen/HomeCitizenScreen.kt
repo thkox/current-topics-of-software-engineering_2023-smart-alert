@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.runtime.Composable
@@ -58,17 +58,17 @@ fun HomeCitizenScreen(navController: NavController? = null) {
     val selectedMessage = remember { mutableStateOf<String?>(null) }
 
     val data = remember { mutableStateOf<ListOfHistoryMessages?>(null) }
-    val error = remember { mutableStateOf<String?>(null) }
+    val errorM = remember { mutableStateOf<String?>(null) }
 
     val isRefreshing = remember { mutableStateOf(false) }
 
     LaunchedEffect(key1 = data.value) {
         isRefreshing.value = true
-        databaseHelper.getMessages() { success, result, err ->
+        databaseHelper.getMessages { success, result, err ->
             if (success) {
                 data.value = result
             } else {
-                error.value = err
+                errorM.value = err
             }
             isRefreshing.value = false
         }
@@ -109,11 +109,11 @@ fun HomeCitizenScreen(navController: NavController? = null) {
             state = rememberSwipeRefreshState(isRefreshing = isRefreshing.value),
             onRefresh = {
                 isRefreshing.value = true
-                databaseHelper.getMessages() { success, result, err ->
+                databaseHelper.getMessages { success, result, err ->
                     if (success) {
                         data.value = result
                     } else {
-                        error.value = err
+                        errorM.value = err
                     }
                     isRefreshing.value = false
                 }
@@ -178,9 +178,9 @@ fun HomeCitizenScreen(navController: NavController? = null) {
                             messageText = selectedMessage.value ?: "",
                             onDismiss = { showDialog.value = false }
                         )
-                    } else if (error != null) {
+                    } else {
                         Text(
-                            text = stringResource(id = R.string.error) + ": ${error.value}",
+                            text = stringResource(id = R.string.error) + ": ${errorM.value}",
                             color = UTOrange
                         )
                     }
