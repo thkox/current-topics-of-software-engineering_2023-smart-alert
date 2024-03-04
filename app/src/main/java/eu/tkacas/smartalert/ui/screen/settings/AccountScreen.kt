@@ -85,9 +85,9 @@ fun AccountScreen(navController: NavController? = null) {
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(top = 50.dp),
+                            .padding(top = 20.dp),
                     ) {
-                        Spacer(modifier = Modifier.height(90.dp))
+                        Spacer(modifier = Modifier.height(20.dp))
 
                         NameFieldComponent(
                             firstName = firstName,
