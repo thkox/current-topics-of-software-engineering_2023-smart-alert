@@ -57,7 +57,7 @@ fun MyReportsHistoryScreen(navController: NavController? = null) {
                     CardComponentWithImage(
                         row1 = alerts[index].timestamp,
                         row2 = alerts[index].message.toString(),
-                        row3 = "${alerts[index].location.latitude}, ${alerts[index].location.longitude}",
+                        row3 = "${"%.4f".format(alerts[index].location.latitude)}, ${"%.4f".format(alerts[index].location.longitude)}",
                         image = alerts[index].criticalWeatherPhenomenon,
                         onClick = {
                             selectedMessage.value = alerts[index].message

@@ -9,12 +9,14 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import eu.tkacas.smartalert.database.cloud.changeUserPassword
+import eu.tkacas.smartalert.database.cloud.FirebaseUtils
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class AccountViewModel : ViewModel() {
+    val firebase = FirebaseUtils()
+
 
     private val _email = MutableStateFlow("")
     val email: StateFlow<String> get() = _email
@@ -77,6 +79,6 @@ class AccountViewModel : ViewModel() {
     }
 
     suspend fun changePassword(newPassword: String): Boolean {
-        return changeUserPassword(newPassword)
+        return firebase.changeUserPassword(newPassword)
     }
 }

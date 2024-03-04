@@ -1,8 +1,10 @@
-package eu.tkacas.smartalert.viewmodel.citizen
+package eu.tkacas.smartalert.viewmodel.employee
 
 import android.content.Context
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import eu.tkacas.smartalert.app.SharedPrefManager
 import eu.tkacas.smartalert.database.cloud.FirebaseUtils
 import eu.tkacas.smartalert.database.local.DatabaseHelper
 import eu.tkacas.smartalert.models.ListOfHistoryMessages
@@ -10,7 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class HomeCitizenViewModel( context: Context )  : ViewModel() {
+class HomeEmployeeViewModel(context : Context): ViewModel() {
 
     private val databaseHelper = DatabaseHelper(context)
     private val firebase = FirebaseUtils()

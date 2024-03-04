@@ -22,8 +22,7 @@ import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.app.SharedPrefManager
-import eu.tkacas.smartalert.database.cloud.getAlertByPhenomenonAndLocationForMaps
-import eu.tkacas.smartalert.database.cloud.getSpecificAlertByPhenomenonAndLocationForMaps
+import eu.tkacas.smartalert.database.cloud.FirebaseUtils
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.models.LocationData
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
@@ -35,6 +34,8 @@ fun MapWithPinnedReportsScreen(navController: NavController? = null) {
     val sharedPrefManager = SharedPrefManager(LocalContext.current)
     val previousScreen = sharedPrefManager.getPreviousScreen()
     val scaffoldState = rememberScaffoldState()
+    val firebase = FirebaseUtils()
+
 
     val weatherPhenomenon = sharedPrefManager.getCriticalWeatherPhenomenon()
     val criticalWeatherPhenomenon = CriticalWeatherPhenomenon.valueOf(weatherPhenomenon.name)
@@ -42,7 +43,7 @@ fun MapWithPinnedReportsScreen(navController: NavController? = null) {
     val data = remember { mutableStateOf<List<LocationData>?>(null) }
     val error = remember { mutableStateOf<String?>(null) }
 
-    var cameraPositionState = rememberCameraPositionState {
+    val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(LatLng(38.0742, 23.8243), 5.8f)
     }
 
@@ -63,7 +64,7 @@ fun MapWithPinnedReportsScreen(navController: NavController? = null) {
     LaunchedEffect(key1 = criticalWeatherPhenomenon) {
         when (previousScreen) {
             "GroupEventsByLocationScreen" -> {
-                getAlertByPhenomenonAndLocationForMaps(criticalWeatherPhenomenon.name) { success, result, err ->
+                firebase.getAlertByPhenomenonAndLocationForMaps(criticalWeatherPhenomenon.name) { success, result, err ->
                     if (success) {
                         data.value = result
                     } else {
@@ -74,7 +75,7 @@ fun MapWithPinnedReportsScreen(navController: NavController? = null) {
 
             "EventsByLocationScreen" -> {
                 val address = sharedPrefManager.getLocationID()
-                getSpecificAlertByPhenomenonAndLocationForMaps(
+                firebase.getSpecificAlertByPhenomenonAndLocationForMaps(
                     criticalWeatherPhenomenon.name,
                     address
                 ) { success, result, err ->

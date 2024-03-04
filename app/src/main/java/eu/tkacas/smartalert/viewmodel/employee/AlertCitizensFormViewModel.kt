@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import eu.tkacas.smartalert.app.SharedPrefManager
 import eu.tkacas.smartalert.database.cloud.CloudFunctionsUtils
-import eu.tkacas.smartalert.database.cloud.storageRef
+import eu.tkacas.smartalert.database.cloud.FirebaseUtils
 import eu.tkacas.smartalert.interfacesAPI.PlacesAPI
 import eu.tkacas.smartalert.models.Alert
 import eu.tkacas.smartalert.models.Bounds
@@ -18,12 +18,14 @@ import retrofit2.await
 import retrofit2.converter.gson.GsonConverterFactory
 
 class AlertCitizensFormViewModel(context: Context) : ViewModel() {
+    val firebase = FirebaseUtils()
+
 
     val sharedPrefManager = SharedPrefManager(context)
 
     private val _selectedArea = mutableStateOf("")
 
-    val selectedWeatherPhenomenon = mutableStateOf(CriticalWeatherPhenomenon.EARTHQUAKE)
+    private val _selectedWeatherPhenomenon = mutableStateOf(CriticalWeatherPhenomenon.EARTHQUAKE)
     val selectedDangerLevelButton = mutableStateOf(CriticalLevel.LOW)
 
     private val _cloudFunctionsUtils = CloudFunctionsUtils()
@@ -33,14 +35,14 @@ class AlertCitizensFormViewModel(context: Context) : ViewModel() {
     }
 
     fun setSelectedWeatherPhenomenon(phenomenon: CriticalWeatherPhenomenon) {
-        selectedWeatherPhenomenon.value = phenomenon
+        _selectedWeatherPhenomenon.value = phenomenon
     }
 
     fun setSelectedDangerLevelButton(level: CriticalLevel) {
         selectedDangerLevelButton.value = level
     }
 
-    private val retrofit: Retrofit
+    private val _retrofit: Retrofit
         get() = setupRetrofit()
 
     private fun setupRetrofit(): Retrofit {
@@ -51,7 +53,7 @@ class AlertCitizensFormViewModel(context: Context) : ViewModel() {
     }
 
     fun createPlacesAPI(): PlacesAPI {
-        return retrofit.create(PlacesAPI::class.java)
+        return _retrofit.create(PlacesAPI::class.java)
     }
 
     private fun getBounds(): Bounds {
@@ -76,10 +78,10 @@ class AlertCitizensFormViewModel(context: Context) : ViewModel() {
 
         val selectedLocationID = sharedPrefManager.getLocationID()
 
-        val selectedWeatherPhenomenon = selectedWeatherPhenomenon.value
+        val selectedWeatherPhenomenon = _selectedWeatherPhenomenon.value
         val selectedDangerLevelButton = selectedDangerLevelButton.value
 
-        val database = storageRef()
+        val database = firebase.storageRef()
 
         // Create a reference to the "notificationsToCitizens" node
         val myRef = database.getReference("notificationsToCitizens")

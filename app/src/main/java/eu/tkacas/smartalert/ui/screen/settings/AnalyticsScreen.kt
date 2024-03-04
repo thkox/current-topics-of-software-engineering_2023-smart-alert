@@ -36,7 +36,7 @@ import eu.tkacas.smartalert.viewmodel.settings.AnalyticsViewModel
 @Composable
 fun AnalyticsScreen(navController: NavController? = null) {
     val scaffoldState = rememberScaffoldState()
-    val viewModel = AnalyticsViewModel(LocalContext.current)
+    val viewModel = AnalyticsViewModel()
 
     // Create a list of years and a list of months based on the fetched data
     val years by viewModel.years.observeAsState(listOf())
@@ -87,7 +87,7 @@ fun AnalyticsScreen(navController: NavController? = null) {
 
                         EnumDropdownComponentMonths(
                             enumClass = Months::class.java,
-                            initialSelection = Months.Select_Month,
+                            initialSelection = Months.SELECT_MONTH,
                             onSelected = { selectedMonth ->
                                 viewModel.selectedMonth = selectedMonth.toString()
                                 viewModel.fetchStatisticsPerMonth()
@@ -147,7 +147,7 @@ fun AnalyticsScreen(navController: NavController? = null) {
 
                         EnumDropdownComponentMonths(
                             enumClass = Months::class.java,
-                            initialSelection = Months.Select_Month,
+                            initialSelection = Months.SELECT_MONTH,
                             onSelected = { selectedMonth ->
                                 viewModel.selectedMonth = selectedMonth.toString()
                                 viewModel.fetchStatisticsPerMonth()

@@ -7,37 +7,37 @@ sealed class Screen<ImageVector>(val titleResId: Int, val route: String) {
     sealed class SettingsScreen(titleResId: Int, route: String, @DrawableRes val icon: Int) :
         Screen<Any?>(titleResId, route) {
 
-        object Account : SettingsScreen(
+        data object Account : SettingsScreen(
             R.string.account,
             "Account",
             R.drawable.account_box
         )
 
-        object MyReportsHistory : SettingsScreen(
+        data object MyReportsHistory : SettingsScreen(
             R.string.reports_history,
             "MyReportsHistory",
             R.drawable.manage_history
         )
 
-        object Language : SettingsScreen(
+        data object Language : SettingsScreen(
             R.string.language,
             "Language",
             R.drawable.language
         )
 
-        object Analytics : SettingsScreen(
+        data object Analytics : SettingsScreen(
             R.string.analytics,
             "Analytics",
             R.drawable.analytics
         )
 
-        object About : SettingsScreen(
+        data object About : SettingsScreen(
             R.string.about,
             "About",
             R.drawable.about
         )
 
-        object Logout : SettingsScreen(
+        data object Logout : SettingsScreen(
             R.string.logout,
             "Logout",
             R.drawable.logout
@@ -46,7 +46,7 @@ sealed class Screen<ImageVector>(val titleResId: Int, val route: String) {
 
     sealed class HomeCitizen(titleResId: Int, route: String, @DrawableRes val icon: Int) :
         Screen<Any?>(titleResId, route) {
-        object AlertForm : HomeCitizen(
+        data object AlertForm : HomeCitizen(
             R.string.alert_form,
             "AlertForm",
             R.drawable.alert
@@ -55,25 +55,25 @@ sealed class Screen<ImageVector>(val titleResId: Int, val route: String) {
 
     sealed class HomeEmployee(titleResId: Int, route: String, @DrawableRes val icon: Int) :
         Screen<Any?>(titleResId, route) {
-        object AlertCitizenForm : HomeEmployee(
+        data object AlertCitizenForm : HomeEmployee(
             R.string.alert_form,
             "AlertForm",
             R.drawable.alert
         )
 
-        object GroupEventsByLocation : HomeEmployee(
+        data object GroupEventsByLocation : HomeEmployee(
             R.string.events,
             "GroupEventsByLocation",
             R.drawable.event
         )
 
-        object EventsByLocation : HomeEmployee(
+        data object EventsByLocation : HomeEmployee(
             R.string.events,
             "EventsByLocation",
             R.drawable.event
         )
 
-        object MapWithPinnedReports : HomeEmployee(
+        data object MapWithPinnedReports : HomeEmployee(
             R.string.map,
             "Map",
             R.drawable.map

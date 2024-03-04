@@ -5,8 +5,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
-import eu.tkacas.smartalert.database.cloud.getUserID
-import eu.tkacas.smartalert.database.cloud.storageRef
+import eu.tkacas.smartalert.database.cloud.FirebaseUtils
 import eu.tkacas.smartalert.models.CitizenMessage
 import eu.tkacas.smartalert.models.CriticalLevel
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
@@ -14,6 +13,7 @@ import eu.tkacas.smartalert.models.LocationData
 import eu.tkacas.smartalert.viewmodel.LocationViewModel
 
 class AlertFormViewModel(context: Context) : ViewModel() {
+    val firebase = FirebaseUtils()
 
     val visiblePermissionDialogQueue = mutableStateListOf<String>()
     val selectedDangerLevelButton = mutableStateOf(CriticalLevel.LOW)
@@ -86,19 +86,19 @@ class AlertFormViewModel(context: Context) : ViewModel() {
     }
 
 
-    private val locationViewModel = LocationViewModel(context = context)
+    private val _locationViewModel = LocationViewModel(context = context)
     suspend fun sentAlert() {
         val selectedLevel = selectedDangerLevelButton.value
         val selectedPhenomenon = selectedWeatherPhenomenon.value
         val description = alertDescription.value
         val photoURL = photoURL.value
 
-        val locationData = locationViewModel.getLastLocation()
+        val locationData = _locationViewModel.getLastLocation()
 
-        val database = storageRef()
+        val database = firebase.storageRef()
 
         // Create a reference to the "alertForms" node
-        val uid = getUserID()
+        val uid = firebase.getUserID()
         val myRef = database.getReference("alertForms/$uid")
 
         // Create a unique key for the new alert form

@@ -1,16 +1,18 @@
 package eu.tkacas.smartalert.viewmodel.settings
 
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import eu.tkacas.smartalert.database.cloud.getStatisticsPerYear
+import eu.tkacas.smartalert.database.cloud.FirebaseUtils
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.Locale
 
-class AnalyticsViewModel(context: Context) : ViewModel() {
+class AnalyticsViewModel : ViewModel() {
+    val firebase = FirebaseUtils()
+
+
     private var _data = mutableMapOf<String, Any>()
     private var _years = MutableLiveData<List<String>>(listOf())
 
@@ -18,12 +20,12 @@ class AnalyticsViewModel(context: Context) : ViewModel() {
     private var _selectedMonth: String? = null
 
 
-    private var _earthquakeCount = MutableLiveData<Int>(0)
-    private var _floodCount = MutableLiveData<Int>(0)
-    private var _wildfireCount = MutableLiveData<Int>(0)
-    private var _heatwaveCount = MutableLiveData<Int>(0)
-    private var _snowstormCount = MutableLiveData<Int>(0)
-    private var _stormCount = MutableLiveData<Int>(0)
+    private var _earthquakeCount = MutableLiveData(0)
+    private var _floodCount = MutableLiveData(0)
+    private var _wildfireCount = MutableLiveData(0)
+    private var _heatwaveCount = MutableLiveData(0)
+    private var _snowstormCount = MutableLiveData(0)
+    private var _stormCount = MutableLiveData(0)
 
     var selectedYear: String?
         get() = _selectedYear
@@ -87,7 +89,7 @@ class AnalyticsViewModel(context: Context) : ViewModel() {
 
     private fun fetchData() {
         CoroutineScope(Dispatchers.IO).launch {
-            getStatisticsPerYear { success, dataRetrieved, error ->
+            firebase.getStatisticsPerYear { success, dataRetrieved, error ->
                 if (success) {
                     _data = dataRetrieved?.toMutableMap() ?: mutableMapOf()
                     _years.postValue(fetchYears())

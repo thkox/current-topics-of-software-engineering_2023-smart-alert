@@ -11,14 +11,14 @@ import eu.tkacas.smartalert.models.LocationData
 import kotlinx.coroutines.tasks.await
 
 class LocationViewModel(val context: Context) : ViewModel() {
-    private val fusedLocationClient: FusedLocationProviderClient by lazy {
+    private val _fusedLocationClient: FusedLocationProviderClient by lazy {
         LocationServices.getFusedLocationProviderClient(context)
     }
 
     suspend fun getLastLocation(): LocationData? {
         return if (hasLocationPermission(context)) {
             try {
-                fusedLocationClient.lastLocation.await()?.let {
+                _fusedLocationClient.lastLocation.await()?.let {
                     LocationData(it.latitude, it.longitude)
                 }
             } catch (e: SecurityException) {

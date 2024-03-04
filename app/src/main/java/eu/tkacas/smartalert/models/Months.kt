@@ -3,7 +3,7 @@ package eu.tkacas.smartalert.models
 import eu.tkacas.smartalert.R
 
 enum class Months {
-    Select_Month,
+    SELECT_MONTH,
     January,
     February,
     March,
@@ -20,7 +20,7 @@ enum class Months {
 
     fun getStringId(): Int {
         return when (this) {
-            Select_Month -> R.string.select_month
+            SELECT_MONTH -> R.string.select_month
             January -> R.string.january
             February -> R.string.february
             March -> R.string.march

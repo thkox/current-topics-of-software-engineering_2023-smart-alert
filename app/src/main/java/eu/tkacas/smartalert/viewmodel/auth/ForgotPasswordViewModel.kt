@@ -4,17 +4,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import eu.tkacas.smartalert.data.rules.Validator
-import eu.tkacas.smartalert.database.cloud.sendPasswordResetEmail
+import eu.tkacas.smartalert.database.cloud.FirebaseUtils
 import eu.tkacas.smartalert.ui.event.ForgotPasswordUIEvent
 import eu.tkacas.smartalert.ui.state.ForgotPasswordUIState
 
 class ForgotPasswordViewModel : ViewModel() {
 
+    val firebase = FirebaseUtils()
+
     var navController: NavController? = null
 
     var forgotPasswordUIState = mutableStateOf(ForgotPasswordUIState())
 
-    var validationPassed = mutableStateOf(false)
+    private var _validationPassed = mutableStateOf(false)
 
     private fun validateForgotPasswordUIDataWithRules() {
         val emailResult = Validator.validateEmail(
@@ -25,7 +27,7 @@ class ForgotPasswordViewModel : ViewModel() {
             emailError = emailResult.status
         )
 
-        validationPassed.value = emailResult.status
+        _validationPassed.value = emailResult.status
     }
 
     fun onEvent(event: ForgotPasswordUIEvent) {
@@ -45,6 +47,6 @@ class ForgotPasswordViewModel : ViewModel() {
 
     private fun resetPassword() {
         val email = forgotPasswordUIState.value.email
-        sendPasswordResetEmail(email, navController)
+        firebase.sendPasswordResetEmail(email, navController)
     }
 }
