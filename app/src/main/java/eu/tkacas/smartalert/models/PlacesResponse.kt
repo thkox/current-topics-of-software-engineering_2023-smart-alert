@@ -6,5 +6,5 @@ data class PlacesResponse(
 
 data class PlacePrediction(
     val description: String,
-    val placeID: String
+    val place_id: String
 )
