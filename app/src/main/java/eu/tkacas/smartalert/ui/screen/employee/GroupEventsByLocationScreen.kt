@@ -172,9 +172,8 @@ fun GroupEventsByLocationScreen(navController: NavHostController? = null) {
                             }
                         }
                     } else if (error.value != null) {
-                        //Text("Error: ${error.value}")
                         Text(
-                            stringResource(id = R.string.error) + ": ${error.value}",
+                            text = error.value!!,
                             color = UTOrange
                         )
                     }
