@@ -31,7 +31,7 @@ import androidx.navigation.NavController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import eu.tkacas.smartalert.R
-import eu.tkacas.smartalert.database.cloud.getFirstName
+import eu.tkacas.smartalert.database.cloud.FirebaseUtils
 import eu.tkacas.smartalert.database.local.DatabaseHelper
 import eu.tkacas.smartalert.models.ListOfHistoryMessages
 import eu.tkacas.smartalert.ui.component.HistoryMessageCard
@@ -47,6 +47,8 @@ fun HomeCitizenScreen(navController: NavController? = null) {
 
     val context = LocalContext.current
     val databaseHelper = DatabaseHelper(context)
+
+    val firebase = FirebaseUtils()
 
     val showDialog = remember { mutableStateOf(false) }
 
@@ -74,7 +76,7 @@ fun HomeCitizenScreen(navController: NavController? = null) {
 
     var firstNameVal: String by remember { mutableStateOf("") }
 
-    getFirstName { success, firstName, error ->
+    firebase.getFirstName { success, firstName, error ->
         if (success) {
             firstNameVal = firstName ?: ""
         } else {

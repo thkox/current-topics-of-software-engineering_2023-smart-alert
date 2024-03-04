@@ -5,12 +5,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import eu.tkacas.smartalert.data.rules.Validator
-import eu.tkacas.smartalert.database.cloud.createUser
+import eu.tkacas.smartalert.database.cloud.FirebaseUtils
 import eu.tkacas.smartalert.ui.event.SignupUIEvent
 import eu.tkacas.smartalert.ui.state.RegistrationUIState
 
 class SignupViewModel : ViewModel() {
     private val TAG = SignupViewModel::class.simpleName
+    val firebase = FirebaseUtils()
+
 
     var navController: NavController? = null
 
@@ -124,7 +126,7 @@ class SignupViewModel : ViewModel() {
         val firstName = registrationUIState.value.firstName
         val lastName = registrationUIState.value.lastName
 
-        createUser(email, password, firstName, lastName) { success, errorMessage ->
+        firebase.createUser(email, password, firstName, lastName) { success, errorMessage ->
             signUpInProgress.value = false
             if (success) {
                 navController?.navigate("permissions")

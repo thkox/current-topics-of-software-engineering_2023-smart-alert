@@ -31,7 +31,7 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.app.SharedPrefManager
-import eu.tkacas.smartalert.database.cloud.getAlertByPhenomenonAndLocation
+import eu.tkacas.smartalert.database.cloud.FirebaseUtils
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.models.ListOfLocationCriticalWeatherPhenomenonData
 import eu.tkacas.smartalert.models.SortingCriteriaDropDown
@@ -47,6 +47,8 @@ fun GroupEventsByLocationScreen(navController: NavHostController? = null) {
     val sharedPrefManager = SharedPrefManager(LocalContext.current)
     sharedPrefManager.setPreviousScreen("GroupEventsByLocationScreen")
     val scaffoldState = rememberScaffoldState()
+    val firebase = FirebaseUtils()
+
 
     val weatherPhenomenon = sharedPrefManager.getCriticalWeatherPhenomenon()
     val criticalWeatherPhenomenon = CriticalWeatherPhenomenon.valueOf(weatherPhenomenon.name)
@@ -65,7 +67,7 @@ fun GroupEventsByLocationScreen(navController: NavHostController? = null) {
 
     LaunchedEffect(key1 = data.value) {
         isRefreshing.value = true
-        getAlertByPhenomenonAndLocation(criticalWeatherPhenomenon.name) { success, result, err ->
+        firebase.getAlertByPhenomenonAndLocation(criticalWeatherPhenomenon.name) { success, result, err ->
             if (success) {
                 data.value = result
             } else {
@@ -100,7 +102,7 @@ fun GroupEventsByLocationScreen(navController: NavHostController? = null) {
             state = rememberSwipeRefreshState(isRefreshing = isRefreshing.value),
             onRefresh = {
                 isRefreshing.value = true
-                getAlertByPhenomenonAndLocation(criticalWeatherPhenomenon.name) { success, result, err ->
+                firebase.getAlertByPhenomenonAndLocation(criticalWeatherPhenomenon.name) { success, result, err ->
                     if (success) {
                         data.value = result
                     } else {

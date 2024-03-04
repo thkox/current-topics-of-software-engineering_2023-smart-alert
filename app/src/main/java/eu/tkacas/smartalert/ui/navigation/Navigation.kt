@@ -9,8 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import eu.tkacas.smartalert.app.SharedPrefManager
-import eu.tkacas.smartalert.database.cloud.signOutUser
-import eu.tkacas.smartalert.database.cloud.userExists
+import eu.tkacas.smartalert.database.cloud.FirebaseUtils
 import eu.tkacas.smartalert.ui.screen.Screen
 import eu.tkacas.smartalert.ui.screen.auth.ForgotPasswordScreen
 import eu.tkacas.smartalert.ui.screen.auth.LoginScreen
@@ -44,6 +43,8 @@ fun Navigation(navController: NavController = rememberNavController()) {
     val sharedPrefManager = SharedPrefManager(LocalContext.current)
     val context = LocalContext.current
     val viewModel = NavigationViewModel(context)
+    val firebase = FirebaseUtils()
+
 
     NavHost(
         navController = navController as NavHostController,
@@ -66,7 +67,7 @@ fun Navigation(navController: NavController = rememberNavController()) {
         composable("home") {
             when {
                 !viewModel.permissionsAreGranted() -> navController.navigate("permissions")
-                !userExists() -> navController.navigate("welcome")
+                !firebase.userExists() -> navController.navigate("welcome")
                 sharedPrefManager.isEmployee() -> {
                     sharedPrefManager.setLocationName("")
                     sharedPrefManager.setLocationID("")
@@ -84,7 +85,7 @@ fun Navigation(navController: NavController = rememberNavController()) {
 
         screensInHomeCitizen.forEach { screen ->
             composable(screen.route) {
-                if (userExists()) {
+                if (firebase.userExists()) {
                     when (screen) {
                         is Screen.HomeCitizen.AlertForm -> AlertFormScreen(navController)
                     }
@@ -96,7 +97,7 @@ fun Navigation(navController: NavController = rememberNavController()) {
 
         screensInHomeEmployee.forEach { screen ->
             composable(screen.route) {
-                if (userExists() && sharedPrefManager.isEmployee()) {
+                if (firebase.userExists() && sharedPrefManager.isEmployee()) {
                     when (screen) {
                         is Screen.HomeEmployee.AlertCitizenForm -> AlertCitizensFormScreen(
                             navController
@@ -132,7 +133,7 @@ fun Navigation(navController: NavController = rememberNavController()) {
                     is Screen.SettingsScreen.Analytics -> AnalyticsScreen(navController)
                     is Screen.SettingsScreen.About -> AboutScreen(navController)
                     is Screen.SettingsScreen.Logout -> {
-                        signOutUser()
+                        firebase.signOutUser()
                         sharedPrefManager.removeIsEmployee()
                         navController.navigate("welcome")
                     }
