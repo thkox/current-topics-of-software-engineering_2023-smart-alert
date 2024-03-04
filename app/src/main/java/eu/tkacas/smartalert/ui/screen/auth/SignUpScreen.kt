@@ -88,7 +88,9 @@ fun SignUpScreen(navController: NavController? = null) {
     }
 
     LazyColumn(
-        modifier = Modifier.fillMaxSize().background(Color.White),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

@@ -22,9 +22,8 @@ import eu.tkacas.smartalert.models.ListOfSingleLocationCriticalWeatherPhenomenon
 import eu.tkacas.smartalert.models.LocationCriticalWeatherPhenomenonData
 import eu.tkacas.smartalert.models.LocationData
 import eu.tkacas.smartalert.models.SingleLocationCriticalWeatherPhenomenonData
-import kotlinx.coroutines.tasks.await
-import java.util.Locale
 import kotlinx.coroutines.CompletableDeferred
+import java.util.Locale
 
 fun userExists(): Boolean {
     return FirebaseAuth.getInstance().currentUser != null
@@ -539,7 +538,7 @@ fun saveToken(token: String) {
     ref.push().setValue(token)
 }
 
-suspend fun changeUserPassword(newPassword: String) : Boolean {
+suspend fun changeUserPassword(newPassword: String): Boolean {
     val user = Firebase.auth.currentUser
     val result = CompletableDeferred<Boolean>()
 

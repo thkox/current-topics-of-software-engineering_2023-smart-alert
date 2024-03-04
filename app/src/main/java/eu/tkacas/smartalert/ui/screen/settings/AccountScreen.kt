@@ -40,7 +40,6 @@ import eu.tkacas.smartalert.ui.component.UploadButtonComponent
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
 import eu.tkacas.smartalert.ui.theme.SkyBlue
 import eu.tkacas.smartalert.viewmodel.settings.AccountViewModel
-import eu.tkacas.smartalert.viewmodel.auth.LoginViewModel
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "StateFlowValueCalledInComposition")
@@ -79,9 +78,15 @@ fun AccountScreen(navController: NavController? = null) {
                 }
             ) {
                 if (enableEdit) {
-                    Image(painter = painterResource(id = R.drawable.close), contentDescription = null)
+                    Image(
+                        painter = painterResource(id = R.drawable.close),
+                        contentDescription = null
+                    )
                 } else
-                    Image(painter = painterResource(id = R.drawable.edit), contentDescription = null)
+                    Image(
+                        painter = painterResource(id = R.drawable.edit),
+                        contentDescription = null
+                    )
             }
         }
     ) {
@@ -142,7 +147,7 @@ fun AccountScreen(navController: NavController? = null) {
                                     value = stringResource(id = R.string.submit),
                                     onButtonClicked = {
                                         scope.launch {
-                                            if (accountViewModel.changePassword(newPassword)){
+                                            if (accountViewModel.changePassword(newPassword)) {
                                                 Toast.makeText(
                                                     context,
                                                     "Password changed successfully",

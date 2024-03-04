@@ -51,9 +51,11 @@ fun TermsAndConditionsScreen(navController: NavController? = null) {
                 .padding(it)
         ) {
 
-            LazyColumn(modifier = Modifier
-                .background(Color.White)
-                .padding(16.dp)) {
+            LazyColumn(
+                modifier = Modifier
+                    .background(Color.White)
+                    .padding(16.dp)
+            ) {
                 item {
                     Text(text = termsOfUseIntro)
                     Text(text = termsOfUseLicense)

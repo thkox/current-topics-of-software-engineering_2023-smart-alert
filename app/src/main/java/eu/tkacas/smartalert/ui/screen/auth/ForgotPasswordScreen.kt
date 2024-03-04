@@ -38,7 +38,9 @@ fun ForgotPasswordScreen(navController: NavController? = null) {
     forgotPasswordViewModel.navController = navController
 
     LazyColumn(
-        modifier = Modifier.fillMaxSize().background(Color.White),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
