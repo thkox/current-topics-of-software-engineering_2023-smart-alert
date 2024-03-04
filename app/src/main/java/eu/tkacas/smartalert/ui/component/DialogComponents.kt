@@ -183,7 +183,7 @@ fun NotificationsHistoryDialog(
             text = {
                 Box(
                     modifier = Modifier
-                        .height(300.dp)
+                        .height(400.dp)
                 ) {
                     LazyColumn(
                         modifier = Modifier
