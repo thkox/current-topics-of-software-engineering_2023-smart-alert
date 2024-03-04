@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ButtonColors
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
@@ -205,7 +206,12 @@ fun UploadButtonComponent(value: String, onButtonClicked: () -> Unit) {
 }
 
 @Composable
-fun GeneralButtonComponent(value: String, onButtonClicked: () -> Unit) {
+fun GeneralButtonComponent(
+    value: String,
+    onButtonClicked: () -> Unit,
+    roundedCorners: RoundedCornerShape = RoundedCornerShape(30.dp),
+    color: Color = SkyBlue
+) {
     Button(
         modifier = Modifier
             .width(175.dp)
@@ -215,15 +221,15 @@ fun GeneralButtonComponent(value: String, onButtonClicked: () -> Unit) {
         },
         contentPadding = PaddingValues(),
         colors = ButtonDefaults.buttonColors(Color.Transparent),
-        shape = RoundedCornerShape(30.dp),
+        shape = roundedCorners
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(40.dp)
                 .background(
-                    color = SkyBlue,
-                    shape = RoundedCornerShape(30.dp)
+                    color = color,
+                    shape = roundedCorners
                 ),
             contentAlignment = Alignment.Center
         ) {
