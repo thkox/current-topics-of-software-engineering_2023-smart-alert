@@ -138,7 +138,6 @@ fun AlertWithImageDialog(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(text = message ?: "")
-                    // TODO: Text should be replaced with Image once the image is available
                     if (!imageURL.isNullOrEmpty()) {
                         Image(
                             painter = rememberAsyncImagePainter(model = imageURL),
