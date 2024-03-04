@@ -61,15 +61,22 @@ fun PhotoBottomSheetContent(
     var selectedBitmap by remember { mutableStateOf<Bitmap?>(null) }
     val scope = rememberCoroutineScope()
 
-    if(bitmaps.isEmpty()) {
+    if (bitmaps.isEmpty()) {
         Box(
             modifier = modifier
                 .padding(16.dp),
             contentAlignment = Alignment.Center
-        ){
+        ) {
             Text(stringResource(id = R.string.there_are_no_photos_yet))
         }
     } else {
+        Box(
+            modifier = modifier
+                .padding(16.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(stringResource(id = R.string.please_choose_a_photo_to_upload))
+        }
         LazyVerticalStaggeredGrid(
             columns = StaggeredGridCells.Fixed(2),
             horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -94,7 +101,7 @@ fun PhotoBottomSheetContent(
                     .fillMaxWidth()
                     .padding(16.dp),
                 horizontalArrangement = Arrangement.End
-            ){
+            ) {
                 UploadPhotoButton(
                     onButtonClicked = {
                         scope.launch {

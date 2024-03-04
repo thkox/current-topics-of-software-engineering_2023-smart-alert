@@ -38,11 +38,17 @@ fun MyReportsHistoryScreen(navController: NavController? = null) {
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            AppBarBackView(title = stringResource(id = R.string.my_reports), navController = navController)
+            AppBarBackView(
+                title = stringResource(id = R.string.my_reports),
+                navController = navController
+            )
         }
     ) {
         if (alerts.isEmpty()) {
-            Text(text = "No reports found", modifier = Modifier.padding(16.dp))
+            Text(
+                text = stringResource(id = R.string.no_reports_found),
+                modifier = Modifier.padding(16.dp)
+            )
         } else {
             LazyColumn(
                 modifier = Modifier.padding(16.dp)

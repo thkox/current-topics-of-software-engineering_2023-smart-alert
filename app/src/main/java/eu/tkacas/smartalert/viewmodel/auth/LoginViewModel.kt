@@ -2,12 +2,14 @@ package eu.tkacas.smartalert.viewmodel.auth
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
-import eu.tkacas.smartalert.cloud.signInUser
+import eu.tkacas.smartalert.data.rules.Validator
+import eu.tkacas.smartalert.database.cloud.signInUser
 import eu.tkacas.smartalert.ui.event.LoginUIEvent
 import eu.tkacas.smartalert.ui.state.LoginUIState
-import eu.tkacas.smartalert.data.rules.Validator
+import java.util.Locale
 
 class LoginViewModel : ViewModel() {
 
@@ -20,6 +22,10 @@ class LoginViewModel : ViewModel() {
     var allValidationsPassed = mutableStateOf(false)
 
     var loginInProgress = mutableStateOf(false)
+
+    val toastMessage = MutableLiveData<String?>()
+
+    val refreshScreen = mutableStateOf(false)
 
 
     fun onEvent(event: LoginUIEvent) {
@@ -62,6 +68,7 @@ class LoginViewModel : ViewModel() {
 
     }
 
+
     private fun login() {
         loginInProgress.value = true
         val email = loginUIState.value.email
@@ -73,8 +80,47 @@ class LoginViewModel : ViewModel() {
                 navController?.navigate("permissions")
             } else {
                 // Handle the error message
+                toastMessage.value = null
+                val currentLanguage = Locale.getDefault().language
+                val loginfailedMessage = if (currentLanguage == "en") {
+                    "Login failed, Please check your credentials."
+                } else if (currentLanguage == "el") {
+                    "Η σύνδεση απέτυχε, Ελέγξτε τα διαπιστευτήριά σας."
+                } else {
+                    "Login failed, Please check your credentials."
+                }
+                toastMessage.value = loginfailedMessage
+                refreshScreen.value = !refreshScreen.value
                 Log.d(TAG, "Login failed: $errorMessage")
             }
         }
     }
+
+
+//    private fun login() {
+//        loginInProgress.value = true
+//        val email = loginUIState.value.email
+//        val password = loginUIState.value.password
+//
+//        val auth = FirebaseAuth.getInstance()
+//        auth.signInWithEmailAndPassword(email, password)
+//            .addOnCompleteListener { task ->
+//                loginInProgress.value = false
+//                if (task.isSuccessful) {
+//                    navController?.navigate("permissions")
+//                } else {
+//                    if (task.exception is FirebaseAuthInvalidCredentialsException) {
+//                        //toastMessage.value = null // Set to null first
+//                        toastMessage.value = "Incorrect password. Please try again."
+//                        Log.d(TAG, "Toast message sent")
+//                    } else {
+//                        // Handle other types of exceptions
+//                        Log.d(TAG, "Login failed: ${task.exception?.message}")
+//                    }
+//                    loginInProgress.value = false
+//                }
+//            }
+//    }
+
+
 }

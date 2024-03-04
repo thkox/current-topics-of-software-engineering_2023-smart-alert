@@ -1,23 +1,22 @@
 package eu.tkacas.smartalert.viewmodel.citizen
 
 import android.content.Context
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.google.gson.Gson
+import eu.tkacas.smartalert.database.cloud.getUserID
+import eu.tkacas.smartalert.database.cloud.storageRef
 import eu.tkacas.smartalert.models.CitizenMessage
+import eu.tkacas.smartalert.models.CriticalLevel
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.models.LocationData
-import com.google.gson.Gson
-import eu.tkacas.smartalert.cloud.getUserID
-import eu.tkacas.smartalert.cloud.storageRef
-import eu.tkacas.smartalert.models.EmergencyLevel
 import eu.tkacas.smartalert.viewmodel.LocationViewModel
 
-class AlertFormViewModel(context: Context): ViewModel() {
+class AlertFormViewModel(context: Context) : ViewModel() {
 
     val visiblePermissionDialogQueue = mutableStateListOf<String>()
-    val selectedDangerLevelButton = mutableStateOf(EmergencyLevel.LOW)
+    val selectedDangerLevelButton = mutableStateOf(CriticalLevel.LOW)
     val selectedWeatherPhenomenon = mutableStateOf(CriticalWeatherPhenomenon.EARTHQUAKE)
     val alertDescription = mutableStateOf("")
     var locationData = LocationData(0.0, 0.0)
@@ -30,26 +29,27 @@ class AlertFormViewModel(context: Context): ViewModel() {
     fun onPermissionResult(
         permission: String,
         isGranted: Boolean
-    ){
-        if(!isGranted && !visiblePermissionDialogQueue.contains(permission)) {
+    ) {
+        if (!isGranted && !visiblePermissionDialogQueue.contains(permission)) {
             visiblePermissionDialogQueue.add(permission)
         }
     }
 
-    fun setSelectedDangerLevelButton(level: EmergencyLevel){
+    fun setSelectedDangerLevelButton(level: CriticalLevel) {
         selectedDangerLevelButton.value = level
     }
-    fun setSelectedWeatherPhenomenon(phenomenon: CriticalWeatherPhenomenon){
+
+    fun setSelectedWeatherPhenomenon(phenomenon: CriticalWeatherPhenomenon) {
         selectedWeatherPhenomenon.value = phenomenon
     }
 
-    fun setAlertDescription(description: String?){
+    fun setAlertDescription(description: String?) {
         if (description != null) {
             alertDescription.value = description
         }
     }
 
-    fun setPhotoURL(url: String?){
+    fun setPhotoURL(url: String?) {
         if (url != null) {
             photoURL.value = url
         }

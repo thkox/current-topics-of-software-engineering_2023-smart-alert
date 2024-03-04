@@ -2,15 +2,13 @@ package eu.tkacas.smartalert.viewmodel.settings
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import eu.tkacas.smartalert.cloud.CloudFunctionsUtils
-import eu.tkacas.smartalert.cloud.getAlertFormsByUser
+import eu.tkacas.smartalert.database.cloud.getAlertFormsByUser
 import eu.tkacas.smartalert.models.CitizenMessage2
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MyReportsHistoryViewModel: ViewModel() {
+class MyReportsHistoryViewModel : ViewModel() {
 
     // Define a LiveData property to hold the list of alerts
     val alerts: MutableLiveData<List<CitizenMessage2>> = fetchAlerts()

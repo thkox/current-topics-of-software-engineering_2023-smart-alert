@@ -2,11 +2,15 @@ package eu.tkacas.smartalert.ui.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Divider
@@ -42,7 +46,7 @@ fun PermissionDialog(
             ) {
                 Divider()
                 Text(
-                    text = if(isPermanentlyDeclined) {
+                    text = if (isPermanentlyDeclined) {
                         "Grant permission"
                     } else {
                         "OK"
@@ -80,7 +84,7 @@ interface PermissionTextProvider {
     fun getDescription(isPermanentlyDeclined: Boolean): String
 }
 
-class NotificationPermissionTextProvider: PermissionTextProvider {
+class NotificationPermissionTextProvider : PermissionTextProvider {
     override fun getDescription(isPermanentlyDeclined: Boolean): String {
         return if (isPermanentlyDeclined) {
             "Notification permission is required to send you alerts. Please go to app settings and enable the notification permission."
@@ -90,7 +94,7 @@ class NotificationPermissionTextProvider: PermissionTextProvider {
     }
 }
 
-class LocationPermissionTextProvider: PermissionTextProvider {
+class LocationPermissionTextProvider : PermissionTextProvider {
     override fun getDescription(isPermanentlyDeclined: Boolean): String {
         return if (isPermanentlyDeclined) {
             "Location permission is required to get your current location. Please go to app settings and enable the location permission."
@@ -100,7 +104,7 @@ class LocationPermissionTextProvider: PermissionTextProvider {
     }
 }
 
-class CameraPermissionTextProvider: PermissionTextProvider {
+class CameraPermissionTextProvider : PermissionTextProvider {
     override fun getDescription(isPermanentlyDeclined: Boolean): String {
         return if (isPermanentlyDeclined) {
             "Camera permission is required to take a picture. Please go to app settings and enable the camera permission."
@@ -116,11 +120,16 @@ fun AlertWithImageDialog(
     message: String?,
     imageURL: String?,
     onDismiss: () -> Unit
-){
-    if(showDialog){
+) {
+    if (showDialog) {
         AlertDialog(
             onDismissRequest = onDismiss,
-            title = { Text(text = stringResource(id = R.string.Citizen_message), color = PrussianBlue) },
+            title = {
+                Text(
+                    text = stringResource(id = R.string.Citizen_message),
+                    color = PrussianBlue
+                )
+            },
             text = {
                 Column(
                     modifier = Modifier
@@ -140,7 +149,8 @@ fun AlertWithImageDialog(
                         )
                     } else {
                         Text(
-                            text = stringResource(id = R.string.No_image_available), color = Color.Red,
+                            text = stringResource(id = R.string.No_image_available),
+                            color = Color.Red,
                         )
                     }
                 }
@@ -155,7 +165,50 @@ fun AlertWithImageDialog(
                 .clip(RoundedCornerShape(10.dp))
         )
     }
+}
 
+@Composable
+fun NotificationsHistoryDialog(
+    showDialog: Boolean,
+    weatherPhenomenonText: String = "Earthquake",
+    locationText: String = "Kifissia, Athens",
+    dateTimeText: String = "2024-02-20 10:00",
+    messageText: String = "This is a test message",
+    onDismiss: () -> Unit
+) {
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = onDismiss,
+            title = { Text(text = weatherPhenomenonText, color = PrussianBlue) },
+            text = {
+                Box(
+                    modifier = Modifier
+                        .height(400.dp)
+                ) {
+                    LazyColumn(
+                        modifier = Modifier
+                            .padding(16.dp)
+                    ) {
+                        item {
+                            Text(text = locationText)
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(text = dateTimeText)
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(text = messageText)
+                        }
+                    }
+                }
+            },
+            confirmButton = {
+                GeneralButtonComponent(
+                    value = stringResource(id = R.string.close),
+                    onButtonClicked = { onDismiss() }
+                )
+            },
+            modifier = Modifier
+                .clip(RoundedCornerShape(10.dp))
+        )
+    }
 }
 
 @Composable
@@ -175,7 +228,6 @@ fun ConfirmDeleteDialog(
                 TextButton(
                     onClick = { onConfirm() }
                 ) {
-                    //Text("Confirm")
                     Text(text = stringResource(id = R.string.confirm), color = PrussianBlue)
                 }
             },
@@ -183,7 +235,6 @@ fun ConfirmDeleteDialog(
                 TextButton(
                     onClick = { onDismiss() }
                 ) {
-                    //Text("Cancel")
                     Text(text = stringResource(id = R.string.cancel), color = Color.Red)
                 }
             }

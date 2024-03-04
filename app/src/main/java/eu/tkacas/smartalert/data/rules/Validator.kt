@@ -33,8 +33,7 @@ object Validator {
         )
     }
 
-data class ValidationResult(
-    val status: Boolean = false
-)
-
+    data class ValidationResult(
+        val status: Boolean = false
+    )
 }

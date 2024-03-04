@@ -1,6 +1,6 @@
 package eu.tkacas.smartalert.ui.screen.employee
 
-import androidx.compose.foundation.Image
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
@@ -19,7 +20,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -32,13 +35,15 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.app.SharedPrefManager
-import eu.tkacas.smartalert.cloud.getAlertByPhenomenonAndLocation
-import eu.tkacas.smartalert.cloud.getSpecificAlertByPhenomenonAndLocation
+import eu.tkacas.smartalert.database.cloud.getSpecificAlertByPhenomenonAndLocation
+import eu.tkacas.smartalert.models.CriticalLevel
+import eu.tkacas.smartalert.models.CriticalLevelDropdown
 import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.models.ListOfSingleLocationCriticalWeatherPhenomenonData
 import eu.tkacas.smartalert.ui.component.AlertWithImageDialog
 import eu.tkacas.smartalert.ui.component.CardComponentWithImage
 import eu.tkacas.smartalert.ui.component.ConfirmDeleteDialog
+import eu.tkacas.smartalert.ui.component.EnumDropdownComponentCriticalLevelAlert
 import eu.tkacas.smartalert.ui.component.GeneralButtonComponent
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
 import eu.tkacas.smartalert.ui.theme.PrussianBlue
@@ -63,18 +68,48 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
     val weatherPhenomenon = sharedPrefManager.getCriticalWeatherPhenomenon()
     val criticalWeatherPhenomenon = CriticalWeatherPhenomenon.valueOf(weatherPhenomenon.name)
 
-    val address = sharedPrefManager.getAddress()
+    val selectedFilter = remember { mutableStateOf(CriticalLevelDropdown.AllALERTS) }
+
+    val locationID = sharedPrefManager.getLocationID()
 
     val data = remember { mutableStateOf<ListOfSingleLocationCriticalWeatherPhenomenonData?>(null) }
+
     val error = remember { mutableStateOf<String?>(null) }
 
     val isRefreshing = remember { mutableStateOf(false) }
 
-    LaunchedEffect(key1 = criticalWeatherPhenomenon, key2 = address) {
+
+    val filteredData = data.value?.list?.filter {
+        when (selectedFilter.value) {
+            CriticalLevelDropdown.AllALERTS -> true
+            CriticalLevelDropdown.LASTHOUR -> it.timeStamp.let { it1 ->
+                viewModel.isWithinLastHour(
+                    it1
+                )
+            }
+
+            CriticalLevelDropdown.LOW -> it.emLevel == CriticalLevel.LOW
+            CriticalLevelDropdown.NORMAL -> it.emLevel == CriticalLevel.NORMAL
+            CriticalLevelDropdown.HIGH -> it.emLevel == CriticalLevel.HIGH
+        }
+    }
+
+    LaunchedEffect(key1 = data.value) {
         isRefreshing.value = true
-        getSpecificAlertByPhenomenonAndLocation(criticalWeatherPhenomenon.name, address) { success, result, err ->
+        getSpecificAlertByPhenomenonAndLocation(
+            criticalWeatherPhenomenon.name,
+            locationID
+        ) { success, alertForms, areaBounds, areaName, err ->
             if (success) {
-                data.value = result
+                data.value = alertForms
+
+                sharedPrefManager.setBoundsNorthEastLat(areaBounds?.northeast?.lat)
+                sharedPrefManager.setBoundsNorthEastLng(areaBounds?.northeast?.lng)
+                sharedPrefManager.setBoundsSouthWestLat(areaBounds?.southwest?.lat)
+                sharedPrefManager.setBoundsSouthWestLng(areaBounds?.southwest?.lng)
+
+                sharedPrefManager.setLocationName(areaName)
+
             } else {
                 error.value = err
             }
@@ -85,46 +120,86 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            AppBarBackView(title = stringResource(id = criticalWeatherPhenomenon.getStringId()), navController = navController)
+            AppBarBackView(
+                title = stringResource(id = criticalWeatherPhenomenon.getStringId()),
+                navController = navController,
+                enableSettingsButton = false
+            )
         },
         floatingActionButton = {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                FloatingActionButton(
-                    modifier = Modifier
-                        .size(40.dp),
-                    containerColor = SkyBlue,
-                    onClick = {
-                        navController?.navigate("alertCitizensForm")
+                val configuration = LocalConfiguration.current
+                val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+
+                if (isLandscape) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        FloatingActionButton(
+                            modifier = Modifier.size(40.dp),
+                            containerColor = SkyBlue,
+                            onClick = { navController?.navigate("alertCitizensForm") }
+                        ) {
+                            Icon(painterResource(id = R.drawable.add), contentDescription = "Map")
+                        }
+                        FloatingActionButton(
+                            modifier = Modifier.padding(all = 15.dp),
+                            containerColor = SkyBlue,
+                            onClick = { navController?.navigate("Map") }
+                        ) {
+                            Icon(painterResource(id = R.drawable.map), contentDescription = "Map")
+                        }
                     }
-                ) {
-                    Image(painterResource(id = R.drawable.add), contentDescription = "Map")
-                }
-                FloatingActionButton(
-                    modifier = Modifier.padding(all = 15.dp),
-                    containerColor = SkyBlue,
-                    onClick = {
-                        navController?.navigate("Map")
+                } else {
+                    Column(
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        FloatingActionButton(
+                            modifier = Modifier.size(40.dp),
+                            containerColor = SkyBlue,
+                            onClick = { navController?.navigate("alertCitizensForm") }
+                        ) {
+                            Icon(painterResource(id = R.drawable.add), contentDescription = "Map")
+                        }
+                        FloatingActionButton(
+                            modifier = Modifier.padding(all = 15.dp),
+                            containerColor = SkyBlue,
+                            onClick = { navController?.navigate("Map") }
+                        ) {
+                            Icon(painterResource(id = R.drawable.map), contentDescription = "Map")
+                        }
                     }
-                ) {
-                    Image(painterResource(id = R.drawable.map), contentDescription = "Map")
                 }
             }
         }
-    ){
+    ) { it ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(it)
-        ){
+        ) {
             SwipeRefresh(
                 state = rememberSwipeRefreshState(isRefreshing = isRefreshing.value),
                 onRefresh = {
                     isRefreshing.value = true
-                    getSpecificAlertByPhenomenonAndLocation(criticalWeatherPhenomenon.name, address) { success, result, err ->
+                    getSpecificAlertByPhenomenonAndLocation(
+                        criticalWeatherPhenomenon.name,
+                        locationID
+                    ) { success, alertForms, locationBounds, locationName, err ->
                         if (success) {
-                            data.value = result
+                            data.value = alertForms
+
+                            sharedPrefManager.setBoundsNorthEastLat(locationBounds?.northeast?.lat)
+                            sharedPrefManager.setBoundsNorthEastLng(locationBounds?.northeast?.lng)
+                            sharedPrefManager.setBoundsSouthWestLat(locationBounds?.southwest?.lat)
+                            sharedPrefManager.setBoundsSouthWestLng(locationBounds?.southwest?.lng)
+
+                            sharedPrefManager.setLocationName(locationName)
+
                         } else {
                             error.value = err
                         }
@@ -140,8 +215,7 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = stringResource(id = R.string.The_reports_about_this_location_from_the_last_24_hours_),
-                        //Text(text = "The reports about this location from the last 24 hours.",
+                        text = stringResource(id = R.string.The_reports_about_this_location_from_the_last_6_hours_),
                         color = PrussianBlue,
                         style = TextStyle(
                             color = PrussianBlue,
@@ -154,7 +228,7 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                         modifier = Modifier
                             .fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.End
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         GeneralButtonComponent(
                             value = stringResource(id = R.string.delete_all),
@@ -163,20 +237,28 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                                 showMassWarningDialog.value = true
                             }
                         )
+
+
+
+                        EnumDropdownComponentCriticalLevelAlert(
+                            enumClass = CriticalLevelDropdown::class.java,
+                            initialSelection = CriticalLevelDropdown.AllALERTS,
+                            onSelected = { selectedFilter.value = it }
+                        )
                     }
                     if (data.value != null) {
                         LazyColumn(
                             modifier = Modifier.fillMaxSize()
                         ) {
-                            items(data.value?.list?.size ?: 0) { index ->
+                            items(filteredData?.size ?: 0) { index ->
                                 CardComponentWithImage(
-                                    row1 = data.value?.list?.get(index)?.location ?: "",
+                                    row1 = filteredData?.get(index)?.location ?: "",
                                     row2 = stringResource(id = R.string.critical_level) + ": ${
-                                        data.value?.list?.get(index)?.emLevel?.getStringId()
+                                        filteredData?.get(index)?.emLevel?.getStringId()
                                             ?.let { it1 -> stringResource(id = it1) }
                                     }",
                                     row3 = stringResource(id = R.string.time) + ": ${
-                                        data.value?.list?.get(
+                                        filteredData?.get(
                                             index
                                         )?.timeStamp
                                     }",
@@ -186,13 +268,16 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                                     },
                                     onClick = {
                                         selectedMessage.value =
-                                            data.value?.list?.get(index)?.message
+                                            filteredData?.get(index)?.message
                                         selectedImageUrl.value =
-                                            data.value?.list?.get(index)?.imageURL
+                                            filteredData?.get(index)?.imageURL
                                         showDialog.value = true
-
-                                    }
-                                )
+                                    },
+                                    color = filteredData?.get(index)?.emLevel?.let {
+                                        colorResource(
+                                            id = it.getColor()
+                                        )
+                                    } ?: colorResource(id = R.color.colorWhite))
                                 AlertWithImageDialog(
                                     showDialog = showDialog.value,
                                     message = selectedMessage.value,
@@ -209,7 +294,7 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                                     onConfirm = {
                                         viewModel.deleteEventByPhenomenonAndLocation(
                                             criticalWeatherPhenomenon.name,
-                                            address,
+                                            locationID,
                                             data.value?.list?.get(index)?.alertID ?: ""
                                         )
                                         showWarningDialog.value = false
@@ -217,15 +302,13 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                                 )
                                 ConfirmDeleteDialog(
                                     showDialog = showMassWarningDialog.value,
-                                    //title =  "Warning",
                                     title = stringResource(id = R.string.Warning),
-                                    //message =  "You are about to delete all alert warnings. Are you sure?",
                                     message = stringResource(id = R.string.You_are_about_to_delete_all_alert_warnings_Are_you_sure),
                                     onDismiss = { showMassWarningDialog.value = false },
                                     onConfirm = {
                                         viewModel.deleteAllEventsByPhenomenonAndLocation(
                                             criticalWeatherPhenomenon.name,
-                                            address
+                                            locationID
                                         )
                                         showMassWarningDialog.value = false
                                     }
@@ -233,7 +316,6 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                             }
                         }
                     } else if (error.value != null) {
-                        //Text("Error: ${error.value}")
                         Text(stringResource(id = R.string.error) + ": ${error.value}")
                     }
                 }
@@ -244,6 +326,6 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
 
 @Preview
 @Composable
-fun EventsByLocationScreenPreview(){
+fun EventsByLocationScreenPreview() {
     EventsByLocationScreen()
 }
