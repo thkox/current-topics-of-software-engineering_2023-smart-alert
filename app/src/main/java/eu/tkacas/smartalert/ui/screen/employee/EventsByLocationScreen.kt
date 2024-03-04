@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -20,6 +22,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
@@ -46,6 +49,7 @@ import eu.tkacas.smartalert.ui.component.ConfirmDeleteDialog
 import eu.tkacas.smartalert.ui.component.EnumDropdownComponentCriticalLevelAlert
 import eu.tkacas.smartalert.ui.component.GeneralButtonComponent
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
+import eu.tkacas.smartalert.ui.theme.BlueGreen
 import eu.tkacas.smartalert.ui.theme.PrussianBlue
 import eu.tkacas.smartalert.ui.theme.SkyBlue
 import eu.tkacas.smartalert.viewmodel.employee.EventsByLocationViewModel
@@ -233,10 +237,11 @@ fun EventsByLocationScreen(navController: NavHostController? = null) {
                     ) {
                         GeneralButtonComponent(
                             value = stringResource(id = R.string.delete_all),
-                            //value = "Delete All",
                             onButtonClicked = {
                                 showMassWarningDialog.value = true
-                            }
+                            },
+                            roundedCorners = RoundedCornerShape(10.dp),
+                            color = BlueGreen
                         )
 
 
