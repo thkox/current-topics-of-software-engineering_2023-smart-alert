@@ -86,14 +86,14 @@ class AlertFormViewModel(context: Context) : ViewModel() {
     }
 
 
-    private val locationViewModel = LocationViewModel(context = context)
+    private val _locationViewModel = LocationViewModel(context = context)
     suspend fun sentAlert() {
         val selectedLevel = selectedDangerLevelButton.value
         val selectedPhenomenon = selectedWeatherPhenomenon.value
         val description = alertDescription.value
         val photoURL = photoURL.value
 
-        val locationData = locationViewModel.getLastLocation()
+        val locationData = _locationViewModel.getLastLocation()
 
         val database = firebase.storageRef()
 

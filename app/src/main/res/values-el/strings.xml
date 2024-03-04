@@ -133,7 +133,9 @@
     <string name="last_hour">Τελευταία Ώρα</string>
     <string name="alphabetical">Αλφαβητικά</string>
     <string name="login_failed">Η σύνδεση απέτυχε, παρακαλούμε ελέγξτε τα διαπιστευτήριά σας.</string>
-    <string name="please_choose_a_photo_to_upload">Please choose a photo to upload</string>
-    <string name="i_read_and_agree">I agree</string>
-    <string name="go_back">Go Back</string>
+    <string name="please_choose_a_photo_to_upload">Παρακαλώ, επέλεξε μία φωτογραφία:</string>
+    <string name="i_read_and_agree">Συμφωνώ</string>
+    <string name="go_back">Επιστροφή</string>
+    <string name="password_changed_successfully">Ο κωδικός χρήστη άλλαξε με επιτυχία!</string>
+    <string name="password_change_failed">Αποτυχία αλλαγής κωδικού. Προσπαθήστε αργότερα</string>
 </resources>
