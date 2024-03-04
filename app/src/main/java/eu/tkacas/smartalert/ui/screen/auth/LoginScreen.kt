@@ -76,7 +76,9 @@ fun LoginScreen(navController: NavController? = null) {
 
                     Column(
                         modifier = Modifier
-                            .fillMaxSize()
+                            .fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
 
                         HeadingTextComponent(value = stringResource(id = welcome_to_smart_alert_app))

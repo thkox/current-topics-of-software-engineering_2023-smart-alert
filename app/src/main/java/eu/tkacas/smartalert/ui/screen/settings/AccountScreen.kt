@@ -30,11 +30,11 @@ import eu.tkacas.smartalert.ui.component.CircleImage
 import eu.tkacas.smartalert.ui.component.EmailDisplayComponent
 import eu.tkacas.smartalert.ui.component.FloatingActionButton
 import eu.tkacas.smartalert.ui.component.NameFieldComponent
-import eu.tkacas.smartalert.ui.component.PasswordDisplayComponent
+import eu.tkacas.smartalert.ui.component.PasswordTextFieldComponent
 import eu.tkacas.smartalert.ui.component.UploadButtonComponent
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
 import eu.tkacas.smartalert.ui.theme.SkyBlue
-import eu.tkacas.smartalert.viewmodel.AccountViewModel
+import eu.tkacas.smartalert.viewmodel.settings.AccountViewModel
 import eu.tkacas.smartalert.viewmodel.auth.LoginViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "StateFlowValueCalledInComposition")
@@ -80,13 +80,14 @@ fun AccountScreen(navController: NavController? = null) {
                             .padding(top = 15.dp),
                         contentAlignment = Alignment.TopCenter
                     ) {
-                        CircleImage(imageResId = R.drawable.account)
                     }
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(top = 20.dp),
                     ) {
+                        CircleImage(imageResId = R.drawable.account)
+
                         Spacer(modifier = Modifier.height(20.dp))
 
                         NameFieldComponent(
@@ -103,36 +104,24 @@ fun AccountScreen(navController: NavController? = null) {
 
                         Spacer(modifier = Modifier.height(10.dp))
 
-                        PasswordDisplayComponent(
-                            password = password,
+                        Spacer(modifier = Modifier.height(10.dp))
+                        PasswordTextFieldComponent(
+                            labelValue = stringResource(id = R.string.new_password),
                             painterResource(id = R.drawable.password),
-                            label = stringResource(id = R.string.current_password)
-                        )
-
-                        if (isPasswordDisplayVisible) {
-                            Spacer(modifier = Modifier.height(10.dp))
-                            PasswordDisplayComponent(
-                                password = password,
-                                painterResource(id = R.drawable.password),
-                                label = stringResource(id = R.string.new_password)
-                            )
-                            Spacer(modifier = Modifier.height(10.dp))
-                            PasswordDisplayComponent(
-                                password = password,
-                                painterResource(id = R.drawable.password),
-                                label = stringResource(id = R.string.confirm_password)
-                            )
-                            Box(
-                                modifier = Modifier.fillMaxSize(),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                UploadButtonComponent(
-                                    value = stringResource(id = R.string.submit),
-                                    onButtonClicked = { //TODO: Implement the logic for updating the user's account
-                                        accountViewModel.changePassword(newPassword)
-                                    }
-                                )
+                            onTextSelected = {
+                                newPassword = it
                             }
+                        )
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            UploadButtonComponent(
+                                value = stringResource(id = R.string.submit),
+                                onButtonClicked = { //TODO: Implement the logic for updating the user's account
+                                    accountViewModel.changePassword(newPassword)
+                                }
+                            )
                         }
                     }
 

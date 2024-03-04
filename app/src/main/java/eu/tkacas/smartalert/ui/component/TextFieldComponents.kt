@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -151,8 +152,10 @@ fun TextFieldComponent(
 
     OutlinedTextField(
         modifier = Modifier
-            .fillMaxWidth()
+            .size(340.dp, 70.dp)
+            .padding(start = 16.dp, end = 16.dp)
             .clip(componentShapes.small),
+        textStyle = TextStyle(fontSize = 18.sp),
         label = { Text(text = labelValue) },
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = PrussianBlue,
@@ -194,8 +197,10 @@ fun PasswordTextFieldComponent(
 
     OutlinedTextField(
         modifier = Modifier
-            .fillMaxWidth()
+            .size(340.dp, 70.dp)
+            .padding(start = 16.dp, end = 16.dp)
             .clip(componentShapes.small),
+        textStyle = TextStyle(fontSize = 18.sp),
         label = { Text(text = labelValue) },
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = PrussianBlue,
@@ -280,11 +285,9 @@ fun MultilineTextFieldComponent(
 
 @Composable
 fun EmailDisplayComponent(email: String, painterResource: Painter) {
-    var enabled by remember { mutableStateOf(false) }
-
     OutlinedTextField(
         modifier = Modifier
-            .fillMaxWidth()
+            .size(340.dp, 70.dp)
             .padding(start = 16.dp, end = 16.dp)
             .clip(componentShapes.small),
         textStyle = TextStyle(fontSize = 18.sp),
@@ -330,29 +333,4 @@ fun NameFieldComponent(
             color = BlueGreen
         )
     }
-}
-
-
-@Composable
-fun PasswordDisplayComponent(password: String, painterResource: Painter, label: String) {
-    OutlinedTextField(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp)
-            .clip(componentShapes.small),
-        textStyle = TextStyle(fontSize = 18.sp),
-        value = password,
-        onValueChange = {},
-        label = { Text(text = label) },
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = PrussianBlue,
-            focusedLabelColor = PrussianBlue,
-            cursorColor = PrussianBlue,
-            backgroundColor = BgColor
-        ),
-        leadingIcon = {
-            Icon(painter = painterResource, contentDescription = "Password")
-        },
-        enabled = false
-    )
 }
