@@ -1,13 +1,16 @@
 package eu.tkacas.smartalert.database.cloud
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.widget.Toast
 import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.ktx.Firebase
 import eu.tkacas.smartalert.R
 import eu.tkacas.smartalert.models.Bounds
 import eu.tkacas.smartalert.models.CitizenMessage2
@@ -19,7 +22,9 @@ import eu.tkacas.smartalert.models.ListOfSingleLocationCriticalWeatherPhenomenon
 import eu.tkacas.smartalert.models.LocationCriticalWeatherPhenomenonData
 import eu.tkacas.smartalert.models.LocationData
 import eu.tkacas.smartalert.models.SingleLocationCriticalWeatherPhenomenonData
+import kotlinx.coroutines.tasks.await
 import java.util.Locale
+import kotlinx.coroutines.CompletableDeferred
 
 fun userExists(): Boolean {
     return FirebaseAuth.getInstance().currentUser != null
@@ -532,4 +537,21 @@ fun saveToken(token: String) {
     val db = FirebaseDatabase.getInstance()
     val ref = db.getReference("tokens")
     ref.push().setValue(token)
+}
+
+suspend fun changeUserPassword(newPassword: String) : Boolean {
+    val user = Firebase.auth.currentUser
+    val result = CompletableDeferred<Boolean>()
+
+    user?.updatePassword(newPassword)?.addOnCompleteListener { task ->
+        if (task.isSuccessful) {
+            Log.d("AccountViewModel", "User password updated.")
+            result.complete(true)
+        } else {
+            Log.e("AccountViewModel", "Failed to update user password.", task.exception)
+            result.complete(false)
+        }
+    }
+
+    return result.await()
 }

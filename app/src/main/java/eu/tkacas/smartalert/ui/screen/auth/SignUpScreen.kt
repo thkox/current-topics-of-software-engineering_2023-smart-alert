@@ -192,7 +192,7 @@ fun SignUpScreen(navController: NavController? = null) {
                             ButtonComponent(
                                 value = stringResource(id = register),
                                 onButtonClicked = {
-                                    signupViewModel.onEvent(SignupUIEvent.RegisterButtonClicked)
+                                    signupViewModel.onEvent(SignupUIEvent.SignupButtonClicked)
                                 },
                                 isEnabled = signupViewModel.allValidationsPassed.value
                             )
