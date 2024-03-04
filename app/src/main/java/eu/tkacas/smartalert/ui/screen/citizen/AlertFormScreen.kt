@@ -87,7 +87,8 @@ fun AlertFormScreen(navController: NavHostController? = null) {
         topBar = {
             AppBarBackView(
                 title = stringResource(id = R.string.create_a_new_alert),
-                navController = navController
+                navController = navController,
+                enableSettingsButton = false
             )
         }
     ) { it ->
