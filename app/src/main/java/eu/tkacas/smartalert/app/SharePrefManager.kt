@@ -8,6 +8,14 @@ class SharedPrefManager(context: Context) {
     private val _sharedPreferences: SharedPreferences =
         context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
 
+    fun setFirstName(firstName: String) {
+        _sharedPreferences.edit().putString("first_name", firstName).apply()
+    }
+
+    fun getFirstName(): String {
+        return _sharedPreferences.getString("first_name", "")!!
+    }
+
     fun setIsEmployee(isEmployee: Boolean) {
         _sharedPreferences.edit().putBoolean("is_employee", isEmployee).apply()
     }

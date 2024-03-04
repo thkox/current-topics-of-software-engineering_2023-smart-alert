@@ -58,6 +58,7 @@ fun HomeCitizenScreen(navController: NavController? = null) {
     val data by viewModel.data.collectAsState()
     val errorM by viewModel.errorM.collectAsState()
     val isRefreshing by viewModel.isRefreshing.collectAsState()
+
     val firstNameVal by viewModel.firstNameVal.collectAsState()
 
 
