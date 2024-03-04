@@ -133,6 +133,7 @@ fun Navigation(navController: NavController = rememberNavController()) {
                     is Screen.SettingsScreen.Analytics -> AnalyticsScreen(navController)
                     is Screen.SettingsScreen.About -> AboutScreen(navController)
                     is Screen.SettingsScreen.Logout -> {
+                        sharedPrefManager.setFirstName("")
                         firebase.signOutUser()
                         sharedPrefManager.removeIsEmployee()
                         navController.navigate("welcome")

@@ -3,6 +3,7 @@ package eu.tkacas.smartalert.viewmodel.citizen
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import eu.tkacas.smartalert.app.SharedPrefManager
 import eu.tkacas.smartalert.database.cloud.FirebaseUtils
 import eu.tkacas.smartalert.database.local.DatabaseHelper
 import eu.tkacas.smartalert.models.ListOfHistoryMessages
@@ -15,6 +16,8 @@ class HomeCitizenViewModel( context: Context )  : ViewModel() {
     private val databaseHelper = DatabaseHelper(context)
     private val firebase = FirebaseUtils()
 
+    val sharedPrefManager = SharedPrefManager(context)
+
 
 
     private val _data = MutableStateFlow<ListOfHistoryMessages?>(null)
@@ -26,8 +29,7 @@ class HomeCitizenViewModel( context: Context )  : ViewModel() {
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing: StateFlow<Boolean> = _isRefreshing
 
-    private var _firstNameVal = MutableStateFlow("")
-    val firstNameVal: StateFlow<String> = _firstNameVal
+    val firstNameVal = MutableStateFlow(sharedPrefManager.getFirstName())
 
     init {
         fetchData()
@@ -51,7 +53,7 @@ class HomeCitizenViewModel( context: Context )  : ViewModel() {
     private fun fetchFirstName() {
         firebase.getFirstName { success, firstName, error ->
             if (success) {
-                _firstNameVal.value = firstName ?: ""
+                sharedPrefManager.setFirstName(firstName ?: "")
             } else {
                 println("Error occurred: $error")
             }

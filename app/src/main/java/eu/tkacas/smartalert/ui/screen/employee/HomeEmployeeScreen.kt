@@ -10,11 +10,13 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,23 +28,16 @@ import eu.tkacas.smartalert.models.CriticalWeatherPhenomenon
 import eu.tkacas.smartalert.ui.component.CriticalWeatherPhenomenonCardComponent
 import eu.tkacas.smartalert.ui.navigation.AppBarBackView
 import eu.tkacas.smartalert.ui.theme.SkyBlue
+import eu.tkacas.smartalert.viewmodel.employee.HomeEmployeeViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun HomeEmployeeScreen(navController: NavController? = null) {
     val scaffoldState = rememberScaffoldState()
-    val firebase = FirebaseUtils()
 
+    val viewModel = HomeEmployeeViewModel(LocalContext.current)
 
-    var firstNameVal: String by remember { mutableStateOf("") }
-
-    firebase.getFirstName { success, firstName, error ->
-        if (success) {
-            firstNameVal = firstName ?: ""
-        } else {
-            println("Error occurred: $error")
-        }
-    }
+    val firstNameVal = viewModel.firstNameVal
 
     Scaffold(
         scaffoldState = scaffoldState,
