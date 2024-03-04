@@ -1,6 +1,8 @@
 package eu.tkacas.smartalert.viewmodel.settings
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.ktx.auth
@@ -9,6 +11,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import eu.tkacas.smartalert.database.cloud.changeUserPassword
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -75,16 +78,7 @@ class AccountViewModel : ViewModel() {
         }
     }
 
-    // TODO: Implement the changePassword function
-    fun changePassword(newPassword: String) {
-        val user = Firebase.auth.currentUser
-        user?.updatePassword(newPassword)?.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                Log.d("AccountViewModel", "User password updated.")
-            } else {
-                Log.d("AccountViewModel", "Failed to update user password.")
-            }
-        }
+    suspend fun changePassword(newPassword: String) : Boolean{
+        return changeUserPassword(newPassword)
     }
-
 }

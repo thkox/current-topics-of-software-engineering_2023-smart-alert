@@ -6,5 +6,5 @@ sealed class SignupUIEvent {
     data class EmailChanged(val email: String) : SignupUIEvent()
     data class PasswordChanged(val password: String) : SignupUIEvent()
     data class PrivacyPolicyCheckBoxClicked(val status: Boolean) : SignupUIEvent()
-    object RegisterButtonClicked : SignupUIEvent()
+    object SignupButtonClicked : SignupUIEvent()
 }

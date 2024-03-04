@@ -291,17 +291,6 @@ fun UploadPhotoButton(
 }
 
 @Composable
-fun FloatingActionButton(onClick: () -> Unit) {
-    FloatingActionButton(
-        containerColor = SkyBlue,
-        onClick = { onClick() },
-    ) {
-        Image(painterResource(id = R.drawable.edit), contentDescription = "Localized description")
-    }
-}
-
-
-@Composable
 fun ButtonWithImageComponent(onClick: () -> Unit, imageId: Int, buttonText: String) {
     Button(
         onClick = onClick,

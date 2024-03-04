@@ -53,7 +53,7 @@ class SignupViewModel : ViewModel() {
 
             }
 
-            is SignupUIEvent.RegisterButtonClicked -> {
+            is SignupUIEvent.SignupButtonClicked -> {
                 signUp()
             }
 
