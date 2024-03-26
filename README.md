@@ -4,4 +4,4 @@
 ### Semester: 7
 ### Project Completion Year: 2024
 ### Back-end: [Smart-Alert](https://github.com/thkox/smart-alert-server)
-### Project Team:  [Apostolis Siampanis](https://github.com/Apostolis2002) | [Theodoros Koxanoglou](https://github.com/thkox) | [Alexander Cholis](https://github.com/AlexanderCholis)
+### Project Team:  [Apostolis Siampanis](https://github.com/ApostolisSiampanis) | [Theodoros Koxanoglou](https://github.com/thkox) | [Alexander Cholis](https://github.com/AlexanderCholis)
