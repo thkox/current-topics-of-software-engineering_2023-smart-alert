@@ -122,7 +122,7 @@ class AlertCitizensFormViewModel(context: Context) : ViewModel() {
         try {
             val placesResponse = placesAPI.getPlacesAutocomplete(
                 locationName,
-                "AIzaSyBM31FS8qWSsNewQM5NGzpYm7pdr8q5azY"
+                "API_KEY_GC"
             ).await()
 
             // Check if any places were found
@@ -139,7 +139,7 @@ class AlertCitizensFormViewModel(context: Context) : ViewModel() {
     private suspend fun getPlaceDetails(placeId: String): Bounds? {
         val placesAPI = createPlacesAPI()
         val deferredResponse =
-            placesAPI.getPlaceDetails(placeId, "AIzaSyBM31FS8qWSsNewQM5NGzpYm7pdr8q5azY")
+            placesAPI.getPlaceDetails(placeId, "API_KEY_GC")
 
         try {
             val response = deferredResponse.await()

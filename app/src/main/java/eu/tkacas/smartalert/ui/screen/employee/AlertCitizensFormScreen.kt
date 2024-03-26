@@ -87,7 +87,7 @@ fun AlertCitizensFormScreen(navController: NavHostController? = null) {
                         CityTextFieldComponent(
                             labelValue = stringResource(id = R.string.city),
                             placesAPI = placesAPI,
-                            apiKey = "AIzaSyBM31FS8qWSsNewQM5NGzpYm7pdr8q5azY",
+                            apiKey = "API_KEY_GC",
                             locationName = locationName
                         ) {
                             viewModel.setSelectedArea(it)
