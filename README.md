@@ -4,7 +4,7 @@
 
 The **Smart Alert Android App** is a team assignment designed for the "Current Topics of Software Engineering - Mobile Software" course, offered in the 7th semester of the 2023-2024 academic year at the University of Piraeus, Department of Informatics. The app provides real-time notifications to citizens during high-risk events such as natural disasters. It allows users to report emergencies, receive location-based alerts, and stay informed about ongoing hazardous situations. The app enables users to manage their safety by accessing vital information about their surroundings.
 
-The Smart Alert system integrates with [JSLeaner Backend](https://github.com/thkox/current-topics-of-software-engineering_2023-smart-alert-server) that processes user-submitted reports, ranks them based on severity and proximity, and sends notifications to users in affected areas. This backend infrastructure ensures that only relevant alerts are delivered to those at risk.
+The Smart Alert system integrates with [Smart Alert Backend](https://github.com/thkox/current-topics-of-software-engineering_2023-smart-alert-server) that processes user-submitted reports, ranks them based on severity and proximity, and sends notifications to users in affected areas. This backend infrastructure ensures that only relevant alerts are delivered to those at risk.
 
 ## Course Information
 
