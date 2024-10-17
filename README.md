@@ -2,9 +2,9 @@
 
 ## Project Overview
 
-The Smart Alert Android App is designed to provide immediate notifications to citizens during high-risk events, such as natural disasters, in real time. The app enables users to report emergencies, receive location-based alerts, and manage their safety by staying informed about ongoing hazardous situations. The Smart Alert system is integrated with a backend that processes and categorizes these alerts, ensuring that only relevant notifications are sent to affected users.
+The **Smart Alert Android App** is a team assignment designed for the "Current Topics of Software Engineering - Mobile Software" course, offered in the 7th semester of the 2023-2024 academic year at the University of Piraeus, Department of Informatics. The app provides real-time notifications to citizens during high-risk events such as natural disasters. It allows users to report emergencies, receive location-based alerts, and stay informed about ongoing hazardous situations. The app enables users to manage their safety by accessing vital information about their surroundings.
 
-This project was developed as part of the 7th-semester coursework for the "Modern Topics in Software Technology - Mobile Software" class at the University of Piraeus, Department of Informatics (Academic Year 2023-2024).
+The Smart Alert system integrates with a backend server that processes user-submitted reports, ranks them based on severity and proximity, and sends notifications to users in affected areas. This backend infrastructure ensures that only relevant alerts are delivered to those at risk.
 
 ## Course Information
 
@@ -25,23 +25,24 @@ This project was developed as part of the 7th-semester coursework for the "Moder
 
 ## App Features
 
-1. **User Roles**
+### 1. User Roles
 
-   - **Citizen:** Users can report a high-risk incident, including information like type (e.g., flood, fire), location, timestamp, and optionally attach a photo.
-   - **Employee (Civil Protection):** Employees review, approve, or reject reported incidents and can trigger notifications for citizens in affected areas.
+- **Citizen:** Users can report high-risk incidents by providing details such as the type of event (e.g., flood, fire), location, timestamp, and optionally attaching a photo.
+- **Employee (Civil Protection):** Employees review, approve, or reject the reported incidents. They can also trigger notifications for citizens in affected areas.
 
-2. **Incident Reporting and Notification**
+### 2. Incident Reporting and Notification
 
-   - Citizens can report emergencies, categorized into pre-defined event types such as floods, fires, or earthquakes.
-   - Notifications are automatically sent to users in close proximity to the event, including details such as location, timestamp, and safety instructions.
-  
-3. **Multilingual Support**
+- **Emergency Reporting:** Citizens can report emergencies categorized into pre-defined event types (floods, fires, earthquakes, etc.).
+- **Location-Based Notifications:** Notifications are sent automatically to users in close proximity to the reported event, with information such as location, timestamp, and safety instructions.
 
-    The app supports English and one additional language, ensuring users receive information in their preferred language.
+### 3. Multilingual Support
 
-4. **Statistics and Event History**
+- The app supports English and one additional language, allowing users to receive critical information in their preferred language.
 
-    Users can view statistics about past incidents, filtered by time and category, through a dedicated interface.
+### 4. Statistics and Event History
+
+- **View Statistics:** Users can view statistics about past incidents, filterable by time and category, through a dedicated statistics interface.
+- **Event History:** Users can access a history of reported incidents to stay informed about ongoing and past events in their area.
 
 ## Setup Instructions
 
@@ -54,14 +55,32 @@ This project was developed as part of the 7th-semester coursework for the "Moder
 3. Configure Firebase credentials by adding the necessary `google-services.json` file.
 4. Build and run the app on an Android device or emulator.
 
+## Documentation and Resources
+
+- Full project details can be found in the [Project-documentation.pdf](./docs/Project-documentation.pdf).
+- A detailed walkthrough video is available: [Project-video.mp4](./video/Project-video.mp4).
+
 ## Screenshots
 
-
-
-## Related Repositories
-[Smart Alert Backend](https://github.com/thkox/smart-alert-server)
-
-The Smart Alert Backend serves as the core infrastructure that processes and ranks reports of high-risk incidents submitted by users through the Smart Alert mobile app. The backend is responsible for managing user data, triggering notifications, and prioritizing alerts based on factors such as proximity and severity. It works seamlessly with the Android app to ensure that only relevant notifications are sent to users in affected areas.
+<table>
+  <tr>
+    <td align="center">
+      <img src="./images/ReportIncident.png" alt="Report Incident"/>
+      <br/>
+      <sub><b>Report Incident</b></sub>
+    </td>
+    <td align="center">
+      <img src="./images/Notifications.png" alt="Notifications"/>
+      <br/>
+      <sub><b>Notifications</b></sub>
+    </td>
+    <td align="center">
+      <img src="./images/Statistics.png" alt="Statistics"/>
+      <br/>
+      <sub><b>Statistics</b></sub>
+    </td>
+  </tr>
+</table>
 
 ## Contributors
 
