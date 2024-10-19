@@ -7,9 +7,8 @@ The **Smart Alert Android App** is a team assignment designed for the "Current T
 The Smart Alert system integrates with [Smart Alert Backend](https://github.com/thkox/current-topics-of-software-engineering_2023-smart-alert-server) that processes user-submitted reports, ranks them based on severity and proximity, and sends notifications to users in affected areas. This backend infrastructure ensures that only relevant alerts are delivered to those at risk.
 
 ## Course Information
-
-- **Institution:** University of Piraeus
-- **Department:** Department of Informatics
+- **Institution:** [University of Piraeus](https://www.unipi.gr/en/)
+- **Department:** [Department of Informatics](https://cs.unipi.gr/en/)
 - **Course:** Current Topics of Software Engineering (2024)
 - **Semester:** 7th
 
